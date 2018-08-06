@@ -6,12 +6,12 @@ import com.sasha.eventsys.SimpleEvent;
 /**
  * Created by Sasha on 06/08/2018 at 4:23 PM
  **/
-public class MixinInitEvent extends SimpleCancellableEvent {
+public class XdolfMixinInitEvent extends SimpleCancellableEvent {
 
     private String mixinConfig;
     private String envObf;
 
-    public MixinInitEvent(String mixinConfig, String envObf){
+    public XdolfMixinInitEvent(String mixinConfig, String envObf){
         this.mixinConfig = mixinConfig;
         this.envObf = envObf;
     }

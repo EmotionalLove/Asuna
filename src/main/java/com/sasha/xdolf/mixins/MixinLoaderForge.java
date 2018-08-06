@@ -1,7 +1,7 @@
 package com.sasha.xdolf.mixins;
 
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.events.MixinInitEvent;
+import com.sasha.xdolf.events.XdolfMixinInitEvent;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -20,7 +20,7 @@ public class MixinLoaderForge implements IFMLLoadingPlugin {
         XdolfMod.logger.info("Xdolf is initialising mixins.");
         String mixinConfig = "mixins.xdolf.json";
         String envObf = "searge";
-        MixinInitEvent event = new MixinInitEvent(mixinConfig, envObf);
+        XdolfMixinInitEvent event = new XdolfMixinInitEvent(mixinConfig, envObf);
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
         MixinBootstrap.init();
         Mixins.addConfiguration(event.getMixinConfig());
