@@ -1,6 +1,7 @@
 package com.sasha.xdolf.mixins;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.events.MixinInitEvent;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -17,9 +18,13 @@ public class MixinLoaderForge implements IFMLLoadingPlugin {
 
     public MixinLoaderForge(){
         XdolfMod.logger.info("Xdolf is initialising mixins.");
+        String mixinConfig = "mixins.xdolf.json";
+        String envObf = "searge";
+        MixinInitEvent event = new MixinInitEvent(mixinConfig, envObf);
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.xdolf.json");
-        MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
+        Mixins.addConfiguration(event.getMixinConfig());
+        MixinEnvironment.getDefaultEnvironment().setObfuscationContext(event.getEnvObf());
         XdolfMod.logger.info("Obfuscation -> " + MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }
 
