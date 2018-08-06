@@ -18,7 +18,7 @@ public class MixinLoaderForge implements IFMLLoadingPlugin {
     public MixinLoaderForge(){
         XdolfMod.logger.info("Xdolf is initialising mixins.");
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.kami.json");
+        Mixins.addConfiguration("mixins.xdolf.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
         XdolfMod.logger.info("Obfuscation -> " + MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }
