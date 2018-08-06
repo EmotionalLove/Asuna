@@ -1,0 +1,16 @@
+[
+{
+  "modid": "xdolfforge",
+  "name": "Xdolf",
+  "description": "Minecraft hacked client geared towards 2b2t and anarchy.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Sasha"],
+  "credits": "x0XP and Sgt Pepper for original name and GUI concept.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
