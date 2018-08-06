@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.sasha.xdolf.mixins.client",
+  "refmap": "mixins.kami.refmap.json",
+  "client": [
+    "MixinGuiChat"
+  ]
+}

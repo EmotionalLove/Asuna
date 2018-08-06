@@ -14,13 +14,18 @@ import java.util.Map;
  **/
 public class MixinLoaderForge implements IFMLLoadingPlugin {
     protected static boolean isObfuscatedEnvironment;
-    @Override
-    public String[] getASMTransformerClass() {
+
+    public MixinLoaderForge(){
         XdolfMod.logger.info("Xdolf is initialising mixins.");
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.kami.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
         XdolfMod.logger.info("Obfuscation -> " + MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
+    }
+
+    @Override
+    public String[] getASMTransformerClass() {
+        return new String[0];
     }
 
     @Override
