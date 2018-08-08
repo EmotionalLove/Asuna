@@ -21,11 +21,11 @@ public class RenderableHacklist extends RenderableObject {
             int count = 0;
             for (XdolfModule module : XdolfModule.displayList) {
                 if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getColouredname(), 4, (yyy) + (10 * count), 0xffffff);
+                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), 4, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
                 else if (module.isEnabled()) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getColouredname() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
+                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
             }
@@ -51,11 +51,11 @@ public class RenderableHacklist extends RenderableObject {
             int count = 0;
             for (XdolfModule module : XdolfModule.displayList) {
                 if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getColouredname(), sWidth - Fonts.segoe_36.getStringWidth(module.getName()) - 2, (yyy) + (10 * count), 0xffffff);
+                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
                 else if (module.isEnabled()) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getColouredname() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getName() + module.getSuffix()) - 2, (yyy) + (10 * count), 0xffffff);
+                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
             }
@@ -67,11 +67,11 @@ public class RenderableHacklist extends RenderableObject {
             int count = 0;
             for (XdolfModule module : XdolfModule.displayList) {
                 if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getColouredname(), sWidth - Fonts.segoe_36.getStringWidth(module.getName()) - 2, (yyy) - (10 * count), 0xffffff);
+                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
                 else if (module.isEnabled()) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getColouredname() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getName() + module.getSuffix()) - 2, (yyy) - (10 * count), 0xffffff);
+                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
             }

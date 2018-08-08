@@ -74,6 +74,14 @@ public abstract class XdolfModule {
         return moduleName;
     }
 
+    public String getModuleNameColoured() {
+        return moduleNameColoured;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
     /**
      * Gets whether its toggled or not
      * @return bool

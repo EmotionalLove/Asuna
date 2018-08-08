@@ -32,7 +32,7 @@ public class ModuleManager implements SimpleListener {
         for (XdolfModule m : moduleRegistry) {
             if (m.getModuleName().equalsIgnoreCase(key)) return m;
         }
-
+        return null;
     }
 
     public static void tickModules(){
