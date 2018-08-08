@@ -6,6 +6,8 @@ import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
 /**
  * Created by Sasha on 08/08/2018 at 8:30 AM
+ * This class is based off of Xdolf 3.x's Module class, however this is redone to make use of the Event system.
+ * Fun fact: Xdolf 3.x's Event system was absolutely horrible, it was easier to just _not use it_...
  **/
 public abstract class XdolfModule {
 
