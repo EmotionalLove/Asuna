@@ -38,6 +38,11 @@ public abstract class XdolfCommand {
         }
         this.commandArgs = list.toArray(this.commandArgs);
     }
+
+    public String getCommandName(boolean withDelimetre) {
+        return (withDelimetre ? commandDelimetre : "") + commandName;
+    }
+
     public void onCommand() {
         XdolfMod.logMsg(true, "Player executing client command \"" + commandName + "\"");
     }
