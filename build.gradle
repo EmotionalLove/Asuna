@@ -73,9 +73,11 @@ dependencies {
         exclude module: 'gson'
         exclude module: 'commons-io'
     }
+    compile files('libs/SimpleEventSystem.jar')
     compile "com.github.ZeroMemes:Alpine:1.5"
     compile group: 'net.jodah', name: 'typetools', version: '0.5.0'
     compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
+
 }
 
 processResources {

@@ -13,6 +13,7 @@ import java.util.Map;
 /**
  * Created by Sasha on 06/08/2018 at 1:34 PM
  **/
+@IFMLLoadingPlugin.Name(value = "MixinLoaderForge")
 public class MixinLoaderForge implements IFMLLoadingPlugin {
     protected static boolean isObfuscatedEnvironment;
 
