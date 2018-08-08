@@ -52,4 +52,9 @@ public class XdolfMod {
         if (consoleOnly) return;
         mc.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247cERROR\2477] \247c" + logMsg));
     }
+    public static void logWarn(boolean consoleOnly, String logMsg) {
+        logger.log(Level.WARN, logMsg);
+        if (consoleOnly) return;
+        mc.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247eWARNING\2477] \247e" + logMsg));
+    }
 }
