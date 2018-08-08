@@ -42,10 +42,11 @@ public class RenderableObject {
     /**
      * >be me
      * >listening to llane's requests
-     * >be a trap, mentally
      * >has to write 4 different rendering voids for each corner of the screen
      * >also requires me to rewrite my entire HUD code and to develop a configuration system
      * >fml
+     *
+     * tf is this - me 2018
      */
     public void renderObjectLT(int yyy) {
 

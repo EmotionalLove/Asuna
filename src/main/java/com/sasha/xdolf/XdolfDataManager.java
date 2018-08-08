@@ -6,6 +6,7 @@ import com.sasha.xdolf.misc.YMLParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -21,7 +22,42 @@ public class XdolfDataManager {
     private final Lock threadLock = new ReentrantLock();
     private final String dataFileName = "XdolfData.yml";
 
+    /**
+     * @since Xdolf 3.x, the HUD could be configured by the user into any corner of the screen.
+     * the elements of the hud would automatically move up or down to stay out of the potion HUD and the chat UI.
+     * It allowed for a clean look that Window based HUD's (like in Root by 086) couldn't deliver.
+     *
+     * The old config system was very sloppy, unfortunately. It needs to be fully re-written. This is temporary.
+     * @return the configuration hashmap.
+     */
+    @Deprecated // TODO Redo this - this is just a way to enable compatibility with tbe legacy HUD config system from 3.x
+    public synchronized HashMap<String, String> getHudPositionStates() {
+        XdolfMod.logMsg(true, "Loading HUD posstates...");
+        threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                // load default values
+                HashMap<String, String> map = new HashMap<>();
+                map.put("HUD_watermark", "LT");
+                map.put("HUD_coordinates", "LB");
+                map.put("HUD_hacklist", "RB");
+                map.put("HUD_Horsestats", "LT");
+                map.put("HUD_Tickrate", "LB");
+                map.put("HUD_Framerate", "LB");
+                map.put("HUD_Saturation", "RT");
+                map.put("HUD_InventoryStats", "RT");
+                //this is _so_ ghetto.
+                return map;
+            }
+            YMLParser parser = new YMLParser(file);
 
+        } finally {
+            threadLock.unlock();
+        }
+    }
 
     public synchronized void saveModuleStates() throws IOException {
         XdolfMod.logMsg(true, "Updating module savestates...");
