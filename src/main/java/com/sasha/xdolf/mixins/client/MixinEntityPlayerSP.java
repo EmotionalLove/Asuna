@@ -1,6 +1,7 @@
 package com.sasha.xdolf.mixins.client;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.events.PlayerXdolfCommandEvent;
 import net.minecraft.client.entity.EntityPlayerSP;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +17,7 @@ public class MixinEntityPlayerSP {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo info) {
-        if (message.startsWith("-")) {
+        if (message.startsWith(XdolfCommand.commandDelimetre)) {
             XdolfMod.EVENT_MANAGER.invokeEvent(new PlayerXdolfCommandEvent(message));
             info.cancel();
         }
