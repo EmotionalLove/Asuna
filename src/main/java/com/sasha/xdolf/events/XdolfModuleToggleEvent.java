@@ -14,5 +14,13 @@ public class XdolfModuleToggleEvent extends SimpleCancellableEvent {
         this.toggledModule= toggledModule;
         this.toggleState= toggleState;
     }
+
+    public ModuleStatus getToggleState() {
+        return toggleState;
+    }
+
+    public XdolfModule getToggledModule() {
+        return toggledModule;
+    }
 }
 
