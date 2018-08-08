@@ -4,6 +4,8 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ModuleStatus;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
+import java.io.IOException;
+
 /**
  * Created by Sasha on 08/08/2018 at 8:30 AM
  * This class is based off of Xdolf 3.x's Module class, however this is redone to make use of the Event system.
@@ -46,6 +48,11 @@ public abstract class XdolfModule {
         }
         this.moduleNameColoured = "\247" + c + moduleName;
         this.keyBind = keyBind;
+        try {
+            this.isEnabled = ModuleUtils.getSavedModuleState(moduleName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getModuleName() {

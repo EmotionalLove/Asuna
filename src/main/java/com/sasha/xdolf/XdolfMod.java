@@ -3,6 +3,8 @@ package com.sasha.xdolf;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
+import com.sasha.xdolf.module.ModuleUtils;
+import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.text.TextComponentString;
@@ -34,12 +36,18 @@ public class XdolfMod {
     public void init(FMLInitializationEvent event) {
         logger.info("Xdolf is initialising...");
         this.registerCommands();
+        this.registerModules();
         EVENT_MANAGER.registerListener(new CommandProcessor());
     }
 
     private void registerCommands() {
         CommandProcessor.commandRegistry.clear();
         CommandProcessor.commandRegistry.add(new AboutCommand());
+    }
+
+    private void registerModules(){
+        ModuleUtils.moduleRegistry.clear();
+
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {
