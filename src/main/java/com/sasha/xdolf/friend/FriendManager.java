@@ -14,9 +14,16 @@ import java.util.concurrent.locks.ReentrantLock;
  **/
 public class FriendManager {
 
-    private ArrayList<Friend> friendList = new ArrayList<>();
+    private ArrayList<Friend> friendList;
 
     public FriendManager() {
+        XdolfMod.scheduler.schedule(() -> {
+            try {
+                friendList= XdolfMod.DATA_MANAGER.loadFriends();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }, 0, TimeUnit.NANOSECONDS);
 
     }
 

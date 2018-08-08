@@ -72,7 +72,7 @@ public class XdolfDataManager {
             threadLock.unlock();
         }
     }
-    public synchronized void loadFriends(ArrayList<Friend> populationList) throws IOException {
+    public synchronized ArrayList<Friend> loadFriends() throws IOException {
         XdolfMod.logMsg(true, "Loading saved friends...");
         threadLock.lock();
         XdolfMod.logWarn(true, "Thread locking engaged!");
@@ -80,11 +80,13 @@ public class XdolfDataManager {
             File file = new File(dataFileName);
             if (!file.exists()) {
                 XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
-                return;
+                return new ArrayList<>();
             }
             YMLParser parser = new YMLParser(file);
             List<String> list = parser.getStringList("xdolf.friends.friendlist");
-            list.forEach(fs -> populationList.add(new Friend(fs)));
+            ArrayList<Friend> fliet = new ArrayList<>();
+            list.forEach(fs -> fliet.add(new Friend(fs)));
+            return fliet; // it was supposed to say flist but i made a typo but idc, now its a filet :yum:
         } finally {
             threadLock.unlock();
             XdolfMod.logWarn(true, "Thread locking disengaged!");

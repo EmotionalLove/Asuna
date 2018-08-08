@@ -3,6 +3,7 @@ package com.sasha.xdolf;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
+import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.module.ModuleUtils;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.Minecraft;
@@ -29,6 +30,7 @@ public class XdolfMod {
     public static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static XdolfDataManager DATA_MANAGER = new XdolfDataManager();
+    public static FriendManager FRIEND_MANAGER;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -36,6 +38,7 @@ public class XdolfMod {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
+        FRIEND_MANAGER= new FriendManager();
     }
 
     @EventHandler
