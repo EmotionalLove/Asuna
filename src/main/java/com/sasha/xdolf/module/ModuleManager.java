@@ -6,6 +6,8 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ModuleStatus;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
+import static com.sasha.xdolf.module.ModuleUtils.moduleRegistry;
+
 /**
  * Created by Sasha on 08/08/2018 at 11:52 AM
  **/
@@ -26,8 +28,15 @@ public class ModuleManager implements SimpleListener {
         }
     }
 
+    public static XdolfModule getModuleByName(String key) {
+        for (XdolfModule m : moduleRegistry) {
+            if (m.getModuleName().equalsIgnoreCase(key)) return m;
+        }
+
+    }
+
     public static void tickModules(){
-        ModuleUtils.moduleRegistry.forEach(XdolfModule::onTick);
+        moduleRegistry.forEach(XdolfModule::onTick);
     }
 
 }
