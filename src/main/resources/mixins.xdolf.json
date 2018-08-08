@@ -4,6 +4,7 @@
   "package": "com.sasha.xdolf.mixins.server",
   "refmap": "mixins.xdolf.refmap.json",
   "client": [
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "MixinEntityPlayerSP"
   ]
 }
