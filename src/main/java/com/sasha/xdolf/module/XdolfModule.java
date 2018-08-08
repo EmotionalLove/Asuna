@@ -5,6 +5,7 @@ import com.sasha.xdolf.events.ModuleStatus;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Sasha on 08/08/2018 at 8:30 AM
@@ -21,7 +22,7 @@ public abstract class XdolfModule {
     private int keyBind;
     private boolean isRenderable = false;
 
-    public XdolfModule(String moduleName, XdolfCategory moduleCategory, int keyBind){
+    public XdolfModule(String moduleName, XdolfCategory moduleCategory){
         this.moduleName = moduleName;
         this.moduleCategory = moduleCategory;
         String c;
@@ -47,12 +48,13 @@ public abstract class XdolfModule {
             c = "8";
         }
         this.moduleNameColoured = "\247" + c + moduleName;
-        this.keyBind = keyBind;
-        try {
-            this.isEnabled = ModuleUtils.getSavedModuleState(moduleName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        XdolfMod.scheduler.schedule(() -> {//todo test
+            try {
+                this.isEnabled = ModuleUtils.getSavedModuleState(moduleName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }, 0, TimeUnit.SECONDS);
     }
 
     public String getModuleName() {

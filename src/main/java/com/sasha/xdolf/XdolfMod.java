@@ -16,6 +16,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 @Mod(modid = XdolfMod.MODID, name = XdolfMod.NAME, version = XdolfMod.VERSION)
 public class XdolfMod {
     public static final String MODID = "xdolfforge";
@@ -24,12 +28,13 @@ public class XdolfMod {
 
     public static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
+    public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        //logger = event.getModLog();
+        ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
     }
 
     @EventHandler
