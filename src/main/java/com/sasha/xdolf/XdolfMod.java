@@ -15,10 +15,8 @@ public class XdolfMod {
     public static final String NAME = "Xdolf";
     public static final String VERSION = "4.0";
 
-    public static XdolfMod INSTANCE;
-
     public static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
-    public static SimpleEventManager EVENT_MANAGER;
+    public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -28,7 +26,5 @@ public class XdolfMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Xdolf is initialising...");
-        INSTANCE = this;
-        EVENT_MANAGER = new SimpleEventManager();
     }
 }
