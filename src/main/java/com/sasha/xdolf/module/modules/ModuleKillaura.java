@@ -1,5 +1,6 @@
 package com.sasha.xdolf.module.modules;
 
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
@@ -35,7 +36,7 @@ public class ModuleKillaura extends XdolfModule {
                                     && mc.player.getDistance(e) <= 5.0f // Is this entity closer than 5 blocks?
                                     && e.isEntityAlive()    // Is this entity alive?
                                     && ((EntityLivingBase) e).hurtTime == 0 // Has this entity not been hurt recently?
-                                    && (!(e instanceof EntityPlayer) || !FriendManager.isFriended(e.getName())) // Is this entity a player? If so, are they not friended?
+                                    && (!(e instanceof EntityPlayer) || !XdolfMod.FRIEND_MANAGER.isFriended(e.getName())) // Is this entity a player? If so, are they not friended?
                     ).map(entity -> (EntityLivingBase) entity)
                     .findFirst().orElse(null);
             if (b != null) {

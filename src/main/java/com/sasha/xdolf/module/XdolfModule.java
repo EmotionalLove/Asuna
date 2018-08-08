@@ -54,7 +54,7 @@ public abstract class XdolfModule {
         this.isRenderable= isRenderable;
         XdolfMod.scheduler.schedule(() -> {//todo test
             try {
-                this.isEnabled = ModuleUtils.getSavedModuleState(moduleName);
+                this.isEnabled = XdolfMod.DATA_MANAGER.getSavedModuleState(moduleName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
