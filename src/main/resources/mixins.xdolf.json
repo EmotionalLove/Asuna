@@ -3,7 +3,7 @@
   "compatibilityLevel": "JAVA_8",
   "package": "com.sasha.xdolf.mixins.server",
   "refmap": "mixins.xdolf.refmap.json",
-  "server": [
-    "MixinMinecraftServer"
+  "client": [
+    "MixinMinecraft"
   ]
 }
