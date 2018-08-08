@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by Sasha on 08/08/2018 at 9:17 AM
  **/
-public abstract class ModuleUtils {
+public abstract class ModuleUtils{
 
     private static Lock threadLock = new ReentrantLock();
 
@@ -37,7 +37,7 @@ public abstract class ModuleUtils {
             XdolfMod.logWarn(true, "Thread locking disengaged!");
         }
     }
-    public static synchronized boolean getSavedModuleState(String modName) throws IOException{
+    public static synchronized boolean getSavedModuleState(String modName) throws IOException {
         XdolfMod.logMsg(true, "Getting module \"" + modName + "\"'s previously saved state...");
         threadLock.lock();
         XdolfMod.logWarn(true, "Thread locking engaged!");
@@ -51,6 +51,7 @@ public abstract class ModuleUtils {
             return parser.getBoolean("modules." + modName, false);
         } finally {
             threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
         }
     }
 
