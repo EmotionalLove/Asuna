@@ -28,6 +28,7 @@ public class XdolfMod {
 
     public static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
+    public static XdolfDataManager DATA_MANAGER = new XdolfDataManager();
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
     public static Minecraft mc = Minecraft.getMinecraft();

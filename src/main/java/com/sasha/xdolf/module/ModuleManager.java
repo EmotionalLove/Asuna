@@ -26,4 +26,8 @@ public class ModuleManager implements SimpleListener {
         }
     }
 
+    public static void tickModules(){
+        ModuleUtils.moduleRegistry.forEach(XdolfModule::onTick);
+    }
+
 }

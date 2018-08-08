@@ -3,6 +3,7 @@ package com.sasha.xdolf.mixins.client;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.events.PlayerXdolfCommandEvent;
+import com.sasha.xdolf.module.ModuleManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,5 +22,9 @@ public class MixinEntityPlayerSP {
             XdolfMod.EVENT_MANAGER.invokeEvent(new PlayerXdolfCommandEvent(message));
             info.cancel();
         }
+    }
+    @Inject(method = "onUpdate", at = @At("HEAD"), cancellable = true)
+    public void onUpdate(CallbackInfo info) {
+        ModuleManager.tickModules();
     }
 }
