@@ -39,6 +39,10 @@ public abstract class XdolfCommand {
         this.commandArgs = list.toArray(this.commandArgs);
     }
 
+    public String[] getArguments() {
+        return commandArgs;
+    }
+
     public String getCommandName(boolean withDelimetre) {
         return (withDelimetre ? commandDelimetre : "") + commandName;
     }

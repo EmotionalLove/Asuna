@@ -17,5 +17,10 @@ public class AboutCommand extends XdolfCommand {
     @Override
     public void onCommand() {
         XdolfMod.logMsg(false, "This is a test :3");
+        if (this.getArguments() != null){
+            for (String argument : this.getArguments()) {
+                XdolfMod.logMsg(false, argument);
+            }
+        }
     }
 }

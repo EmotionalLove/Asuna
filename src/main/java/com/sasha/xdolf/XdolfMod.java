@@ -3,6 +3,7 @@ package com.sasha.xdolf;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
+import com.sasha.xdolf.command.commands.ToggleCommand;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
@@ -83,6 +84,7 @@ public class XdolfMod {
     private void registerCommands() {
         CommandProcessor.commandRegistry.clear();
         CommandProcessor.commandRegistry.add(new AboutCommand());
+        CommandProcessor.commandRegistry.add(new ToggleCommand());
     }
 
     private void registerModules(){
