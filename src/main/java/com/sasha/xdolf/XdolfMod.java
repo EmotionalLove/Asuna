@@ -93,6 +93,7 @@ public class XdolfMod {
         ModuleManager.moduleRegistry.add(new ModuleSaturation());
         ModuleManager.moduleRegistry.add(new ModuleInventoryStats());
         ModuleManager.moduleRegistry.add(new ModuleHorsestats());
+        ModuleManager.moduleRegistry.add(new ModuleHacklist());
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {
