@@ -37,7 +37,7 @@ public abstract class XdolfCommand {
         while (m.find()) {
             list.add(m.group(1).replace("\"", ""));
         }
-        this.commandArgs = list.toArray(this.commandArgs);
+        this.commandArgs = list.toArray(new String[0]);
     }
 
     public String[] getArguments() {
