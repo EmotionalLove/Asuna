@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GuiIngame.class)
 public class MixinGuiIngame {
 
-    @Inject(method = "renderGameOverlay", at = @At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/GlStateManager.color (FFFF)V", ordinal = 3), cancellable = true)
+    @Inject(method = "renderGameOverlay", at = @At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/GlStateManager;color(FFFF)V", ordinal = 3), cancellable = true)
     public void renderGameOverlay(float partialTicks, CallbackInfo info) {
         XdolfMod.HUD.renderScreen();
     }
