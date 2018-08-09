@@ -5,6 +5,7 @@ import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.XdolfHUD;
+import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
@@ -52,11 +53,19 @@ public class XdolfMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Xdolf is initialising...");
+        logMsg(true, "Loading TTF fonts...");
+        Fonts.loadFonts();
+        logMsg(true, "Done!");
+        logMsg(true, "Registering commands and modules...");
         this.registerCommands();
         this.registerModules();
         EVENT_MANAGER.registerListener(new CommandProcessor());
+        EVENT_MANAGER.registerListener(new ModuleManager());
+        logMsg(true, "Done!");
+        logMsg(true, "Initialising HUD");
         HUD = new XdolfHUD();
         HUD.setupHUD();
+        logMsg(true, "Done!");
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
         XdolfMod.scheduler.schedule(() -> {//todo test
@@ -68,6 +77,7 @@ public class XdolfMod {
                 }catch (IOException e){e.printStackTrace();}
             });
         }, 0, TimeUnit.SECONDS);
+        logMsg(true, "Xdolf cleanly initialised!");
     }
 
     private void registerCommands() {

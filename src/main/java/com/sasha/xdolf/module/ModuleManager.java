@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Sasha on 08/08/2018 at 11:52 AM
  **/
-public abstract class ModuleManager implements SimpleListener {
+public class ModuleManager implements SimpleListener {
 
     public static ArrayList<XdolfModule> moduleRegistry = new ArrayList<>();
 
