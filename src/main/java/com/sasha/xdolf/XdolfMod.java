@@ -5,8 +5,13 @@ import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.XdolfHUD;
+import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
-import com.sasha.xdolf.module.ModuleUtils;
+import com.sasha.xdolf.module.ModuleManager;
+import com.sasha.xdolf.module.modules.ModuleCoordinates;
+import com.sasha.xdolf.module.modules.ModuleFPS;
+import com.sasha.xdolf.module.modules.ModuleKillaura;
+import com.sasha.xdolf.module.modules.ModuleTPS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
@@ -17,9 +22,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @Mod(modid = XdolfMod.MODID, name = XdolfMod.NAME, version = XdolfMod.VERSION)
 public class XdolfMod {
@@ -52,6 +59,15 @@ public class XdolfMod {
         HUD.setupHUD();
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
+        XdolfMod.scheduler.schedule(() -> {//todo test
+            ModuleManager.moduleRegistry.forEach(mod -> {
+                try {
+                    if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
+                        mod.forceState(ModuleState.ENABLE, false);
+                    }
+                }catch (IOException e){e.printStackTrace();}
+            });
+        }, 0, TimeUnit.SECONDS);
     }
 
     private void registerCommands() {
@@ -60,8 +76,11 @@ public class XdolfMod {
     }
 
     private void registerModules(){
-        ModuleUtils.moduleRegistry.clear();
-
+        ModuleManager.moduleRegistry.clear();
+        ModuleManager.moduleRegistry.add(new ModuleKillaura());
+        ModuleManager.moduleRegistry.add(new ModuleTPS());
+        ModuleManager.moduleRegistry.add(new ModuleFPS());
+        ModuleManager.moduleRegistry.add(new ModuleCoordinates());
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {

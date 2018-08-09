@@ -1,12 +1,10 @@
 package com.sasha.xdolf.module;
 
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.events.ModuleStatus;
+import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Sasha on 08/08/2018 at 8:30 AM
@@ -52,13 +50,7 @@ public abstract class XdolfModule {
         }
         this.moduleNameColoured = "\247" + c + moduleName;
         this.isRenderable= isRenderable;
-        XdolfMod.scheduler.schedule(() -> {//todo test
-            try {
-                this.isEnabled = XdolfMod.DATA_MANAGER.getSavedModuleState(moduleName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }, 0, TimeUnit.SECONDS);
+        this.isEnabled=false;
         if(this.isRenderable){
             this.init();
         }
@@ -113,7 +105,7 @@ public abstract class XdolfModule {
      * invokes an XdolfModuleToggleEvent
      */
     public void toggle(){
-        XdolfModuleToggleEvent event = new XdolfModuleToggleEvent(this, (isEnabled ? ModuleStatus.DISABLE : ModuleStatus.ENABLE));
+        XdolfModuleToggleEvent event = new XdolfModuleToggleEvent(this, (isEnabled ? ModuleState.DISABLE : ModuleState.ENABLE));
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()){
             XdolfMod.logWarn(true, "Module \""+this.getModuleName()+"\" toggle was cancelled!");
@@ -127,8 +119,8 @@ public abstract class XdolfModule {
      * @param state enable or disable
      * @param executeOnStateMethod whether you want to execute onDisable() or onEnable()
      */
-    public void forceState(ModuleStatus state, boolean executeOnStateMethod){
-        if (state == ModuleStatus.ENABLE){
+    public void forceState(ModuleState state, boolean executeOnStateMethod){
+        if (state == ModuleState.ENABLE){
             this.isEnabled = true;
             if (executeOnStateMethod){
                 this.onEnable();

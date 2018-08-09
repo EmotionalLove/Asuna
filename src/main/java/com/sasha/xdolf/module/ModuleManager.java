@@ -2,20 +2,21 @@ package com.sasha.xdolf.module;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.events.ModuleStatus;
+import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
-import static com.sasha.xdolf.module.ModuleUtils.moduleRegistry;
+import java.util.ArrayList;
 
 /**
  * Created by Sasha on 08/08/2018 at 11:52 AM
  **/
-public class ModuleManager implements SimpleListener {
+public abstract class ModuleManager implements SimpleListener {
+
+    public static ArrayList<XdolfModule> moduleRegistry = new ArrayList<>();
 
     @SimpleEventHandler
     public void onModToggle(XdolfModuleToggleEvent e){
-        if (e.getToggleState() == ModuleStatus.ENABLE){
+        if (e.getToggleState() == ModuleState.ENABLE){
             e.getToggledModule().onEnable();
             if (!e.getToggledModule().isRenderable()) {
                 XdolfModule.displayList.add(e.getToggledModule());

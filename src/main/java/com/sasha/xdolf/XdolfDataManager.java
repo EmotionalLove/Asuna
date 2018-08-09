@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.sasha.xdolf.module.ModuleUtils.moduleRegistry;
+import static com.sasha.xdolf.module.ModuleManager.moduleRegistry;
 
 /**
  * Created by Sasha on 08/08/2018 at 12:47 PM
