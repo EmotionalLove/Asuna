@@ -2,9 +2,11 @@ package com.sasha.xdolf.module;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,12 @@ public class ModuleManager implements SimpleListener {
 
     @SimpleEventHandler
     public void onModToggle(XdolfModuleToggleEvent e){
+        try {
+            XdolfMod.DATA_MANAGER.saveModuleStates();
+        } catch (IOException e1) {
+            XdolfMod.logErr(false, "Couldn't save module state. " + e1.getMessage());
+            e1.printStackTrace();
+        }
         if (e.getToggleState() == ModuleState.ENABLE){
             e.getToggledModule().onEnable();
             if (!e.getToggledModule().isRenderable()) {

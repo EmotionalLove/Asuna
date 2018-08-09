@@ -1,7 +1,6 @@
 package com.sasha.xdolf.gui;
 
 
-import com.sasha.xdolf.XdolfDataManager;
 import com.sasha.xdolf.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.fonts.Fonts;
@@ -9,12 +8,10 @@ import com.sasha.xdolf.gui.renderableobjects.*;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -197,6 +194,7 @@ public class XdolfHUD extends GuiScreen {
         if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && XdolfMod.mc.world.isRemote && XdolfMod.mc.currentScreen == null) {
             return;
         }
+        XdolfMod.logErr(true, "boo");
         //Legacy Rendering (static methods, no configurability)
         //renderClientName();
         //renderArrayList();
