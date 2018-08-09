@@ -5,7 +5,6 @@
   "refmap": "mixins.xdolf.refmap.json",
   "client": [
     "MixinEntityPlayerSP",
-    "MixinNetworkManager",
-    "MixinKillMyself"
+    "MixinNetworkManager"
   ]
 }

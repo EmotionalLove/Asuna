@@ -120,13 +120,10 @@ public class XdolfMod {
 class ForgeEvent {
     @SubscribeEvent
     public void onRenderLost(RenderGameOverlayEvent.Post e){
-        RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.EXPERIENCE;
+        RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.TEXT;
         if (XdolfMod.mc.player.getRidingEntity() instanceof EntityHorse) target = RenderGameOverlayEvent.ElementType.HEALTHMOUNT;
         if (e.getType() == target){
-            /*
-            GL11.glPushMatrix();
-            XdolfMod.HUD.renderScreen();
-            GL11.glPopMatrix();*/
+            XdolfHUD.renderScreen();
         }
     }
 }
