@@ -1,6 +1,7 @@
 package com.sasha.xdolf.module;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
@@ -119,7 +120,7 @@ public abstract class XdolfModule {
      * @param state enable or disable
      * @param executeOnStateMethod whether you want to execute onDisable() or onEnable()
      */
-    public void forceState(ModuleState state, boolean executeOnStateMethod){
+    public void forceState(ModuleState state, boolean executeOnStateMethod, boolean resetHud){
         if (state == ModuleState.ENABLE){
             this.isEnabled = true;
             if (executeOnStateMethod){
@@ -127,7 +128,12 @@ public abstract class XdolfModule {
             }
             if (!this.isRenderable()){
                 XdolfModule.displayList.add(this);
+                return;
             }
+            if(!resetHud){
+                return;
+            }
+            XdolfHUD.resetHUD();
         }else{
             this.isEnabled = false;
             if (executeOnStateMethod){
@@ -135,7 +141,12 @@ public abstract class XdolfModule {
             }
             if (!this.isRenderable()){
                 XdolfModule.displayList.remove(this);
+                return;
             }
+            if(!resetHud){
+                return;
+            }
+            XdolfHUD.resetHUD();
         }
     }
 

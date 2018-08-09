@@ -50,7 +50,7 @@ public class ModuleManager implements SimpleListener {
 
     public static XdolfModule getModuleByName(String key) {
         for (XdolfModule m : moduleRegistry) {
-            if (m.getModuleName().equalsIgnoreCase(key)) return m;
+            if (m.getModuleName().toLowerCase().equals(key.toLowerCase())) return m;
         }
         return null;
     }

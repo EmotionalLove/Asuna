@@ -42,7 +42,6 @@ public class XdolfMod {
     public static XdolfDataManager DATA_MANAGER = new XdolfDataManager();
     public static FriendManager FRIEND_MANAGER;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
-    public static XdolfHUD HUD;
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
@@ -73,7 +72,7 @@ public class XdolfMod {
             ModuleManager.moduleRegistry.forEach(mod -> {
                 try {
                     if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
-                        mod.forceState(ModuleState.ENABLE, false);
+                        mod.forceState(ModuleState.ENABLE, false, true);
                     }
                 }catch (IOException e){e.printStackTrace();}
             });

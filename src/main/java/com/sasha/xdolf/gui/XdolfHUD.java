@@ -23,6 +23,8 @@ public class XdolfHUD extends GuiScreen {
     public static int sHeight;
     public static int sWidth;
 
+    public static ArrayList<RenderableObject> registeredHudElements = new ArrayList<>();
+
     // starts at x = 12
     private static ArrayList<RenderableObject> leftTop = new ArrayList<>();
 
@@ -38,6 +40,11 @@ public class XdolfHUD extends GuiScreen {
     // possible blockades: hack arraylist
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
+    public static void setupHUD(){
+        HashMap<String, String>
+    }
+
+    /*
     public static void setupHUD() {
         for (HashMap.Entry<String, String> e : XdolfMod.DATA_MANAGER.getHudPositionStates().entrySet()) {
             XdolfMod.logMsg(true, e.getKey() + " " + e.getValue());
@@ -187,9 +194,9 @@ public class XdolfHUD extends GuiScreen {
             }
             //XdolfMod.pushNotifyNoPrefix("\247" + "e[" + "\247" + "6Warning" + "\247" + "e] Out of date XDOLF_UserConfig.txt file, please delete and restart client", "\247" + "7");
         }
-    }
+    }*/
 
-    public static void renderScreen() {XdolfMod.logErr(true, "boo");
+    public static void renderScreen() {
         sHeight = new ScaledResolution(XdolfMod.mc).getScaledHeight();
         sWidth = new ScaledResolution(XdolfMod.mc).getScaledWidth();
         if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && XdolfMod.mc.world.isRemote && XdolfMod.mc.currentScreen == null) {
