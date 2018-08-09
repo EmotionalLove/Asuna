@@ -29,6 +29,7 @@ public abstract class XdolfCommand {
     /* package-private */ void setArguments(String theMessage){
         if (!theMessage.contains(" ")){
             this.commandArgs = null;
+            return;
         }
         String updatedMessage = theMessage.replace(commandDelimetre + this.commandName + " ", ""); // i dont want the actual '-command' to be in the array
         List<String> list = new ArrayList<>();
