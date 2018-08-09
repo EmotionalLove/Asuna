@@ -10,9 +10,9 @@ import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
+import com.sasha.xdolf.module.modules.ModuleKillaura;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,7 +24,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -121,7 +120,7 @@ class ForgeEvent {
     @SubscribeEvent
     public void onRenderLost(RenderGameOverlayEvent.Post e){
         RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.TEXT;
-        if (XdolfMod.mc.player.getRidingEntity() instanceof EntityHorse) target = RenderGameOverlayEvent.ElementType.HEALTHMOUNT;
+        //(do we need this? idk yet)if (XdolfMod.mc.player.getRidingEntity() instanceof EntityHorse) target = RenderGameOverlayEvent.ElementType.HEALTHMOUNT;
         if (e.getType() == target){
             XdolfHUD.renderScreen();
         }

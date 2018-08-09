@@ -11,11 +11,4 @@ public class ModuleHacklist extends XdolfModule {
     public ModuleHacklist() {
         super("Hacklist", XdolfCategory.GUI, true);
     }
-
-    @Override
-    public void onTick(){
-        if (XdolfMod.mc.currentScreen != null){
-
-        }
-    }
 }

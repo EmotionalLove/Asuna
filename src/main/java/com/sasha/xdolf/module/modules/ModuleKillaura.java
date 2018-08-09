@@ -1,4 +1,4 @@
-package com.sasha.xdolf.module.modules.hudelements;
+package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.friend.FriendManager;

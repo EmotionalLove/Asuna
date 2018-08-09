@@ -5,6 +5,8 @@ import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
@@ -15,17 +17,22 @@ public class ToggleCommand extends XdolfCommand {
 
     @Override
     public void onCommand() {
+        super.onCommand();
         if (this.getArguments() == null){
             XdolfMod.logErr(false, "Arguments required! \"-toggle <module>\"");
             return;
         }
+        AtomicBoolean found = new AtomicBoolean(false);
         ModuleManager.moduleRegistry.forEach(mod -> {
             if (mod.getModuleName().equalsIgnoreCase(this.getArguments()[0])){
                 mod.toggle();
                 XdolfMod.logMsg(false, "Toggled " + mod.getModuleName());
+                found.set(true);
                 return;
             }
         });
-        XdolfMod.logErr(false, "Couldn't find the specified module.");
+        if (!found.get()) {
+            XdolfMod.logErr(false, "Couldn't find the specified module.");
+        }
     }
 }
