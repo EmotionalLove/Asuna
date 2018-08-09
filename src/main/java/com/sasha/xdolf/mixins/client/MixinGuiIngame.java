@@ -2,6 +2,7 @@ package com.sasha.xdolf.mixins.client;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.command.XdolfCommand;
+import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.events.PlayerXdolfCommandEvent;
 import com.sasha.xdolf.module.ModuleManager;
 import net.minecraft.client.Minecraft;
@@ -301,6 +302,8 @@ public abstract class MixinGuiIngame {
             this.overlayPlayerList.updatePlayerList(true);
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
         }
+        ClientOverlayRenderEvent event = new ClientOverlayRenderEvent(partialTicks);
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
         XdolfMod.HUD.renderScreen();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();

@@ -3,6 +3,7 @@ package com.sasha.xdolf.module;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
@@ -35,6 +36,11 @@ public class ModuleManager implements SimpleListener {
         if (!e.getToggledModule().isRenderable()){
             XdolfModule.displayList.remove(e.getToggledModule());
         }
+    }
+
+    @SimpleEventHandler
+    public void onOverlay(ClientOverlayRenderEvent e){
+        XdolfMod.HUD.renderScreen();
     }
 
     public static XdolfModule getModuleByName(String key) {
