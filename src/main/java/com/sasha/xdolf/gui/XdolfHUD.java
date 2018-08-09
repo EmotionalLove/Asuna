@@ -38,7 +38,7 @@ public class XdolfHUD extends GuiScreen {
     // possible blockades: hack arraylist
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
-    public void setupHUD() {
+    public static void setupHUD() {
         for (HashMap.Entry<String, String> e : XdolfMod.DATA_MANAGER.getHudPositionStates().entrySet()) {
             XdolfMod.logMsg(true, e.getKey() + " " + e.getValue());
             if (e.getKey().replace("HUD_", "").equalsIgnoreCase("watermark")) {
@@ -189,25 +189,13 @@ public class XdolfHUD extends GuiScreen {
         }
     }
 
-    public void renderScreen() {
+    public static void renderScreen() {
         sHeight = new ScaledResolution(XdolfMod.mc).getScaledHeight();
         sWidth = new ScaledResolution(XdolfMod.mc).getScaledWidth();
         if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && XdolfMod.mc.world.isRemote && XdolfMod.mc.currentScreen == null) {
             return;
         }
         XdolfMod.logErr(true, "boo");
-        //Legacy Rendering (static methods, no configurability)
-        //renderClientName();
-        //renderArrayList();
-        /* renderCoords(); */
-
-        /*
-        if (GlobalUtils.isServerResponding()) {
-            renderServerResponding();
-        }todo*/
-
-
-        //New Rendering (Object Oriented, Configurable)
         int lt_count = 0;
         for (RenderableObject o : leftTop) {
             o.renderTheObject((2) + (10 * lt_count));
@@ -281,7 +269,7 @@ public class XdolfHUD extends GuiScreen {
     }
 
 
-    public void resetHUD() {
+    public static void resetHUD() {
         leftBottom.clear();
         leftTop.clear();
         rightBottom.clear();

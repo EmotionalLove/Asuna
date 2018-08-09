@@ -66,8 +66,7 @@ public class XdolfMod {
         EVENT_MANAGER.registerListener(new ModuleManager());
         logMsg(true, "Done!");
         logMsg(true, "Initialising HUD");
-        HUD = new XdolfHUD();
-        HUD.setupHUD();
+        XdolfHUD.setupHUD();
         logMsg(true, "Done!");
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
