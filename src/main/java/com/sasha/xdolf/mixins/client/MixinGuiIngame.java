@@ -104,6 +104,7 @@ public abstract class MixinGuiIngame {
      */
     @Overwrite
     public void renderGameOverlay(float partialTicks) {
+        XdolfMod.logMsg(false, "ffrr");
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int i = scaledresolution.getScaledWidth();
         int j = scaledresolution.getScaledHeight();
