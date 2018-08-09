@@ -13,9 +13,7 @@ public class ModulesCommand extends XdolfCommand {
     }
 
     public void onCommand(){
-        ModuleManager.moduleRegistry.forEach(module -> {
-            XdolfMod.logMsg(false, module.getModuleName() + (module.isEnabled() ? "\247aenabled" : "\247cdisabled")
-            + " " + (module.isRenderable() ? "\247arenderable" : "\247crenderable"));
-        });
+        ModuleManager.moduleRegistry.forEach(module -> XdolfMod.logMsg(false, module.getModuleName() + (module.isEnabled() ? "\247aenabled" : "\247cdisabled")
+        + " " + (module.isRenderable() ? "\247arenderable" : "\247crenderable")));
     }
 }

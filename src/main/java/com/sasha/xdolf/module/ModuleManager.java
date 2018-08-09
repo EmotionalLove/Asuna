@@ -30,13 +30,17 @@ public class ModuleManager implements SimpleListener {
             e.getToggledModule().onEnable();
             if (!e.getToggledModule().isRenderable()) {
                 XdolfModule.displayList.add(e.getToggledModule());
+                return;
             }
+            XdolfHUD.resetHUD();
             return;
         }
         e.getToggledModule().onDisable();
         if (!e.getToggledModule().isRenderable()){
             XdolfModule.displayList.remove(e.getToggledModule());
+            return;
         }
+        XdolfHUD.resetHUD();
     }
 
     @SimpleEventHandler
