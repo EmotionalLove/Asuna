@@ -1,6 +1,7 @@
 package com.sasha.xdolf.gui;
 
 
+import com.sasha.xdolf.XdolfDataManager;
 import com.sasha.xdolf.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.fonts.Fonts;
@@ -41,8 +42,7 @@ public class XdolfModHUD extends GuiScreen {
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
     public static void setupHUD() {
-        boolean hadVersion = false;
-        for (HashMap.Entry<String, String> e : ConfigUtils.configEntries.entrySet()) {
+        for (HashMap.Entry<String, String> e : XdolfMod.DATA_MANAGER.getHudPositionStates().entrySet()) {
             if (e.getKey().replace("HUD_", "").equalsIgnoreCase("watermark")) {
                 if (e.getValue().equalsIgnoreCase("LT")) {
                     leftTop.add(new RenderableWatermark("LT"));
@@ -187,17 +187,7 @@ public class XdolfModHUD extends GuiScreen {
                     continue;
                 }
             }
-            if (e.getKey().equalsIgnoreCase("cfg_version")) {
-                hadVersion = true;
-                int version = Integer.parseInt(e.getValue());
-                if (version != currentCfgVersion) {
-                    ConfigUtils.writeUpdatedConfig(new File("XDOLF_UserConfig.txt"));
-                }
-            }
             //XdolfMod.pushNotifyNoPrefix("\247" + "e[" + "\247" + "6Warning" + "\247" + "e] Out of date XDOLF_UserConfig.txt file, please delete and restart client", "\247" + "7");
-        }
-        if (!hadVersion) {
-            ConfigUtils.writeUpdatedConfig(new File("XDOLF_UserConfig.txt"));
         }
     }
 
@@ -212,9 +202,10 @@ public class XdolfModHUD extends GuiScreen {
         //renderArrayList();
         /* renderCoords(); */
 
+        /*
         if (GlobalUtils.isServerResponding()) {
             renderServerResponding();
-        }
+        }todo*/
 
 
         //New Rendering (Object Oriented, Configurable)
@@ -251,16 +242,17 @@ public class XdolfModHUD extends GuiScreen {
 
 
         if (!XdolfModule.displayList.isEmpty()) {
-            XdolfModule.displayList.sort((m, m1) -> Fonts.segoe_36.getStringWidth(m1.getModuleName() + m1.getSuffix()) - Fonts.segoe_36.getStringWidth(m.getName() + m.getSuffix()));
+            XdolfModule.displayList.sort((m, m1) -> Fonts.segoe_36.getStringWidth(m1.getModuleName() + m1.getSuffix()) - Fonts.segoe_36.getStringWidth(m.getModuleName() + m.getSuffix()));
         }
     }
 
+    /*
     private static void renderServerResponding() {
         if (!XdolfMod.mc.world.isRemote) {
             return;
         }
         Fonts.segoe_36.drawCenteredString("\247" + "4The server is not responding! (" + ServerResponding.responding/20 + " sec)", sWidth / 2, (sHeight / 2) - 15, 0xffffff, true);
-    }
+    }*/
 
     private static void renderArrayList() {
         int count = 0;
@@ -270,7 +262,7 @@ public class XdolfModHUD extends GuiScreen {
                 count++;
             }
             else if (module.isEnabled()) {
-                Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getName() + module.getSuffix()) - 2, (sHeight - 15) - (10 * count), 0xffffff);
+                Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (sHeight - 15) - (10 * count), 0xffffff);
                 count++;
             }
         }
@@ -288,6 +280,7 @@ public class XdolfModHUD extends GuiScreen {
             }
         }
     }
+
 
     public static void resetHUD() {
         leftBottom.clear();

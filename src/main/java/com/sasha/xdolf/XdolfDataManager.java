@@ -1,6 +1,7 @@
 package com.sasha.xdolf;
 
 import com.sasha.xdolf.friend.Friend;
+import com.sasha.xdolf.gui.XdolfModHUD;
 import com.sasha.xdolf.misc.YMLParser;
 
 import java.io.File;
@@ -35,25 +36,40 @@ public class XdolfDataManager {
         XdolfMod.logMsg(true, "Loading HUD posstates...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
         XdolfMod.logWarn(true, "Thread locking engaged!");
+        String[] oof = {
+        "watermark",
+        "coordinates",
+        "hacklist",
+        "Horsestats",
+        "Tickrate",
+        "Framerate",
+        "Saturation",
+        "InventoryStats"
+        };
         try {
             File file = new File(dataFileName);
             if (!file.exists()) {
                 XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
                 // load default values
                 HashMap<String, String> map = new HashMap<>();
-                map.put("HUD_watermark", "LT");
-                map.put("HUD_coordinates", "LB");
-                map.put("HUD_hacklist", "RB");
-                map.put("HUD_Horsestats", "LT");
-                map.put("HUD_Tickrate", "LB");
-                map.put("HUD_Framerate", "LB");
-                map.put("HUD_Saturation", "RT");
-                map.put("HUD_InventoryStats", "RT");
+                map.put("HUD_" + oof[0], "LT");
+                map.put("HUD_" + oof[1], "LB");
+                map.put("HUD_" + oof[2], "RB");
+                map.put("HUD_" + oof[3], "LT");
+                map.put("HUD_" + oof[4], "LB");
+                map.put("HUD_" + oof[5], "LB");
+                map.put("HUD_" + oof[6], "RT");
+                map.put("HUD_" + oof[7], "RT");
                 //this is _so_ ghetto.
                 return map;
             }
             YMLParser parser = new YMLParser(file);
-
+            HashMap<String, String> map = new HashMap<>();
+            for (String s : oof) {
+                String pos = parser.getString("xdolf.hud." + s);
+                map.put("HUD_"+s, pos);
+            }
+            return map;
         } finally {
             threadLock.unlock();
         }

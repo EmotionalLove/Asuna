@@ -21,8 +21,6 @@ public class RenderableObject {
      * determines the code to use based on what the pos of the RenerableObject is set to
      */
 
-    //TODO: FIGURE THIS OUT SO THAT RENDERS DONT COLLIDE WITH EACHOTHER edit : done (i think)
-    // TODO: needs more testing
     // x's are always the same, thankfully. no need to worry about that.
     public void renderTheObject(int pos) {
         if (this.pos == ScreenCornerPos.LEFTBOTTOM) {
@@ -47,6 +45,7 @@ public class RenderableObject {
      * >fml
      *
      * tf is this - me 2018
+     * this javadoc is gay af
      */
     public void renderObjectLT(int yyy) {
 
