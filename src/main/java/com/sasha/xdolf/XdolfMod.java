@@ -10,10 +10,7 @@ import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
-import com.sasha.xdolf.module.modules.ModuleCoordinates;
-import com.sasha.xdolf.module.modules.ModuleFPS;
-import com.sasha.xdolf.module.modules.ModuleKillaura;
-import com.sasha.xdolf.module.modules.ModuleTPS;
+import com.sasha.xdolf.module.modules.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +33,7 @@ public class XdolfMod {
     public static final String NAME = "Xdolf";
     public static final String VERSION = "4.0";
 
-    public static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
+    private static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static XdolfDataManager DATA_MANAGER = new XdolfDataManager();
     public static FriendManager FRIEND_MANAGER;
@@ -93,6 +90,9 @@ public class XdolfMod {
         ModuleManager.moduleRegistry.add(new ModuleTPS());
         ModuleManager.moduleRegistry.add(new ModuleFPS());
         ModuleManager.moduleRegistry.add(new ModuleCoordinates());
+        ModuleManager.moduleRegistry.add(new ModuleSaturation());
+        ModuleManager.moduleRegistry.add(new ModuleInventoryStats());
+        ModuleManager.moduleRegistry.add(new ModuleHorsestats());
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {

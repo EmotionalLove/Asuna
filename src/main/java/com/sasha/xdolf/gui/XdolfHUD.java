@@ -115,7 +115,7 @@ public class XdolfHUD extends GuiScreen {
                     continue;
                 }
             }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("Tickrate") && ModuleManager.getModuleByName("TPS").isEnabled()) {
+            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("TPS") && ModuleManager.getModuleByName("TPS").isEnabled()) {
                 if (e.getValue().equalsIgnoreCase("LT")) {
                     leftTop.add(new RenderableTickrate("LT"));
                     continue;
@@ -133,7 +133,7 @@ public class XdolfHUD extends GuiScreen {
                     continue;
                 }
             }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("Framerate") && ModuleManager.getModuleByName("FPS").isEnabled()) {
+            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("FPS") && ModuleManager.getModuleByName("FPS").isEnabled()) {
                 if (e.getValue().equalsIgnoreCase("LT")) {
                     leftTop.add(new RenderableFramerate("LT"));
                     continue;

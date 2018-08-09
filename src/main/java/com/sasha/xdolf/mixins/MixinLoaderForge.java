@@ -17,16 +17,19 @@ import java.util.Map;
 public class MixinLoaderForge implements IFMLLoadingPlugin {
     protected static boolean isObfuscatedEnvironment;
 
+    /**
+     * I found out the hard way that you cannot make calls to XdolfMod in this constructor... Don't do it.
+     */
     public MixinLoaderForge(){
-        XdolfMod.logger.info("Xdolf is initialising mixins.");
+        //XdolfMod.logMsg(true,"Xdolf is initialising mixins.");
         String mixinConfig = "mixins.xdolf.json";
         String envObf = "searge";
-        XdolfMixinInitEvent event = new XdolfMixinInitEvent(mixinConfig, envObf);
-        XdolfMod.EVENT_MANAGER.invokeEvent(event);
+        //XdolfMixinInitEvent event = new XdolfMixinInitEvent(mixinConfig, envObf);
+        //XdolfMod.EVENT_MANAGER.invokeEvent(event);
         MixinBootstrap.init();
-        Mixins.addConfiguration(event.getMixinConfig());
-        MixinEnvironment.getDefaultEnvironment().setObfuscationContext(event.getEnvObf());
-        XdolfMod.logger.info("Obfuscation -> " + MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
+        Mixins.addConfiguration(mixinConfig);
+        MixinEnvironment.getDefaultEnvironment().setObfuscationContext(envObf);
+        //XdolfMod.logMsg(false,"Obfuscation -> " + MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }
 
     @Override
