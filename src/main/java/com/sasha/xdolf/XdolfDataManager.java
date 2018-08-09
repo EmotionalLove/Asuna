@@ -66,8 +66,10 @@ public class XdolfDataManager {
             HashMap<String, String> map = new HashMap<>();
             for (String s : oof) {
                 String pos = parser.getString("xdolf.hud." + s);
+                if (pos == null || pos.equalsIgnoreCase("")) parser.set("xdolf.hud."+s, "LT");
                 map.put("HUD_"+s, pos);
             }
+            parser.save();
             return map;
         } finally {
             threadLock.unlock();

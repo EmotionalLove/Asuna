@@ -189,13 +189,13 @@ public class XdolfHUD extends GuiScreen {
         }
     }
 
-    public static void renderScreen() {
+    public static void renderScreen() {XdolfMod.logErr(true, "boo");
         sHeight = new ScaledResolution(XdolfMod.mc).getScaledHeight();
         sWidth = new ScaledResolution(XdolfMod.mc).getScaledWidth();
         if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && XdolfMod.mc.world.isRemote && XdolfMod.mc.currentScreen == null) {
             return;
         }
-        XdolfMod.logErr(true, "boo");
+
         int lt_count = 0;
         for (RenderableObject o : leftTop) {
             o.renderTheObject((2) + (10 * lt_count));
