@@ -5,6 +5,7 @@
   "refmap": "mixins.xdolf.refmap.json",
   "client": [
     "MixinMinecraft",
-    "MixinEntityPlayerSP"
+    "MixinEntityPlayerSP",
+    "MixinGuiIngame"
   ]
 }
