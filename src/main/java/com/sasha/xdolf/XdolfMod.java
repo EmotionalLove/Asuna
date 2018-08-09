@@ -12,14 +12,19 @@ import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -76,6 +81,7 @@ public class XdolfMod {
             });
         }, 0, TimeUnit.SECONDS);
         logMsg(true, "Xdolf cleanly initialised!");
+        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
     }
 
     private void registerCommands() {
@@ -110,5 +116,18 @@ public class XdolfMod {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
         mc.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247eWARNING\2477] \247e" + logMsg));
+    }
+}
+class ForgeEvent {
+    @SubscribeEvent
+    public void onRenderLost(RenderGameOverlayEvent.Post e){
+        RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.EXPERIENCE;
+        if (XdolfMod.mc.player.getRidingEntity() instanceof EntityHorse) target = RenderGameOverlayEvent.ElementType.HEALTHMOUNT;
+        if (e.getType() == target){
+            /*
+            GL11.glPushMatrix();
+            XdolfMod.HUD.renderScreen();
+            GL11.glPopMatrix();*/
+        }
     }
 }

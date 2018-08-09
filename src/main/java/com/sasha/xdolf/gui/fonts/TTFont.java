@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
 
 import com.sasha.xdolf.XdolfMod;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
 
 public class TTFont
@@ -200,16 +201,8 @@ public class TTFont
 		y = y * 2 - 2;
 		glPushMatrix();
 		glScaled(0.25D, 0.25D, 0.25D);
-		//TextureUtil.bindTexture(texID); this method is private... Reflection to the rescue!
-		try {
-			Method bindTexture = TextureUtil.class.getDeclaredMethod("bindTexture", int.class);
-			bindTexture.setAccessible(true);
-			bindTexture.invoke(null, texID);
-			bindTexture.setAccessible(false);
-		} catch (Exception e) {
-			e.printStackTrace();
-			XdolfMod.logErr(true, "REFLECTION ERROR!!!!");
-		}
+		GlStateManager.bindTexture(texID);
+
 		glColor(shadow ? new Color(0.05F, 0.05F, 0.05F, color.getAlpha() / 255F)
 			: color);
 		final int size = text.length();

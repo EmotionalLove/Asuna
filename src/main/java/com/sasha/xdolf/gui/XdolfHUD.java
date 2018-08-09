@@ -40,6 +40,7 @@ public class XdolfHUD extends GuiScreen {
 
     public void setupHUD() {
         for (HashMap.Entry<String, String> e : XdolfMod.DATA_MANAGER.getHudPositionStates().entrySet()) {
+            XdolfMod.logMsg(true, e.getKey() + " " + e.getValue());
             if (e.getKey().replace("HUD_", "").equalsIgnoreCase("watermark")) {
                 if (e.getValue().equalsIgnoreCase("LT")) {
                     leftTop.add(new RenderableWatermark("LT"));
