@@ -21,7 +21,7 @@ import java.util.HashMap;
 import static com.sasha.xdolf.XdolfMath.dround;
 
 
-public class XdolfModHUD extends GuiScreen {
+public class XdolfHUD extends GuiScreen {
 
     public static int sHeight;
     public static int sWidth;
@@ -41,7 +41,7 @@ public class XdolfModHUD extends GuiScreen {
     // possible blockades: hack arraylist
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
-    public static void setupHUD() {
+    public void setupHUD() {
         for (HashMap.Entry<String, String> e : XdolfMod.DATA_MANAGER.getHudPositionStates().entrySet()) {
             if (e.getKey().replace("HUD_", "").equalsIgnoreCase("watermark")) {
                 if (e.getValue().equalsIgnoreCase("LT")) {
@@ -282,7 +282,7 @@ public class XdolfModHUD extends GuiScreen {
     }
 
 
-    public static void resetHUD() {
+    public void resetHUD() {
         leftBottom.clear();
         leftTop.clear();
         rightBottom.clear();

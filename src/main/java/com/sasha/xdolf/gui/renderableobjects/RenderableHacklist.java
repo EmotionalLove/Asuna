@@ -8,7 +8,7 @@ import com.sasha.xdolf.module.XdolfModule;
 
 import static com.sasha.xdolf.XdolfMath.dround;
 import static com.sasha.xdolf.XdolfMod.mc;
-import static com.sasha.xdolf.gui.XdolfModHUD.sWidth;
+import static com.sasha.xdolf.gui.XdolfHUD.sWidth;
 
 public class RenderableHacklist extends RenderableObject {
     public RenderableHacklist(String pos) {

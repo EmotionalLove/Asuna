@@ -2,7 +2,7 @@ package com.sasha.xdolf.gui.renderableobjects;
 
 
 import com.sasha.xdolf.gui.RenderableObject;
-import com.sasha.xdolf.gui.XdolfModHUD;
+import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,12 +25,12 @@ public class RenderableInventoryStats extends RenderableObject {
     @Override
     public void renderObjectRT(int yyy) {
         String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(mc.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(mc.player);
-        Fonts.segoe_36.drawStringWithShadow(s, (XdolfModHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     @Override
     public void renderObjectRB(int yyy) {
         String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(mc.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(mc.player);
-        Fonts.segoe_36.drawStringWithShadow(s, (XdolfModHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     public static String getFoodItemsInInventory(EntityPlayerSP player) {
         int i = 0;

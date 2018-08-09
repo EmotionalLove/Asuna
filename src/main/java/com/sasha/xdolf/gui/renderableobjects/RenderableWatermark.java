@@ -3,7 +3,7 @@ package com.sasha.xdolf.gui.renderableobjects;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
-import com.sasha.xdolf.gui.XdolfModHUD;
+import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
 
 public class RenderableWatermark extends RenderableObject {
@@ -22,7 +22,7 @@ public class RenderableWatermark extends RenderableObject {
     @Override
     public void renderObjectRT(int yyy) {
         String s = "\247" + "4Xdolf " + "\247" + "7" + XdolfMod.VERSION;
-        Fonts.segoe_36.drawStringWithShadow(s, (XdolfModHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     @Override
     public void renderObjectRB(int yyy) {

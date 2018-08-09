@@ -4,11 +4,10 @@ import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
 import com.sasha.xdolf.friend.FriendManager;
-import com.sasha.xdolf.gui.XdolfModHUD;
+import com.sasha.xdolf.gui.XdolfHUD;
+import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleUtils;
-import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -33,7 +32,7 @@ public class XdolfMod {
     public static XdolfDataManager DATA_MANAGER = new XdolfDataManager();
     public static FriendManager FRIEND_MANAGER;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
-    public static XdolfModHUD HUD;
+    public static XdolfHUD HUD;
 
     public static Minecraft mc = Minecraft.getMinecraft();
 
@@ -49,7 +48,10 @@ public class XdolfMod {
         this.registerCommands();
         this.registerModules();
         EVENT_MANAGER.registerListener(new CommandProcessor());
-        HUD = new XdolfModHUD();
+        HUD = new XdolfHUD();
+        HUD.setupHUD();
+        TPS.INSTANCE = new TPS();
+        EVENT_MANAGER.registerListener(TPS.INSTANCE);
     }
 
     private void registerCommands() {

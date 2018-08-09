@@ -1,7 +1,6 @@
 package com.sasha.xdolf;
 
 import com.sasha.xdolf.friend.Friend;
-import com.sasha.xdolf.gui.XdolfModHUD;
 import com.sasha.xdolf.misc.YMLParser;
 
 import java.io.File;
