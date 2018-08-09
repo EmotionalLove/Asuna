@@ -1,4 +1,4 @@
-package com.sasha.xdolf.module.modules;
+package com.sasha.xdolf.module.modules.hudelements;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.module.XdolfCategory;

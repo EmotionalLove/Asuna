@@ -10,7 +10,7 @@ import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
-import com.sasha.xdolf.module.modules.*;
+import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
