@@ -1,10 +1,11 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "com.sasha.xdolf.mixins.server",
+  "package": "com.sasha.xdolf.mixins.client",
   "refmap": "mixins.xdolf.refmap.json",
   "client": [
     "MixinEntityPlayerSP",
-    "MixinGuiIngame"
+    "MixinGuiIngame",
+    "MixinNetworkManager"
   ]
 }
