@@ -51,10 +51,6 @@ repositories {
         url = 'http://repo.spongepowered.org/maven/'
     }
     maven {
-        name = 'impactdevelopment-repo'
-        url = 'https://impactdevelopment.github.io/maven/'
-    }
-    maven {
         name = 'swt-repo'
         url = "http://maven-eclipse.github.io/maven"
     }
@@ -74,7 +70,6 @@ dependencies {
         exclude module: 'commons-io'
     }
     compile files('libs/SimpleEventSystem.jar')
-    compile "com.github.ZeroMemes:Alpine:1.5"
     compile group: 'net.jodah', name: 'typetools', version: '0.5.0'
     compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
 
@@ -143,7 +138,6 @@ allprojects {
 shadowJar {
     dependencies {
         include(dependency('org.spongepowered:mixin'))
-        include(dependency('com.github.ZeroMemes:Alpine'))
         include(dependency('net.jodah:typetools'))
         include(dependency('org.yaml:snakeyaml'))
     }
