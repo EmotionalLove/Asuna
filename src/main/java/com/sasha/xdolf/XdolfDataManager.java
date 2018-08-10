@@ -4,6 +4,7 @@ import com.sasha.xdolf.friend.Friend;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.misc.YMLParser;
+import com.sasha.xdolf.module.XdolfModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -106,6 +107,47 @@ public class XdolfDataManager {
         }
     }
 
+    public synchronized int getSavedKeybind(XdolfModule module){
+        XdolfMod.logMsg(true, "Getting module keybinde...");
+        threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                return 0;
+            }
+            YMLParser parser = new YMLParser(file);
+            if (!parser.exists("xdolf.modules."+module.getModuleName()+".bind")){
+                parser.set("xdolf.modules."+module.getModuleName()+".bind", 0);
+                parser.save();
+                return 0;
+            }
+            return parser.getInt("xdolf.modules."+module.getModuleName()+".bind", 0);
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized void saveModuleBind(XdolfModule module) throws IOException {
+        XdolfMod.logMsg(true, "Saving module keybinde...");
+        threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                file.createNewFile();
+            }
+            YMLParser parser = new YMLParser(file);
+            parser.set("xdolf.modules."+module.getModuleName()+".bind", module.getKeyBind());
+            parser.save();
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
+
     public synchronized void saveModuleStates(boolean fileExists) throws IOException {
         XdolfMod.logMsg(true, "Updating module savestates...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
@@ -116,7 +158,7 @@ public class XdolfDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            moduleRegistry.forEach(mod -> parser.set("xdolf.modules." + mod.getModuleName(), fileExists && mod.isEnabled()));
+            moduleRegistry.forEach(mod -> parser.set("xdolf.modules." + mod.getModuleName()+".state", fileExists && mod.isEnabled()));
             parser.save();
         } finally {
             threadLock.unlock();
@@ -154,6 +196,7 @@ public class XdolfDataManager {
             ArrayList<String> strFriends = new ArrayList<>();
             updatedFriends.forEach(f -> strFriends.add(f.getFriendName()));
             parser.set("xdolf.friends.friendlist", strFriends);//todo test
+            parser.save();
         } finally {
             threadLock.unlock();
         }

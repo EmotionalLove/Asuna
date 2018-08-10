@@ -4,6 +4,7 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketSendEvent;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -11,6 +12,7 @@ import net.minecraft.network.play.client.CPacketPlayer;
 /**
  * Created by Sasha on 10/08/2018 at 12:47 PM
  **/
+@ModuleInfo(description = "Makes your hunger last longer while sprinting/jumping/etc")
 public class ModuleAntiHunger extends XdolfModule implements SimpleListener {
     public ModuleAntiHunger() {
         super("AntiHunger", XdolfCategory.MOVEMENT, false);

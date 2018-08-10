@@ -51,6 +51,8 @@ public class ModuleStorageESP extends XdolfModule {
                 XdolfRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.0f, 1.0f);
             }
         }
+        //todo int x = XdolfMod.minecraft.world.loadedTileEntityList.stream().filter(tile -> tile. )
         this.setSuffix(i+"");
     }
+
 }

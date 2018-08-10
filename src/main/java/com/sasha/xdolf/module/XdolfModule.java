@@ -99,6 +99,14 @@ public abstract class XdolfModule {
         this.suffix= " \2478[\2477" + b.toString() + "\2478]";
     }
 
+    public int getKeyBind() {
+        return keyBind;
+    }
+
+    public void setKeyBind(int keyBind) {
+        this.keyBind = keyBind;
+    }
+
     public void removeSuffix(){
         this.suffix = "";
     }
