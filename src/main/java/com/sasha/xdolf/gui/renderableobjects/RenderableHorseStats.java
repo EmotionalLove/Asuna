@@ -11,7 +11,7 @@ import net.minecraft.entity.passive.EntityHorse;
 
 import java.io.IOException;
 
-import static com.sasha.xdolf.XdolfMath.dround;
+import static com.sasha.xdolf.misc.XdolfMath.dround;
 import static com.sasha.xdolf.XdolfMod.mc;
 
 public class RenderableHorseStats extends RenderableObject {

@@ -1,6 +1,6 @@
 package com.sasha.xdolf.gui.renderableobjects;
 
-import com.sasha.xdolf.XdolfMath;
+import com.sasha.xdolf.misc.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.ScreenCornerPos;
@@ -10,7 +10,7 @@ import net.minecraft.client.gui.ScaledResolution;
 
 import java.io.IOException;
 
-import static com.sasha.xdolf.XdolfMath.dround;
+import static com.sasha.xdolf.misc.XdolfMath.dround;
 import static com.sasha.xdolf.XdolfMod.mc;
 
 

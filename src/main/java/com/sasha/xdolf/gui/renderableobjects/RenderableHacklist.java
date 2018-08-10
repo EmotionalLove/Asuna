@@ -10,8 +10,6 @@ import com.sasha.xdolf.module.XdolfModule;
 
 import java.io.IOException;
 
-import static com.sasha.xdolf.XdolfMath.dround;
-import static com.sasha.xdolf.XdolfMod.mc;
 import static com.sasha.xdolf.gui.XdolfHUD.sWidth;
 
 public class RenderableHacklist extends RenderableObject {

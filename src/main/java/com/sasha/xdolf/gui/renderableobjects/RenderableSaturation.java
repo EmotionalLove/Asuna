@@ -1,7 +1,7 @@
 package com.sasha.xdolf.gui.renderableobjects;
 
 
-import com.sasha.xdolf.XdolfMath;
+import com.sasha.xdolf.misc.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.ScreenCornerPos;

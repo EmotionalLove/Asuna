@@ -13,6 +13,7 @@ import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.modules.ModuleKillaura;
+import com.sasha.xdolf.module.modules.ModuleStorageESP;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
@@ -93,7 +94,6 @@ public class XdolfMod {
 
     private void registerModules(){
         ModuleManager.moduleRegistry.clear();
-        ModuleManager.moduleRegistry.add(new ModuleKillaura());
         ModuleManager.moduleRegistry.add(new ModuleTPS());
         ModuleManager.moduleRegistry.add(new ModuleFPS());
         ModuleManager.moduleRegistry.add(new ModuleCoordinates());
@@ -102,6 +102,8 @@ public class XdolfMod {
         ModuleManager.moduleRegistry.add(new ModuleHorsestats());
         ModuleManager.moduleRegistry.add(new ModuleHacklist());
         ModuleManager.moduleRegistry.add(new ModuleWatermark());
+        ModuleManager.moduleRegistry.add(new ModuleKillaura());
+        ModuleManager.moduleRegistry.add(new ModuleStorageESP());
     }
 
     private void registerRenderables(){

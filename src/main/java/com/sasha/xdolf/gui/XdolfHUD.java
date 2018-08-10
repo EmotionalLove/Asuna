@@ -1,10 +1,9 @@
 package com.sasha.xdolf.gui;
 
 
-import com.sasha.xdolf.XdolfMath;
+import com.sasha.xdolf.misc.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.fonts.Fonts;
-import com.sasha.xdolf.gui.renderableobjects.*;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.gui.GuiChat;
@@ -13,9 +12,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import static com.sasha.xdolf.XdolfMath.dround;
+import static com.sasha.xdolf.misc.XdolfMath.dround;
 
 
 public class XdolfHUD extends GuiScreen {
