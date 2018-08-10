@@ -33,7 +33,6 @@ public class ModuleManager implements SimpleListener {
                 XdolfModule.displayList.add(e.getToggledModule());
                 return;
             }
-            XdolfHUD.resetHUD();
             return;
         }
         e.getToggledModule().onDisable();
@@ -41,12 +40,6 @@ public class ModuleManager implements SimpleListener {
             XdolfModule.displayList.remove(e.getToggledModule());
             return;
         }
-        XdolfHUD.resetHUD();
-    }
-
-    @SimpleEventHandler
-    public void onOverlay(ClientOverlayRenderEvent e){
-        XdolfHUD.renderScreen();
     }
 
     public static XdolfModule getModuleByName(String key) {

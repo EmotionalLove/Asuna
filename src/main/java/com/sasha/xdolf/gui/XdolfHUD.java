@@ -1,6 +1,10 @@
 package com.sasha.xdolf.gui;
 
 
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import com.sasha.xdolf.events.ClientOverlayRenderEvent;
+import com.sasha.xdolf.events.XdolfModuleTogglePostEvent;
 import com.sasha.xdolf.misc.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.fonts.Fonts;
@@ -16,7 +20,7 @@ import java.util.ArrayList;
 import static com.sasha.xdolf.misc.XdolfMath.dround;
 
 
-public class XdolfHUD extends GuiScreen {
+public class XdolfHUD extends GuiScreen implements SimpleListener {
 
     public static int sHeight;
     public static int sWidth;
@@ -38,6 +42,16 @@ public class XdolfHUD extends GuiScreen {
     // possible blockades: hack arraylist
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
+    @SimpleEventHandler
+    public void onOverlayRender(ClientOverlayRenderEvent e){
+        renderScreen();
+    }
+    @SimpleEventHandler
+    public void onPostToggle(XdolfModuleTogglePostEvent e){
+        if (e.getToggledModule().isRenderable()) {
+            resetHUD();
+        }
+    }
 
     /* todo optimise this */
     public static void setupHUD(){
@@ -79,157 +93,6 @@ public class XdolfHUD extends GuiScreen {
         }
     }
 
-    /*
-    public static void setupHUD() {
-        for (HashMap.Entry<String, String> e : XdolfMod.DATA_MANAGER.getHudPositionStates().entrySet()) {
-            XdolfMod.logMsg(true, e.getKey() + " " + e.getValue());
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("watermark")) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableWatermark("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableWatermark("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableWatermark("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableWatermark("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("coordinates") && ModuleManager.getModuleByName("coordinates").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableCoordinates("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableCoordinates("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableCoordinates("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableCoordinates("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("hacklist") && ModuleManager.getModuleByName("Hacklist").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableHacklist("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableHacklist("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableHacklist("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableHacklist("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("Horsestats") && ModuleManager.getModuleByName("HorseStats").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableHorseStats("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableHorseStats("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableHorseStats("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableHorseStats("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("TPS") && ModuleManager.getModuleByName("TPS").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableTickrate("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableTickrate("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableTickrate("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableTickrate("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("FPS") && ModuleManager.getModuleByName("FPS").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableFramerate("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableFramerate("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableFramerate("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableFramerate("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("Saturation") && ModuleManager.getModuleByName("Saturation").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableSaturation("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableSaturation("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableSaturation("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableSaturation("RT"));
-                    continue;
-                }
-            }
-            if (e.getKey().replace("HUD_", "").equalsIgnoreCase("InventoryStats") && ModuleManager.getModuleByName("InventoryStats").isEnabled()) {
-                if (e.getValue().equalsIgnoreCase("LT")) {
-                    leftTop.add(new RenderableInventoryStats("LT"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("LB")) {
-                    leftBottom.add(new RenderableInventoryStats("LB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RB")) {
-                    rightBottom.add(new RenderableInventoryStats("RB"));
-                    continue;
-                }
-                if (e.getValue().equalsIgnoreCase("RT")) {
-                    rightTop.add(new RenderableInventoryStats("RT"));
-                    continue;
-                }
-            }
-            //XdolfMod.pushNotifyNoPrefix("\247" + "e[" + "\247" + "6Warning" + "\247" + "e] Out of date XDOLF_UserConfig.txt file, please delete and restart client", "\247" + "7");
-        }
-    }*/
 
     public static void renderScreen() {
         sHeight = new ScaledResolution(XdolfMod.mc).getScaledHeight();
@@ -282,34 +145,6 @@ public class XdolfHUD extends GuiScreen {
         }
         Fonts.segoe_36.drawCenteredString("\247" + "4The server is not responding! (" + ServerResponding.responding/20 + " sec)", sWidth / 2, (sHeight / 2) - 15, 0xffffff, true);
     }*/
-
-    private static void renderArrayList() {
-        int count = 0;
-        for (XdolfModule module : XdolfModule.displayList) {
-            if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
-                Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (sHeight - 15) - (10 * count), 0xffffff);
-                count++;
-            }
-            else if (module.isEnabled()) {
-                Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (sHeight - 15) - (10 * count), 0xffffff);
-                count++;
-            }
-        }
-    }
-    private static void renderCoords() {
-        if (ModuleManager.getModuleByName("Coordinates").isEnabled()) {
-            double x = dround(XdolfMod.mc.player.posX, 3);
-            double y = dround(XdolfMod.mc.player.posY, 3);
-            double z = dround(XdolfMod.mc.player.posZ, 3);
-            if (XdolfMod.mc.player.dimension == 0 || XdolfMod.mc.player.dimension == 1) {
-                Fonts.segoe_36.drawStringWithShadow("\247" + "fX " + "\247" + "7" + x + " (" + dround(x/8, 3) + ") " + "\247" + "fY " + "\247" + "7" + y + " " + "\247" + "fZ " + "\247" + "7" + z + " (" + dround(z/8, 3) + ")", 4, 12, 0xffffff);
-            }
-            if (XdolfMod.mc.player.dimension == -1) {
-                Fonts.segoe_36.drawStringWithShadow("\247" + "fX " + "\247" + "7" + x + " (" + dround(x*8, 3) + ") " + "\247" + "fY " + "\247" + "7" + y + " " + "\247" + "fZ " + "\247" + "7" + z + " (" + dround(z*8, 3) + ")", 4, 12, 0xffffff);
-            }
-        }
-    }
-
 
     public static void resetHUD() {
         leftBottom.clear();

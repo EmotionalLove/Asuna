@@ -5,6 +5,7 @@ import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
 import com.sasha.xdolf.command.commands.ModulesCommand;
 import com.sasha.xdolf.command.commands.ToggleCommand;
+import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
@@ -69,6 +70,7 @@ public class XdolfMod {
         logMsg(true, "Done!");
         logMsg(true, "Initialising HUD");
         XdolfHUD.setupHUD();
+        EVENT_MANAGER.registerListener(new XdolfHUD());
         logMsg(true, "Done!");
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
@@ -138,9 +140,9 @@ class ForgeEvent {
     @SubscribeEvent
     public void onRenderLost(RenderGameOverlayEvent.Post e){
         RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.TEXT;
-        //(do we need this? idk yet)if (XdolfMod.mc.player.getRidingEntity() instanceof EntityHorse) target = RenderGameOverlayEvent.ElementType.HEALTHMOUNT;
         if (e.getType() == target){
-            XdolfHUD.renderScreen();
+            ClientOverlayRenderEvent event = new ClientOverlayRenderEvent(e.getPartialTicks());
+            XdolfMod.EVENT_MANAGER.invokeEvent(event);
         }
     }
 }
