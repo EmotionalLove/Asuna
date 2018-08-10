@@ -1,7 +1,7 @@
 package com.sasha.xdolf.gui;
 
-import jdk.internal.jline.internal.Nullable;
-import net.minecraft.client.renderer.entity.Render;
+
+import javax.annotation.Nullable;
 
 public class RenderableObject {
 
