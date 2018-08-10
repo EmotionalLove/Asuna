@@ -6,7 +6,7 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
-import com.sasha.xdolf.events.XdolfModuleToggleEvent;
+import com.sasha.xdolf.events.XdolfModuleTogglePreEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class ModuleManager implements SimpleListener {
     public static ArrayList<XdolfModule> moduleRegistry = new ArrayList<>();
 
     @SimpleEventHandler
-    public void onModToggle(XdolfModuleToggleEvent e){
+    public void onModPostToggle(XdolfModuleTogglePreEvent e){
         try {
             XdolfMod.DATA_MANAGER.saveModuleStates();
         } catch (IOException e1) {

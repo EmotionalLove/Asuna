@@ -1,9 +1,10 @@
 package com.sasha.xdolf.module;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.events.XdolfModuleTogglePostEvent;
+import com.sasha.xdolf.events.XdolfModuleTogglePreEvent;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
-import com.sasha.xdolf.events.XdolfModuleToggleEvent;
 
 import java.util.ArrayList;
 
@@ -103,16 +104,18 @@ public abstract class XdolfModule {
 
     /**
      * toggles the module and runs all the needed disable/enable fhnctions
-     * invokes an XdolfModuleToggleEvent
+     * invokes an XdolfModuleTogglePreEvent
      */
     public void toggle(){
-        XdolfModuleToggleEvent event = new XdolfModuleToggleEvent(this, (isEnabled ? ModuleState.DISABLE : ModuleState.ENABLE));
+        XdolfModuleTogglePreEvent event = new XdolfModuleTogglePreEvent(this, (isEnabled ? ModuleState.DISABLE : ModuleState.ENABLE));
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()){
             XdolfMod.logWarn(true, "Module \""+this.getModuleName()+"\" toggle was cancelled!");
             return;
         }
         this.isEnabled = !this.isEnabled;
+        XdolfModuleTogglePostEvent post = new XdolfModuleTogglePostEvent(this, (isEnabled ? ModuleState.ENABLE : ModuleState.DISABLE));
+        XdolfMod.EVENT_MANAGER.invokeEvent(post);
     }
 
     /**
