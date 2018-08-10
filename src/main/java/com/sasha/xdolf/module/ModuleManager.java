@@ -22,7 +22,7 @@ public class ModuleManager implements SimpleListener {
     @SimpleEventHandler
     public void onModPostToggle(XdolfModuleTogglePostEvent e){
         try {
-            XdolfMod.DATA_MANAGER.saveModuleStates();
+            XdolfMod.DATA_MANAGER.saveModuleStates(true);
         } catch (IOException e1) {
             XdolfMod.logErr(false, "Couldn't save module state. " + e1.getMessage());
             e1.printStackTrace();
