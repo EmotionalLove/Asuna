@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 
 import java.io.IOException;
 
-import static com.sasha.xdolf.XdolfMod.mc;
+import static com.sasha.xdolf.XdolfMod.minecraft;
 
 public class RenderableInventoryStats extends RenderableObject {
     public RenderableInventoryStats() {
@@ -27,20 +27,20 @@ public class RenderableInventoryStats extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(mc.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(mc.player), 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player), 4, yyy, 0xffffff);
     }
     @Override
     public void renderObjectLB(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(mc.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(mc.player), 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player), 4, yyy, 0xffffff);
     }
     @Override
     public void renderObjectRT(int yyy) {
-        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(mc.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(mc.player);
+        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player);
         Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     @Override
     public void renderObjectRB(int yyy) {
-        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(mc.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(mc.player);
+        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player);
         Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     public static String getFoodItemsInInventory(EntityPlayerSP player) {

@@ -10,7 +10,7 @@ import com.sasha.xdolf.gui.fonts.Fonts;
 
 import java.io.IOException;
 
-import static com.sasha.xdolf.XdolfMod.mc;
+import static com.sasha.xdolf.XdolfMod.minecraft;
 
 public class RenderableSaturation extends RenderableObject {
     public RenderableSaturation() {
@@ -25,20 +25,20 @@ public class RenderableSaturation extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(mc.player.getFoodStats().getSaturationLevel(), 2)), 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(minecraft.player.getFoodStats().getSaturationLevel(), 2)), 4, yyy, 0xffffff);
     }
     @Override
     public void renderObjectLB(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(mc.player.getFoodStats().getSaturationLevel(), 2)), 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(minecraft.player.getFoodStats().getSaturationLevel(), 2)), 4, yyy, 0xffffff);
     }
     @Override
     public void renderObjectRT(int yyy) {
-        String s = "\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(mc.player.getFoodStats().getSaturationLevel(), 2));
+        String s = "\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(minecraft.player.getFoodStats().getSaturationLevel(), 2));
         Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     @Override
     public void renderObjectRB(int yyy) {
-        String s = "\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(mc.player.getFoodStats().getSaturationLevel(), 2));
+        String s = "\247" + "fSaturation" + "\247" + "7: " + formatSaturation(XdolfMath.fround(minecraft.player.getFoodStats().getSaturationLevel(), 2));
         Fonts.segoe_36.drawStringWithShadow(s, (XdolfHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     private static String formatSaturation(float sat) {

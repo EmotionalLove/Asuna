@@ -20,7 +20,7 @@ public abstract class XdolfMath {
 
     public static int calculateFutureSyndromeFix() {
         int returnint = 0;
-        Collection<PotionEffect> collection_xdolf = XdolfMod.mc.player.getActivePotionEffects();
+        Collection<PotionEffect> collection_xdolf = XdolfMod.minecraft.player.getActivePotionEffects();
         if (collection_xdolf.isEmpty() || XdolfMath.areAllPotionsAmbient(collection_xdolf)) {
             return returnint;
         }

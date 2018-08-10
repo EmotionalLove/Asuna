@@ -17,8 +17,6 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 
-import static com.sasha.xdolf.misc.XdolfMath.dround;
-
 
 public class XdolfHUD extends GuiScreen implements SimpleListener {
 
@@ -95,9 +93,9 @@ public class XdolfHUD extends GuiScreen implements SimpleListener {
 
 
     public static void renderScreen() {
-        sHeight = new ScaledResolution(XdolfMod.mc).getScaledHeight();
-        sWidth = new ScaledResolution(XdolfMod.mc).getScaledWidth();
-        if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && XdolfMod.mc.world.isRemote && XdolfMod.mc.currentScreen == null) {
+        sHeight = new ScaledResolution(XdolfMod.minecraft).getScaledHeight();
+        sWidth = new ScaledResolution(XdolfMod.minecraft).getScaledWidth();
+        if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && XdolfMod.minecraft.world.isRemote && XdolfMod.minecraft.currentScreen == null) {
             return;
         }
 
@@ -108,7 +106,7 @@ public class XdolfHUD extends GuiScreen implements SimpleListener {
         }
         int lb_count = 0;
         for (RenderableObject o : leftBottom) {
-            if (XdolfMod.mc.currentScreen instanceof GuiChat) {
+            if (XdolfMod.minecraft.currentScreen instanceof GuiChat) {
                 o.renderTheObject(((sHeight - 15) - (10 * lb_count)) - 14);
                 lb_count++;
                 continue;
@@ -123,7 +121,7 @@ public class XdolfHUD extends GuiScreen implements SimpleListener {
         }
         int rb_count = 0;
         for (RenderableObject o : rightBottom) {
-            if (XdolfMod.mc.currentScreen instanceof GuiChat) {
+            if (XdolfMod.minecraft.currentScreen instanceof GuiChat) {
                 o.renderTheObject(((sHeight - 15) - (10 * rb_count)) - 14);
                 rb_count++;
                 continue;
@@ -140,7 +138,7 @@ public class XdolfHUD extends GuiScreen implements SimpleListener {
 
     /*
     private static void renderServerResponding() {
-        if (!XdolfMod.mc.world.isRemote) {
+        if (!XdolfMod.minecraft.world.isRemote) {
             return;
         }
         Fonts.segoe_36.drawCenteredString("\247" + "4The server is not responding! (" + ServerResponding.responding/20 + " sec)", sWidth / 2, (sHeight / 2) - 15, 0xffffff, true);

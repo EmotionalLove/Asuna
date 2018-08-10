@@ -47,7 +47,7 @@ public class XdolfMod {
     public static FriendManager FRIEND_MANAGER;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
-    public static Minecraft mc = Minecraft.getMinecraft();
+    public static Minecraft minecraft = Minecraft.getMinecraft();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -123,17 +123,17 @@ public class XdolfMod {
     public static void logMsg(boolean consoleOnly, String logMsg) {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
-        mc.player.sendMessage(new TextComponentString("\2477[\2474Xdolf\2477] \2476" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf\2477] \2476" + logMsg));
     }
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
         if (consoleOnly) return;
-        mc.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247cERROR\2477] \247c" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247cERROR\2477] \247c" + logMsg));
     }
     public static void logWarn(boolean consoleOnly, String logMsg) {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
-        mc.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247eWARNING\2477] \247e" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247eWARNING\2477] \247e" + logMsg));
     }
 }
 class ForgeEvent {

@@ -19,7 +19,7 @@ public class ModuleStorageESP extends XdolfModule {
         if (!this.isEnabled())
             return;
         int i = 0;
-        for (TileEntity TE : XdolfMod.mc.world.loadedTileEntityList) {
+        for (TileEntity TE : XdolfMod.minecraft.world.loadedTileEntityList) {
             if (TE instanceof TileEntityChest) {
                 i++;
                 if (((TileEntityChest) TE).getChestType() == BlockChest.Type.TRAP /* OwO What's this? */) {
