@@ -2,14 +2,25 @@ package com.sasha.xdolf.gui.renderableobjects;
 
 
 import com.sasha.xdolf.XdolfMath;
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
+
+import java.io.IOException;
+
 import static com.sasha.xdolf.XdolfMod.mc;
 
 public class RenderableSaturation extends RenderableObject {
-    public RenderableSaturation(String pos) {
-        super("Saturation", pos);
+    public RenderableSaturation() {
+        super("Saturation", ScreenCornerPos.RIGHTTOP);
+        try {
+            this.setPos(XdolfMod.DATA_MANAGER.getHudPositionState(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.setPos(this.getDefaultPos());
+        }
     }
 
     @Override

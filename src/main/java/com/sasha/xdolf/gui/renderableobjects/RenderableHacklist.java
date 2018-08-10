@@ -1,18 +1,28 @@
 package com.sasha.xdolf.gui.renderableobjects;
 
 
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
+
+import java.io.IOException;
 
 import static com.sasha.xdolf.XdolfMath.dround;
 import static com.sasha.xdolf.XdolfMod.mc;
 import static com.sasha.xdolf.gui.XdolfHUD.sWidth;
 
 public class RenderableHacklist extends RenderableObject {
-    public RenderableHacklist(String pos) {
-        super("Hacklist", pos);
+    public RenderableHacklist() {
+        super("Hacklist", ScreenCornerPos.RIGHTBOTTOM);
+        try {
+            this.setPos(XdolfMod.DATA_MANAGER.getHudPositionState(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.setPos(this.getDefaultPos());
+        }
     }
 
     @Override

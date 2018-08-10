@@ -1,6 +1,8 @@
 package com.sasha.xdolf;
 
 import com.sasha.xdolf.friend.Friend;
+import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.misc.YMLParser;
 
 import java.io.File;
@@ -21,6 +23,28 @@ import static com.sasha.xdolf.module.ModuleManager.moduleRegistry;
 public class XdolfDataManager {
     private final Lock threadLock = new ReentrantLock();
     private final String dataFileName = "XdolfData.yml";
+
+    public synchronized ScreenCornerPos getHudPositionState(RenderableObject robj) throws IOException {
+        XdolfMod.logMsg(true, "Loading \"" + robj.getName() +"\"'s saved HUD position...");
+        threadLock.lock();
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()){
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+                XdolfMod.logMsg(true, "Creating new data file with default HUD poaitions.");
+                YMLParser parser = new YMLParser(f);
+                parser.set("xdolf.gui.hud." + robj.getName().toLowerCase(), RenderableObject.getPosStr(robj.getDefaultPos()));
+                parser.save();
+                return robj.getDefaultPos();
+            }
+            YMLParser parser = new YMLParser(f);
+            return RenderableObject.getPosEnum(parser.getString("xdolf.gui.hud." + robj.getName().toLowerCase()));
+        } finally {
+            threadLock.unlock();
+        }
+    }
 
     /**
      * @since Xdolf 3.x, the HUD could be configured by the user into any corner of the screen.

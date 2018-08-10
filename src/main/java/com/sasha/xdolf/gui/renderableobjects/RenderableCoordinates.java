@@ -1,18 +1,28 @@
 package com.sasha.xdolf.gui.renderableobjects;
 
 import com.sasha.xdolf.XdolfMath;
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.module.ModuleManager;
 import net.minecraft.client.gui.ScaledResolution;
+
+import java.io.IOException;
 
 import static com.sasha.xdolf.XdolfMath.dround;
 import static com.sasha.xdolf.XdolfMod.mc;
 
 
 public class RenderableCoordinates extends RenderableObject {
-    public RenderableCoordinates(String pos) {
-        super("Coordinates", pos);
+    public RenderableCoordinates() {
+        super("Coordinates", ScreenCornerPos.LEFTBOTTOM);
+        try {
+            this.setPos(XdolfMod.DATA_MANAGER.getHudPositionState(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.setPos(this.getDefaultPos());
+        }
     }
 
     @Override

@@ -1,18 +1,40 @@
 package com.sasha.xdolf.gui;
 
+import jdk.internal.jline.internal.Nullable;
+import net.minecraft.client.renderer.entity.Render;
+
 public class RenderableObject {
 
     private String name;
-    private ScreenCornerPos pos;
+    private ScreenCornerPos pos = null;
+    private ScreenCornerPos defaultPos;
 
     private static int LT_x = 12;
 
-    public RenderableObject(String name, String pos) {
+
+    public RenderableObject(String name, ScreenCornerPos defaultPos){
         this.name = name;
+        this.defaultPos = defaultPos;
+    }
+
+    /**
+     * Creates a new RenderableObject
+     * @param name What is this RenderableObject called?
+     * @param pos Which corner of the screen will it be on?
+     * @param defaultPos What's the default position of this RO? (In case @param pos is null)
+     */
+    public RenderableObject(String name, @Nullable String pos, ScreenCornerPos defaultPos) {
+        this.name = name;
+        this.defaultPos = defaultPos;
+        if (pos == null){
+            this.pos = this.defaultPos;
+            return;
+        }
         this.pos = getPosEnum(pos);
     }
 
     // just in case i need it, better to use the above one instead though :///
+    @Deprecated
     public RenderableObject(String name) {
         this.name = name;
     }
@@ -64,6 +86,10 @@ public class RenderableObject {
         return this.pos;
     }
 
+    public ScreenCornerPos getDefaultPos() {
+        return defaultPos;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -71,8 +97,11 @@ public class RenderableObject {
     public void setPos(String pos) {
         this.pos = getPosEnum(pos);
     }
+    public void setPos(ScreenCornerPos pos) {
+        this.pos = pos;
+    }
 
-    private static ScreenCornerPos getPosEnum(String pos) {
+    public static ScreenCornerPos getPosEnum(String pos) {
         if (pos.equalsIgnoreCase("LT")) {
             return ScreenCornerPos.LEFTTOP;
         }
@@ -84,6 +113,21 @@ public class RenderableObject {
         }
         if (pos.equalsIgnoreCase("RB")) {
             return ScreenCornerPos.RIGHTBOTTOM;
+        }
+        return null;
+    }
+    public static String getPosStr(ScreenCornerPos pos) {
+        if (pos == ScreenCornerPos.LEFTTOP) {
+            return "LT";
+        }
+        if (pos == ScreenCornerPos.LEFTBOTTOM) {
+            return "LB";
+        }
+        if (pos == ScreenCornerPos.RIGHTTOP) {
+            return "RT";
+        }
+        if (pos == ScreenCornerPos.RIGHTBOTTOM) {
+            return "RB";
         }
         return null;
     }

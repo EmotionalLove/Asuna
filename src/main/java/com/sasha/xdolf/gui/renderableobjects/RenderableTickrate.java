@@ -1,14 +1,24 @@
 package com.sasha.xdolf.gui.renderableobjects;
 
 
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.misc.TPS;
 
+import java.io.IOException;
+
 public class RenderableTickrate extends RenderableObject {
-    public RenderableTickrate(String pos) {
-        super("Tickrate", pos);
+    public RenderableTickrate() {
+        super("TPS", ScreenCornerPos.RIGHTTOP);
+        try {
+            this.setPos(XdolfMod.DATA_MANAGER.getHudPositionState(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.setPos(this.getDefaultPos());
+        }
     }
 
     @Override

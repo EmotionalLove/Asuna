@@ -1,14 +1,24 @@
 package com.sasha.xdolf.gui.renderableobjects;
 
 
+import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import net.minecraft.client.Minecraft;
 
+import java.io.IOException;
+
 public class RenderableFramerate extends RenderableObject {
-    public RenderableFramerate(String pos) {
-        super("Framerate", pos);
+    public RenderableFramerate() {
+        super("FPS", ScreenCornerPos.LEFTBOTTOM);
+        try {
+            this.setPos(XdolfMod.DATA_MANAGER.getHudPositionState(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.setPos(this.getDefaultPos());
+        }
     }
 
     @Override

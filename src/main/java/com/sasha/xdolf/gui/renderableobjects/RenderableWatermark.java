@@ -3,12 +3,21 @@ package com.sasha.xdolf.gui.renderableobjects;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
 
+import java.io.IOException;
+
 public class RenderableWatermark extends RenderableObject {
-    public RenderableWatermark(String pos) {
-        super("Watermark", pos);
+    public RenderableWatermark() {
+        super("Watermark", ScreenCornerPos.LEFTTOP);
+        try {
+            this.setPos(XdolfMod.DATA_MANAGER.getHudPositionState(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.setPos(this.getDefaultPos());
+        }
     }
 
     @Override

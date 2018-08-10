@@ -40,8 +40,33 @@ public class XdolfHUD extends GuiScreen {
     // possible blockades: hack arraylist
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
+
+    /* todo optimise this */
     public static void setupHUD(){
-        HashMap<String, String>
+        for (RenderableObject element : registeredHudElements) {
+            for (XdolfModule moduleElement : ModuleManager.moduleRegistry) {
+                if (element.getName().toLowerCase().endsWith(moduleElement.getModuleName().toLowerCase())){
+                    if (moduleElement.isEnabled() && moduleElement.isRenderable()){
+                        switch(element.getPos()){
+                            case LEFTTOP:
+                                leftTop.add(element);
+                                break;
+                            case LEFTBOTTOM:
+                                leftBottom.add(element);
+                                break;
+                            case RIGHTBOTTOM:
+                                rightBottom.add(element);
+                                break;
+                            case RIGHTTOP:
+                                rightTop.add(element);
+                                break;
+                        }
+                        return;
+                    }
+                    return;
+                }
+            }
+        }
     }
 
     /*

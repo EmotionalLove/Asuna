@@ -7,6 +7,7 @@ import com.sasha.xdolf.command.commands.ToggleCommand;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
+import com.sasha.xdolf.gui.renderableobjects.*;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
@@ -57,9 +58,10 @@ public class XdolfMod {
         logMsg(true, "Loading TTF fonts...");
         Fonts.loadFonts();
         logMsg(true, "Done!");
-        logMsg(true, "Registering commands and modules...");
+        logMsg(true, "Registering commands, renderables and modules...");
         this.registerCommands();
         this.registerModules();
+        this.registerRenderables();
         EVENT_MANAGER.registerListener(new CommandProcessor());
         EVENT_MANAGER.registerListener(new ModuleManager());
         logMsg(true, "Done!");
@@ -97,6 +99,18 @@ public class XdolfMod {
         ModuleManager.moduleRegistry.add(new ModuleInventoryStats());
         ModuleManager.moduleRegistry.add(new ModuleHorsestats());
         ModuleManager.moduleRegistry.add(new ModuleHacklist());
+    }
+
+    private void registerRenderables(){
+        XdolfHUD.registeredHudElements.clear();
+        XdolfHUD.registeredHudElements.add(new RenderableWatermark());
+        XdolfHUD.registeredHudElements.add(new RenderableHacklist());
+        XdolfHUD.registeredHudElements.add(new RenderableCoordinates());
+        XdolfHUD.registeredHudElements.add(new RenderableSaturation());
+        XdolfHUD.registeredHudElements.add(new RenderableInventoryStats());
+        XdolfHUD.registeredHudElements.add(new RenderableHorseStats());
+        XdolfHUD.registeredHudElements.add(new RenderableFramerate());
+        XdolfHUD.registeredHudElements.add(new RenderableTickrate());
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {
