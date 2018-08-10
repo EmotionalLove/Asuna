@@ -45,7 +45,7 @@ public class XdolfHUD extends GuiScreen {
     public static void setupHUD(){
         for (RenderableObject element : registeredHudElements) {
             for (XdolfModule moduleElement : ModuleManager.moduleRegistry) {
-                if (element.getName().toLowerCase().endsWith(moduleElement.getModuleName().toLowerCase())){
+                if (element.getName().toLowerCase().equals(moduleElement.getModuleName().toLowerCase())){
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
                         ScreenCornerPos thePos=element.getPos();
                         if (element.getPos() == null){
@@ -67,7 +67,6 @@ public class XdolfHUD extends GuiScreen {
                         }
                         return;
                     }
-                    return;
                 }
             }
         }
