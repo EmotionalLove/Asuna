@@ -47,6 +47,10 @@ public class XdolfHUD extends GuiScreen {
             for (XdolfModule moduleElement : ModuleManager.moduleRegistry) {
                 if (element.getName().toLowerCase().endsWith(moduleElement.getModuleName().toLowerCase())){
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
+                        ScreenCornerPos thePos=element.getPos();
+                        if (element.getPos() == null){
+                            thePos=element.getDefaultPos();
+                        }
                         switch(element.getPos()){
                             case LEFTTOP:
                                 leftTop.add(element);
