@@ -44,12 +44,12 @@ public class XdolfHUD extends GuiScreen {
         XdolfMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject element : registeredHudElements) {
             for (XdolfModule moduleElement : ModuleManager.moduleRegistry) {
-                XdolfMod.logMsg(true, "Checking "+moduleElement.getModuleName().toLowerCase() +" & "
-                + element.getName());
+                //XdolfMod.logMsg(true, "Checking "+moduleElement.getModuleName().toLowerCase() +" & "
+                //+ element.getName());
                 if (element.getName().toLowerCase().equals(moduleElement.getModuleName().toLowerCase())){
-                    XdolfMod.logWarn(true, "Found matching module and renderable: " + element.getName().toLowerCase());
+                    //XdolfMod.logWarn(true, "Found matching module and renderable: " + element.getName().toLowerCase());
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
-                        XdolfMod.logMsg(true,"Sorting renderable...");
+                        //XdolfMod.logMsg(true,"Sorting renderable...");
                         ScreenCornerPos thePos=element.getPos();
                         if (element.getPos() == null){
                             thePos=element.getDefaultPos();
@@ -60,13 +60,16 @@ public class XdolfHUD extends GuiScreen {
                                 XdolfMod.logMsg(true,element.getName() + " LT");
                                 break;
                             case LEFTBOTTOM:
-                                leftBottom.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
+                                leftBottom.add(element);
+                                XdolfMod.logMsg(true,element.getName() + " LB");
                                 break;
                             case RIGHTBOTTOM:
-                                rightBottom.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
+                                rightBottom.add(element);
+                                XdolfMod.logMsg(true,element.getName() + " RB");
                                 break;
                             case RIGHTTOP:
-                                rightTop.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
+                                rightTop.add(element);
+                                XdolfMod.logMsg(true,element.getName() + " RT");
                                 break;
                         }
                         break;

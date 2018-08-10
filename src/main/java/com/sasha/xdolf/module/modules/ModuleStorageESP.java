@@ -12,7 +12,7 @@ import net.minecraft.tileentity.*;
  **/
 public class ModuleStorageESP extends XdolfModule {
     public ModuleStorageESP() {
-        super("StoragsESP", XdolfCategory.RENDER, false);
+        super("StorageESP", XdolfCategory.RENDER, false);
     }
     @Override
     public void onRender() {

@@ -88,7 +88,7 @@ public abstract class XdolfModule {
             }
             b.append(", ").append(s[i]);
         }
-        this.suffix= " \2477[\2476" + b.toString() + "\2477]";
+        this.suffix= " \2478[\2477" + b.toString() + "\2478]";
     }
 
     public void removeSuffix(){
