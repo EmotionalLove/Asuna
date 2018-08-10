@@ -14,6 +14,7 @@ import com.sasha.xdolf.gui.renderableobjects.*;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
+import com.sasha.xdolf.module.modules.ModuleAntiHunger;
 import com.sasha.xdolf.module.modules.ModuleKillaura;
 import com.sasha.xdolf.module.modules.ModuleStorageESP;
 import com.sasha.xdolf.module.modules.ModuleTracers;
@@ -103,17 +104,18 @@ public class XdolfMod {
 
     private void registerModules(){
         ModuleManager.moduleRegistry.clear();
-        ModuleManager.moduleRegistry.add(new ModuleTPS());
-        ModuleManager.moduleRegistry.add(new ModuleFPS());
-        ModuleManager.moduleRegistry.add(new ModuleCoordinates());
-        ModuleManager.moduleRegistry.add(new ModuleSaturation());
-        ModuleManager.moduleRegistry.add(new ModuleInventoryStats());
-        ModuleManager.moduleRegistry.add(new ModuleHorsestats());
-        ModuleManager.moduleRegistry.add(new ModuleHacklist());
-        ModuleManager.moduleRegistry.add(new ModuleWatermark());
-        ModuleManager.moduleRegistry.add(new ModuleKillaura());
-        ModuleManager.moduleRegistry.add(new ModuleStorageESP());
-        ModuleManager.moduleRegistry.add(new ModuleTracers());
+        ModuleManager.register(new ModuleTPS());
+        ModuleManager.register(new ModuleFPS());
+        ModuleManager.register(new ModuleCoordinates());
+        ModuleManager.register(new ModuleSaturation());
+        ModuleManager.register(new ModuleInventoryStats());
+        ModuleManager.register(new ModuleHorsestats());
+        ModuleManager.register(new ModuleHacklist());
+        ModuleManager.register(new ModuleWatermark());
+        ModuleManager.register(new ModuleKillaura());
+        ModuleManager.register(new ModuleStorageESP());
+        ModuleManager.register(new ModuleTracers());
+        ModuleManager.register(new ModuleAntiHunger());
     }
 
     private void registerRenderables(){

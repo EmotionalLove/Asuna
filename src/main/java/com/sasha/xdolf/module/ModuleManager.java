@@ -49,6 +49,19 @@ public class ModuleManager implements SimpleListener {
         }
     }
 
+    /**
+     * This will automatically register listeners to the Event Manager if they implement SimpleListener
+     */
+    public static void register(XdolfModule mod) {
+        moduleRegistry.add(mod);
+        if (mod.getClass().getInterfaces().length != 0) {
+            if (mod.getClass().getInterfaces()[0] == SimpleListener.class)  {
+                XdolfMod.logMsg(true, mod.getModuleName() + " is listening for events.");
+                XdolfMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
+            }
+        }
+    }
+
     public static XdolfModule getModuleByName(String key) {
         for (XdolfModule m : moduleRegistry) {
             if (m.getModuleName().toLowerCase().equals(key.toLowerCase())) return m;
