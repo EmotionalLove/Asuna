@@ -18,7 +18,7 @@ public abstract class XdolfModule {
     private String moduleName, moduleNameColoured;
     private XdolfCategory moduleCategory;
     private boolean isEnabled = false;
-    private String suffix;
+    private String suffix = "";
     private String colour;
     private int keyBind;
     private boolean isRenderable = false;
@@ -74,6 +74,25 @@ public abstract class XdolfModule {
 
     public String getSuffix() {
         return suffix;
+    }
+
+    public void setSuffix(String s){
+        this.suffix= " \2477[\2476" + s + "\2477]";
+    }
+    public void setSuffix(String[] s){
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < s.length; i++) {
+            if(i==0){
+                b.append(s[i]);
+                continue;
+            }
+            b.append(", ").append(s[i]);
+        }
+        this.suffix= " \2477[\2476" + b.toString() + "\2477]";
+    }
+
+    public void removeSuffix(){
+        this.suffix = "";
     }
 
     /**

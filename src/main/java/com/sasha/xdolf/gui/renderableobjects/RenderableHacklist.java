@@ -30,7 +30,7 @@ public class RenderableHacklist extends RenderableObject {
         if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
             int count = 0;
             for (XdolfModule module : XdolfModule.displayList) {
-                if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
+                if (module.isEnabled() && module.getSuffix().equals("")) {
                     Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), 4, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
@@ -44,15 +44,7 @@ public class RenderableHacklist extends RenderableObject {
     @Override
     public void renderObjectLB(int yyy) {
         if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
-            double xx = dround(mc.player.posX, 3);
-            double y = dround(mc.player.posY, 3);
-            double z = dround(mc.player.posZ, 3);
-            if (mc.player.dimension == 0 || mc.player.dimension == 1) {
-                Fonts.segoe_36.drawStringWithShadow("\247" + "fX " + "\247" + "7" + xx + " (" + dround(xx/8, 3) + ") " + "\247" + "fY " + "\247" + "7" + y + " " + "\247" + "fZ " + "\247" + "7" + z + " (" + dround(z/8, 3) + ")", 4, yyy, 0xffffff);
-            }
-            if (mc.player.dimension == -1) {
-                Fonts.segoe_36.drawStringWithShadow("\247" + "fX " + "\247" + "7" + xx + " (" + dround(xx*8, 3) + ") " + "\247" + "fY " + "\247" + "7" + y + " " + "\247" + "fZ " + "\247" + "7" + z + " (" + dround(z*8, 3) + ")", 4, yyy, 0xffffff);
-            }
+            // TODO
         }
     }
     @Override
@@ -60,7 +52,7 @@ public class RenderableHacklist extends RenderableObject {
         if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
             int count = 0;
             for (XdolfModule module : XdolfModule.displayList) {
-                if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
+                if (module.isEnabled() && module.getSuffix().equals("")) {
                     Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
@@ -76,7 +68,7 @@ public class RenderableHacklist extends RenderableObject {
         if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
             int count = 0;
             for (XdolfModule module : XdolfModule.displayList) {
-                if (module.isEnabled() && module.getSuffix() != null && !module.getSuffix().contains("[")) {
+                if (module.isEnabled() && module.getSuffix().equals("")) {
                     Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
