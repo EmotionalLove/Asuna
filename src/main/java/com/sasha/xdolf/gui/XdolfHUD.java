@@ -71,7 +71,7 @@ public class XdolfHUD extends GuiScreen {
                                 rightTop.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
                                 break;
                         }
-                        return;
+                        break;
                     }
                 }
             }
