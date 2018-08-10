@@ -40,9 +40,15 @@ public class XdolfDataManager {
                 return robj.getDefaultPos();
             }
             YMLParser parser = new YMLParser(f);
+            if (!parser.exists("xdolf.gui.hud." + robj.getName())){
+                parser.set("xdolf.gui.hud." + robj.getName().toLowerCase(), RenderableObject.getPosStr(robj.getDefaultPos()));
+                parser.save();
+                return robj.getDefaultPos();
+            }
             return RenderableObject.getPosEnum(parser.getString("xdolf.gui.hud." + robj.getName().toLowerCase()));
         } finally {
             threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
         }
     }
 
@@ -100,7 +106,7 @@ public class XdolfDataManager {
         }
     }
 
-    public synchronized void saveModuleStates() throws IOException {
+    public synchronized void saveModuleStates(boolean fileExists) throws IOException {
         XdolfMod.logMsg(true, "Updating module savestates...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
         XdolfMod.logWarn(true, "Thread locking engaged!");
@@ -110,7 +116,7 @@ public class XdolfDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            moduleRegistry.forEach(mod -> parser.set("xdolf.modules." + mod.getModuleName(), mod.isEnabled()));
+            moduleRegistry.forEach(mod -> parser.set("xdolf.modules." + mod.getModuleName(), fileExists && mod.isEnabled()));
             parser.save();
         } finally {
             threadLock.unlock();
@@ -125,6 +131,7 @@ public class XdolfDataManager {
             File file = new File(dataFileName);
             if (!file.exists()) {
                 XdolfMod.logErr(true, "Module states file doesn't exist (maybe this is the client's first run?)");
+                saveModuleStates(false);
                 return false;
             }
             YMLParser parser = new YMLParser(file);
@@ -171,4 +178,5 @@ public class XdolfDataManager {
             XdolfMod.logWarn(true, "Thread locking disengaged!");
         }
     }
+
 }
