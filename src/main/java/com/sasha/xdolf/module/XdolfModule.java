@@ -68,8 +68,8 @@ public abstract class XdolfModule {
         return moduleName;
     }
 
-    public String getDescription(){
-        ModuleInfo d = this.getClass().getAnnotation(ModuleInfo.class);
+    public String getDescription(Class<?> clazz){
+        ModuleInfo d = clazz.getAnnotation(ModuleInfo.class);
         if (d == null){
             return "No description provided.";
         }
@@ -109,6 +109,10 @@ public abstract class XdolfModule {
      */
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public boolean hasForcefulAnnotation(Class<?> clazz){
+        return clazz.getAnnotation(ForcefulEnable.class)!= null;
     }
 
     /**

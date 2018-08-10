@@ -20,6 +20,13 @@ public class ModuleManager implements SimpleListener {
     public static ArrayList<XdolfModule> moduleRegistry = new ArrayList<>();
 
     @SimpleEventHandler
+    public void onPreToggle(XdolfModuleTogglePreEvent e){
+        if (e.getToggledModule().hasForcefulAnnotation(e.getToggledModule().getClass()) && e.getToggleState() == ModuleState.DISABLE){
+            e.setCancelled(true);
+        }
+    }
+
+    @SimpleEventHandler
     public void onModPostToggle(XdolfModuleTogglePostEvent e){
         try {
             XdolfMod.DATA_MANAGER.saveModuleStates(true);

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Created by Sasha on 09/08/2018 at 8:37 PM
- * Decorate an XdolfModule with this to give it a Description
+ * Decorate an XdolfModule with this to forcefully keep it enabled.
  **/
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

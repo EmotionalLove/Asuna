@@ -81,6 +81,9 @@ public class XdolfMod {
                     if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
                         mod.forceState(ModuleState.ENABLE, false, true);
                     }
+                    if (mod.hasForcefulAnnotation(mod.getClass())){
+                        mod.forceState(ModuleState.ENABLE, false, true);
+                    }
                 }catch (IOException e){e.printStackTrace();}
             });
         }, 0, TimeUnit.SECONDS);
