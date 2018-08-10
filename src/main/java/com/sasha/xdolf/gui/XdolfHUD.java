@@ -43,26 +43,32 @@ public class XdolfHUD extends GuiScreen {
 
     /* todo optimise this */
     public static void setupHUD(){
+        XdolfMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject element : registeredHudElements) {
             for (XdolfModule moduleElement : ModuleManager.moduleRegistry) {
+                XdolfMod.logMsg(true, "Checking "+moduleElement.getModuleName().toLowerCase() +" & "
+                + element.getName());
                 if (element.getName().toLowerCase().equals(moduleElement.getModuleName().toLowerCase())){
+                    XdolfMod.logWarn(true, "Found matching module and renderable: " + element.getName().toLowerCase());
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
+                        XdolfMod.logMsg(true,"Sorting renderable...");
                         ScreenCornerPos thePos=element.getPos();
                         if (element.getPos() == null){
                             thePos=element.getDefaultPos();
                         }
-                        switch(element.getPos()){
+                        switch(thePos){
                             case LEFTTOP:
                                 leftTop.add(element);
+                                XdolfMod.logMsg(true,element.getName() + " LT");
                                 break;
                             case LEFTBOTTOM:
-                                leftBottom.add(element);
+                                leftBottom.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
                                 break;
                             case RIGHTBOTTOM:
-                                rightBottom.add(element);
+                                rightBottom.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
                                 break;
                             case RIGHTTOP:
-                                rightTop.add(element);
+                                rightTop.add(element);XdolfMod.logMsg(true,element.getName() + " LT");
                                 break;
                         }
                         return;
