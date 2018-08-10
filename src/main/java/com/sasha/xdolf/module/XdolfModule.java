@@ -68,6 +68,14 @@ public abstract class XdolfModule {
         return moduleName;
     }
 
+    public String getDescription(){
+        ModuleInfo d = this.getClass().getAnnotation(ModuleInfo.class);
+        if (d == null){
+            return "No description provided.";
+        }
+        return d.description();
+    }
+
     public String getModuleNameColoured() {
         return moduleNameColoured;
     }

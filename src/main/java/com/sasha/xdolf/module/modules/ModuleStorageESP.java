@@ -2,6 +2,7 @@ package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.misc.XdolfRender;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.block.BlockChest;
@@ -10,6 +11,7 @@ import net.minecraft.tileentity.*;
 /**
  * Created by Sasha on 09/08/2018 at 7:32 PM
  **/
+@ModuleInfo(description = "Draws an outline around storage containers")
 public class ModuleStorageESP extends XdolfModule {
     public ModuleStorageESP() {
         super("StorageESP", XdolfCategory.RENDER, false);

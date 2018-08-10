@@ -6,6 +6,7 @@ import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.fonts.Fonts;
+import com.sasha.xdolf.module.ModuleInfo;
 import net.minecraft.client.Minecraft;
 
 import java.io.IOException;

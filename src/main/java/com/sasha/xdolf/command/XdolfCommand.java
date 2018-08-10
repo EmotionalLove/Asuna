@@ -1,7 +1,7 @@
 package com.sasha.xdolf.command;
 
 import com.sasha.xdolf.XdolfMod;
-import org.apache.logging.log4j.Level;
+import com.sasha.xdolf.exception.XdolfCommandAnnotationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,20 @@ public abstract class XdolfCommand {
 
     public String[] getArguments() {
         return commandArgs;
+    }
+    public String[] getSyntax(){
+        CommandInfo d = this.getClass().getAnnotation(CommandInfo.class);
+        if (d == null){
+            throw new XdolfCommandAnnotationException("The developer didn't decorate " + this.getClass().getName() + " with a CommandInfo annotation!");
+        }
+        return d.syntax();
+    }
+    public String getDescription(){
+        CommandInfo d = this.getClass().getAnnotation(CommandInfo.class);
+        if (d == null){
+            throw new XdolfCommandAnnotationException("The developer didn't decorate " + this.getClass().getName() + " with a CommandInfo annotation!");
+        }
+        return d.description();
     }
 
     public String getCommandName(boolean withDelimetre) {

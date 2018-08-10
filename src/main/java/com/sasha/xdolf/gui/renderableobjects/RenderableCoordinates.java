@@ -5,14 +5,15 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.fonts.Fonts;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
 
 import static com.sasha.xdolf.misc.XdolfMath.dround;
 import static com.sasha.xdolf.XdolfMod.minecraft;
-
 
 public class RenderableCoordinates extends RenderableObject {
     public RenderableCoordinates() {

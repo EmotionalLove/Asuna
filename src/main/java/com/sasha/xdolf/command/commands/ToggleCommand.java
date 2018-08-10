@@ -1,6 +1,7 @@
 package com.sasha.xdolf.command.commands;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.command.CommandInfo;
 import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
+@CommandInfo(description = "Toggle a named module", syntax = {"<module>"})
 public class ToggleCommand extends XdolfCommand {
     public ToggleCommand() {
         super("toggle");

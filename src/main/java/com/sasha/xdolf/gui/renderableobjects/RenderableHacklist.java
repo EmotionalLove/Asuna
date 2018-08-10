@@ -5,6 +5,7 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.RenderableObject;
 import com.sasha.xdolf.gui.ScreenCornerPos;
 import com.sasha.xdolf.gui.fonts.Fonts;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
 

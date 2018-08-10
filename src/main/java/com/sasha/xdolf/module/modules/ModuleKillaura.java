@@ -1,6 +1,7 @@
 package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -15,6 +16,7 @@ import static com.sasha.xdolf.XdolfMod.minecraft;
 /**
  * Created by Sasha on 08/08/2018 at 12:23 PM
  **/
+@ModuleInfo(description = "Automatically attacks nearby entities, excluding friended players.")
 public class ModuleKillaura extends XdolfModule {
 
     public static double range = 5.0;

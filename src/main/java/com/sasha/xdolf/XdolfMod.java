@@ -15,6 +15,7 @@ import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.modules.ModuleKillaura;
 import com.sasha.xdolf.module.modules.ModuleStorageESP;
+import com.sasha.xdolf.module.modules.ModuleTracers;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
@@ -106,6 +107,7 @@ public class XdolfMod {
         ModuleManager.moduleRegistry.add(new ModuleWatermark());
         ModuleManager.moduleRegistry.add(new ModuleKillaura());
         ModuleManager.moduleRegistry.add(new ModuleStorageESP());
+        ModuleManager.moduleRegistry.add(new ModuleTracers());
     }
 
     private void registerRenderables(){
@@ -124,6 +126,9 @@ public class XdolfMod {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf\2477] \2476" + logMsg));
+    }
+    public static void logMsg(String logMsg) {
+        minecraft.player.sendMessage(new TextComponentString("\2476" + logMsg));
     }
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
