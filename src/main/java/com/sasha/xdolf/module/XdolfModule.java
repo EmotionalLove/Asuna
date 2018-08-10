@@ -85,7 +85,7 @@ public abstract class XdolfModule {
     }
 
     public void setSuffix(String s){
-        this.suffix= " \2477[\2476" + s + "\2477]";
+        this.suffix= " \2478[\2477" + s + "\2478]";
     }
     public void setSuffix(String[] s){
         StringBuilder b = new StringBuilder();
