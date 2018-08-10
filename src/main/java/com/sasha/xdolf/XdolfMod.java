@@ -3,6 +3,7 @@ package com.sasha.xdolf;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.AboutCommand;
+import com.sasha.xdolf.command.commands.HelpCommand;
 import com.sasha.xdolf.command.commands.ModulesCommand;
 import com.sasha.xdolf.command.commands.ToggleCommand;
 import com.sasha.xdolf.events.ClientOverlayRenderEvent;
@@ -96,6 +97,7 @@ public class XdolfMod {
         CommandProcessor.commandRegistry.add(new AboutCommand());
         CommandProcessor.commandRegistry.add(new ToggleCommand());
         CommandProcessor.commandRegistry.add(new ModulesCommand());
+        CommandProcessor.commandRegistry.add(new HelpCommand());
     }
 
     private void registerModules(){

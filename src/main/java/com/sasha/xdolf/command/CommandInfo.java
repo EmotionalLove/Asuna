@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CommandInfo {
     String description() default "No description provided.";
-    String[] syntax() default "No syntax information provided";
+    String[] syntax() default {"No syntax information provided"};
 }
