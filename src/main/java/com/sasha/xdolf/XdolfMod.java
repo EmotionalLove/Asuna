@@ -130,20 +130,20 @@ public class XdolfMod {
     public static void logMsg(boolean consoleOnly, String logMsg) {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf\2477] \2476" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474Xdolf\2478] \2477" + logMsg));
     }
     public static void logMsg(String logMsg) {
-        minecraft.player.sendMessage(new TextComponentString("\2476" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2477" + logMsg));
     }
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247cERROR\2477] \247c" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474Xdolf \247cERROR\2478] \247c" + logMsg));
     }
     public static void logWarn(boolean consoleOnly, String logMsg) {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2477[\2474Xdolf \247eWARNING\2477] \247e" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474Xdolf \247eWARNING\2478] \247e" + logMsg));
     }
 }
 class ForgeEvent {

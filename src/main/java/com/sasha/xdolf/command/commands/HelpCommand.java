@@ -34,7 +34,7 @@ public class HelpCommand extends XdolfCommand {
         }
         if (this.getArguments().length != 2 || !this.getArguments()[0].toLowerCase().matches("command|module")){
             logErr(false, "Incorrect syntax! Listing valid args:");
-            for (String s : this.getSyntax()){
+            for (String s : this.getSyntax(this.getClass())){
                 logMsg(this.getCommandName(true) +" "+s);
             }
             return;
@@ -42,7 +42,7 @@ public class HelpCommand extends XdolfCommand {
         if (this.getArguments()[0].toLowerCase().equals("command")){
             for (XdolfCommand xdolfCommand : commandRegistry) {
                 if (xdolfCommand.getCommandName(false).equalsIgnoreCase(this.getArguments()[1])){
-                    for (String sy : xdolfCommand.getSyntax()) logMsg(xdolfCommand.getCommandName(true)+" "+sy);
+                    for (String sy : xdolfCommand.getSyntax(xdolfCommand.getClass())) logMsg(xdolfCommand.getCommandName(true)+" "+sy);
                 }
             }
             return;
@@ -50,7 +50,7 @@ public class HelpCommand extends XdolfCommand {
         if (this.getArguments()[0].toLowerCase().equalsIgnoreCase("module")){
             for (XdolfModule module : moduleRegistry) {
                 if (module.getModuleName().toLowerCase().equalsIgnoreCase(this.getArguments()[1])){
-                    logMsg(module.getDescription());
+                    logMsg(module.getDescription(module.getClass()));
                 }
             }
         }

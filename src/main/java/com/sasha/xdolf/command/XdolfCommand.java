@@ -43,15 +43,15 @@ public abstract class XdolfCommand {
     public String[] getArguments() {
         return commandArgs;
     }
-    public String[] getSyntax(){
-        CommandInfo d = this.getClass().getAnnotation(CommandInfo.class);
+    public String[] getSyntax(Class<?> clazz){
+        CommandInfo d = clazz.getAnnotation(CommandInfo.class);
         if (d == null){
             throw new XdolfCommandAnnotationException("The developer didn't decorate " + this.getClass().getName() + " with a CommandInfo annotation!");
         }
         return d.syntax();
     }
-    public String getDescription(){
-        CommandInfo d = this.getClass().getAnnotation(CommandInfo.class);
+    public String getDescription(Class<?> clazz){
+        CommandInfo d = clazz.getAnnotation(CommandInfo.class);
         if (d == null){
             throw new XdolfCommandAnnotationException("The developer didn't decorate " + this.getClass().getName() + " with a CommandInfo annotation!");
         }
