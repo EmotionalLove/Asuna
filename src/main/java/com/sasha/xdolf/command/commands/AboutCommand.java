@@ -15,7 +15,7 @@ public class AboutCommand extends XdolfCommand {
 
     @Override
     public void onCommand() {
-        XdolfMod.logMsg(false, "Xdolf " + XdolfMod.VERSION + " by Sasha and Sgt Pepper");
+        XdolfMod.logMsg(false, "Xdolf " + XdolfMod.VERSION + " by Sasha and Sgt Pepper. All Rights Reserved.");
         XdolfMod.logMsg(false, "Run -help for commands.");
     }
 }

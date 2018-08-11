@@ -120,6 +120,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleAntiHunger());
         ModuleManager.register(new ModuleClickGUI());
         ModuleManager.register(new ModuleNightVision());
+        ModuleManager.register(new ModuleNoSlow());
     }
 
     private void registerRenderables(){
