@@ -155,12 +155,12 @@ public class XdolfDataManager {
                 return 0;
             }
             YMLParser parser = new YMLParser(file);
-            if (!parser.exists("xdolf.modules."+module.getModuleName()+".bind")){
+            if (!parser.exists("xdolf.modules."+module.getModuleName().toLowerCase()+".bind")){
                 parser.set("xdolf.modules."+module.getModuleName()+".bind", 0);
                 parser.save();
                 return 0;
             }
-            return parser.getInt("xdolf.modules."+module.getModuleName()+".bind", 0);
+            return parser.getInt("xdolf.modules."+module.getModuleName().toLowerCase()+".bind", 0);
         } finally {
             threadLock.unlock();
             XdolfMod.logWarn(true, "Thread locking disengaged!");
@@ -177,7 +177,7 @@ public class XdolfDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            parser.set("xdolf.modules."+module.getModuleName()+".bind", module.getKeyBind());
+            parser.set("xdolf.modules."+module.getModuleName().toLowerCase()+".bind", module.getKeyBind());
             parser.save();
         } finally {
             threadLock.unlock();
@@ -195,7 +195,7 @@ public class XdolfDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            moduleRegistry.forEach(mod -> parser.set("xdolf.modules." + mod.getModuleName()+".state", fileExists && mod.isEnabled()));
+            moduleRegistry.forEach(mod -> parser.set("xdolf.modules." + mod.getModuleName().toLowerCase()+".state", fileExists && mod.isEnabled()));
             parser.save();
         } finally {
             threadLock.unlock();
@@ -214,7 +214,7 @@ public class XdolfDataManager {
                 return false;
             }
             YMLParser parser = new YMLParser(file);
-            return parser.getBoolean("xdolf.modules." + modName + ".state", false);
+            return parser.getBoolean("xdolf.modules." + modName.toLowerCase() + ".state", false);
         } finally {
             threadLock.unlock();
             XdolfMod.logWarn(true, "Thread locking disengaged!");
