@@ -11,10 +11,7 @@ import com.sasha.xdolf.gui.hud.renderableobjects.*;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
 import com.sasha.xdolf.module.ModuleManager;
-import com.sasha.xdolf.module.modules.ModuleAntiHunger;
-import com.sasha.xdolf.module.modules.ModuleKillaura;
-import com.sasha.xdolf.module.modules.ModuleStorageESP;
-import com.sasha.xdolf.module.modules.ModuleTracers;
+import com.sasha.xdolf.module.modules.*;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
@@ -120,6 +117,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleStorageESP());
         ModuleManager.register(new ModuleTracers());
         ModuleManager.register(new ModuleAntiHunger());
+        ModuleManager.register(new ModuleClickGUI());
     }
 
     private void registerRenderables(){
