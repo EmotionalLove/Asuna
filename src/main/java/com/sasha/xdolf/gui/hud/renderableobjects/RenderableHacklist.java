@@ -1,17 +1,16 @@
-package com.sasha.xdolf.gui.renderableobjects;
+package com.sasha.xdolf.gui.hud.renderableobjects;
 
 
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.gui.RenderableObject;
-import com.sasha.xdolf.gui.ScreenCornerPos;
+import com.sasha.xdolf.gui.hud.RenderableObject;
+import com.sasha.xdolf.gui.hud.ScreenCornerPos;
 import com.sasha.xdolf.gui.fonts.Fonts;
-import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
 
 import java.io.IOException;
 
-import static com.sasha.xdolf.gui.XdolfHUD.sWidth;
+import static com.sasha.xdolf.gui.hud.XdolfHUD.sWidth;
 
 public class RenderableHacklist extends RenderableObject {
     public RenderableHacklist() {

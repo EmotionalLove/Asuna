@@ -1,7 +1,7 @@
 package com.sasha.xdolf.misc;
 
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.gui.Direction;
+import com.sasha.xdolf.gui.hud.Direction;
 import net.minecraft.potion.PotionEffect;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;

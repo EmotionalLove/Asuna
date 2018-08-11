@@ -3,7 +3,7 @@ package com.sasha.xdolf.module;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.XdolfModuleTogglePostEvent;
 import com.sasha.xdolf.events.XdolfModuleTogglePreEvent;
-import com.sasha.xdolf.gui.XdolfHUD;
+import com.sasha.xdolf.gui.hud.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
 
 import java.util.ArrayList;

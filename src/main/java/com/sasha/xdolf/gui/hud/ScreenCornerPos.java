@@ -1,4 +1,4 @@
-package com.sasha.xdolf.gui;
+package com.sasha.xdolf.gui.hud;
 
 public enum ScreenCornerPos {
 

@@ -1,12 +1,11 @@
-package com.sasha.xdolf.gui.renderableobjects;
+package com.sasha.xdolf.gui.hud.renderableobjects;
 
 
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.gui.ScreenCornerPos;
-import com.sasha.xdolf.gui.XdolfHUD;
-import com.sasha.xdolf.gui.RenderableObject;
+import com.sasha.xdolf.gui.hud.ScreenCornerPos;
+import com.sasha.xdolf.gui.hud.XdolfHUD;
+import com.sasha.xdolf.gui.hud.RenderableObject;
 import com.sasha.xdolf.gui.fonts.Fonts;
-import com.sasha.xdolf.module.ModuleInfo;
 import net.minecraft.client.Minecraft;
 
 import java.io.IOException;

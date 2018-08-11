@@ -1,4 +1,4 @@
-package com.sasha.xdolf.gui;
+package com.sasha.xdolf.gui.hud;
 
 /**
  * Created by Sasha on 08/08/2018 at 2:19 PM

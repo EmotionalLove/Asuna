@@ -3,9 +3,7 @@ package com.sasha.xdolf.module;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.events.XdolfModuleTogglePostEvent;
-import com.sasha.xdolf.gui.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.events.XdolfModuleTogglePreEvent;
 

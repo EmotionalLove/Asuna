@@ -1,14 +1,12 @@
-package com.sasha.xdolf.gui.renderableobjects;
+package com.sasha.xdolf.gui.hud.renderableobjects;
 
 import com.sasha.xdolf.misc.XdolfMath;
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.gui.RenderableObject;
-import com.sasha.xdolf.gui.ScreenCornerPos;
+import com.sasha.xdolf.gui.hud.RenderableObject;
+import com.sasha.xdolf.gui.hud.ScreenCornerPos;
 import com.sasha.xdolf.gui.fonts.Fonts;
-import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
 
