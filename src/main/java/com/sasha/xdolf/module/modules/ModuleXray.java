@@ -2,6 +2,7 @@ package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.misc.ModuleState;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Sasha on 11/08/2018 at 11:39 AM
  **/
+@ModuleInfo(description = "Makes chosen blocks invisible so that you can find ores or other blocks.")
 public class ModuleXray extends XdolfModule {
     public static ArrayList<Block> xrayBlocks = new ArrayList<>();
     private boolean wasNightVisionsOff = false;
