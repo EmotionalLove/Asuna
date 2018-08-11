@@ -132,7 +132,7 @@ public class XdolfDataManager {
                 return robj.getDefaultPos();
             }
             YMLParser parser = new YMLParser(f);
-            if (!parser.exists("xdolf.gui.hud." + robj.getName())){
+            if (!parser.exists("xdolf.gui.hud." + robj.getName().toLowerCase())){
                 parser.set("xdolf.gui.hud." + robj.getName().toLowerCase(), RenderableObject.getPosStr(robj.getDefaultPos()));
                 parser.save();
                 return robj.getDefaultPos();

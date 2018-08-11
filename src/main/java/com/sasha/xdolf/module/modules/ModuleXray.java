@@ -1,6 +1,8 @@
 package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.misc.ModuleState;
+import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.block.Block;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
  **/
 public class ModuleXray extends XdolfModule {
     public static ArrayList<Block> xrayBlocks = new ArrayList<>();
+    private boolean wasNightVisionsOff = false;
 
     public ModuleXray() {
         super("XRay", XdolfCategory.RENDER, false);
@@ -19,11 +22,19 @@ public class ModuleXray extends XdolfModule {
 
     @Override
     public void onEnable() {
+        if (!ModuleManager.getModuleByName("NightVision").isEnabled()) {
+            ModuleManager.getModuleByName("NightVision").forceState(ModuleState.ENABLE, true, true);
+            wasNightVisionsOff = true;
+        }
         XdolfMod.minecraft.renderGlobal.loadRenderers();
     }
 
     @Override
     public void onDisable() {
+        if (wasNightVisionsOff) {
+            ModuleManager.getModuleByName("NightVision").forceState(ModuleState.DISABLE, true, true);
+            wasNightVisionsOff = false;
+        }
         XdolfMod.minecraft.renderGlobal.loadRenderers();
     }
 

@@ -6,6 +6,9 @@ import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.module.modules.ModuleXray;
 import net.minecraft.block.Block;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Sasha on 11/08/2018 at 1:18 PM
  **/
@@ -47,6 +50,10 @@ public class XrayCommand extends XdolfCommand {
                     }
                     ModuleXray.xrayBlocks.add(b);
                     XdolfMod.logMsg(false, this.getArguments()[1] + " successfully added");
+                    XdolfMod.minecraft.renderGlobal.loadRenderers();
+                    XdolfMod.scheduler.schedule(() -> {
+                        try { XdolfMod.DATA_MANAGER.saveXrayBlocks(ModuleXray.xrayBlocks); } catch (IOException e) { e.printStackTrace(); }
+                    }, 0, TimeUnit.NANOSECONDS);
                     break;
                 case "del":
                     Block delb = Block.getBlockFromName(this.getArguments()[1]);
@@ -60,6 +67,10 @@ public class XrayCommand extends XdolfCommand {
                     }
                     ModuleXray.xrayBlocks.remove(delb);
                     XdolfMod.logMsg(false, this.getArguments()[1] + " successfully removed");
+                    XdolfMod.minecraft.renderGlobal.loadRenderers();
+                    XdolfMod.scheduler.schedule(() -> {
+                        try { XdolfMod.DATA_MANAGER.saveXrayBlocks(ModuleXray.xrayBlocks); } catch (IOException e) { e.printStackTrace(); }
+                    }, 0, TimeUnit.NANOSECONDS);
                     break;
             }
             return;

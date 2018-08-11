@@ -73,7 +73,7 @@ public class XdolfMod {
         EVENT_MANAGER.registerListener(new XdolfHUD());
         logMsg(true, "Done!");
         logMsg(true, "Loading Xray");
-        scheduler.schedule(() -> ModuleXray.xrayBlocks =DATA_MANAGER.getXrayBlocks(), 0, TimeUnit.NANOSECONDS);
+        scheduler.schedule(() -> ModuleXray.xrayBlocks =DATA_MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
         XdolfMod.scheduler.schedule(() -> {//todo test
@@ -87,14 +87,12 @@ public class XdolfMod {
                     }
                 }catch (IOException e){e.printStackTrace();}
             });
-        }, 0, TimeUnit.SECONDS);
-        XdolfMod.scheduler.schedule(() -> {//todo test
-            ModuleManager.moduleRegistry.forEach(mod -> {
-                try {
-                    mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
-                }catch (Exception e){e.printStackTrace();}
-            });
-        }, 0, TimeUnit.SECONDS);
+        }, 500, TimeUnit.MILLISECONDS);
+        ModuleManager.moduleRegistry.forEach(mod -> {
+            try {
+                mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
+            }catch (Exception e){e.printStackTrace();}
+        });
         logMsg(true, "Xdolf cleanly initialised!");
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
     }
@@ -125,6 +123,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleTracers());
         ModuleManager.register(new ModuleAntiHunger());
         ModuleManager.register(new ModuleClickGUI());
+        ModuleManager.register(new ModuleNightVision());
     }
 
     private void registerRenderables(){
