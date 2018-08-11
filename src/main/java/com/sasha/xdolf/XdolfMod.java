@@ -85,14 +85,10 @@ public class XdolfMod {
                     if (mod.hasForcefulAnnotation(mod.getClass())){
                         mod.forceState(ModuleState.ENABLE, false, true);
                     }
+                    mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
                 }catch (IOException e){e.printStackTrace();}
             });
         }, 500, TimeUnit.MILLISECONDS);
-        ModuleManager.moduleRegistry.forEach(mod -> {
-            try {
-                mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
-            }catch (Exception e){e.printStackTrace();}
-        });
         logMsg(true, "Xdolf cleanly initialised!");
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
     }
