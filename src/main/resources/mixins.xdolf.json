@@ -6,6 +6,7 @@
   "client": [
     "MixinEntityPlayerSP",
     "MixinNetworkManager",
-    "MixinEntityRenderer"
+    "MixinEntityRenderer",
+    "MixinMinecraft"
   ]
 }

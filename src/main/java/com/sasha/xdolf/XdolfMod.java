@@ -2,10 +2,7 @@ package com.sasha.xdolf;
 
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandProcessor;
-import com.sasha.xdolf.command.commands.AboutCommand;
-import com.sasha.xdolf.command.commands.HelpCommand;
-import com.sasha.xdolf.command.commands.ModulesCommand;
-import com.sasha.xdolf.command.commands.ToggleCommand;
+import com.sasha.xdolf.command.commands.*;
 import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.XdolfHUD;
@@ -62,9 +59,11 @@ public class XdolfMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Xdolf is initialising...");
-        logMsg(true, "Loading TTF fonts...");
-        Fonts.loadFonts();
-        logMsg(true, "Done!");
+        scheduler.schedule(()-> {
+            logMsg(true, "Loading TTF fonts...");
+            Fonts.loadFonts();
+            logMsg(true, "Done!");
+        }, 0, TimeUnit.NANOSECONDS);
         logMsg(true, "Registering commands, renderables and modules...");
         this.registerCommands();
         this.registerModules();
@@ -90,6 +89,13 @@ public class XdolfMod {
                 }catch (IOException e){e.printStackTrace();}
             });
         }, 0, TimeUnit.SECONDS);
+        XdolfMod.scheduler.schedule(() -> {//todo test
+            ModuleManager.moduleRegistry.forEach(mod -> {
+                try {
+                    mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
+                }catch (Exception e){e.printStackTrace();}
+            });
+        }, 0, TimeUnit.SECONDS);
         logMsg(true, "Xdolf cleanly initialised!");
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
     }
@@ -100,6 +106,7 @@ public class XdolfMod {
         CommandProcessor.commandRegistry.add(new ToggleCommand());
         CommandProcessor.commandRegistry.add(new ModulesCommand());
         CommandProcessor.commandRegistry.add(new HelpCommand());
+        CommandProcessor.commandRegistry.add(new BindCommand());
     }
 
     private void registerModules(){
