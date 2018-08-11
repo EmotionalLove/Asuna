@@ -33,12 +33,5 @@ public class MixinEntityPlayerSP {
     public void onUpdate(CallbackInfo info) {
         ModuleManager.tickModules();
     }
-    @Inject(method = "onLivingUpdate", at = @At("RETURN"), cancellable = true)
-    public void onLivingUpdate(CallbackInfo info){
-        if (ModuleManager.getModuleByName("NoSlow").isEnabled()) {
-            this.movementInput.moveForward /= 0.2;
-            this.movementInput.moveStrafe /= 0.2;
-            this.sprintToggleTimer = 7;
-        }
-    }
+
 }
