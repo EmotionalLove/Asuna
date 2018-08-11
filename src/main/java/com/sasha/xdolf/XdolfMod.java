@@ -59,11 +59,9 @@ public class XdolfMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Xdolf is initialising...");
-        scheduler.schedule(()-> {
             logMsg(true, "Loading TTF fonts...");
             Fonts.loadFonts();
             logMsg(true, "Done!");
-        }, 0, TimeUnit.NANOSECONDS);
         logMsg(true, "Registering commands, renderables and modules...");
         this.registerCommands();
         this.registerModules();

@@ -2,6 +2,7 @@ package com.sasha.xdolf.misc;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketRecieveEvent;
 import net.minecraft.network.play.server.SPacketTimeUpdate;
 import net.minecraft.util.math.MathHelper;

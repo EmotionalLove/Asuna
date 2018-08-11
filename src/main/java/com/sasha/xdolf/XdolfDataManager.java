@@ -177,7 +177,7 @@ public class XdolfDataManager {
                 return false;
             }
             YMLParser parser = new YMLParser(file);
-            return parser.getBoolean("xdolf.modules." + modName, false);
+            return parser.getBoolean("xdolf.modules." + modName + ".state", false);
         } finally {
             threadLock.unlock();
             XdolfMod.logWarn(true, "Thread locking disengaged!");

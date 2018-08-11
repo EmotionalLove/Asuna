@@ -52,6 +52,7 @@ public abstract class MixinNetworkManager {
         if (this.channel.isOpen()) {
             try {
                 ClientPacketRecieveEvent event = new ClientPacketRecieveEvent(p_channelRead0_2_);
+                XdolfMod.EVENT_MANAGER.invokeEvent(event);
                 if (event.isCancelled()){
                     return;
                 }
