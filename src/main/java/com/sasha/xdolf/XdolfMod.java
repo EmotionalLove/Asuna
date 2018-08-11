@@ -27,6 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -55,13 +56,15 @@ public class XdolfMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Xdolf is initialising...");
-            logMsg(true, "Loading TTF fonts...");
-            Fonts.loadFonts();
-            logMsg(true, "Done!");
-        logMsg(true, "Registering commands, renderables and modules...");
-        this.registerCommands();
-        this.registerModules();
-        this.registerRenderables();
+         logMsg(true, "Loading TTF fonts...");
+         Fonts.loadFonts();
+         logMsg(true, "Done!");
+         logMsg(true, "Registering commands, renderables and modules...");
+        scheduler.schedule(() -> {
+            this.registerCommands();
+            this.registerModules();
+            this.registerRenderables();
+        }, 0, TimeUnit.NANOSECONDS);
         EVENT_MANAGER.registerListener(new CommandProcessor());
         EVENT_MANAGER.registerListener(new ModuleManager());
         logMsg(true, "Done!");
@@ -69,6 +72,8 @@ public class XdolfMod {
         XdolfHUD.setupHUD();
         EVENT_MANAGER.registerListener(new XdolfHUD());
         logMsg(true, "Done!");
+        logMsg(true, "Loading Xray");
+        scheduler.schedule(() -> ModuleXray.xrayBlocks =DATA_MANAGER.getXrayBlocks(), 0, TimeUnit.NANOSECONDS);
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
         XdolfMod.scheduler.schedule(() -> {//todo test
@@ -101,10 +106,12 @@ public class XdolfMod {
         CommandProcessor.commandRegistry.add(new ModulesCommand());
         CommandProcessor.commandRegistry.add(new HelpCommand());
         CommandProcessor.commandRegistry.add(new BindCommand());
+        CommandProcessor.commandRegistry.add(new XrayCommand());
     }
 
     private void registerModules(){
         ModuleManager.moduleRegistry.clear();
+        ModuleManager.register(new ModuleXray());
         ModuleManager.register(new ModuleTPS());
         ModuleManager.register(new ModuleFPS());
         ModuleManager.register(new ModuleCoordinates());

@@ -6,6 +6,8 @@ import com.sasha.xdolf.gui.hud.RenderableObject;
 import com.sasha.xdolf.gui.hud.ScreenCornerPos;
 import com.sasha.xdolf.misc.YMLParser;
 import com.sasha.xdolf.module.XdolfModule;
+import net.minecraft.block.Block;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +25,51 @@ import static com.sasha.xdolf.module.ModuleManager.moduleRegistry;
 public class XdolfDataManager {
     private final Lock threadLock = new ReentrantLock();
     private final String dataFileName = "XdolfData.yml";
+
+    public synchronized void saveXrayBlocks(ArrayList<Block> blocks) throws IOException {
+        XdolfMod.logMsg(true, "Saving Xray blocks...");
+        threadLock.lock();
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        ArrayList<Integer> intBlocks = new ArrayList<>();
+        blocks.forEach(b -> intBlocks.add(Block.getIdFromBlock(b))); // In 3.x I used the Localised name, but the localised name changes when you change the game's language
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            parser.set("xdolf.xray.blocks", intBlocks);
+            parser.save();
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized ArrayList<Block> getXrayBlocks() throws IOException {
+        XdolfMod.logMsg(true, "Saving Xray blocks...");
+        threadLock.lock();
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        List<Integer> intBlocks = new ArrayList<>();
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?) Returning empty ArrayList...");
+                return new ArrayList<>();
+            }
+            YMLParser parser = new YMLParser(f);
+            if (!parser.exists("xdolf.xray.blocks")){
+                return new ArrayList<>();
+            }
+            ArrayList<Block> realBlocks=new ArrayList<>();
+            intBlocks = parser.getIntegerList("xdolf.xray.blocks");
+            intBlocks.forEach(id -> realBlocks.add(Block.getBlockById(id)));
+            return realBlocks;
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
 
     public synchronized int[] getSavedGuiPos(XdolfWindow window){
         XdolfMod.logMsg(true, "Loading \"" + window.getTitle()+"\"'s saved GUI position...");
@@ -50,7 +97,7 @@ public class XdolfDataManager {
         }
     }
     public synchronized void saveGuiPos(XdolfWindow window) throws IOException{
-        XdolfMod.logMsg(true, "Loading \"" + window.getTitle()+"\"'s saved GUI position...");
+        XdolfMod.logMsg(true, "Saving \"" + window.getTitle()+"\"'s GUI position...");
         threadLock.lock();
         XdolfMod.logWarn(true, "Thread locking engaged!");
         try {
@@ -62,6 +109,7 @@ public class XdolfDataManager {
             YMLParser parser = new YMLParser(f);
             parser.set("xdolf.gui.clickgui."+window.getTitle()+".x",window.dragX);
             parser.set("xdolf.gui.clickgui."+window.getTitle()+".y",window.dragY);
+            parser.save();
         } finally {
             threadLock.unlock();
             XdolfMod.logWarn(true, "Thread locking disengaged!");
@@ -184,6 +232,9 @@ public class XdolfDataManager {
             YMLParser parser = new YMLParser(file);
             ArrayList<String> strFriends = new ArrayList<>();
             updatedFriends.forEach(f -> strFriends.add(f.getFriendName()));
+            if (strFriends.isEmpty()) {
+                strFriends.add("");
+            }
             parser.set("xdolf.friends.friendlist", strFriends);//todo test
             parser.save();
         } finally {

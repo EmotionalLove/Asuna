@@ -2,6 +2,7 @@ package com.sasha.xdolf.command;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.PlayerXdolfCommandEvent;
 
 import java.util.ArrayList;
@@ -18,7 +19,11 @@ public class CommandProcessor implements SimpleListener {
         commandRegistry.forEach(command -> {
             if (e.getMsg().startsWith(command.getCommandName(true))) {
                 command.setArguments(e.getMsg());
-                command.onCommand();
+                try {
+                    command.onCommand();
+                }catch(Exception ee) {
+                    XdolfMod.logErr(false, "Oops! An internal exception occurred while executing the requested command. \2477" + ee.getMessage());
+                }
             }
         });
 

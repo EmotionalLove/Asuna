@@ -7,6 +7,7 @@
     "MixinEntityPlayerSP",
     "MixinNetworkManager",
     "MixinEntityRenderer",
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "MixinBlock"
   ]
 }
