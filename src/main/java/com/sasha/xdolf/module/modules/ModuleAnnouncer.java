@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import static com.sasha.xdolf.XdolfMod.logMsg;
 import static com.sasha.xdolf.module.modules.AnnouncerTask.blocksBrokenMap;
 import static com.sasha.xdolf.module.modules.AnnouncerTask.blocksPlacedMap;
 import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
@@ -50,6 +51,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e){
+        logMsg("brek");
         if (this.isEnabled()){
             if (blocksBrokenMap.containsKey(e.getBlock().getLocalizedName())){
                 blocksBrokenMap.put(e.getBlock().getLocalizedName(), (blocksBrokenMap.get(e.getBlock().getLocalizedName()))+1);
@@ -60,6 +62,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockPlaceEvent e){
+        logMsg("brok");
         if (this.isEnabled()){
             if (blocksPlacedMap.containsKey(e.getBlock().getLocalizedName())){
                 blocksPlacedMap.put(e.getBlock().getLocalizedName(), (blocksPlacedMap.get(e.getBlock().getLocalizedName()))+1);
@@ -75,7 +78,7 @@ class AnnouncerTask implements Runnable{
     public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
     @Override
     public void run() {
-        XdolfMod.logMsg(true, "Refreshing announcer");
+        logMsg(true, "Refreshing announcer");
         if (XdolfMod.minecraft.world == null) return; //not logged in to a world
         Random rand = new Random();
         if (ModuleAnnouncer.swap && !blocksBrokenMap.isEmpty()){
