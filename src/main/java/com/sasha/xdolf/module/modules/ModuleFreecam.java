@@ -74,6 +74,9 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
                 pck.y = oldY;
                 pck.z = oldZ;
             }
+            else {
+                e.setCancelled(true);
+            }
         }
     }
 }

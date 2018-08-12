@@ -32,7 +32,7 @@ public class XdolfPerformanceAnalyser {
         for (int i : performanceTimesNormal) {
             sum+=i;
         }
-        return sum/performanceTimesNormal.size();
+        return (double)sum/performanceTimesNormal.size();
     }
     public int getCurrentMsRender(){
         return performanceTimesRender.get(performanceTimesRender.size()-1);
@@ -42,7 +42,7 @@ public class XdolfPerformanceAnalyser {
         for (int i : performanceTimesRender) {
             sum+=i;
         }
-        return sum/performanceTimesRender.size();
+        return (double)sum/performanceTimesRender.size();
     }
 
 }

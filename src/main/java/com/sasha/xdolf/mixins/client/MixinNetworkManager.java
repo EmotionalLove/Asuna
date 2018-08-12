@@ -44,10 +44,6 @@ public abstract class MixinNetworkManager {
         this.dispatchPacket(event.getSendPacket(), null);
         info.cancel();
     }
-    /**
-     * @author Sasha Stevens
-     * @reason Setup packet recieve event without the unnecessary wizardry
-     */
     @Inject(method = "channelRead0",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Packet;processPacket(Lnet/minecraft/network/INetHandler;)V"), cancellable = true)
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet<?> p_channelRead0_2_, CallbackInfo info) throws Exception {
