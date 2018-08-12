@@ -8,19 +8,13 @@ import com.sasha.xdolf.events.PlayerBlockPlaceEvent;
 import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
-import net.minecraft.util.text.TextComponentString;
-
 import java.util.*;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
 import static com.sasha.xdolf.XdolfMod.logMsg;
-import static com.sasha.xdolf.module.modules.AnnouncerTask.blocksBrokenMap;
-import static com.sasha.xdolf.module.modules.AnnouncerTask.blocksPlacedMap;
-import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
+
 
 /**
  * Created by Sasha on 11/08/2018 at 4:31 PM
+ * WHY TF DOESNT THIS WORK OMG ;-; i SWEAr
  **/
 @ModuleInfo(description = "Sends a message in chat every 30 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
@@ -28,6 +22,10 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     static boolean swap = false;
     public static int counter = 0;
 
+    private ArrayList<String> blocksPlacedStr;
+    private ArrayList<Integer> blocksPlacedInt;
+    private ArrayList<String> blocksBrokenStr;
+    private ArrayList<Integer> blocksBrokenInt;
 
 
 
@@ -37,9 +35,10 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
     @Override
     public void onEnable(){
-        blocksBrokenMap.clear();
-        blocksPlacedMap.clear();
-        //AnnouncerTask.theThing = XdolfMod.scheduler.scheduleAtFixedRate(new AnnouncerTask(), 0, 30, TimeUnit.SECONDS);
+        blocksBrokenStr = new ArrayList<>();
+        blocksBrokenInt = new ArrayList<>();
+        blocksPlacedStr = new ArrayList<>();
+        blocksPlacedInt = new ArrayList<>();
     }
 
     @Override
@@ -51,7 +50,27 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     public void onTick() {
         counter++;
         if (counter > 20*30) {
-           new AnnouncerTask().run();
+            logMsg(false, "Refreshing announcer");
+            Random rand = new Random();
+            int swap = rand.nextInt(10);
+            if (swap > 5){
+                if (blocksBrokenStr.isEmpty()) {
+                    counter = 0;
+                    return;
+                }
+                XdolfMod.minecraft.player.sendChatMessage("> I just mined " + blocksBrokenInt.get(0) + " " + blocksBrokenStr.get(0));
+                blocksBrokenStr.remove(0);
+                blocksBrokenInt.remove(0);
+            }
+            else {
+                if (blocksPlacedStr.isEmpty()) {
+                    counter = 0;
+                    return;
+                }
+                XdolfMod.minecraft.player.sendChatMessage("> I just placed " + blocksPlacedInt.get(0) + " " + blocksPlacedStr.get(0));
+                blocksPlacedInt.remove(0);
+                blocksPlacedStr.remove(0);
+            }
             counter = 0;
         }
 
@@ -59,49 +78,36 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e){
         if (this.isEnabled()){
-            if (blocksBrokenMap.containsKey(e.getBlock().getLocalizedName())){
-                blocksBrokenMap.put(e.getBlock().getLocalizedName(), (blocksBrokenMap.get(e.getBlock().getLocalizedName()))+1);
+            logMsg("ok");
+            if (blocksBrokenStr.contains(e.getBlock().getLocalizedName())){
+                logMsg("ok 1");
+                blocksBrokenInt.set(blocksBrokenStr.indexOf(e.getBlock().getLocalizedName()),
+                        blocksPlacedInt.get(blocksBrokenStr.indexOf(e.getBlock().getLocalizedName()))+1);
+                logMsg(blocksBrokenStr.get(0));
                 return;
             }
-            blocksBrokenMap.put(e.getBlock().getLocalizedName(), 1);
+            logMsg("oh ok");
+            blocksBrokenStr.add(e.getBlock().getLocalizedName());
+            blocksBrokenInt.add(1);
+            logMsg(blocksBrokenStr.get(0));
         }
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockPlaceEvent e){
-        blocksBrokenMap.forEach((String ee, Integer gg) -> {
-            logMsg(ee + " " + gg);
-        });
         if (this.isEnabled()){
-            if (blocksPlacedMap.containsKey(e.getBlock().getLocalizedName())){
-                blocksPlacedMap.put(e.getBlock().getLocalizedName(), (blocksPlacedMap.get(e.getBlock().getLocalizedName()))+1);
+            logMsg("ok");
+            if (blocksPlacedStr.contains(e.getBlock().getLocalizedName())){
+                logMsg("ok 1");
+                blocksPlacedInt.set(blocksPlacedStr.indexOf(e.getBlock().getLocalizedName()),
+                        blocksPlacedInt.get(blocksPlacedStr.indexOf(e.getBlock().getLocalizedName()))+1);
+                logMsg(blocksPlacedStr.get(0));
                 return;
             }
-            blocksPlacedMap.put(e.getBlock().getLocalizedName(), 1);
+            logMsg("oh ok");
+            blocksPlacedStr.add(e.getBlock().getLocalizedName());
+            blocksPlacedInt.add(1);
+            logMsg(blocksPlacedStr.get(0));
         }
     }
-}
-class AnnouncerTask implements Runnable{
-    //public static ScheduledFuture<?> theThing;
-    public static LinkedHashMap<String, Integer> blocksBrokenMap = new LinkedHashMap<>();
-    public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
-    @Override
-    public void run() {
-        logMsg(false, "Refreshing announcer");
-        Random rand = new Random();
-        int swap = rand.nextInt(10);
-        if (swap > 5){
-            ArrayList<String> blockNames= new ArrayList<>(blocksBrokenMap.keySet());
-            String blockname= (blockNames.get(rand.nextInt(blockNames.size())));
-            int amt = blocksBrokenMap.get(blockname);
-            XdolfMod.minecraft.player.sendChatMessage("> I just mined " + amt + " " + blockname);
-            blocksBrokenMap.remove(blockname);
-        }
-       else {
-            ArrayList<String> blockNames= new ArrayList<>(blocksPlacedMap.keySet());
-            String blockname= (blockNames.get(rand.nextInt(blockNames.size())));
-            int amt = blocksPlacedMap.get(blockname);
-            XdolfMod.minecraft.player.sendChatMessage("> I just placed " + amt + " " + blockname);
-            blocksPlacedMap.remove(blockname);
-        }
-    }
+
 }
