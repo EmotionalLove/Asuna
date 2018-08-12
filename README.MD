@@ -1,6 +1,6 @@
 # Xdolf 4.x
 
-This is a work in progress. There is not an ETA (yet).
+This is a work in progress. ETA: One week(?)
 
 ### About Xdolf
 
