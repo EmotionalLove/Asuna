@@ -9,6 +9,7 @@ import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.network.play.client.CPacketKeepAlive;
+import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.world.GameType;
 
 import static com.sasha.xdolf.XdolfMod.logMsg;
@@ -39,7 +40,7 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
 
     @Override
     public void onDisable() {
-        XdolfMod.minecraft.player.attemptTeleport(oldX,oldY,oldZ);
+        XdolfMod.minecraft.player.setLocationAndAngles(oldX, oldY, oldZ, XdolfMod.minecraft.player.rotationYaw, XdolfMod.minecraft.player.rotationPitch);
         XdolfMod.minecraft.playerController.setGameType(oldGameType);
         XdolfMod.minecraft.player.setGameType(oldGameType);
 
@@ -51,13 +52,25 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
-        logMsg("oof");
+        //logMsg("oof");
         if (this.isEnabled()) e.setCancelled(true);
     }
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e){
-        if (this.isEnabled() && !(e.getSendPacket() instanceof CPacketKeepAlive)){
-            e.setCancelled(true);
+        if (this.isEnabled()){
+            if (e.getSendPacket() instanceof CPacketPlayer.Position) {
+                CPacketPlayer.Position pck = (CPacketPlayer.Position) e.getSendPacket();
+                pck.x = oldX;
+                pck.y = oldY;
+                pck.z = oldZ;
+                return;
+            }
+            if (e.getSendPacket() instanceof CPacketPlayer.PositionRotation) {
+                CPacketPlayer.PositionRotation pck = (CPacketPlayer.PositionRotation) e.getSendPacket();
+                pck.x = oldX;
+                pck.y = oldY;
+                pck.z = oldZ;
+            }
         }
     }
 }
