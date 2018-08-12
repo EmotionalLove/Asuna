@@ -36,7 +36,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     public void onEnable(){
         blocksBrokenMap.clear();
         blocksPlacedMap.clear();
-        announcerTimer.scheduleAtFixedRate(new AnnouncerTask(), 30000, 30000);
+        announcerTimer.scheduleAtFixedRate(new AnnouncerTask(), 3000, 3000);
     }
 
     @Override
@@ -72,6 +72,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 class AnnouncerTask extends TimerTask{
     @Override
     public void run() {
+        XdolfMod.logMsg(true, "Refreshing announcer");
         if (XdolfMod.minecraft.world == null) return; //not logged in to a world
         Random rand = new Random();
         if (ModuleAnnouncer.swap && !blocksBrokenMap.isEmpty()){

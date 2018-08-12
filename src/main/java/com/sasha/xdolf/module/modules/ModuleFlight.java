@@ -24,6 +24,7 @@ public class ModuleFlight extends XdolfModule {
 
     @Override
     public void onTick() {
+        if (!this.isEnabled()) return;
         XdolfMod.minecraft.player.capabilities.isFlying = true;
     }
 }

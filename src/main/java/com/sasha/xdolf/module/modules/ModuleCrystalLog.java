@@ -19,7 +19,7 @@ import static com.sasha.xdolf.module.modules.ModuleKillaura.rotateTowardsEntity;
 @ModuleInfo(description = "Automatically disconnect when a crystal is near you")
 public class ModuleCrystalLog extends XdolfModule {
     public ModuleCrystalLog() {
-        super("CrystalAura", XdolfCategory.COMBAT, false);
+        super("CrystalLog", XdolfCategory.COMBAT, false);
     }
 
     @Override
