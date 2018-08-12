@@ -37,10 +37,15 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
 
     @Override
     public void onTick() {
-
+        if (this.isEnabled()) {
+            if (XdolfMod.minecraft.player.isInWater()) {
+                XdolfMod.minecraft.player.motionY = 0.05;
+            }
+        }
     }
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e) {
+        if (!this.isEnabled()) return;
         if (e.getSendPacket() instanceof CPacketPlayer) {
             if (isOverWater(XdolfMod.minecraft.player) && !XdolfMod.minecraft.gameSettings.keyBindSneak.isPressed()) {
                 int t = XdolfMod.minecraft.player.ticksExisted % 2;
@@ -52,6 +57,7 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBoxFormed(CollisionBoxEvent e) {
+        if (!this.isEnabled()) return;
         if (!(e.getBlock() instanceof BlockLiquid)) {
             return;
         }
