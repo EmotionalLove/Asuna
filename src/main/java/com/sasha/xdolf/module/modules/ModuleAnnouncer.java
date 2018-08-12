@@ -51,7 +51,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     public void onTick() {
         counter++;
         if (counter > 20*30) {
-            XdolfMod.scheduler.submit(new AnnouncerTask());
+           new AnnouncerTask().run();
             counter = 0;
         }
 
@@ -68,7 +68,9 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockPlaceEvent e){
-        logMsg("brok");
+        logMsg(blocksBrokenMap.forEach((String ee, Integer gg) -> {
+            logMsg(ee + " " + gg);
+        });
         if (this.isEnabled()){
             if (blocksPlacedMap.containsKey(e.getBlock().getLocalizedName())){
                 blocksPlacedMap.put(e.getBlock().getLocalizedName(), (blocksPlacedMap.get(e.getBlock().getLocalizedName()))+1);
@@ -84,25 +86,22 @@ class AnnouncerTask implements Runnable{
     public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
     @Override
     public void run() {
-        //logMsg(false, "Refreshing announcer");
+        logMsg(false, "Refreshing announcer");
         Random rand = new Random();
-        if (ModuleAnnouncer.swap && blocksBrokenMap.size() != 0){
+        int swap = rand.nextInt(10);
+        if (swap > 5){
             ArrayList<String> blockNames= new ArrayList<>(blocksBrokenMap.keySet());
             String blockname= (blockNames.get(rand.nextInt(blockNames.size())));
             int amt = blocksBrokenMap.get(blockname);
             XdolfMod.minecraft.player.sendChatMessage("> I just mined " + amt + " " + blockname);
             blocksBrokenMap.remove(blockname);
-            ModuleAnnouncer.swap=!swap;
-            return;
         }
-        if (!ModuleAnnouncer.swap &&  blocksPlacedMap.size() != 0){
+       else {
             ArrayList<String> blockNames= new ArrayList<>(blocksPlacedMap.keySet());
             String blockname= (blockNames.get(rand.nextInt(blockNames.size())));
             int amt = blocksPlacedMap.get(blockname);
             XdolfMod.minecraft.player.sendChatMessage("> I just placed " + amt + " " + blockname);
             blocksPlacedMap.remove(blockname);
-            ModuleAnnouncer.swap=!swap;
-            return;
         }
     }
 }
