@@ -67,7 +67,7 @@ public class ModuleKillaura extends XdolfModule {
             }
         }
     }
-    private static void rotateTowardsEntity(Entity entity) {
+    static void rotateTowardsEntity(Entity entity) {
         double x = entity.posX - minecraft.player.posX;
         double z = entity.posZ - minecraft.player.posZ;
         double y = entity.posY + entity.getEyeHeight() / 1.4D - minecraft.player.posY/* + minecraft.player.getEyeHeight() / 1.4D**/;
