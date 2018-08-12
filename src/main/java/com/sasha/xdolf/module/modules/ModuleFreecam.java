@@ -46,7 +46,6 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
         XdolfMod.minecraft.player.setLocationAndAngles(oldX, oldY, oldZ, XdolfMod.minecraft.player.rotationYaw, XdolfMod.minecraft.player.rotationPitch);
         XdolfMod.minecraft.playerController.setGameType(oldGameType);
         XdolfMod.minecraft.player.setGameType(oldGameType);
-
     }
 
     @Override

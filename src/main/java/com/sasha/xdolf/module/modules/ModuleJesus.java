@@ -10,6 +10,7 @@ import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -58,7 +59,7 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
     @SimpleEventHandler
     public void onBoxFormed(CollisionBoxEvent e) {
         if (!this.isEnabled()) return;
-        if (!(e.getBlock() instanceof BlockLiquid)) {
+        if (e.getBlock() != Material.WATER || e.getBlock() != Material.LAVA) {
             return;
         }
         if (XdolfMod.minecraft.player.isInWater() || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
