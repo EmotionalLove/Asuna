@@ -20,4 +20,14 @@ public class ModuleClickGUI extends XdolfModule {
         XdolfMod.minecraft.displayGuiScreen(new XdolfClickGUI());
         this.toggle();
     }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

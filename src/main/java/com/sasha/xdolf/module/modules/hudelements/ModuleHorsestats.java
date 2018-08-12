@@ -12,4 +12,19 @@ public class ModuleHorsestats extends XdolfModule {
     public ModuleHorsestats() {
         super("HorseStats", XdolfCategory.GUI, true);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

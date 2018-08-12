@@ -12,4 +12,19 @@ public class ModuleCoordinates extends XdolfModule {
     public ModuleCoordinates() {
         super("Coordinates", XdolfCategory.GUI, true);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

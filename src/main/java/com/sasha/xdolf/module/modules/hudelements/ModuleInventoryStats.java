@@ -12,4 +12,19 @@ public class ModuleInventoryStats extends XdolfModule {
     public ModuleInventoryStats() {
         super("InventoryStats", XdolfCategory.GUI, true);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

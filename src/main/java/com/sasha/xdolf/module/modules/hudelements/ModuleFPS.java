@@ -12,4 +12,19 @@ public class ModuleFPS extends XdolfModule {
     public ModuleFPS() {
         super("FPS", XdolfCategory.GUI, true);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

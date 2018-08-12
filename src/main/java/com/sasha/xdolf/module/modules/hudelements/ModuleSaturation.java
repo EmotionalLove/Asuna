@@ -12,4 +12,19 @@ public class ModuleSaturation extends XdolfModule {
     public ModuleSaturation() {
         super("Saturation", XdolfCategory.GUI, true);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

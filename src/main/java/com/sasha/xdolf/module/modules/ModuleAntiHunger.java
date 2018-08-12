@@ -17,6 +17,17 @@ public class ModuleAntiHunger extends XdolfModule implements SimpleListener {
     public ModuleAntiHunger() {
         super("AntiHunger", XdolfCategory.MOVEMENT, false);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
     @Override
     public void onTick() {
         if (this.isEnabled() && (!XdolfMod.minecraft.gameSettings.keyBindAttack.isPressed() || !XdolfMod.minecraft.gameSettings.keyBindAttack.isKeyDown())) {

@@ -26,6 +26,16 @@ public class ModuleKillaura extends XdolfModule {
     }
 
     @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
     public void onTick(){
         if (this.isEnabled()) {
             if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...

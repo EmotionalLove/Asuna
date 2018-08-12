@@ -1,6 +1,8 @@
 package com.sasha.xdolf.mixins.client;
 
 import com.mojang.authlib.properties.PropertyMap;
+import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.events.PlayerBlockPlaceEvent;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.Minecraft;
@@ -10,6 +12,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.util.ReportedException;
+import net.minecraft.util.math.RayTraceResult;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -65,8 +68,17 @@ public abstract class MixinMinecraft {
     @Shadow
     public long debugCrashKeyPressTime;
 
+    @Shadow public RayTraceResult objectMouseOver;
+
+    @Inject(method = "rightClickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;swingArm(Lnet/minecraft/util/EnumHand;)V"))
+    public void rightClickMouse(CallbackInfo info){
+        PlayerBlockPlaceEvent event = new PlayerBlockPlaceEvent(this.objectMouseOver.getBlockPos());
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
+    }
+
     /**
      * @author Sasha Stevens
+     * @reason ugh
      */
     @Overwrite
     public void runTickKeyboard() throws IOException {

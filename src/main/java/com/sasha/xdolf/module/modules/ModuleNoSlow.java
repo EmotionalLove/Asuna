@@ -13,6 +13,16 @@ public class ModuleNoSlow extends XdolfModule {
     }
 
     @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
     public void onTick() {
         if (XdolfMod.minecraft.player.isHandActive()) {
             XdolfMod.minecraft.player.moveForward *= 2;

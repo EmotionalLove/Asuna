@@ -14,4 +14,19 @@ public class ModuleWatermark extends XdolfModule {
     public ModuleWatermark() {
         super("Watermark", XdolfCategory.GUI, true);
     }
+
+    @Override
+    public void onEnable() {
+        
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
+    }
 }

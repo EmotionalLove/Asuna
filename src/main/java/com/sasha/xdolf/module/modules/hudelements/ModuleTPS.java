@@ -15,6 +15,16 @@ public class ModuleTPS extends XdolfModule {
     }
 
     @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
     public void onTick(){
         if (XdolfMod.minecraft.currentScreen != null){
 

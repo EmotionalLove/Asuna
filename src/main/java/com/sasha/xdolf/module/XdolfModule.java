@@ -194,9 +194,9 @@ public abstract class XdolfModule {
 
 
 
-    public void onEnable(){}
-    public void onDisable(){}
+    public abstract void onEnable();
+    public  abstract void onDisable();
     public void onRender(){} // called a lot more than 20x per second
-    public void onTick(){} // callee 20x per second
+    public abstract void onTick(); // callee 20x per second
     public void init() {} //used for renderables(?) todo this needs review.
 }

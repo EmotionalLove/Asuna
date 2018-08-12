@@ -21,6 +21,11 @@ public class ModuleNightVision extends XdolfModule {
     }
 
     @Override
+    public void onEnable() {
+
+    }
+
+    @Override
     public void onDisable() {
         XdolfMod.minecraft.player.removePotionEffect(Potion.getPotionById(16));
     }

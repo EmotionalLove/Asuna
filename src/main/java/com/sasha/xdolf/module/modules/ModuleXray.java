@@ -40,6 +40,11 @@ public class ModuleXray extends XdolfModule {
         XdolfMod.minecraft.renderGlobal.loadRenderers();
     }
 
+    @Override
+    public void onTick() {
+
+    }
+
     public static class XrayManager {
 
         public static boolean isXray;

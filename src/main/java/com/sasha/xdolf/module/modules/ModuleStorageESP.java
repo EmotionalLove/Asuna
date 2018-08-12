@@ -16,6 +16,17 @@ public class ModuleStorageESP extends XdolfModule {
     public ModuleStorageESP() {
         super("StorageESP", XdolfCategory.RENDER, false);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
     @Override
     public void onRender() {
         if (!this.isEnabled())
@@ -53,6 +64,11 @@ public class ModuleStorageESP extends XdolfModule {
         }
         //todo int x = XdolfMod.minecraft.world.loadedTileEntityList.stream().filter(tile -> tile. )
         this.setSuffix(i+"");
+    }
+
+    @Override
+    public void onTick() {
+
     }
 
 }

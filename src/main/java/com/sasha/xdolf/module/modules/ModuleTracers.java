@@ -14,6 +14,12 @@ public class ModuleTracers extends XdolfModule {
     public ModuleTracers() {
         super("Tracers", XdolfCategory.RENDER, false);
     }
+
+    @Override
+    public void onEnable() {
+
+    }
+
     @Override
     public void onDisable(){
         i = 0;
@@ -23,5 +29,10 @@ public class ModuleTracers extends XdolfModule {
         if (this.isEnabled()) {
             i = XdolfRender.tracers();
         }
+    }
+
+    @Override
+    public void onTick() {
+
     }
 }
