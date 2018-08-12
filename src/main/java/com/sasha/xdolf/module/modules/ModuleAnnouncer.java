@@ -5,6 +5,7 @@ import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.PlayerBlockBreakEvent;
 import com.sasha.xdolf.events.PlayerBlockPlaceEvent;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.util.text.TextComponentString;
@@ -18,6 +19,7 @@ import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
 /**
  * Created by Sasha on 11/08/2018 at 4:31 PM
  **/
+@ModuleInfo(description = "Sends a message in chat every 30 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
     Timer announcerTimer = new Timer();
