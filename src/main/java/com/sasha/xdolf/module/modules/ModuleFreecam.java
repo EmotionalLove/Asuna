@@ -24,6 +24,9 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
     public static GameType oldGameType;
 
 
+    /**
+     * this module isn't working correctly idk way and idc rn to fix it because my irl can go fuck itself. long story...
+     */
     public ModuleFreecam() {
         super("Freecam", XdolfCategory.MOVEMENT, false);
     }

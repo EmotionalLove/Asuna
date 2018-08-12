@@ -33,7 +33,7 @@ public abstract class MixinNetworkManager {
     @Shadow public Channel channel;
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkManager;flushOutboundQueue()V", ordinal = 0), cancellable = true)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkManager;flushOutboundQueue()V"), cancellable = true)
     public void sendPacket(Packet<?> packetIn, CallbackInfo info){
         ClientPacketSendEvent event = new ClientPacketSendEvent(packetIn);
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
