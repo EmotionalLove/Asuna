@@ -5,6 +5,7 @@ import com.sasha.xdolf.events.CollisionBoxEvent;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.modules.ModuleXray;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -35,6 +36,9 @@ import static net.minecraft.block.Block.NULL_AABB;
 public abstract class MixinBlock {
 
     @Shadow @Final public BlockStateContainer blockState;
+
+    @Shadow @Final public Material blockMaterial;
+
     /**
      * @author Sasha Stevens
      * @reason because i need to do the event thingy
@@ -44,7 +48,7 @@ public abstract class MixinBlock {
     , at = @At("HEAD"), cancellable = true)
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_, CallbackInfo info) {
         AxisAlignedBB blockBox = state.getCollisionBoundingBox(worldIn, pos);
-        CollisionBoxEvent event = new CollisionBoxEvent(this.blockState.getBlock(), pos, blockBox); //todo asuna
+        CollisionBoxEvent event = new CollisionBoxEvent(this.blockMaterial, pos, blockBox); //todo asuna
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
         //this.addCollisionBoxToList(event.getPos(), entityBox , collidingBoxes, event.getAabb())
         if (event.getAabb() != NULL_AABB)
