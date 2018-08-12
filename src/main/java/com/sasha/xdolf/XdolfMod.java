@@ -1,16 +1,20 @@
 package com.sasha.xdolf;
 
 import com.sasha.eventsys.SimpleEventManager;
+import com.sasha.xdolf.command.CommandInfo;
 import com.sasha.xdolf.command.CommandProcessor;
 import com.sasha.xdolf.command.commands.*;
 import com.sasha.xdolf.events.ClientOverlayRenderEvent;
+import com.sasha.xdolf.exception.XdolfException;
 import com.sasha.xdolf.friend.FriendManager;
 import com.sasha.xdolf.gui.hud.XdolfHUD;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.gui.hud.renderableobjects.*;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
+import com.sasha.xdolf.module.XdolfModule;
 import com.sasha.xdolf.module.modules.*;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
@@ -26,9 +30,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.reflections.Reflections;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -63,9 +69,13 @@ public class XdolfMod {
          logMsg(true, "Done!");
          logMsg(true, "Registering commands, renderables and modules...");
         scheduler.schedule(() -> {
-            this.registerCommands();
-            this.registerModules();
-            this.registerRenderables();
+            try {
+                this.registerCommands();
+                this.registerModules();
+                this.registerRenderables();
+            } catch (Exception e){
+                throw new XdolfException("Couldn't register! " + e.getMessage() );
+            }
         }, 0, TimeUnit.NANOSECONDS);
         EVENT_MANAGER.registerListener(new CommandProcessor());
         EVENT_MANAGER.registerListener(new ModuleManager());
@@ -96,38 +106,22 @@ public class XdolfMod {
         PERFORMANCE_ANAL = new XdolfPerformanceAnalyser();
     }
 
-    private void registerCommands() {
+    private void registerCommands() throws Exception{
         CommandProcessor.commandRegistry.clear();
-        CommandProcessor.commandRegistry.add(new AboutCommand());
-        CommandProcessor.commandRegistry.add(new ToggleCommand());
-        CommandProcessor.commandRegistry.add(new ModulesCommand());
-        CommandProcessor.commandRegistry.add(new HelpCommand());
-        CommandProcessor.commandRegistry.add(new BindCommand());
-        CommandProcessor.commandRegistry.add(new XrayCommand());
+        Reflections reflections = new Reflections("com.sasha.xdolf.command.commands");
+        Set<Class<?>> moduleClasses = reflections.getTypesAnnotatedWith(CommandInfo.class);
+        for (Class<?> moduleClass : moduleClasses) {
+            ModuleManager.register((XdolfModule)moduleClass.getConstructor().newInstance());
+        }
     }
 
-    private void registerModules(){
+    private void registerModules() throws Exception {
         ModuleManager.moduleRegistry.clear();
-        ModuleManager.register(new ModuleXray());
-        ModuleManager.register(new ModuleTPS());
-        ModuleManager.register(new ModuleFPS());
-        ModuleManager.register(new ModuleCoordinates());
-        ModuleManager.register(new ModuleSaturation());
-        ModuleManager.register(new ModuleInventoryStats());
-        ModuleManager.register(new ModuleHorsestats());
-        ModuleManager.register(new ModuleHacklist());
-        ModuleManager.register(new ModuleWatermark());
-        ModuleManager.register(new ModuleKillaura());
-        ModuleManager.register(new ModuleStorageESP());
-        ModuleManager.register(new ModuleTracers());
-        ModuleManager.register(new ModuleAntiHunger());
-        ModuleManager.register(new ModuleClickGUI());
-        ModuleManager.register(new ModuleNightVision());
-        ModuleManager.register(new ModuleNoSlow());
-        ModuleManager.register(new ModuleAnnouncer());
-        ModuleManager.register(new ModuleAFKFish());
-        ModuleManager.register(new ModuleAutoRespawn());
-        ModuleManager.register(new ModuleChunkTrace());
+        Reflections reflections = new Reflections("com.sasha.xdolf.module.modules");
+        Set<Class<?>> moduleClasses = reflections.getTypesAnnotatedWith(ModuleInfo.class); /* Anything with this annotation should be an XdolfModule anyways*/
+        for (Class<?> moduleClass : moduleClasses) {
+            ModuleManager.register((XdolfModule)moduleClass.getConstructor().newInstance());
+        }
     }
 
     private void registerRenderables(){
