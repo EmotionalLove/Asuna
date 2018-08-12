@@ -109,21 +109,49 @@ public class XdolfMod {
 
     private void registerCommands() throws Exception{
         CommandProcessor.commandRegistry.clear();
-        Reflections reflections = new Reflections(HelpCommand.class.getPackage());
-        Set<Class<? extends XdolfCommand>> commandClasses = reflections.getSubTypesOf(XdolfCommand.class);
-        for (Class<?> commandClass : commandClasses) {
-            CommandProcessor.commandRegistry.add((XdolfCommand)commandClass.getConstructor().newInstance());
-        }
+        CommandProcessor.commandRegistry.add(new AboutCommand());
+        CommandProcessor.commandRegistry.add(new ToggleCommand());
+        CommandProcessor.commandRegistry.add(new ModulesCommand());
+        CommandProcessor.commandRegistry.add(new HelpCommand());
+        CommandProcessor.commandRegistry.add(new BindCommand());
+        CommandProcessor.commandRegistry.add(new XrayCommand());
+        CommandProcessor.commandRegistry.add(new LagCommand());
     }
 
     private void registerModules() throws Exception {
         ModuleManager.moduleRegistry.clear();
-        Reflections reflections = new Reflections(ModuleXray.class.getPackage());
-        Set<Class<? extends XdolfModule>> moduleClasses = reflections.getSubTypesOf(XdolfModule.class); /* Anything with this annotation should be an XdolfModule anyways*/
+        ModuleManager.register(new ModuleXray());
+        ModuleManager.register(new ModuleTPS());
+        ModuleManager.register(new ModuleFPS());
+        ModuleManager.register(new ModuleCoordinates());
+        ModuleManager.register(new ModuleSaturation());
+        ModuleManager.register(new ModuleInventoryStats());
+        ModuleManager.register(new ModuleHorsestats());
+        ModuleManager.register(new ModuleHacklist());
+        ModuleManager.register(new ModuleWatermark());
+        ModuleManager.register(new ModuleKillaura());
+        ModuleManager.register(new ModuleStorageESP());
+        ModuleManager.register(new ModuleTracers());
+        ModuleManager.register(new ModuleAntiHunger());
+        ModuleManager.register(new ModuleClickGUI());
+        ModuleManager.register(new ModuleNightVision());
+        ModuleManager.register(new ModuleNoSlow());
+        ModuleManager.register(new ModuleAnnouncer());
+        ModuleManager.register(new ModuleAFKFish());
+        ModuleManager.register(new ModuleAutoRespawn());
+        ModuleManager.register(new ModuleChunkTrace());
+        ModuleManager.register(new ModuleFreecam());
+        ModuleManager.register(new ModuleCrystalAura());
+        ModuleManager.register(new ModuleCrystalLog());
+        ModuleManager.register(new ModuleFlight());
+        /*
+        ModuleManager.moduleRegistry.clear();
+        Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
+        Set<Class<? extends XdolfModule>> moduleClasses = reflections.getSubTypesOf(XdolfModule.class);
         for (Class<?> moduleClass : moduleClasses) {
             XdolfMod.logMsg(true, "Registered " +moduleClass.getName());
             ModuleManager.register((XdolfModule)moduleClass.getConstructor().newInstance());
-        }
+        }*///todo fix
     }
 
     private void registerRenderables(){
