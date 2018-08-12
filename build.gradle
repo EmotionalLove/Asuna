@@ -142,6 +142,7 @@ shadowJar {
         include(dependency('org.spongepowered:mixin'))
         include(dependency('net.jodah:typetools'))
         include(dependency('org.yaml:snakeyaml'))
+        include(dependency('org.reflections:reflections'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
