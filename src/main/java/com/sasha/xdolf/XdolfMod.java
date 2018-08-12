@@ -3,6 +3,7 @@ package com.sasha.xdolf;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.xdolf.command.CommandInfo;
 import com.sasha.xdolf.command.CommandProcessor;
+import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.command.commands.*;
 import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.exception.XdolfException;
@@ -111,7 +112,7 @@ public class XdolfMod {
         Reflections reflections = new Reflections("com.sasha.xdolf.command.commands");
         Set<Class<?>> moduleClasses = reflections.getTypesAnnotatedWith(CommandInfo.class);
         for (Class<?> moduleClass : moduleClasses) {
-            ModuleManager.register((XdolfModule)moduleClass.getConstructor().newInstance());
+            CommandProcessor.commandRegistry.add((XdolfCommand)moduleClass.getConstructor().newInstance());
         }
     }
 
