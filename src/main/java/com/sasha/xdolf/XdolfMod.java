@@ -121,6 +121,7 @@ public class XdolfMod {
         Reflections reflections = new Reflections("com.sasha.xdolf.module.modules");
         Set<Class<?>> moduleClasses = reflections.getTypesAnnotatedWith(ModuleInfo.class); /* Anything with this annotation should be an XdolfModule anyways*/
         for (Class<?> moduleClass : moduleClasses) {
+            XdolfMod.logMsg(true, "Registered " +moduleClass.getName());
             ModuleManager.register((XdolfModule)moduleClass.getConstructor().newInstance());
         }
     }

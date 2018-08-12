@@ -32,19 +32,19 @@ public class MixinBlock {
     }
     @Inject(method = "isFullBlock", at = @At("HEAD") , cancellable = true)
     public void isFullBlock(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if (ModuleManager.moduleRegistry.get(0).isEnabled() ) {
+        if (ModuleManager.moduleRegistry.get(0).isEnabled() && !ModuleManager.moduleRegistry.isEmpty()) {
             info.setReturnValue(false);
         }
     }
     @Inject(method = "isFullCube", at = @At("HEAD") , cancellable = true)
     public void isFullCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if (ModuleManager.moduleRegistry.get(0).isEnabled() ) {
+    if (ModuleManager.moduleRegistry.get(0).isEnabled() && !ModuleManager.moduleRegistry.isEmpty()) {
             info.setReturnValue(ModuleXray.xrayBlocks.contains(state.getBlock()));
         }
     }
     @Inject(method = "getRenderType", at = @At("HEAD") , cancellable = true)
     public void getRenderType(IBlockState state, CallbackInfoReturnable<EnumBlockRenderType> info) {
-        if (ModuleManager.moduleRegistry.get(0).isEnabled() ) {
+        if (ModuleManager.moduleRegistry.get(0).isEnabled() && !ModuleManager.moduleRegistry.isEmpty()) {
             if (!state.getBlock().isNormalCube(state) && !ModuleXray.xrayBlocks.contains(state.getBlock())) {
                 info.setReturnValue(EnumBlockRenderType.INVISIBLE);
             }
