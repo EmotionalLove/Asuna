@@ -11,9 +11,11 @@ import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.util.text.TextComponentString;
 
 import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
-import static com.sasha.xdolf.module.modules.ModuleAnnouncer.blocksBrokenMap;
-import static com.sasha.xdolf.module.modules.ModuleAnnouncer.blocksPlacedMap;
+import static com.sasha.xdolf.module.modules.AnnouncerTask.blocksBrokenMap;
+import static com.sasha.xdolf.module.modules.AnnouncerTask.blocksPlacedMap;
 import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
 
 /**
@@ -22,11 +24,9 @@ import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
 @ModuleInfo(description = "Sends a message in chat every 30 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
-    private Timer announcerTimer = new Timer();
     static boolean swap = false;
 
-    public static LinkedHashMap<String, Integer> blocksBrokenMap = new LinkedHashMap<>();
-    public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
+
 
     public ModuleAnnouncer() {
         super("Announcer", XdolfCategory.CHAT, false);
@@ -36,12 +36,12 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     public void onEnable(){
         blocksBrokenMap.clear();
         blocksPlacedMap.clear();
-        announcerTimer.scheduleAtFixedRate(new AnnouncerTask(), 3000, 3000);
+        AnnouncerTask.theThing = XdolfMod.scheduler.scheduleAtFixedRate(new AnnouncerTask(), 30, 30, TimeUnit.SECONDS);
     }
 
     @Override
     public void onDisable() {
-        announcerTimer.cancel();
+        AnnouncerTask.theThing.cancel(true);
     }
 
     @Override
@@ -62,14 +62,17 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     public void onBlockBreak(PlayerBlockPlaceEvent e){
         if (this.isEnabled()){
             if (blocksPlacedMap.containsKey(e.getBlock().getLocalizedName())){
-                blocksPlacedMap.put(e.getBlock().getLocalizedName(), (blocksBrokenMap.get(e.getBlock().getLocalizedName()))+1);
+                blocksPlacedMap.put(e.getBlock().getLocalizedName(), (blocksPlacedMap.get(e.getBlock().getLocalizedName()))+1);
                 return;
             }
             blocksPlacedMap.put(e.getBlock().getLocalizedName(), 1);
         }
     }
 }
-class AnnouncerTask extends TimerTask{
+class AnnouncerTask implements Runnable{
+    public static ScheduledFuture<?> theThing;
+    public static LinkedHashMap<String, Integer> blocksBrokenMap = new LinkedHashMap<>();
+    public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
     @Override
     public void run() {
         XdolfMod.logMsg(true, "Refreshing announcer");
