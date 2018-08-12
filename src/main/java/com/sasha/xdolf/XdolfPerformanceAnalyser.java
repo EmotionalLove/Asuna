@@ -18,22 +18,14 @@ public class XdolfPerformanceAnalyser {
     }
 
     public void recordNewNormalTime(int totalTime) {
-        if (counterNormal > 1200) {
-            counterNormal = 0;
-        }
-        performanceTimesNormal.set(counterNormal, totalTime);
-        counterNormal++;
+        performanceTimesNormal.add(totalTime);
     }
     public void recordNewRenderTime(int totalTime) {
-        if (counterRender > 1200){
-            counterRender =0;
-        }
-        performanceTimesRender.set(counterRender,totalTime);
-        counterRender++;
+        performanceTimesRender.add(totalTime);
     }
 
     public int getCurrentMsNormal(){
-        return performanceTimesNormal.get(counterNormal == 0 ? counterNormal : counterNormal-1);
+        return performanceTimesNormal.get(performanceTimesNormal.size()-1);
     }
     public double getAvgMsNormal(){
         int sum=0;
@@ -43,7 +35,7 @@ public class XdolfPerformanceAnalyser {
         return sum/performanceTimesNormal.size();
     }
     public int getCurrentMsRender(){
-        return performanceTimesRender.get(counterRender == 0 ? counterRender : counterRender-1);
+        return performanceTimesRender.get(performanceTimesRender.size()-1);
     }
     public double getAvgMsRender(){
         int sum=0;
