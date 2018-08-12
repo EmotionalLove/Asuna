@@ -26,6 +26,8 @@ import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
 public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
     static boolean swap = false;
+    public static int counter = 0;
+
 
 
 
@@ -37,21 +39,25 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     public void onEnable(){
         blocksBrokenMap.clear();
         blocksPlacedMap.clear();
-        AnnouncerTask.theThing = XdolfMod.scheduler.scheduleAtFixedRate(new AnnouncerTask(), 30, 30, TimeUnit.SECONDS);
+        //AnnouncerTask.theThing = XdolfMod.scheduler.scheduleAtFixedRate(new AnnouncerTask(), 0, 30, TimeUnit.SECONDS);
     }
 
     @Override
     public void onDisable() {
-        AnnouncerTask.theThing.cancel(true);
+       // AnnouncerTask.theThing.cancel(true);
     }
 
     @Override
     public void onTick() {
+        counter++;
+        if (counter > 20*30) {
+            XdolfMod.scheduler.submit(new AnnouncerTask());
+            counter = 0;
+        }
 
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e){
-        logMsg("brek");
         if (this.isEnabled()){
             if (blocksBrokenMap.containsKey(e.getBlock().getLocalizedName())){
                 blocksBrokenMap.put(e.getBlock().getLocalizedName(), (blocksBrokenMap.get(e.getBlock().getLocalizedName()))+1);
@@ -73,12 +79,12 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
 }
 class AnnouncerTask implements Runnable{
-    public static ScheduledFuture<?> theThing;
+    //public static ScheduledFuture<?> theThing;
     public static LinkedHashMap<String, Integer> blocksBrokenMap = new LinkedHashMap<>();
     public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
     @Override
     public void run() {
-        logMsg(true, "Refreshing announcer");
+        logMsg(false, "Refreshing announcer");
         if (XdolfMod.minecraft.world == null) return; //not logged in to a world
         Random rand = new Random();
         if (ModuleAnnouncer.swap && !blocksBrokenMap.isEmpty()){
