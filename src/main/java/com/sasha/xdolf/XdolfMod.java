@@ -146,6 +146,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleCrystalAura());
         ModuleManager.register(new ModuleCrystalLog());
         ModuleManager.register(new ModuleFlight());
+        ModuleManager.register(new ModuleJesus());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
