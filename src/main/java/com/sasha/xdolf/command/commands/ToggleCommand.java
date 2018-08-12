@@ -19,7 +19,6 @@ public class ToggleCommand extends XdolfCommand {
 
     @Override
     public void onCommand() {
-        super.onCommand();
         if (this.getArguments() == null){
             XdolfMod.logErr(false, "Arguments required! \"-toggle <module>\"");
             return;

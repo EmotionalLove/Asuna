@@ -44,6 +44,7 @@ public class XdolfMod {
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static XdolfDataManager DATA_MANAGER = new XdolfDataManager();
     public static FriendManager FRIEND_MANAGER;
+    public static XdolfPerformanceAnalyser PERFORMANCE_ANAL; // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
@@ -92,6 +93,7 @@ public class XdolfMod {
         }, 500, TimeUnit.MILLISECONDS);
         logMsg(true, "Xdolf cleanly initialised!");
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
+        PERFORMANCE_ANAL = new XdolfPerformanceAnalyser();
     }
 
     private void registerCommands() {
@@ -123,6 +125,8 @@ public class XdolfMod {
         ModuleManager.register(new ModuleNightVision());
         ModuleManager.register(new ModuleNoSlow());
         ModuleManager.register(new ModuleAnnouncer());
+        ModuleManager.register(new ModuleAFKFish());
+        ModuleManager.register(new ModuleAutoRespawn());
     }
 
     private void registerRenderables(){

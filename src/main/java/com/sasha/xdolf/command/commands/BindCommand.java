@@ -21,7 +21,6 @@ public class BindCommand extends XdolfCommand {
 
     @Override
     public void onCommand() {
-        super.onCommand();
         if (this.getArguments() == null || this.getArguments().length != 2){
             XdolfMod.logErr(false, "Arguments required! Try \"-help command bind\"");
             return;

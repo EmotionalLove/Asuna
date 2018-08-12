@@ -68,10 +68,14 @@ public class ModuleManager implements SimpleListener {
     }
 
     public static void tickModules(){
+        long l = System.currentTimeMillis();
         moduleRegistry.forEach(XdolfModule::onTick);
+        XdolfMod.PERFORMANCE_ANAL.recordNewNormalTime((int)(System.currentTimeMillis()-l));
     }
     public static void renderModules(){
+        long l = System.currentTimeMillis();
         moduleRegistry.forEach(XdolfModule::onRender);
+        XdolfMod.PERFORMANCE_ANAL.recordNewRenderTime((int)(System.currentTimeMillis()-l));
     }
 
 }

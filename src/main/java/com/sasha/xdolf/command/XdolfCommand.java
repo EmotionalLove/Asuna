@@ -62,7 +62,5 @@ public abstract class XdolfCommand {
         return (withDelimetre ? commandDelimetre : "") + commandName;
     }
 
-    public void onCommand() {
-        XdolfMod.logMsg(true, "Player executing client command \"" + commandName + "\"");
-    }
+    public abstract void onCommand();
 }
