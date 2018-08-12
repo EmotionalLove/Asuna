@@ -11,6 +11,8 @@ import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.network.play.client.CPacketKeepAlive;
 import net.minecraft.world.GameType;
 
+import static com.sasha.xdolf.XdolfMod.logMsg;
+
 /**
  * Created by Sasha on 12/08/2018 at 9:12 AM
  **/
@@ -49,6 +51,7 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
+        logMsg("oof");
         if (this.isEnabled()) e.setCancelled(true);
     }
     @SimpleEventHandler

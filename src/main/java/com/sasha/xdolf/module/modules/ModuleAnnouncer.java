@@ -22,8 +22,8 @@ import static com.sasha.xdolf.module.modules.ModuleAnnouncer.swap;
 @ModuleInfo(description = "Sends a message in chat every 30 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
-    Timer announcerTimer = new Timer();
-    protected static boolean swap = false;
+    private Timer announcerTimer = new Timer();
+    static boolean swap = false;
 
     public static LinkedHashMap<String, Integer> blocksBrokenMap = new LinkedHashMap<>();
     public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();

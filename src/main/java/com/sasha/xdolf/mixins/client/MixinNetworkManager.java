@@ -39,6 +39,7 @@ public abstract class MixinNetworkManager {
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()){
             info.cancel();
+            return;
         }
         this.dispatchPacket(event.getSendPacket(), null);
         info.cancel();
@@ -47,21 +48,16 @@ public abstract class MixinNetworkManager {
      * @author Sasha Stevens
      * @reason Setup packet recieve event without the unnecessary wizardry
      */
-    @Overwrite
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet<?> p_channelRead0_2_) throws Exception {
-        if (this.channel.isOpen()) {
-            try {
-                ClientPacketRecieveEvent event = new ClientPacketRecieveEvent(p_channelRead0_2_);
-                XdolfMod.EVENT_MANAGER.invokeEvent(event);
-                if (event.isCancelled()){
-                    return;
-                }
-                ((Packet<INetHandler>)event.getRecievedPacket()).processPacket(this.packetListener);
-            }
-            catch (ThreadQuickExitException var4)
-            {
-
-            }
+    @Inject(method = "channelRead0",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Packet;processPacket(Lnet/minecraft/network/INetHandler;)V"), cancellable = true)
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet<?> p_channelRead0_2_, CallbackInfo info) throws Exception {
+        ClientPacketRecieveEvent event = new ClientPacketRecieveEvent(p_channelRead0_2_);
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()){
+            info.cancel();
+            return;
         }
+        ((Packet<INetHandler>)event.getRecievedPacket()).processPacket(this.packetListener);
+        info.cancel();
     }
 }
