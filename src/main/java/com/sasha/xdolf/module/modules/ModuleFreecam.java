@@ -18,7 +18,7 @@ import net.minecraft.world.GameType;
 public class ModuleFreecam extends XdolfModule implements SimpleListener {
 
     public static double oldX, oldY, oldZ;
-
+    public static GameType oldGameType;
 
 
     public ModuleFreecam() {
@@ -30,6 +30,7 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
         oldX=XdolfMod.minecraft.player.posX;
         oldY=XdolfMod.minecraft.player.posY;
         oldZ=XdolfMod.minecraft.player.posZ;
+        oldGameType = XdolfMod.minecraft.playerController.currentGameType;
         XdolfMod.minecraft.playerController.setGameType(GameType.SPECTATOR);
         XdolfMod.minecraft.player.setGameType(GameType.SPECTATOR);
     }
@@ -37,8 +38,8 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
     @Override
     public void onDisable() {
         XdolfMod.minecraft.player.attemptTeleport(oldX,oldY,oldZ);
-        XdolfMod.minecraft.playerController.setGameType(GameType.SPECTATOR);
-        XdolfMod.minecraft.player.setGameType(GameType.SPECTATOR);
+        XdolfMod.minecraft.playerController.setGameType(oldGameType);
+        XdolfMod.minecraft.player.setGameType(oldGameType);
 
     }
 
