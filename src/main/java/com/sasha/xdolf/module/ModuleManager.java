@@ -21,7 +21,13 @@ public class ModuleManager implements SimpleListener {
     public void onPreToggle(XdolfModuleTogglePreEvent e){
         if (e.getToggledModule().hasForcefulAnnotation(e.getToggledModule().getClass()) && e.getToggleState() == ModuleState.DISABLE){
             e.setCancelled(true);
+            return;
         }
+        if (e.getToggleState() == ModuleState.ENABLE){
+            e.getToggledModule().onEnable();
+            return;
+        }
+        e.getToggledModule().onDisable();
     }
 
     @SimpleEventHandler
@@ -33,14 +39,14 @@ public class ModuleManager implements SimpleListener {
             e1.printStackTrace();
         }
         if (e.getToggleState() == ModuleState.ENABLE){
-            e.getToggledModule().onEnable();
+            //e.getToggledModule().onEnable();
             if (!e.getToggledModule().isRenderable()) {
                 XdolfModule.displayList.add(e.getToggledModule());
                 return;
             }
             return;
         }
-        e.getToggledModule().onDisable();
+        //e.getToggledModule().onDisable();
         if (!e.getToggledModule().isRenderable()){
             XdolfModule.displayList.remove(e.getToggledModule());
             return;
