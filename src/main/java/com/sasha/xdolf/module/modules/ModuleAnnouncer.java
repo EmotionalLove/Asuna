@@ -68,7 +68,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockPlaceEvent e){
-        logMsg(blocksBrokenMap.forEach((String ee, Integer gg) -> {
+        blocksBrokenMap.forEach((String ee, Integer gg) -> {
             logMsg(ee + " " + gg);
         });
         if (this.isEnabled()){
