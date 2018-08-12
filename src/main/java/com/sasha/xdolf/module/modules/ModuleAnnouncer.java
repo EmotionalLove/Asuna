@@ -22,10 +22,10 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     static boolean swap = false;
     public static int counter = 0;
 
-    private ArrayList<String> blocksPlacedStr;
-    private ArrayList<Integer> blocksPlacedInt;
-    private ArrayList<String> blocksBrokenStr;
-    private ArrayList<Integer> blocksBrokenInt;
+    private ArrayList<String> blocksPlacedStr = new ArrayList<>();
+    private ArrayList<Integer> blocksPlacedInt = new ArrayList<>();
+    private ArrayList<String> blocksBrokenStr = new ArrayList<>();
+    private ArrayList<Integer> blocksBrokenInt = new ArrayList<>();
 
 
 
@@ -35,10 +35,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
     @Override
     public void onEnable(){
-        blocksBrokenStr = new ArrayList<>();
-        blocksBrokenInt = new ArrayList<>();
-        blocksPlacedStr = new ArrayList<>();
-        blocksPlacedInt = new ArrayList<>();
+
     }
 
     @Override
@@ -48,6 +45,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
     @Override
     public void onTick() {
+        if (!this.isEnabled()) return;
         counter++;
         if (counter > 20*30) {
             logMsg(false, "Refreshing announcer");
