@@ -127,6 +127,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleAnnouncer());
         ModuleManager.register(new ModuleAFKFish());
         ModuleManager.register(new ModuleAutoRespawn());
+        ModuleManager.register(new ModuleChunkTrace());
     }
 
     private void registerRenderables(){

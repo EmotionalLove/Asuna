@@ -7,6 +7,9 @@ import com.sasha.xdolf.gui.hud.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Sasha on 08/08/2018 at 8:30 AM
@@ -97,6 +100,18 @@ public abstract class XdolfModule {
             b.append(", ").append(s[i]);
         }
         this.suffix= " \2478[\2477" + b.toString() + "\2478]";
+    }
+    public void setSuffix(LinkedHashMap<String, Boolean> boolMap){
+        StringBuilder b = new StringBuilder();
+        AtomicInteger counter = new AtomicInteger();
+        boolMap.entrySet().stream().filter(Map.Entry::getValue).forEach(strBool -> {
+            if (counter.get()==0){
+                b.append(strBool.getKey());
+                counter.getAndIncrement();
+                return;
+            }
+            b.append(", ").append(strBool.getKey());
+        });
     }
 
     public int getKeyBind() {
