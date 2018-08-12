@@ -110,16 +110,16 @@ public class XdolfMod {
     private void registerCommands() throws Exception{
         CommandProcessor.commandRegistry.clear();
         Reflections reflections = new Reflections("com.sasha.xdolf.command.commands");
-        Set<Class<?>> moduleClasses = reflections.getTypesAnnotatedWith(CommandInfo.class);
-        for (Class<?> moduleClass : moduleClasses) {
-            CommandProcessor.commandRegistry.add((XdolfCommand)moduleClass.getConstructor().newInstance());
+        Set<Class<? extends XdolfCommand>> commandClasses = reflections.getSubTypesOf(XdolfCommand.class);
+        for (Class<?> commandClass : commandClasses) {
+            CommandProcessor.commandRegistry.add((XdolfCommand)commandClass.getConstructor().newInstance());
         }
     }
 
     private void registerModules() throws Exception {
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections("com.sasha.xdolf.module.modules");
-        Set<Class<?>> moduleClasses = reflections.getTypesAnnotatedWith(ModuleInfo.class); /* Anything with this annotation should be an XdolfModule anyways*/
+        Set<Class<? extends XdolfModule>> moduleClasses = reflections.getSubTypesOf(XdolfModule.class); /* Anything with this annotation should be an XdolfModule anyways*/
         for (Class<?> moduleClass : moduleClasses) {
             XdolfMod.logMsg(true, "Registered " +moduleClass.getName());
             ModuleManager.register((XdolfModule)moduleClass.getConstructor().newInstance());
