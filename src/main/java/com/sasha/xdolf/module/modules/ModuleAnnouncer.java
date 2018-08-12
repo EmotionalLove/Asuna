@@ -84,23 +84,22 @@ class AnnouncerTask implements Runnable{
     public static LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
     @Override
     public void run() {
-        logMsg(false, "Refreshing announcer");
-        if (XdolfMod.minecraft.world == null) return; //not logged in to a world
+        //logMsg(false, "Refreshing announcer");
         Random rand = new Random();
-        if (ModuleAnnouncer.swap && !blocksBrokenMap.isEmpty()){
+        if (ModuleAnnouncer.swap && blocksBrokenMap.size() != 0){
             ArrayList<String> blockNames= new ArrayList<>(blocksBrokenMap.keySet());
             String blockname= (blockNames.get(rand.nextInt(blockNames.size())));
             int amt = blocksBrokenMap.get(blockname);
-            XdolfMod.minecraft.player.sendMessage(new TextComponentString("> I just mined " + amt + " " + blockname));
+            XdolfMod.minecraft.player.sendChatMessage("> I just mined " + amt + " " + blockname);
             blocksBrokenMap.remove(blockname);
             ModuleAnnouncer.swap=!swap;
             return;
         }
-        if (!ModuleAnnouncer.swap && !blocksPlacedMap.isEmpty()){
+        if (!ModuleAnnouncer.swap &&  blocksPlacedMap.size() != 0){
             ArrayList<String> blockNames= new ArrayList<>(blocksPlacedMap.keySet());
             String blockname= (blockNames.get(rand.nextInt(blockNames.size())));
             int amt = blocksPlacedMap.get(blockname);
-            XdolfMod.minecraft.player.sendMessage(new TextComponentString("> I just placed " + amt + " " + blockname));
+            XdolfMod.minecraft.player.sendChatMessage("> I just placed " + amt + " " + blockname);
             blocksPlacedMap.remove(blockname);
             ModuleAnnouncer.swap=!swap;
             return;
