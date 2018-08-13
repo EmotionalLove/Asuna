@@ -62,6 +62,7 @@ public class XdolfMod {
     public void preInit(FMLPreInitializationEvent event) {
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
         FRIEND_MANAGER= new FriendManager();
+        XdolfDiscordPresense.setupPresense();
     }
 
     @EventHandler

@@ -6,6 +6,7 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.PlayerBlockBreakEvent;
 import com.sasha.xdolf.events.PlayerBlockPlaceEvent;
 import com.sasha.xdolf.module.ModuleInfo;
+import com.sasha.xdolf.module.PostToggleExec;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import java.util.*;
@@ -16,6 +17,7 @@ import static com.sasha.xdolf.XdolfMod.logMsg;
  * Created by Sasha on 11/08/2018 at 4:31 PM
  * WHY TF DOESNT THIS WORK OMG ;-; i SWEAr
  **/
+@PostToggleExec
 @ModuleInfo(description = "Sends a message in chat every 30 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
@@ -40,7 +42,6 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
 
     @Override
     public void onDisable() {
-       // AnnouncerTask.theThing.cancel(true);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
         if (!this.isEnabled()) return;
         counter++;
         if (counter > 20*30) {
-            logMsg(false, "Refreshing announcer");
+            //logMsg(false, "Refreshing announcer");
             Random rand = new Random();
             int swap = rand.nextInt(10);
             if (swap > 5){
@@ -75,37 +76,33 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e){
-        if (this.isEnabled()){
-            logMsg("ok");
-            if (blocksBrokenStr.contains(e.getBlock().getLocalizedName())){
-                logMsg("ok 1");
-                blocksBrokenInt.set(blocksBrokenStr.indexOf(e.getBlock().getLocalizedName()),
-                        blocksPlacedInt.get(blocksBrokenStr.indexOf(e.getBlock().getLocalizedName()))+1);
-                logMsg(blocksBrokenStr.get(0));
-                return;
-            }
-            logMsg("oh ok");
-            blocksBrokenStr.add(e.getBlock().getLocalizedName());
-            blocksBrokenInt.add(1);
+        //logMsg("ok");
+        if (blocksBrokenStr.contains(e.getBlock().getLocalizedName())){
+            //logMsg("ok 1");
+            blocksBrokenInt.set(blocksBrokenStr.indexOf(e.getBlock().getLocalizedName()),
+                    blocksPlacedInt.get(blocksBrokenStr.indexOf(e.getBlock().getLocalizedName()))+1);
             logMsg(blocksBrokenStr.get(0));
+            return;
         }
+        //logMsg("oh ok");
+        blocksBrokenStr.add(e.getBlock().getLocalizedName());
+        blocksBrokenInt.add(1);
+        logMsg(blocksBrokenStr.get(0));
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockPlaceEvent e){
-        if (this.isEnabled()){
-            logMsg("ok");
-            if (blocksPlacedStr.contains(e.getBlock().getLocalizedName())){
-                logMsg("ok 1");
-                blocksPlacedInt.set(blocksPlacedStr.indexOf(e.getBlock().getLocalizedName()),
-                        blocksPlacedInt.get(blocksPlacedStr.indexOf(e.getBlock().getLocalizedName()))+1);
-                logMsg(blocksPlacedStr.get(0));
-                return;
-            }
-            logMsg("oh ok");
-            blocksPlacedStr.add(e.getBlock().getLocalizedName());
-            blocksPlacedInt.add(1);
-            logMsg(blocksPlacedStr.get(0));
+        //logMsg("ok");
+        if (blocksPlacedStr.contains(e.getBlock().getLocalizedName())){
+            //logMsg("ok 1");
+            blocksPlacedInt.set(blocksPlacedStr.indexOf(e.getBlock().getLocalizedName()),
+                    blocksPlacedInt.get(blocksPlacedStr.indexOf(e.getBlock().getLocalizedName()))+1);
+            //logMsg(blocksPlacedStr.get(0));
+            return;
         }
+        logMsg("oh ok");
+        blocksPlacedStr.add(e.getBlock().getLocalizedName());
+        blocksPlacedInt.add(1);
+        logMsg(blocksPlacedStr.get(0));
     }
 
 }
