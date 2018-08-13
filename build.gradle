@@ -70,6 +70,7 @@ dependencies {
         exclude module: 'commons-io'
     }
     compile files('libs/SimpleEventSystem.jar')
+    compile files('libs/discord-rpc-2.0.1-all.jar')
     compile files('libs/javax.mail.jar')
     compile files('libs/activation.jar')
     compile group: 'net.jodah', name: 'typetools', version: '0.5.0'
@@ -145,6 +146,7 @@ shadowJar {
         include(dependency('net.jodah:typetools'))
         include(dependency('org.yaml:snakeyaml'))
         include(dependency('org.reflections:reflections'))
+        include(dependency('club.minnced:java-discord-rpc'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
