@@ -78,6 +78,10 @@ public abstract class XdolfModule {
         }
         return d.description();
     }
+    public boolean isPostExec(Class<?> clazz){
+        PostToggleExec d = clazz.getAnnotation(PostToggleExec.class);
+        return d != null;
+    }
 
     public String getModuleNameColoured() {
         return moduleNameColoured;

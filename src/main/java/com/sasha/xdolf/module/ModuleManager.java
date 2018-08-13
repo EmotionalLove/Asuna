@@ -23,10 +23,11 @@ public class ModuleManager implements SimpleListener {
             e.setCancelled(true);
             return;
         }
-        if (e.getToggleState() == ModuleState.ENABLE){
+        if (e.getToggleState() == ModuleState.ENABLE && !e.getToggledModule().isPostExec(e.getToggledModule().getClass())){
             e.getToggledModule().onEnable();
             return;
         }
+        if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) return;
         e.getToggledModule().onDisable();
     }
 
@@ -39,14 +40,15 @@ public class ModuleManager implements SimpleListener {
             e1.printStackTrace();
         }
         if (e.getToggleState() == ModuleState.ENABLE){
-            //e.getToggledModule().onEnable();
+            if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onEnable();
+
             if (!e.getToggledModule().isRenderable()) {
                 XdolfModule.displayList.add(e.getToggledModule());
                 return;
             }
             return;
         }
-        //e.getToggledModule().onDisable();
+        if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onDisable();
         if (!e.getToggledModule().isRenderable()){
             XdolfModule.displayList.remove(e.getToggledModule());
             return;

@@ -3,12 +3,14 @@ package com.sasha.xdolf.module.modules;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.clickgui.XdolfClickGUI;
 import com.sasha.xdolf.module.ModuleInfo;
+import com.sasha.xdolf.module.PostToggleExec;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 
 /**
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
+@PostToggleExec
 @ModuleInfo(description = "Displays the Clickgui")
 public class ModuleClickGUI extends XdolfModule {
     public ModuleClickGUI() {
