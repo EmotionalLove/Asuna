@@ -3,7 +3,6 @@ package com.sasha.xdolf.module.modules;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
-import com.sasha.xdolf.events.ClientPacketRecieveEvent;
 import com.sasha.xdolf.events.ClientPacketSendEvent;
 import com.sasha.xdolf.events.CollisionBoxEvent;
 import com.sasha.xdolf.module.XdolfCategory;
