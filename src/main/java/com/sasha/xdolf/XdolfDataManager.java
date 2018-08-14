@@ -25,6 +25,24 @@ import static com.sasha.xdolf.module.ModuleManager.moduleRegistry;
 public class XdolfDataManager {
     private final Lock threadLock = new ReentrantLock();
     private final String dataFileName = "XdolfData.yml";
+    
+    public synchronized boolean getDRPEnabled() throws IOException {
+        XdolfMod.logMsg(true, "Checking to see if DRP should be enabled.");
+        threadLock.lock();
+        XdolfMod.logWarn(true, "Thread locked.");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            return parser.getBoolean("drpenabled");
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread unlocked.");
+        }
+    }
 
     public synchronized void saveXrayBlocks(ArrayList<Block> blocks) throws IOException {
         XdolfMod.logMsg(true, "Saving Xray blocks...");
