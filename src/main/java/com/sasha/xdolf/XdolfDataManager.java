@@ -34,10 +34,14 @@ public class XdolfDataManager {
             File f = new File(dataFileName);
             if (!f.exists()) {
                 XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
-                f.createNewFile();
+                return true; // assuming true
             }
             YMLParser parser = new YMLParser(f);
-            return parser.getBoolean("drpenabled");
+            if (!parser.exists("xdolf.discordpresence.enabled")){
+                parser.set("xdolf.discordpresence.enabled", true);
+                return true;
+            }
+            return parser.getBoolean("xdolf.discordpresence.enabled");
         } finally {
             threadLock.unlock();
             XdolfMod.logWarn(true, "Thread unlocked.");
