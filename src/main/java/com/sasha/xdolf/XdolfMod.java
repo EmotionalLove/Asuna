@@ -62,7 +62,15 @@ public class XdolfMod {
     public void preInit(FMLPreInitializationEvent event) {
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
         FRIEND_MANAGER= new FriendManager();
-        if (DATA_MANAGER.getDRPEnabled()) {
+        try {
+            if (DATA_MANAGER.getDRPEnabled()) {
+                XdolfDiscordPresense.setupPresense();
+                Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+                    XdolfDiscordPresense.discordRpc.Discord_Shutdown();
+                }));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
             XdolfDiscordPresense.setupPresense();
             Runtime.getRuntime().addShutdownHook(new Thread(()-> {
                 XdolfDiscordPresense.discordRpc.Discord_Shutdown();
@@ -95,7 +103,7 @@ public class XdolfMod {
         logMsg(true, "Done!");
         logMsg(true, "Loading Xray");
         scheduler.schedule(() -> ModuleXray.xrayBlocks =
-                           MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
+                           DATA_MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
         XdolfMod.scheduler.schedule(() -> {//todo test
