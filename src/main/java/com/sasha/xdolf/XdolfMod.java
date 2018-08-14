@@ -63,6 +63,9 @@ public class XdolfMod {
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
         FRIEND_MANAGER= new FriendManager();
         XdolfDiscordPresense.setupPresense();
+        Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+            XdolfDiscordPresense.discordRpc.Discord_Shutdown();
+        }));
     }
 
     @EventHandler
