@@ -38,7 +38,7 @@ public class XdolfDiscordPresense {
                         details = "Main Menu";
                         state = "Thinking about what to do.";
                     }
-                    else if (XdolfMod.minecraft.world.isRemote) {
+                    else if (XdolfMod.minecraft.getCurrentServerData() != null) {
                         details = "Playing Multiplayer";
                         state = "on " + XdolfMod.minecraft.getCurrentServerData().serverIP;
                     }
