@@ -58,7 +58,7 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
     @SimpleEventHandler
     public void onBoxFormed(CollisionBoxEvent e) {
         if (!this.isEnabled()) return;
-        if (e.getBlock() != Material.WATER || e.getBlock() != Material.LAVA) {
+        if (!(e.getBlock() instanceof BlockLiquid)) {
             return;
         }
         if (XdolfMod.minecraft.player.isInWater() || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {

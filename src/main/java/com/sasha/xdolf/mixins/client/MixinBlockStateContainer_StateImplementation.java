@@ -27,10 +27,6 @@ public class MixinBlockStateContainer_StateImplementation {
 
     @Shadow @Final private Block block;
 
-    /**
-     * @author Sasha Stevens
-     * @reason Xdolf Event
-     */
     @Inject(method = "addCollisionBoxToList", at = @At("HEAD"))
     public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185908_6_, CallbackInfo info){
         CollisionBoxEvent event = new CollisionBoxEvent(this.block, pos, entityBox);
