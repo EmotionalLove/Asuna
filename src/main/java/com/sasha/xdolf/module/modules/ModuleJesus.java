@@ -5,6 +5,7 @@ import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketSendEvent;
 import com.sasha.xdolf.events.CollisionBoxEvent;
+import com.sasha.xdolf.module.PostToggleExec;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.block.Block;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Created by Sasha on 12/08/2018 at 2:48 PM
  **/
+@PostToggleExec
 public class ModuleJesus extends XdolfModule implements SimpleListener {
     public ModuleJesus() {
         super("Jesus", XdolfCategory.MOVEMENT, false);
@@ -57,8 +59,10 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBoxFormed(CollisionBoxEvent e) {
-        XdolfMod.logMsg("o");
-        if (!this.isEnabled()) return;
+        if (!this.isEnabled()) {
+            XdolfMod.logMsg("huh muy dood");
+            return;
+        }
         if (!(e.getBlock() instanceof BlockLiquid)) {
             XdolfMod.logMsg("ouch");
             return;
