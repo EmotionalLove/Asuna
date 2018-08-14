@@ -148,7 +148,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleChunkTrace());
         ModuleManager.register(new ModuleFreecam());
         ModuleManager.register(new ModuleCrystalAura());
-        ModuleManager.register(new ModuleCrystalLog());
+        ModuleManager.register(new ModuleCrystalLogout());
         ModuleManager.register(new ModuleFlight());
         ModuleManager.register(new ModuleJesus());
         /*
