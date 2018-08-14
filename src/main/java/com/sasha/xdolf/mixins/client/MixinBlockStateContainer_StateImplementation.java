@@ -33,6 +33,7 @@ public class MixinBlockStateContainer_StateImplementation {
         XdolfMod.EVENT_MANAGER.invokeEvent(event);
         pos = event.getPos();
         entityBox = event.getAabb();
+        XdolfMod.logMsg("oof");
     }
 
 }
