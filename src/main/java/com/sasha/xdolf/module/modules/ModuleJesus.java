@@ -65,10 +65,11 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
         if (e.getBlock().blockMaterial != Material.WATER || e.getBlock().blockMaterial != Material.LAVA) {
             return;
         }
-        if (XdolfMod.minecraft.player.isInWater() || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
+        if (inLiquid(XdolfMod.minecraft.player) || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
+            XdolfMod.logMsg("nuu");
             return;
         }
-        //XdolfMod.logMsg("yassss");
+        XdolfMod.logMsg("yassss");
         e.setAabb(new AxisAlignedBB(0, 0, 0, 1, 0.99, 1));
     }
     private boolean isOverWater(Entity e) {
