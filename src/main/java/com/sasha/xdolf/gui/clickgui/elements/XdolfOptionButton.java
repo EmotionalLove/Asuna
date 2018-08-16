@@ -4,6 +4,8 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.clickgui.XdolfClickGUI;
 import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.misc.XdolfMath;
+import com.sasha.xdolf.module.ModuleManager;
+import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -15,9 +17,9 @@ public class XdolfOptionButton {
 	private String text;
 	private int x, y;
 	boolean overButton;
-	private String toToggle;
+	private XdolfMod toToggle;
 
-	XdolfOptionButton(XdolfWindow window, String text, int x, int y, String toToggle) {
+	XdolfOptionButton(XdolfWindow window, String text, int x, int y, XdolfMod toToggle) {
 		this.window = window;
 		this.text = text;
 		this.x = x;
@@ -58,38 +60,11 @@ public class XdolfOptionButton {
 		if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 0) {
 			XdolfClickGUI.sendPanelToFront(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
-			switch (toToggle) {/*
-				case "ESP.P":
-					ESP.players = !ESP.players;
-					break;
-				case "ESP.PS":
-					ESP.passives = !ESP.passives;
-					break;
-				case "ESP.H":
-					ESP.hostiles = !ESP.hostiles;
-					break;
-				case "CI.NC":
-					ChunkInspection.newChunks = !ChunkInspection.newChunks;
-					break;
-				case "CI.ESP":
-					ChunkInspection.chunkESP = !ChunkInspection.chunkESP;
-					break;
-				case "CI.P":
-					ChunkInspection.pearlNotify = !ChunkInspection.pearlNotify;
-					break;
-				case "CI.BU":
-					ChunkInspection.blockUpdates = !ChunkInspection.blockUpdates;
-					break;
-				case "AW.A":
-					AutoWalk.advanced = true;
-					break;
-				case "AW.S":
-					AutoWalk.advanced = false;
-					break;*/
-				default:
-					XdolfMod.logErr(false,"Key not recognised - please contact the developer.");
-					break;
-			}
+			ModuleManager.moduleRegistry.stream().filter(XdolfModule::hasOptions).forEach(mod -> {
+			    if (mod.getModuleName().toLowerCase().equalsIgnoreCase(this.window.getTitle() + " options")) {
+			        
+                }
+            });
 		} else if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 1) {
 			XdolfClickGUI.sendPanelToFront(window);
 		}

@@ -77,17 +77,10 @@ public class XdolfButton {
 			var4 = 0f;
 		}
 		XdolfMath.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 96 + window.getDragX(), y + 11  + window.getDragY(), 0.5F, var1, var2,var3, var4,1f,1f,1f, varia);
-		//ClientUtils.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 96 + window.getDragX(), y + 11  + window.getDragY(), 0.5F, 0xF0F0F0FF, 0x00000000);
-		Fonts.segoe_30.drawStringWithShadow(displayName, (x + 4 + window.getDragX()), (int)y + window.getDragY(), 0xFFFFFF);/*
-		if (mod.getModuleName().equalsIgnoreCase("ESP")) {
-			this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[. . .]");
-		}
-		if (mod.getModuleName().equalsIgnoreCase("ChunkInspector")) {
-			this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[. . .]");
-		}
-		if (mod.getModuleName().equalsIgnoreCase("AutoWalk")) {
-			this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[. . .]");
-		}*/
+		Fonts.segoe_30.drawStringWithShadow(displayName, (x + 4 + window.getDragX()), (int)y + window.getDragY(), 0xFFFFFF);
+		 if (mod.hasOptions()) {
+			 this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
+		 }
 	}
 	
 	public void mouseClicked(int x, int y, int button) { //TODO: make sure only one button gets toggled even if the windows are overlapping
@@ -98,130 +91,15 @@ public class XdolfButton {
 		} else if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 1) {
 			XdolfClickGUI.sendPanelToFront(window);
 			mc.world.playSound(mc.player.posX, mc.player.posY, mc.player.posZ, SoundEvents.BLOCK_CHEST_OPEN ,SoundCategory.MASTER, 1f, 1f, false);
-			/*if (mod.getModuleName().equalsIgnoreCase("ESP")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[. . .]");
+			if (mod.hasOptions()) {
 				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("esp options")) {
+					if (w.getTitle().toLowerCase().contains(mod.getModuleName().toLowerCase() +" options")) {
 						w.setShown(true);
 						w.drag((window.getX() + window.getDragX()) + 100, y);
 						break;
 					}
 				}
 			}
-			if (mod.getModuleName().equalsIgnoreCase("ChunkInspector")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[. . .]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().equals("chunkinspector options")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("autowalk")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[. . .]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("autowalk")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}/*
-			if (mod.getModuleName().equalsIgnoreCase("killaura")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("killaura")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("antislow")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("antislow")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("liquidjesus")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("jesus")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("antikb")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("antikb")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("spammer")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("spammer")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("flight")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("flight")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("fullbright")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("fullbright")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("notifications")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("notifications")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						//Client.pushNotification(w.getX() + " " + w.getY() + " " + x + " "+ y);
-						break;
-					}
-				}
-			}
-			if (mod.getModuleName().equalsIgnoreCase("tpssync")) {
-				this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
-				for (XdolfWindow w : getWindowList()) {
-					if (w.getTitle().toLowerCase().contains("tpssync")) {
-						w.setShown(true);
-						w.drag((window.getX() + window.getDragX()) + 100, y);
-						//Client.pushNotification(w.getX() + " " + w.getY() + " " + x + " "+ y);
-						break;
-					}
-				}
-			}*/
-
-			//Client.pushNotification("Under construction");
 		}
 	}
 
