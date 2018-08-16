@@ -35,6 +35,7 @@ public class XdolfButton {
                     mod.getModuleOptionsMap().forEach((str,bool) -> this.addOptionsButton(str));
                 }
             }
+            new someThing();
         }
 	}
 	

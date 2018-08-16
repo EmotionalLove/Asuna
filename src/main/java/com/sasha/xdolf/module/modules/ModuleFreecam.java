@@ -57,8 +57,10 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
         if (this.isEnabled()) {
             if (!(e.getRecievedPacket() instanceof CPacketKeepAlive)) {
                 e.setCancelled(true);
+                return;
             }
         }
+        e.setCancelled(false);
     }
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e){
@@ -75,10 +77,12 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
                 pck.x = oldX;
                 pck.y = oldY;
                 pck.z = oldZ;
+                return;
             }
-            else {
-                e.setCancelled(true);
+            if (e.getSendPacket() instanceof CPacketKeepAlive) {
+                return;
             }
+            e.setCancelled(true);
         }
     }
 }
