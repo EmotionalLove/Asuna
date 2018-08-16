@@ -17,9 +17,9 @@ public class XdolfOptionButton {
 	private String text;
 	private int x, y;
 	boolean overButton;
-	private XdolfMod toToggle;
+	private String toToggle;
 
-	XdolfOptionButton(XdolfWindow window, String text, int x, int y, XdolfMod toToggle) {
+	XdolfOptionButton(XdolfWindow window, String text, int x, int y, String toToggle) {
 		this.window = window;
 		this.text = text;
 		this.x = x;
@@ -62,7 +62,8 @@ public class XdolfOptionButton {
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 			ModuleManager.moduleRegistry.stream().filter(XdolfModule::hasOptions).forEach(mod -> {
 			    if (mod.getModuleName().toLowerCase().equalsIgnoreCase(this.window.getTitle() + " options")) {
-			        
+                    mod.toggleOption(this.toToggle);
+                    return;
                 }
             });
 		} else if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 1) {
