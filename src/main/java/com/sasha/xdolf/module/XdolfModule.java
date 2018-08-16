@@ -148,6 +148,9 @@ public abstract class XdolfModule {
             b.append(", ").append(strBool.getKey());
         });
     }
+    public LinkedHashMap<String, Boolean> getModuleOptionsMap() {
+        return moduleOptions;
+    }
 
     public void addOption(String name, boolean def) {
         this.moduleOptions.put(name.toLowerCase(), def);

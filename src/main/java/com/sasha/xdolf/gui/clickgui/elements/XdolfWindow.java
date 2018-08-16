@@ -113,8 +113,8 @@ public class XdolfWindow {
 	public void addButton(XdolfModule module) {
 		buttonList.add(new XdolfButton(this, module, x + 2, y + 12 + (12 * buttonList.size())));
 	}
-	public void addOptionsButton(String name, String booleanToToggle) {
-		optionButtonList.add(new XdolfOptionButton(this, name, x+2, y+12 + (12 * optionButtonList.size()), booleanToToggle));
+	public void addOptionsButton(String name) {
+		optionButtonList.add(new XdolfOptionButton(this, name, x+2, y+12 + (12 * optionButtonList.size()), name));
 	}
 	public void loadButtonsFromCategory(XdolfCategory category) {
 		for(XdolfModule m : ModuleManager.moduleRegistry) {
