@@ -25,11 +25,15 @@ public class ModuleChunkTrace extends XdolfModule implements SimpleListener {
 
     public static LinkedHashMap<Integer, Integer> newChunks = new LinkedHashMap<>();
 
+    /*
     public static boolean chunkESP = false;
     public static boolean pearlNotify = false;
+    */
 
     public ModuleChunkTrace() {
-        super("ChunkTrace", XdolfCategory.RENDER, false);
+        super("ChunkTrace", XdolfCategory.RENDER, false, true);
+        this.addOption("ChunkESP", false);
+        this.addOption("PearlNotify", false);
     }
 
     @Override
@@ -45,10 +49,10 @@ public class ModuleChunkTrace extends XdolfModule implements SimpleListener {
     @Override
     public void onTick() {
         LinkedHashMap<String, Boolean> suffixMap = new LinkedHashMap<>();
-        suffixMap.put("Chunks", chunkESP);
-        suffixMap.put("Pearls", pearlNotify);
+        suffixMap.put("Chunks", this.getOption("ChunkESP"));
+        suffixMap.put("Pearls", this.getOption("PearlNotify"));
         this.setSuffix(suffixMap);
-        if (this.isEnabled() && chunkESP){
+        if (this.isEnabled() && this.getOption("ChunkESP")){
             for (Map.Entry<Integer, Integer> chunk : newChunks.entrySet()) {
                 int x, z;
                 x = chunk.getKey()*16;
@@ -64,6 +68,9 @@ public class ModuleChunkTrace extends XdolfModule implements SimpleListener {
         if (!this.isEnabled()) return;
         if (e.getRecievedPacket() instanceof SPacketSpawnObject){
             SPacketSpawnObject pck = (SPacketSpawnObject) e.getRecievedPacket();
+            if (pck.getEntityID() != 65 || !this.getOption("PearlNotify")) {
+                return;
+            }
             XdolfMod.logMsg(false, "\2478(\247bChunkTrace\2478) \2477Ender pearl loaded @ XYZ *x *y *z".replace("*x", pck.getX()+"")
             .replace("*y", pck.getY()+"").replace("*z", pck.getZ()+""));
         }

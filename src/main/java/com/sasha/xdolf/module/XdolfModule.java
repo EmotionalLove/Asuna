@@ -3,6 +3,7 @@ package com.sasha.xdolf.module;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.XdolfModuleTogglePostEvent;
 import com.sasha.xdolf.events.XdolfModuleTogglePreEvent;
+import com.sasha.xdolf.exception.XdolfModuleOptionNotFoundException;
 import com.sasha.xdolf.gui.hud.XdolfHUD;
 import com.sasha.xdolf.misc.ModuleState;
 
@@ -25,8 +26,41 @@ public abstract class XdolfModule {
     private String colour;
     private int keyBind;
     private boolean isRenderable = false;
+    private boolean hasOptions = false;private LinkedHashMap<String, Boolean> moduleOptions;
 
     public static ArrayList<XdolfModule> displayList = new ArrayList<>(); // used for the hud
+
+    public XdolfModule(String moduleName, XdolfCategory moduleCategory, boolean isRenderable, boolean hasOptions) {
+        this.hasOptions = hasOptions;
+        this.moduleOptions = new LinkedHashMap<>();
+        this.moduleName = moduleName;
+        this.moduleCategory = moduleCategory;
+        String c;
+        if (moduleCategory == XdolfCategory.COMBAT) {
+            c = "4";
+        }
+        else if (moduleCategory == XdolfCategory.CHAT) {
+            c = "3";
+        }
+        else if (moduleCategory == XdolfCategory.GUI) {
+            c = "7";
+        }
+        else if (moduleCategory == XdolfCategory.MISC) {
+            c = "b";
+        }
+        else if (moduleCategory == XdolfCategory.MOVEMENT) {
+            c = "6";
+        }
+        else if (moduleCategory == XdolfCategory.RENDER) {
+            c = "d";
+        }
+        else {
+            c = "8";
+        }
+        this.moduleNameColoured = "\247" + c + moduleName;
+        this.isRenderable= isRenderable;
+        this.isEnabled=false;
+    }
 
     public XdolfModule(String moduleName, XdolfCategory moduleCategory, boolean isRenderable){
         this.moduleName = moduleName;
@@ -56,9 +90,6 @@ public abstract class XdolfModule {
         this.moduleNameColoured = "\247" + c + moduleName;
         this.isRenderable= isRenderable;
         this.isEnabled=false;
-        if(this.isRenderable){
-            this.init();
-        }
     }
 
     ///getters
@@ -118,6 +149,18 @@ public abstract class XdolfModule {
         });
     }
 
+    public void addOption(String name, boolean def) {
+        this.moduleOptions.put(name.toLowerCase(), def);
+    }
+    public void toggleOption(String name) {
+        if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new XdolfModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
+        this.moduleOptions.put(name.toLowerCase(), !this.moduleOptions.get(name.toLowerCase()));
+    }
+    public boolean getOption(String name) {
+        if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new XdolfModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
+        return this.moduleOptions.get(name.toLowerCase());
+    }
+
     public int getKeyBind() {
         return keyBind;
     }
@@ -157,6 +200,7 @@ public abstract class XdolfModule {
     public boolean isRenderable() {
         return isRenderable;
     }
+    public boolean hasOptions() { return hasOptions;}
 
     ///voids
 
@@ -217,5 +261,4 @@ public abstract class XdolfModule {
     public  abstract void onDisable();
     public void onRender(){} // called a lot more than 20x per second
     public abstract void onTick(); // callee 20x per second
-    public void init() {} //used for renderables(?) todo this needs review.
 }

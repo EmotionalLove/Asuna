@@ -54,8 +54,11 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
-        //logMsg("oof");
-        if (this.isEnabled()) e.setCancelled(true);
+        if (this.isEnabled()) {
+            if (!(e.getRecievedPacket() instanceof CPacketKeepAlive)) {
+                e.setCancelled(true);
+            }
+        }
     }
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e){
