@@ -4,9 +4,6 @@ import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.gui.clickgui.elements.XdolfWindow;
 import com.sasha.xdolf.gui.clickgui.elements.WindowType;
 import com.sasha.xdolf.gui.clickgui.windows.*;
-import com.sasha.xdolf.gui.clickgui.windows.optionWindows.WindowOptionsAutoWalk;
-import com.sasha.xdolf.gui.clickgui.windows.optionWindows.WindowOptionsChunkInspector;
-import com.sasha.xdolf.gui.clickgui.windows.optionWindows.WindowOptionsESP;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
@@ -26,9 +23,6 @@ public class XdolfClickGUI extends GuiScreen {
 	public static WindowMovement movement = new WindowMovement();
 	public static WindowHUD hud = new WindowHUD();
 	public static WindowChat chat = new WindowChat();
-	public static WindowOptionsESP espoptions = new WindowOptionsESP();
-	public static WindowOptionsChunkInspector cioptions = new WindowOptionsChunkInspector();
-	public static WindowOptionsAutoWalk aaa = new WindowOptionsAutoWalk();
 
 
 	@Override

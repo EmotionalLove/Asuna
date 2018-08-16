@@ -28,6 +28,14 @@ public class XdolfButton {
 		this.x = x;
 		this.y = y;
 		this.displayName = mod.getModuleName();
+		if (mod.hasOptions()) {
+            class someThing extends XdolfWindow {
+                public someThing() {
+                    super(mod.getModuleName() + " Options", 2, 12, false, WindowType.OPTION);
+                    mod.getModuleOptionsMap().forEach((str,bool) -> this.addOptionsButton(str));
+                }
+            }
+        }
 	}
 	
 	public void draw() {
