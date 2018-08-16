@@ -39,6 +39,23 @@ public abstract class MixinBlock {
 
     @Shadow @Final public Material blockMaterial;
 
+    @Inject(method = "addCollisionBoxToList(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/AxisAlignedBB;Ljava/util/List;Lnet/minecraft/entity/Entity;Z)V"
+            , at = @At("HEAD"), cancellable = true)
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_, CallbackInfo info) {
+        AxisAlignedBB blockBox = state.getCollisionBoundingBox(worldIn, pos);
+        CollisionBoxEvent event = new CollisionBoxEvent(this.blockState.getBlock(), pos, blockBox);
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.getAabb() != NULL_AABB)
+        {
+            AxisAlignedBB axisalignedbb = event.getAabb().offset(event.getPos());
+
+            if (entityBox.intersects(axisalignedbb))
+            {
+                collidingBoxes.add(axisalignedbb);
+            }
+        }
+        info.cancel();
+    }
 
     @Inject(method = "isOpaqueCube", at = @At("HEAD") , cancellable = true)
     public void isOpaqueCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
