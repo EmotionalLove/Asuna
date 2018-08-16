@@ -9,7 +9,6 @@
     "MixinEntityRenderer",
     "MixinMinecraft",
     "MixinBlock",
-    "MixinPlayerControllerMP",
-    "MixinBlockStateContainer_StateImplementation"
+    "MixinPlayerControllerMP"
   ]
 }
