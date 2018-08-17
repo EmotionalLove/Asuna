@@ -2,10 +2,9 @@ package com.sasha.xdolf.module.modules;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.xdolf.XdolfDataManager;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketRecieveEvent;
-import com.sasha.xdolf.misc.XdolfMath;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
@@ -16,9 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.sasha.xdolf.XdolfMod.logMsg;
 import static com.sasha.xdolf.XdolfMod.logWarn;
 
+@ModuleInfo(description = "Automatically ignore players that are spamming in chat.")
 public class ModuleAutoIgnore extends XdolfModule implements SimpleListener {
 
     public static HashMap<String/* Player's name */, Integer/* VL */> spamViolationMap = new HashMap<>();
