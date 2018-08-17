@@ -25,6 +25,42 @@ import static com.sasha.xdolf.module.ModuleManager.moduleRegistry;
 public class XdolfDataManager {
     private final Lock threadLock = new ReentrantLock();
     private final String dataFileName = "XdolfData.yml";
+
+    public synchronized void saveIgnorelist(ArrayList<String> ignores) throws IOException {
+        XdolfMod.logMsg(true, "Saving ignorelist...");
+        threadLock.lock();
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            parser.set("xdolf.ignorelist", ignores);
+            parser.save();
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized List<String> loadIgnorelist() throws IOException {
+        XdolfMod.logMsg(true, "Getting ignorelist...");
+        threadLock.lock();
+        XdolfMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                XdolfMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            return parser.getStringList("xdolf.ignorelist");
+        } finally {
+            threadLock.unlock();
+            XdolfMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
     
     public synchronized boolean getDRPEnabled() throws IOException {
         XdolfMod.logMsg(true, "Checking to see if DRP should be enabled.");
