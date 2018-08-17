@@ -41,7 +41,7 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
     @Override
     public void onTick() {
         if (this.isEnabled()) {
-            if (XdolfMod.minecraft.player.isInWater()) {
+            if (inLiquid(XdolfMod.minecraft.player)) {
                 XdolfMod.minecraft.player.motionY = 0.05;
             }
         }
