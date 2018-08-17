@@ -170,6 +170,7 @@ public class XdolfMod {
         /*ModuleManager.register(new ModuleCameraClip());*/ //todo
         ModuleManager.register(new ModuleElytraBoost());
         ModuleManager.register(new ModuleElytraFlight());
+        ModuleManager.register(new ModuleEntitySpeed());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
