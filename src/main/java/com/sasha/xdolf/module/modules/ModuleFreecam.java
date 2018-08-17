@@ -17,16 +17,12 @@ import static com.sasha.xdolf.XdolfMod.logMsg;
 /**
  * Created by Sasha on 12/08/2018 at 9:12 AM
  **/
-@ModuleInfo(description = "Allows you to fly through solid objects.")
+@ModuleInfo(description = "Client-sided spectator mode.") //todo fix the fact that you cant fly thru stuff
 public class ModuleFreecam extends XdolfModule implements SimpleListener {
 
     public static double oldX, oldY, oldZ;
     public static GameType oldGameType;
 
-
-    /**
-     * this module isn't working correctly idk way and idc rn to fix it because my irl can go fuck itself. long story...
-     */
     public ModuleFreecam() {
         super("Freecam", XdolfCategory.MOVEMENT, false);
     }

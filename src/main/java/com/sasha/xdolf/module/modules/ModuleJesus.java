@@ -5,6 +5,7 @@ import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketSendEvent;
 import com.sasha.xdolf.events.CollisionBoxEvent;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.PostToggleExec;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
  * Created by Sasha on 12/08/2018 at 2:48 PM
  **/
 @PostToggleExec
+@ModuleInfo(description = "Walk on water!")
 public class ModuleJesus extends XdolfModule implements SimpleListener {
     public ModuleJesus() {
         super("Jesus", XdolfCategory.MOVEMENT, false);
