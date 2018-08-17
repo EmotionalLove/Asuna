@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 public class XdolfMod {
     public static final String MODID = "xdolfforge";
     public static final String NAME = "Xdolf";
-    public static final String VERSION = "4.0";
+    public static final String VERSION = "4.0pre";
 
     private static Logger logger = LogManager.getLogger("Xdolf " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
