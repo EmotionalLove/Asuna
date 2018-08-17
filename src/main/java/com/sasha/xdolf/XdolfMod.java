@@ -167,7 +167,9 @@ public class XdolfMod {
         ModuleManager.register(new ModuleClientIgnore());
         ModuleManager.register(new ModuleAutoIgnore());
         ModuleManager.register(new ModuleAutoSprint());
-        ModuleManager.register(new ModuleCameraClip());
+        /*ModuleManager.register(new ModuleCameraClip());*/ //todo
+        ModuleManager.register(new ModuleElytraBoost());
+        ModuleManager.register(new ModuleElytraFlight());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
