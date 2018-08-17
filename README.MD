@@ -21,7 +21,11 @@ https://discord.gg/Z2Cm4de
 
 ### Collaborators
 x0XP (ported original Adolf modules, module base, utilities)
+
 Sgt. Pepper (original module base/modules, project hosting, upgrade to 1.12)
+
 LeafHacker/BeefHacker (NCP Jesus)
+
 Meckimp (???)
+
 2F4U (upgrade to 1.12.2, Xdolf 3.x/4.x)
