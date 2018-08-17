@@ -133,6 +133,8 @@ public class XdolfMod {
         CommandProcessor.commandRegistry.add(new BindCommand());
         CommandProcessor.commandRegistry.add(new XrayCommand());
         CommandProcessor.commandRegistry.add(new LagCommand());
+        CommandProcessor.commandRegistry.add(new IgnoreCommand());
+        CommandProcessor.commandRegistry.add(new IgnorelistCommand());
     }
 
     private void registerModules() throws Exception {
@@ -162,6 +164,8 @@ public class XdolfMod {
         ModuleManager.register(new ModuleCrystalLogout());
         ModuleManager.register(new ModuleFlight());
         ModuleManager.register(new ModuleJesus());
+        ModuleManager.register(new ModuleClientIgnore());
+        ModuleManager.register(new ModuleAutoIgnore());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
