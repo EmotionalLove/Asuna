@@ -11,6 +11,7 @@ import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -62,15 +63,12 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
         if (!this.isEnabled()) {
             return;
         }
-        if (e.getBlock().blockMaterial != Material.WATER || e.getBlock().blockMaterial != Material.LAVA) {
-            XdolfMod.logMsg(e.getBlock().getLocalizedName() + " | " + e.getBlock().blockMaterial);
+        if (!e.getBlock().getUnlocalizedName().trim().matches("tile\\.water|tile\\.lava")) {
             return;
         }
         if (inLiquid(XdolfMod.minecraft.player) || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
-            XdolfMod.logMsg("nuu");
             return;
         }
-        XdolfMod.logMsg("yassss");
         e.setAabb(new AxisAlignedBB(0, 0, 0, 1, 0.99, 1));
     }
     private boolean isOverWater(Entity e) {
