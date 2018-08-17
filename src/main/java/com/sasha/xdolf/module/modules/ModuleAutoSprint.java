@@ -21,7 +21,7 @@ public class ModuleAutoSprint extends XdolfModule {
 
     @Override
     public void onTick() {
-        if (!XdolfMod.minecraft.player.isSprinting()) {
+        if (!XdolfMod.minecraft.player.isSprinting() && this.isEnabled()) {
             XdolfMod.minecraft.player.setSprinting(true);
         }
     }
