@@ -166,6 +166,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleJesus());
         ModuleManager.register(new ModuleClientIgnore());
         ModuleManager.register(new ModuleAutoIgnore());
+        ModuleManager.register(new ModuleAutoSprint());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
