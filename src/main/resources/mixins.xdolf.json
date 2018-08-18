@@ -9,6 +9,7 @@
     "MixinEntityRenderer",
     "MixinMinecraft",
     "MixinBlock",
-    "MixinPlayerControllerMP"
+    "MixinPlayerControllerMP",
+    "MixinEntityLivingBase"
   ]
 }
