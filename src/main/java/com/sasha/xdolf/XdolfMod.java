@@ -172,6 +172,8 @@ public class XdolfMod {
         ModuleManager.register(new ModuleElytraFlight());
         ModuleManager.register(new ModuleEntitySpeed());
         ModuleManager.register(new ModuleLowJump());
+        ModuleManager.register(new ModuleMiddleClickBlock());
+        ModuleManager.register(new ModuleExtendedTablist());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
