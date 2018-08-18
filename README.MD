@@ -28,4 +28,4 @@ LeafHacker/BeefHacker (NCP Jesus)
 
 Meckimp (???)
 
-Sasha (upgrade to 1.12.2, Xdolf 3.x/4.x)
+2F4U/Sasha (upgrade to 1.12.2, Xdolf 3.x/4.x)
