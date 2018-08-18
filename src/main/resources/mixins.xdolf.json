@@ -10,6 +10,7 @@
     "MixinMinecraft",
     "MixinBlock",
     "MixinPlayerControllerMP",
-    "MixinEntityLivingBase"
+    "MixinEntityLivingBase",
+    "MixinGuiPlayerTabOverlay"
   ]
 }

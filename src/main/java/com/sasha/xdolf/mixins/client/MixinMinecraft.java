@@ -2,6 +2,7 @@ package com.sasha.xdolf.mixins.client;
 
 import com.mojang.authlib.properties.PropertyMap;
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.events.ClientMouseClickEvent;
 import com.sasha.xdolf.events.PlayerBlockPlaceEvent;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
@@ -164,5 +165,18 @@ public abstract class MixinMinecraft {
 
             this.processKeyBinds();
         }
+    }
+    @Inject(method = "middleClickMouse", at = @At("HEAD"), cancellable = true)
+    public void middleClickMouse(CallbackInfo iinfo) {
+        ClientMouseClickEvent.Middle event = new ClientMouseClickEvent.Middle();
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()) iinfo.cancel();
+    }
+
+    @Inject(method = "rightClickMouse", at = @At("HEAD"), cancellable = true)
+    protected void rightClickMouse$0(CallbackInfo iinfo) {
+        ClientMouseClickEvent.Right event = new ClientMouseClickEvent.Right();
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()) iinfo.cancel();
     }
 }
