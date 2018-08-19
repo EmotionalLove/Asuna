@@ -12,6 +12,7 @@
     "MixinPlayerControllerMP",
     "MixinEntityLivingBase",
     "MixinGuiPlayerTabOverlay",
-    "MixinBlockLiquid"
+    "MixinBlockLiquid",
+    "MixinRender"
   ]
 }
