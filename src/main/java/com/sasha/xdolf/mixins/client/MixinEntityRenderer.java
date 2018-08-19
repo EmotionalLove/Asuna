@@ -36,7 +36,7 @@ public class MixinEntityRenderer {
         GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float)(isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
         float scale = 0.025f;
-        if (ModuleManager.moduleRegistry.get(3).isEnabled()) {
+        if (ModuleManager.moduleRegistry.get(2).isEnabled()) {
             isSneaking = false;
             double distance = Math.sqrt(x * x + y * y + z * z);
             if (distance > 10) {
@@ -68,7 +68,7 @@ public class MixinEntityRenderer {
 
         if (!isSneaking)
         {
-            fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, ModuleManager.moduleRegistry.get(3).isEnabled() ? 0xFFFFFF : 553648127);
+            fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, ModuleManager.moduleRegistry.get(2).isEnabled() ? 0xFFFFFF : 553648127);
             GlStateManager.enableDepth();
         }
 

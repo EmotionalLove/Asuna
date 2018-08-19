@@ -142,6 +142,7 @@ public class XdolfMod {
         ModuleManager.moduleRegistry.clear();
         ModuleManager.register(new ModuleXray());
         ModuleManager.register(new ModuleWireframe());
+        ModuleManager.register(new ModuleNamePlates());
         ModuleManager.register(new ModuleTPS());
         ModuleManager.register(new ModuleFPS());
         ModuleManager.register(new ModuleCoordinates());
@@ -176,7 +177,6 @@ public class XdolfMod {
         ModuleManager.register(new ModuleLowJump());
         ModuleManager.register(new ModuleMiddleClickBlock());
         ModuleManager.register(new ModuleExtendedTablist());
-        ModuleManager.register(new ModuleNamePlates());
         ModuleManager.register(new ModuleAntiAFK());
         /*
         ModuleManager.moduleRegistry.clear();
