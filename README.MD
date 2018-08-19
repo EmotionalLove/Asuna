@@ -4,7 +4,7 @@ This is a work in progress. ETA: One week(?)
 
 ### About Adorufu
 
-Adorufu is a continuation of the Xdolf 3.x series written by me (sasha). Per x0XP's request the client has been renamed to Adorufu and it is no longer has anything to do with Xdolf.
+Adorufu is a minecraft client made for Forge
 
 ### Installation tutorial
 
