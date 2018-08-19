@@ -64,9 +64,6 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
         if (!this.isEnabled()) {
             return;
         }
-        if (!e.getBlock().getUnlocalizedName().trim().matches("tile\\.water|tile\\.lava")) {
-            return;
-        }
         if (inLiquid(XdolfMod.minecraft.player) || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
             return;
         }
