@@ -4,9 +4,7 @@ This is a work in progress. ETA: One week(?)
 
 ### About Adorufu
 
-Adorufu began as a Minecraft cheat client based off of x0XP's Adolf client for Minecraft 1.6.x. Originally distributed as a Minecraft version JAR, it recieved negative attention from Mojang, and it eventually stopped being developed. Adorufu 3.x was completely re-written, however there were a lot of bugs, and it was still written into a versions JAR. Adorufu 4.x is written as a Forge mod, and compatible with other Forge mods, and carefully rewritten. Stay tuned for the first release.
-
-"Adorufu" is a combination of xcheat (Sgt. Pepper's original base) and Adolf. It is styled Adorufu. Not Adorufu, not Adorufu. It is not a pun on xD. It is pronounced "Ex-dolf", or "Zee-dolf" if you're British.
+Adorufu is a continuation of the Xdolf 3.x series written by me (sasha). Per x0XP's request the client has been renamed to Adorufu and it is no longer has anything to do with Xdolf.
 
 ### Installation tutorial
 
@@ -18,14 +16,3 @@ Coming soon...
 
 ### Official Discord
 https://discord.gg/Z2Cm4de
-
-### Collaborators
-x0XP (ported original Adolf modules, module base, utilities)
-
-Sgt. Pepper (original module base/modules, project hosting, upgrade to 1.12)
-
-LeafHacker/BeefHacker (NCP Jesus)
-
-Meckimp (???)
-
-Sasha (previously known as 2F4U) (upgrade to 1.12.2, Adorufu 3.x/4.x)
