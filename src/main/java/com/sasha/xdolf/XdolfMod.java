@@ -174,6 +174,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleLowJump());
         ModuleManager.register(new ModuleMiddleClickBlock());
         ModuleManager.register(new ModuleExtendedTablist());
+        ModuleManager.register(new ModuleNamePlates());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
