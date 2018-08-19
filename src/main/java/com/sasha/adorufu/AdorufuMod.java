@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION)
 public class AdorufuMod {
-    public static final String MODID = "Adorufuforge";
+    public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String VERSION = "4.0pre";
 

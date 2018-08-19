@@ -1,6 +1,6 @@
 [
 {
-  "modid": "Adorufuforge",
+  "modid": "adorufuforge",
   "name": "Adorufu",
   "description": "Minecraft hacked client geared towards 2b2t and anarchy.",
   "version": "${version}",
@@ -8,7 +8,7 @@
   "url": "",
   "updateUrl": "",
   "authorList": ["Sasha"],
-  "credits": "x0XP and Sgt Pepper for original name and GUI concept.",
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
