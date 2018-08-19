@@ -24,8 +24,8 @@ public class AdorufuDiscordPresense {
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.startTimestamp = System.currentTimeMillis() / 1000L; // epoch second
         presence.details = details;
-        presence.largeImageKey = "Adorufucover";
-        presence.smallImageKey = "Adorufusmol_2";
+        presence.largeImageKey = "xdolfcover";
+        presence.smallImageKey = "xdolfsmol_2";
         presence.state = state;
         discordRpc.Discord_UpdatePresence(presence);
         // in a worker thread
