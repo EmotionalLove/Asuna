@@ -80,6 +80,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e){
+        if (!this.isEnabled()) return;
         //logMsg("ok");
         if (blocksBrokenMap.containsKey(e.getBlock().getLocalizedName())){
             //logMsg("ok 1");
@@ -91,6 +92,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockPlaceEvent e){
+        if (!this.isEnabled()) return;
         //logMsg("ok");
         if (blocksPlacedMap.containsKey(e.getBlock().getLocalizedName())){
             //logMsg("ok 1");
