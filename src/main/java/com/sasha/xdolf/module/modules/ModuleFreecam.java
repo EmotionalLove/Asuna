@@ -5,6 +5,7 @@ import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketRecieveEvent;
 import com.sasha.xdolf.events.ClientPacketSendEvent;
+import com.sasha.xdolf.events.ClientPushOutOfBlocksEvent;
 import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
@@ -75,5 +76,9 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
                 e.setCancelled(true);
             }
         }
+    }
+    @SimpleEventHandler
+    public void onPushoutofblocks(ClientPushOutOfBlocksEvent e) {
+        if (this.isEnabled()) e.setCancelled(true);
     }
 }
