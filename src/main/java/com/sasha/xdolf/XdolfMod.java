@@ -1,9 +1,7 @@
 package com.sasha.xdolf;
 
 import com.sasha.eventsys.SimpleEventManager;
-import com.sasha.xdolf.command.CommandInfo;
 import com.sasha.xdolf.command.CommandProcessor;
-import com.sasha.xdolf.command.XdolfCommand;
 import com.sasha.xdolf.command.commands.*;
 import com.sasha.xdolf.events.ClientOverlayRenderEvent;
 import com.sasha.xdolf.exception.XdolfException;
@@ -13,17 +11,14 @@ import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.gui.hud.renderableobjects.*;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
-import com.sasha.xdolf.module.ModuleAntiAFK;
-import com.sasha.xdolf.module.ModuleInfo;
+import com.sasha.xdolf.module.modules.ModuleAntiAFK;
 import com.sasha.xdolf.module.ModuleManager;
-import com.sasha.xdolf.module.XdolfModule;
 import com.sasha.xdolf.module.modules.*;
 import com.sasha.xdolf.module.modules.hudelements.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -32,13 +27,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.reflections.Reflections;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -181,6 +171,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleAntiAFK());
         ModuleManager.register(new ModuleYawLock());
         ModuleManager.register(new ModuleQueueTime());
+        ModuleManager.register(new ModuleNoPush());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
