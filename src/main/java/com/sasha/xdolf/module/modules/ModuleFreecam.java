@@ -52,7 +52,7 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
 
     @Override
     public void onTick() {
-
+        XdolfMod.minecraft.player.noClip = true;
     }
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
