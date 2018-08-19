@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class AdorufuMod {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
-    public static final String JAP_NAME = "アドルフ";
+    public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
     public static final String VERSION = "1.0pre";
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
