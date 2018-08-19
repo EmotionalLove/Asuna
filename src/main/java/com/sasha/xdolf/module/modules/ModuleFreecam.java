@@ -8,8 +8,11 @@ import com.sasha.xdolf.events.ClientPacketSendEvent;
 import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
+import net.minecraft.network.play.client.CPacketInput;
 import net.minecraft.network.play.client.CPacketKeepAlive;
 import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.network.play.server.SPacketChat;
+import net.minecraft.network.play.server.SPacketTimeUpdate;
 import net.minecraft.world.GameType;
 
 import static com.sasha.xdolf.XdolfMod.logMsg;
@@ -53,34 +56,24 @@ public class ModuleFreecam extends XdolfModule implements SimpleListener {
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
         if (this.isEnabled()) {
-            if (!(e.getRecievedPacket() instanceof CPacketKeepAlive)) {
-                e.setCancelled(true);
+            if (e.getRecievedPacket() instanceof SPacketTimeUpdate) {
                 return;
             }
+            if (e.getRecievedPacket() instanceof CPacketKeepAlive) {
+                return;
+            }
+            if (e.getRecievedPacket() instanceof SPacketChat) {
+                return;
+            }
+            e.setCancelled(true);
         }
-        e.setCancelled(false);
     }
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e){
         if (this.isEnabled()){
-            if (e.getSendPacket() instanceof CPacketPlayer.Position) {
-                CPacketPlayer.Position pck = (CPacketPlayer.Position) e.getSendPacket();
-                pck.x = oldX;
-                pck.y = oldY;
-                pck.z = oldZ;
-                return;
+            if(e.getSendPacket() instanceof CPacketPlayer || e.getSendPacket() instanceof CPacketInput) {
+                e.setCancelled(true);
             }
-            if (e.getSendPacket() instanceof CPacketPlayer.PositionRotation) {
-                CPacketPlayer.PositionRotation pck = (CPacketPlayer.PositionRotation) e.getSendPacket();
-                pck.x = oldX;
-                pck.y = oldY;
-                pck.z = oldZ;
-                return;
-            }
-            if (e.getSendPacket() instanceof CPacketKeepAlive) {
-                return;
-            }
-            e.setCancelled(true);
         }
     }
 }
