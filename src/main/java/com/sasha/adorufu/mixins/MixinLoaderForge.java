@@ -19,7 +19,7 @@ public class MixinLoaderForge implements IFMLLoadingPlugin {
      * I found out the hard way that you cannot make calls to AdorufuMod in this constructor... Don't do it.
      */
     public MixinLoaderForge(){
-        String mixinConfig = "mixins.Adorufu.json";
+        String mixinConfig = "mixins.adorufu.json";
         String envObf = "searge";
         MixinBootstrap.init();
         Mixins.addConfiguration(mixinConfig);

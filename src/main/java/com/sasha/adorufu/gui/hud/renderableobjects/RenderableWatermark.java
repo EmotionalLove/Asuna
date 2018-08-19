@@ -22,19 +22,19 @@ public class RenderableWatermark extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.JAP_NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
     }
     @Override
     public void renderObjectLB(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.JAP_NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
     }
     @Override
     public void renderObjectRT(int yyy) {
-        String s = "\247" + "4" + AdorufuMod.JAP_NAME + " \247" + "7" + AdorufuMod.VERSION;
+        String s = "\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION;
         Fonts.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - Fonts.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     @Override
     public void renderObjectRB(int yyy) {
-        Fonts.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.JAP_NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
+        Fonts.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
     }
 }
