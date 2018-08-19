@@ -25,9 +25,11 @@ import net.minecraft.util.math.BlockPos;
 @PostToggleExec
 @ModuleInfo(description = "Walk on water!")
 public class ModuleJesus extends XdolfModule implements SimpleListener {
-    private static AxisAlignedBB WATER_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
+    public static AxisAlignedBB WATER_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
+    public static ModuleJesus INSTANCE;
     public ModuleJesus() {
         super("Jesus", XdolfCategory.MOVEMENT, false);
+        INSTANCE = this;
     }
 
     @Override
@@ -60,15 +62,11 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
             }
         }
     }
-    @SimpleEventHandler
-    public void onBoxFormed(MinecraftGetAABBEvent e) {
+    public boolean doJesus() {
         if (!this.isEnabled()) {
-            return;
+            return false;
         }
-        if (inLiquid(XdolfMod.minecraft.player) || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
-            return;
-        }
-        e.setAxisAlignedBB(WATER_AABB);
+        return !inLiquid(XdolfMod.minecraft.player) && !XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(XdolfMod.minecraft.player.fallDistance > 2);
     }
     private boolean isOverWater(Entity e) {
         BlockPos pos = e.getPosition();
