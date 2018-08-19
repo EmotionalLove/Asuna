@@ -1,10 +1,13 @@
 package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.util.MovementInput;
+import net.minecraftforge.fml.common.Mod;
 
+@ModuleInfo(description = "Speedhack for ridable animals")
 public class ModuleEntitySpeed extends XdolfModule {
     static float speed = 2.5f;
     public ModuleEntitySpeed() {

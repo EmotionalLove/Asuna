@@ -1,10 +1,12 @@
 package com.sasha.xdolf.module.modules;
 
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 
 import static com.sasha.xdolf.misc.XdolfMath.dround;
 
+@ModuleInfo(description = "Display an enchanced nametag above a player's head")
 public class ModuleNamePlates extends XdolfModule {
     public ModuleNamePlates() {
         super("NamePlates", XdolfCategory.RENDER, false);
@@ -12,7 +14,7 @@ public class ModuleNamePlates extends XdolfModule {
 
     @Override
     public void onEnable() {
-        
+
     }
 
     @Override

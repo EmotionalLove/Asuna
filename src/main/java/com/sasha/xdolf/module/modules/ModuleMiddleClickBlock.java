@@ -1,8 +1,10 @@
 package com.sasha.xdolf.module.modules;
 
 import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientMouseClickEvent;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
@@ -10,7 +12,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 
-public class ModuleMiddleClickBlock extends XdolfModule {
+@ModuleInfo(description = "Middle click a block to add it to xray")
+public class ModuleMiddleClickBlock extends XdolfModule implements SimpleListener {
     public ModuleMiddleClickBlock() {
         super("MiddleClickBlock", XdolfCategory.MISC, false);
     }
