@@ -1,6 +1,8 @@
-package com.sasha.xdolf.module;
+package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.module.XdolfCategory;
+import com.sasha.xdolf.module.XdolfModule;
 
 public class ModuleAntiAFK extends XdolfModule {
     private int timer=0;
