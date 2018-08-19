@@ -5,6 +5,7 @@ import com.sasha.eventsys.SimpleListener;
 import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.ClientPacketSendEvent;
 import com.sasha.xdolf.events.CollisionBoxEvent;
+import com.sasha.xdolf.events.MinecraftGetAABBEvent;
 import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.PostToggleExec;
 import com.sasha.xdolf.module.XdolfCategory;
@@ -60,14 +61,14 @@ public class ModuleJesus extends XdolfModule implements SimpleListener {
         }
     }
     @SimpleEventHandler
-    public void onBoxFormed(CollisionBoxEvent e) {
+    public void onBoxFormed(MinecraftGetAABBEvent e) {
         if (!this.isEnabled()) {
             return;
         }
         if (inLiquid(XdolfMod.minecraft.player) || XdolfMod.minecraft.gameSettings.keyBindSneak.isKeyDown() || XdolfMod.minecraft.player.fallDistance > 2) {
             return;
         }
-        e.setAabb(WATER_AABB);
+        e.setAxisAlignedBB(WATER_AABB);
     }
     private boolean isOverWater(Entity e) {
         BlockPos pos = e.getPosition();

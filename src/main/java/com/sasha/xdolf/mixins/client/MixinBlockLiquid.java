@@ -1,5 +1,6 @@
 package com.sasha.xdolf.mixins.client;
 
+import com.sasha.xdolf.XdolfMod;
 import com.sasha.xdolf.events.MinecraftGetAABBEvent;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -19,6 +20,7 @@ public class MixinBlockLiquid {
     @Inject(method = "getCollisionBoundingBox", at = @At("HEAD"), cancellable = true)
     public void getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<AxisAlignedBB> info) {
         MinecraftGetAABBEvent event = new MinecraftGetAABBEvent(NULL_AABB);
+        XdolfMod.EVENT_MANAGER.invokeEvent(event);
         info.setReturnValue(event.getAxisAlignedBB());
         info.cancel();
     }
