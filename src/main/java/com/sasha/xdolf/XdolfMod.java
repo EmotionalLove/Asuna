@@ -136,6 +136,7 @@ public class XdolfMod {
         CommandProcessor.commandRegistry.add(new LagCommand());
         CommandProcessor.commandRegistry.add(new IgnoreCommand());
         CommandProcessor.commandRegistry.add(new IgnorelistCommand());
+        CommandProcessor.commandRegistry.add(new YawCommand());
     }
 
     private void registerModules() throws Exception {
@@ -178,6 +179,8 @@ public class XdolfMod {
         ModuleManager.register(new ModuleMiddleClickBlock());
         ModuleManager.register(new ModuleExtendedTablist());
         ModuleManager.register(new ModuleAntiAFK());
+        ModuleManager.register(new ModuleYawLock());
+        ModuleManager.register(new ModuleQueueTime());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
