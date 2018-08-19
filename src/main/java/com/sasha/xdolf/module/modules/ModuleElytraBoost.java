@@ -1,6 +1,7 @@
 package com.sasha.xdolf.module.modules;
 
 import com.sasha.xdolf.XdolfMod;
+import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.XdolfCategory;
 import com.sasha.xdolf.module.XdolfModule;
 import net.minecraft.util.math.MathHelper;
@@ -8,6 +9,7 @@ import net.minecraft.util.math.MathHelper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+@ModuleInfo(description = "Press the spacebar to go faster")
 public class ModuleElytraBoost extends XdolfModule {
 
     static float limit = 2.5f;
