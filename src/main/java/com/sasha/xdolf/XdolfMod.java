@@ -13,6 +13,7 @@ import com.sasha.xdolf.gui.fonts.Fonts;
 import com.sasha.xdolf.gui.hud.renderableobjects.*;
 import com.sasha.xdolf.misc.ModuleState;
 import com.sasha.xdolf.misc.TPS;
+import com.sasha.xdolf.module.ModuleAntiAFK;
 import com.sasha.xdolf.module.ModuleInfo;
 import com.sasha.xdolf.module.ModuleManager;
 import com.sasha.xdolf.module.XdolfModule;
@@ -176,6 +177,7 @@ public class XdolfMod {
         ModuleManager.register(new ModuleMiddleClickBlock());
         ModuleManager.register(new ModuleExtendedTablist());
         ModuleManager.register(new ModuleNamePlates());
+        ModuleManager.register(new ModuleAntiAFK());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
