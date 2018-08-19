@@ -76,7 +76,6 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
                 blocksPlacedMap.remove(key);
             }
         }
-
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e){
