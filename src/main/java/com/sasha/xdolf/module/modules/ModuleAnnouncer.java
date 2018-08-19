@@ -47,6 +47,7 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
         if (!this.isEnabled()) return;
         counter++;
         if (counter > 20*30) {
+            counter = 0;
             Random rand = new Random();
             boolean randBool = rand.nextBoolean();
             if (randBool) {
@@ -56,8 +57,8 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
                 String key = "";
                 for (Map.Entry<String, Integer> stringIntegerEntry : blocksBrokenMap.entrySet()) {
                     key = stringIntegerEntry.getKey();
-                    XdolfMod.minecraft.player.sendChatMessage("> I just mined " + stringIntegerEntry.getKey() + " " +
-                            stringIntegerEntry.getValue());
+                    XdolfMod.minecraft.player.sendChatMessage("> I just mined " + stringIntegerEntry.getValue() + " " +
+                            stringIntegerEntry.getKey());
                     break;
                 }
                 blocksBrokenMap.remove(key);
@@ -69,8 +70,8 @@ public class ModuleAnnouncer extends XdolfModule implements SimpleListener {
                 String key = "";
                 for (Map.Entry<String, Integer> stringIntegerEntry : blocksPlacedMap.entrySet()) {
                     key = stringIntegerEntry.getKey();
-                    XdolfMod.minecraft.player.sendChatMessage("> I just mined " + stringIntegerEntry.getKey() + " " +
-                            stringIntegerEntry.getValue());
+                    XdolfMod.minecraft.player.sendChatMessage("> I just placed " + stringIntegerEntry.getValue() + " " +
+                            stringIntegerEntry.getKey());
                     break;
                 }
                 blocksPlacedMap.remove(key);
