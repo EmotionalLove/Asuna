@@ -140,6 +140,7 @@ public class XdolfMod {
     private void registerModules() throws Exception {
         ModuleManager.moduleRegistry.clear();
         ModuleManager.register(new ModuleXray());
+        ModuleManager.register(new ModuleWireframe());
         ModuleManager.register(new ModuleTPS());
         ModuleManager.register(new ModuleFPS());
         ModuleManager.register(new ModuleCoordinates());

@@ -25,6 +25,24 @@ public class MixinEntityRenderer {
         }
     }
 */
+    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/renderer/GlStateManager;matrixMode(I)V", ordinal = 4))
+    public void renderWorldPass$0(int pass, float partialTicks, long finishTimeNano, CallbackInfo info){
+        if (ModuleManager.moduleRegistry.get(1).isEnabled()) {
+            GL11.glPushAttrib(1048575);
+            GL11.glEnable(32823);
+            GL11.glPolygonOffset(-1.0f, -1.0f);
+            GL11.glLineWidth(1.0f);
+            GL11.glPolygonMode(1032, 6913);
+        }
+    }
+    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/renderer/GlStateManager;shadeModel(I)V", ordinal = 1))
+    public void renderWorldPass$1(int pass, float partialTicks, long finishTimeNano, CallbackInfo info){
+        if (ModuleManager.moduleRegistry.get(1).isEnabled()) {
+            GL11.glPopAttrib();
+        }
+    }
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;renderHand(FI)V"))
     public void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo info){
         ModuleManager.renderModules();

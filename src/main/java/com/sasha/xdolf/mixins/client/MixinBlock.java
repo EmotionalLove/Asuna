@@ -37,19 +37,25 @@ public abstract class MixinBlock {
 
     @Inject(method = "isOpaqueCube", at = @At("HEAD") , cancellable = true)
     public void isOpaqueCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
+        if (!ModuleManager.moduleRegistry.isEmpty() && ModuleManager.moduleRegistry.get(1).isEnabled()) {
+            info.setReturnValue(true);
+        }
         if (!ModuleManager.moduleRegistry.isEmpty() && ModuleManager.moduleRegistry.get(0).isEnabled() ) {
             info.setReturnValue(ModuleXray.xrayBlocks.contains(state.getBlock()));
         }
     }
     @Inject(method = "isFullBlock", at = @At("HEAD") , cancellable = true)
     public void isFullBlock(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if (ModuleManager.moduleRegistry.get(0).isEnabled() && !ModuleManager.moduleRegistry.isEmpty()) {
+        if ((ModuleManager.moduleRegistry.get(0).isEnabled() || ModuleManager.moduleRegistry.get(1).isEnabled()) && !ModuleManager.moduleRegistry.isEmpty()) {
             info.setReturnValue(false);
         }
     }
     @Inject(method = "isFullCube", at = @At("HEAD") , cancellable = true)
     public void isFullCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-    if (ModuleManager.moduleRegistry.get(0).isEnabled() && !ModuleManager.moduleRegistry.isEmpty()) {
+        if (!ModuleManager.moduleRegistry.isEmpty() && ModuleManager.moduleRegistry.get(1).isEnabled())     {
+            info.setReturnValue(true);
+        }
+        if (ModuleManager.moduleRegistry.get(0).isEnabled() && !ModuleManager.moduleRegistry.isEmpty()) {
             info.setReturnValue(ModuleXray.xrayBlocks.contains(state.getBlock()));
         }
     }
