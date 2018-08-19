@@ -1,7 +1,7 @@
 [
 {
-  "modid": "xdolfforge",
-  "name": "Xdolf",
+  "modid": "Adorufuforge",
+  "name": "Adorufu",
   "description": "Minecraft hacked client geared towards 2b2t and anarchy.",
   "version": "${version}",
   "mcversion": "${mcversion}",

@@ -41,7 +41,7 @@ minecraft {
     version = project.forgeVersion
     runDir = "run"
     mappings = project.mcpVersion
-    coreMod = "com.sasha.xdolf.mixins.MixinLoaderForge"
+    coreMod = "com.sasha.Adorufu.mixins.MixinLoaderForge"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
@@ -104,7 +104,7 @@ processResources {
 
 mixin {
     defaultObfuscationEnv searge
-    add sourceSets.main, "mixins.xdolf.refmap.json"
+    add sourceSets.main, "mixins.Adorufu.refmap.json"
 }
 
 reobf {
@@ -158,13 +158,13 @@ build.dependsOn(shadowJar)
 jar {
     manifest {
         attributes(
-                "MixinConfigs": 'mixins.xdolf.json',
+                "MixinConfigs": 'mixins.Adorufu.json',
                 "tweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
                 "TweakOrder": 0,
                 'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.sasha.xdolf.mixins.MixinLoaderForge',
+                'FMLCorePlugin': 'com.sasha.Adorufu.mixins.MixinLoaderForge',
                 'ForceLoadAsMod': 'true',
-                'FMLAT': 'xdolf_at.cfg'
+                'FMLAT': 'Adorufu_at.cfg'
         )
     }
 }
