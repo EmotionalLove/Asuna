@@ -26,13 +26,14 @@ public abstract class AdorufuModule {
     private String colour;
     private int keyBind;
     private boolean isRenderable = false;
-    private boolean hasOptions = false;private LinkedHashMap<String, Boolean> moduleOptions;
+    private boolean hasOptions = false;
+    private LinkedHashMap<String, Boolean> moduleOptions;
 
     public static ArrayList<AdorufuModule> displayList = new ArrayList<>(); // used for the hud
 
     public AdorufuModule(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable, boolean hasOptions) {
         this.hasOptions = hasOptions;
-        this.moduleOptions = new LinkedHashMap<>();
+        if (hasOptions) this.moduleOptions = new LinkedHashMap<>();
         this.moduleName = moduleName;
         this.moduleCategory = moduleCategory;
         String c;
@@ -158,6 +159,7 @@ public abstract class AdorufuModule {
     public void toggleOption(String name) {
         if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
         this.moduleOptions.put(name.toLowerCase(), !this.moduleOptions.get(name.toLowerCase()));
+        AdorufuMod.logMsg(this.moduleOptions.get(name.toLowerCase()) + "");
     }
     public boolean getOption(String name) {
         if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");

@@ -17,6 +17,7 @@ import net.minecraft.network.play.server.SPacketTimeUpdate;
 import net.minecraft.world.GameType;
 
 import static com.sasha.adorufu.AdorufuMod.logMsg;
+import static com.sasha.adorufu.AdorufuMod.minecraft;
 
 /**
  * Created by Sasha on 12/08/2018 at 9:12 AM
@@ -52,6 +53,7 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
+        if (minecraft.world == null) this.toggle();
         AdorufuMod.minecraft.player.noClip = true;
     }
     @SimpleEventHandler
@@ -72,6 +74,7 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e){
         if (this.isEnabled()){
+            if (minecraft.world == null) this.toggle();
             if(e.getSendPacket() instanceof CPacketPlayer || e.getSendPacket() instanceof CPacketInput) {
                 e.setCancelled(true);
             }
@@ -79,6 +82,7 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onPushoutofblocks(ClientPushOutOfBlocksEvent e) {
+        if (minecraft.world == null && this.isEnabled()) this.toggle();
         if (this.isEnabled()) e.setCancelled(true);
     }
 }

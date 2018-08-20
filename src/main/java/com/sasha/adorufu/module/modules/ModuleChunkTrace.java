@@ -31,7 +31,7 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
     public ModuleChunkTrace() {
         super("ChunkTrace", AdorufuCategory.RENDER, false, true);
         this.addOption("ChunkESP", false);
-        this.addOption("PearlNotify", false);
+        this.addOption("PearlNotify", true);
     }
 
     @Override
