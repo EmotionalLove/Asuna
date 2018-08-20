@@ -1,4 +1,4 @@
-# Adorufu 4.x
+# Adorufu for Minecraft Forge
 
 This is a work in progress. ETA: One week(?)
 
