@@ -8,6 +8,8 @@ import com.sasha.adorufu.waypoint.Waypoint;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 
+import java.io.IOException;
+
 import static com.sasha.adorufu.gui.waypointgui.WaypointGUI.windowList;
 
 public class WaypointButton {
@@ -82,6 +84,11 @@ public class WaypointButton {
 		if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 196 + window.getDragX() && y <= getY() + 21 + window.getDragY() && window.isOpen() && button == 0) {
 			WaypointGUI.sendPanelToFront(window);
 			mod.toggle();
+			try {
+				AdorufuMod.DATA_MANAGER.saveWaypoint(mod, false);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			AdorufuMod.minecraft.world.playSound(AdorufuMod.minecraft.player.posX, AdorufuMod.minecraft.player.posY, AdorufuMod.minecraft.player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 		} else if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 196 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 1) {
 			WaypointGUI.sendPanelToFront(window);
