@@ -35,6 +35,10 @@ public class AdorufuDataManager {
         waypointLock.lock();
         logWarn(true, "Thread locking engaged!");
         try {
+            File dir = new File("waypoints");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
             File f = new File("waypoints/" + waypoint.getName() + ".wypt");
             if (f.exists() || delete) {
                 f.delete();
