@@ -30,13 +30,29 @@ public class WaypointManager {
             AdorufuMod.logErr(false, "Couldn't save waypoint to file!");
         }
     }
-    public void delWaypoint(Waypoint waypoint) {
-        waypoints.add(waypoint);
+    public void delWaypoint(String waypoint) {
+        Waypoint toDelete = null;
+        for (Waypoint waypoint1 : waypoints) {
+            if (waypoint1.getName().equalsIgnoreCase(waypoint)) {
+                toDelete = waypoint1;
+                break;
+            }
+        }
+        if (toDelete == null) return;
+        waypoints.remove(toDelete);
         try {
-            AdorufuMod.DATA_MANAGER.saveWaypoint(waypoint, true);
+            AdorufuMod.DATA_MANAGER.saveWaypoint(toDelete, true);
         } catch (IOException e) {
             e.printStackTrace();
             AdorufuMod.logErr(false, "Couldn't delete waypoint file on disk!");
         }
+    }
+    public boolean sameName(String name) {
+        for (Waypoint waypoint : waypoints) {
+            if (waypoint.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

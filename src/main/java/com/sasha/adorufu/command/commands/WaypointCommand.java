@@ -3,6 +3,7 @@ package com.sasha.adorufu.command.commands;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.command.CommandInfo;
+import com.sasha.adorufu.waypoint.Waypoint;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -15,32 +16,36 @@ public class WaypointCommand extends AdorufuCommand {
 
     @Override
     public void onCommand() {
-        if (this.getArguments() == null || this.getArguments().length != 2){
+        if (this.getArguments() == null || this.getArguments().length < 2){
             AdorufuMod.logErr(false, "Arguments required! Try \"-help command waypoint\"");
             return;
         }
+        boolean manualMode = false;
+        if (this.getArguments().length == 5) {
+            manualMode = true;
+        }
         switch (this.getArguments()[0].toLowerCase()) {
             case "add":
-                if (AdorufuMod.FRIEND_MANAGER.isFriended(this.getArguments()[1])) {
-                    AdorufuMod.logErr(false, "That person is already friended!");
+                if (AdorufuMod.WAYPOINT_MANAGER.sameName(this.getArguments()[1])) {
+                    AdorufuMod.logErr(false, "There is already a waypoint with that name!");
                     return;
                 }
-                AdorufuMod.FRIEND_MANAGER.addFriend(this.getArguments()[1]);
+                Waypoint daWaypoint = new Waypoint(manualMode ? Integer.parseInt(this.getArguments()[2]) : AdorufuMod.minecraft.player.getPosition().x,
+                        manualMode ? Integer.parseInt(this.getArguments()[3]) : AdorufuMod.minecraft.player.getPosition().y,
+                        manualMode ? Integer.parseInt(this.getArguments()[4]) : AdorufuMod.minecraft.player.getPosition().z,
+                        true,
+                        (AdorufuMod.minecraft.getCurrentServerData() == null) ? null : AdorufuMod.minecraft.getCurrentServerData().serverIP,
+                        this.getArguments()[1]);
+                AdorufuMod.WAYPOINT_MANAGER.addWaypoint(daWaypoint, true);
                 AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully added");
-                AdorufuMod.scheduler.schedule(() -> {
-                    try { AdorufuMod.DATA_MANAGER.saveFriends(AdorufuMod.FRIEND_MANAGER.getFriendList()); } catch (IOException e) { e.printStackTrace(); }
-                }, 0, TimeUnit.NANOSECONDS);
                 break;
             case "del":
-                if (!AdorufuMod.FRIEND_MANAGER.isFriended(this.getArguments()[1])) {
-                    AdorufuMod.logErr(false, "That person isn't friended!");
+                if (!AdorufuMod.WAYPOINT_MANAGER.sameName(this.getArguments()[1])) {
+                    AdorufuMod.logErr(false, "There isn't a waypoint with that name!");
                     return;
                 }
-                AdorufuMod.FRIEND_MANAGER.removeFriend(this.getArguments()[1]);
+                AdorufuMod.WAYPOINT_MANAGER.delWaypoint(this.getArguments()[1]);
                 AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully removed");
-                AdorufuMod.scheduler.schedule(() -> {
-                    try { AdorufuMod.DATA_MANAGER.saveFriends(AdorufuMod.FRIEND_MANAGER.getFriendList()); } catch (IOException e) { e.printStackTrace(); }
-                }, 0, TimeUnit.NANOSECONDS);
                 break;
         }
     }

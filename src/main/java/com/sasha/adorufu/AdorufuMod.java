@@ -136,6 +136,7 @@ public class AdorufuMod {
         CommandProcessor.commandRegistry.add(new YawCommand());
         CommandProcessor.commandRegistry.add(new FriendCommand());
         CommandProcessor.commandRegistry.add(new FriendlistCommand());
+        CommandProcessor.commandRegistry.add(new WaypointCommand());
     }
 
     private void registerModules() throws Exception {

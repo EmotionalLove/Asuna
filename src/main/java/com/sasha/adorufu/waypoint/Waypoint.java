@@ -44,6 +44,10 @@ public class Waypoint implements Serializable {
         return this.name;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
     public int getDim() {
         return dim;
     }
