@@ -3,7 +3,10 @@ package com.sasha.adorufu.mixins.client;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientEntityCollideEvent;
 import com.sasha.adorufu.events.ClientPushOutOfBlocksEvent;
+import com.sasha.adorufu.module.ModuleManager;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,6 +15,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public class MixinEntity {
+    @Inject(method = "move", at = @At("HEAD"), cancellable = true)
+    public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
+        if (ModuleManager.getModuleByName("Freecam").isEnabled()) {
+            info.cancel();
+        }
+    }
+    @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
+    public void isInsideOfMaterial(Material materialIn, CallbackInfoReturnable<Boolean> info) {
+        if (ModuleManager.getModuleByName("Freecam").isEnabled()) {
+            info.setReturnValue(false);
+            info.cancel();
+        }
+    }
     @Inject(method = "applyEntityCollision", at = @At("HEAD"), cancellable = true)
     public void applyEntityCollision(Entity entityIn, CallbackInfo info) {
         ClientEntityCollideEvent event = new ClientEntityCollideEvent(entityIn);

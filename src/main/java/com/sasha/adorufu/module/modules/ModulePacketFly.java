@@ -22,15 +22,20 @@ public class ModulePacketFly extends AdorufuModule{
 
     @Override
     public void onTick() {
-        // literally just Direkt's shit, however it doesn't work well
-        // "Flying is not enabled on this server"
         if(!this.isEnabled())
             return;
         double[] dir = moveLooking(0);
-        double xDir = dir[1];
-        double zDir = dir[0];
+        double xDir = dir[0];
+        double zDir = dir[1];
+        AdorufuMod.minecraft.player.motionX = 0;
         AdorufuMod.minecraft.player.motionY = 0;
-        AdorufuMod.minecraft.player.connection.sendPacket(new CPacketPlayer.PositionRotation(AdorufuMod.minecraft.player.posX + AdorufuMod.minecraft.player.motionX, AdorufuMod.minecraft.player.posY + (AdorufuMod.minecraft.gameSettings.keyBindJump.isKeyDown() ? 0.0624 : 0) - (AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() ? 0.0624 : 0), AdorufuMod.minecraft.player.posZ + AdorufuMod.minecraft.player.motionZ, AdorufuMod.minecraft.player.rotationYaw, AdorufuMod.minecraft.player.rotationPitch, false));
+        AdorufuMod.minecraft.player.motionZ = 0;
+        AdorufuMod.minecraft.player.connection.sendPacket(
+                new CPacketPlayer.PositionRotation
+                (AdorufuMod.minecraft.player.posX + AdorufuMod.minecraft.player.motionX + (AdorufuMod.minecraft.gameSettings.keyBindForward.isKeyDown() ? 0.0624 : 0) - (AdorufuMod.minecraft.gameSettings.keyBindBack.isKeyDown() ? 0.0624 : 0)
+                 , AdorufuMod.minecraft.player.posY + (AdorufuMod.minecraft.gameSettings.keyBindJump.isKeyDown() ? 0.0624 : 0) - (AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() ? 0.0624 : 0),
+                 AdorufuMod.minecraft.player.posZ + AdorufuMod.minecraft.player.motionZ + (AdorufuMod.minecraft.gameSettings.keyBindRight.isKeyDown() ? 0.0624 : 0) - (AdorufuMod.minecraft.gameSettings.keyBindLeft.isKeyDown() ? 0.0624 : 0)
+                        , AdorufuMod.minecraft.player.rotationYaw, AdorufuMod.minecraft.player.rotationPitch, false));
         AdorufuMod.minecraft.player.connection.sendPacket(new CPacketPlayer.PositionRotation(AdorufuMod.minecraft.player.posX + AdorufuMod.minecraft.player.motionX, AdorufuMod.minecraft.player.posY - 42069, AdorufuMod.minecraft.player.posZ + AdorufuMod.minecraft.player.motionZ, AdorufuMod.minecraft.player.rotationYaw , AdorufuMod.minecraft.player.rotationPitch, true));
     }
 
