@@ -1,11 +1,11 @@
 package com.sasha.adorufu.gui.waypointgui;
-
-import com.asunaclient.waypoints.Waypoint;
-import com.asunaclient.waypoints.WaypointManager;
-import com.asunaclient.main.Category;
-import com.asunaclient.main.GlobalUtils;
-import com.asunaclient.mcgui.clickgui.elements.WindowType;
-import com.asunaclient.mcgui.fonts.Fonts;
+import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.gui.clickgui.elements.WindowType;
+import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.misc.AdorufuMath;
+import com.sasha.adorufu.module.AdorufuCategory;
+import com.sasha.adorufu.waypoint.Waypoint;
+import com.sasha.adorufu.waypoint.WaypointManager;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -42,8 +42,8 @@ public class WaypointWindow {
 		this.isOpen = true;
 		this.isShown = isShown;
 		this.type = type;
-		com.asunaclient.mcgui.waypointgui.WaypointGUI.windowList.add(this);
-		com.asunaclient.mcgui.waypointgui.WaypointGUI.unFocusedWindows.add(this);
+		WaypointGUI.windowList.add(this);
+		WaypointGUI.unFocusedWindows.add(this);
 	}
 	
 	public void draw(int x, int y) {
@@ -54,7 +54,7 @@ public class WaypointWindow {
 			if (dragging) {
 				drag(x, y);
 			}
-			GlobalUtils.drawBetterBorderedRect(getXAndDrag(), getYAndDrag(), getXAndDrag() + 200, getYAndDrag() + 13 + (isEmpty ? 175 : (isOpen ? 12 + (24 * (buttonList.size()/* + optionButtonList.size()*/) + 0.5F) + (0 + (0 != 0 ? 2.5F : 0)) : 0) + toAdd), 0.5F, 0f, 0.5f, 1f, 1f, 0f, 0f, 0.5f, 0.3f);
+			AdorufuMath.drawBetterBorderedRect(getXAndDrag(), getYAndDrag(), getXAndDrag() + 200, getYAndDrag() + 13 + (isEmpty ? 175 : (isOpen ? 12 + (24 * (buttonList.size()/* + optionButtonList.size()*/) + 0.5F) + (0 + (0 != 0 ? 2.5F : 0)) : 0) + toAdd), 0.5F, 0f, 0.5f, 1f, 1f, 0f, 0f, 0.5f, 0.3f);
 			Fonts.segoe_30.drawCenteredString(title, getXAndDrag() + 100, getYAndDrag() + 1, 0xFFFFFF, true);
 			if (Minecraft.getMinecraft().currentScreen instanceof WaypointGUI) {
 				//ClientUtils.drawBetterBorderedRect(getXAndDrag() + 79, getYAndDrag() + 2, getXAndDrag() + 88, getYAndDrag() + 11, 0.5F, 0xFF000000, isPinned ? 0xFFFF0000 : 0xFF383b42);
@@ -128,8 +128,8 @@ public class WaypointWindow {
 	public void addOptionsButton(String name, String booleanToToggle) {
 		//optionButtonList.add(new AsunaOptionButton(this, name, x+2, y+12 + (12 * optionButtonList.size()), booleanToToggle));
 	}
-	public void loadButtonsFromCategory(Category category) {
-		for(Waypoint m : WaypointManager.getWaypoints()) {
+	public void loadButtonsFromCategory(AdorufuCategory category) {
+		for(Waypoint m : AdorufuMod.WAYPOINT_MANAGER.getWaypoints()) {
 			addButton(m);
 		}
 	}

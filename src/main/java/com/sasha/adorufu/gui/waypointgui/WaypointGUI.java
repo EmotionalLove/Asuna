@@ -1,5 +1,6 @@
 package com.sasha.adorufu.gui.waypointgui;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.elements.WindowType;
 import com.sasha.adorufu.waypoint.Waypoint;
 import com.sasha.adorufu.waypoint.WaypointManager;
@@ -22,7 +23,7 @@ public class WaypointGUI extends GuiScreen {
 	@Override
 	public void initGui() {
 		windowList.get(0).getButtonList().clear();
-		for (Waypoint wp : WaypointManager.getWaypoints()){
+		for (Waypoint wp : AdorufuMod.WAYPOINT_MANAGER.getWaypoints()){
 			windowList.get(0).addButton(wp);
 		}
 	}
