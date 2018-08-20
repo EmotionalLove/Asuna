@@ -22,16 +22,16 @@ public class FriendlistCommand extends AdorufuCommand {
             logMsg(false, "Listing \247l" + ignorelist.size() + " \247r\2477friended players:");
             for (int i = 0; i < AdorufuMod.FRIEND_MANAGER.getFriendList().size(); i++) {
                 if (i == 0) {
-                    builder.append(AdorufuMod.FRIEND_MANAGER.getFriendList().get(i));
+                    builder.append(AdorufuMod.FRIEND_MANAGER.getFriendList().get(i).getFriendName());
                     continue;
                 }
-                builder.append(", ").append(AdorufuMod.FRIEND_MANAGER.getFriendList().get(i));
+                builder.append(", ").append(AdorufuMod.FRIEND_MANAGER.getFriendList().get(i).getFriendName());
             }
             logMsg(builder.toString());
             return;
         }
         String player = this.getArguments()[0];
         logMsg(false,
-                player + " is" + (AdorufuMod.FRIEND_MANAGER.getFriendList().contains(player) ? "" : " not") + " friended.");
+                player + " is" + (AdorufuMod.FRIEND_MANAGER.isFriended(player) ? "" : " not") + " friended.");
     }
 }
