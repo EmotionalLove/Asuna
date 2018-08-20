@@ -43,15 +43,15 @@ public class AdorufuOptionButton {
 		});
 		if (this.isAnyWindowDragging()) {
 			var1 = 0f;
-			var2 = 0f;
+			var2 = isTrue.get() ? 0.7f : 0f;
 			var3 = 0f;
-			var4 = 0f;
+			var4 = isTrue.get() ? 0.7f : 0f;
 		}
 		else if (!overButton) {
 			var1 = 0f;
-			var2 = !isTrue.get() ? 0f : 0.6f;
+			var2 = isTrue.get() ? 0.7f : 0f;
 			var3 = 0f;
-			var4 = 0f;
+			var4 = isTrue.get() ? 0.7f : 0f;
 		}
 		else {
 			var1 = 0.5f;
@@ -70,7 +70,7 @@ public class AdorufuOptionButton {
 			AdorufuClickGUI.sendPanelToFront(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 			ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
-			    mod.getModuleOptionsMap().forEach((str, bool) -> AdorufuMod.logMsg(str));
+			    //mod.getModuleOptionsMap().forEach((str, bool) -> AdorufuMod.logMsg(str));
                 if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
                     mod.toggleOption(this.toToggle);
                     return;

@@ -148,6 +148,7 @@ public abstract class AdorufuModule {
             }
             b.append(", ").append(strBool.getKey());
         });
+        this.suffix= " \2478[\2477" + b.toString() + "\2478]";
     }
     public LinkedHashMap<String, Boolean> getModuleOptionsMap() {
         return moduleOptions;
@@ -159,7 +160,7 @@ public abstract class AdorufuModule {
     public void toggleOption(String name) {
         if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
         this.moduleOptions.put(name.toLowerCase(), !this.moduleOptions.get(name.toLowerCase()));
-        AdorufuMod.logMsg(this.moduleOptions.get(name.toLowerCase()) + "");
+        //AdorufuMod.logMsg(this.moduleOptions.get(name.toLowerCase()) + "");
     }
     public boolean getOption(String name) {
         if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
