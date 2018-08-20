@@ -2,6 +2,7 @@ package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.ModuleTracers;
+import com.sasha.adorufu.module.modules.ModuleWaypoints;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -104,7 +105,7 @@ public class MixinEntityRenderer {
     }
     @Inject(method = "applyBobbing", at = @At("HEAD"), cancellable = true)
     public void applyBobbing(float partialTicks, CallbackInfo info){
-        if (ModuleTracers.i > 0){
+        if (ModuleTracers.i > 0 || ModuleWaypoints.i > 0){
             info.cancel();
             //todo make tracers bob against camera so that we dont need to do this
         }
