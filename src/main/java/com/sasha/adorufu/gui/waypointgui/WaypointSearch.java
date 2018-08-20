@@ -1,6 +1,7 @@
 package com.sasha.adorufu.gui.waypointgui;
 
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.waypoint.Waypoint;
@@ -107,14 +108,14 @@ public class WaypointSearch {
 
 	public static void buttonUpdate(String term) {
 		WaypointGUI.windowList.get(0).getButtonList().clear();
-		for (Waypoint wp : WaypointManager.getWaypoints()){
+		for (Waypoint wp : AdorufuMod.WAYPOINT_MANAGER.getWaypoints()){
 			if (wp.getName().toLowerCase().contains(term.toLowerCase())) {
 				WaypointGUI.windowList.get(0).addButton(wp);
 			}
 		}
 		if (term.equalsIgnoreCase("")) {
 			WaypointGUI.windowList.get(0).getButtonList().clear();
-			for (Waypoint wp : WaypointManager.getWaypoints()){
+			for (Waypoint wp : AdorufuMod.WAYPOINT_MANAGER.getWaypoints()){
 				WaypointGUI.windowList.get(0).addButton(wp);
 			}
 		}

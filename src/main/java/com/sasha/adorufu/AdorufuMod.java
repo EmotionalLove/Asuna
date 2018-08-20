@@ -1,5 +1,6 @@
 package com.sasha.adorufu;
 
+import com.sasha.adorufu.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.adorufu.command.CommandProcessor;
 import com.sasha.adorufu.command.commands.*;
@@ -41,10 +42,12 @@ public class AdorufuMod {
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
     public static final String VERSION = "1.0pre";
 
+
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
     public static FriendManager FRIEND_MANAGER;
+    public static WaypointManager WAYPOINT_MANAGER;
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL; // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
@@ -114,6 +117,9 @@ public class AdorufuMod {
         logMsg(true, "Adorufu cleanly initialised!");
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
+        scheduler.schedule(() -> {
+            WAYPOINT_MANAGER = new WaypointManager();
+        }, 0, TimeUnit.NANOSECONDS);
     }
 
     private void registerCommands() throws Exception{
