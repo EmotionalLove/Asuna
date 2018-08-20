@@ -128,6 +128,8 @@ public class AdorufuMod {
         CommandProcessor.commandRegistry.add(new IgnoreCommand());
         CommandProcessor.commandRegistry.add(new IgnorelistCommand());
         CommandProcessor.commandRegistry.add(new YawCommand());
+        CommandProcessor.commandRegistry.add(new FriendCommand());
+        CommandProcessor.commandRegistry.add(new FriendlistCommand());
     }
 
     private void registerModules() throws Exception {
