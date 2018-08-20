@@ -15,6 +15,7 @@
     "MixinBlockLiquid",
     "MixinRender",
     "MixinEntity",
-    "MixinEntityPig"
+    "MixinEntityPig",
+    "MixinAbstractClientPlayer"
   ]
 }
