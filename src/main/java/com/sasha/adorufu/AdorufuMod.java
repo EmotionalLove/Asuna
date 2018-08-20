@@ -173,6 +173,8 @@ public class AdorufuMod {
         ModuleManager.register(new ModuleYawLock());
         ModuleManager.register(new ModuleQueueTime());
         ModuleManager.register(new ModuleNoPush());
+        ModuleManager.register(new ModulePacketFly());
+        ModuleManager.register(new ModulePigControl());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
