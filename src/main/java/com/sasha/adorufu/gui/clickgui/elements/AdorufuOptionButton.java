@@ -1,5 +1,6 @@
 package com.sasha.adorufu.gui.clickgui.elements;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.misc.AdorufuMath;
@@ -8,6 +9,8 @@ import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class AdorufuOptionButton {
@@ -31,6 +34,13 @@ public class AdorufuOptionButton {
 		float var2 = 0f;
 		float var3 = 0f;
 		float var4 = 0.5f;
+		AtomicBoolean isTrue = new AtomicBoolean(false);
+		ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
+			if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
+				if (mod.getOption(this.toToggle)) isTrue.set(true);
+				return;
+			}
+		});
 		if (this.isAnyWindowDragging()) {
 			var1 = 0f;
 			var2 = 0f;
@@ -39,7 +49,7 @@ public class AdorufuOptionButton {
 		}
 		else if (!overButton) {
 			var1 = 0f;
-			var2 = 0f;
+			var2 = !isTrue.get() ? 0f : 0.6f;
 			var3 = 0f;
 			var4 = 0f;
 		}
@@ -60,7 +70,8 @@ public class AdorufuOptionButton {
 			AdorufuClickGUI.sendPanelToFront(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 			ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
-			    if (mod.getModuleName().toLowerCase().equalsIgnoreCase(this.window.getTitle() + " options")) {
+			    mod.getModuleOptionsMap().forEach((str, bool) -> AdorufuMod.logMsg(str));
+                if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
                     mod.toggleOption(this.toToggle);
                     return;
                 }

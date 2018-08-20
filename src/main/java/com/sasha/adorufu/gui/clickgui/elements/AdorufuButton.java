@@ -29,13 +29,13 @@ public class AdorufuButton {
 		this.y = y;
 		this.displayName = mod.getModuleName();
 		if (mod.hasOptions()) {
-            class someThing extends AdorufuWindow {
-                public someThing() {
+            class NewOption extends AdorufuWindow {
+                public NewOption() {
                     super(mod.getModuleName() + " Options", 2, 12, false, WindowType.OPTION);
                     mod.getModuleOptionsMap().forEach((str,bool) -> this.addOptionsButton(str));
                 }
             }
-            new someThing();
+            new NewOption();
         }
 	}
 	
