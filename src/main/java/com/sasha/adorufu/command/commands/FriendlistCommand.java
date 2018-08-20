@@ -19,7 +19,7 @@ public class FriendlistCommand extends AdorufuCommand {
     public void onCommand(){
         if (this.getArguments() == null) {
             StringBuilder builder = new StringBuilder();
-            logMsg(false, "Listing \247l" + ignorelist.size() + " \247r\2477friended players:");
+            logMsg(false, "Listing \247l" + AdorufuMod.FRIEND_MANAGER.getFriendList().size() + " \247r\2477friended players:");
             for (int i = 0; i < AdorufuMod.FRIEND_MANAGER.getFriendList().size(); i++) {
                 if (i == 0) {
                     builder.append(AdorufuMod.FRIEND_MANAGER.getFriendList().get(i).getFriendName());
