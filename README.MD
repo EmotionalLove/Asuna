@@ -4,7 +4,7 @@ This is a work in progress. ETA: One week(?)
 
 ### About Adorufu
 
-Adorufu is a minecraft client made for Forge
+Adorufu is a minecraft client made for Forge. "Adorufu" is Japanese for "Adolf"
 
 ### Installation tutorial
 
