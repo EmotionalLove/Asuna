@@ -7,18 +7,27 @@ import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.util.math.AxisAlignedBB;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
-public class MixinEntity {
+public abstract class MixinEntity {
+    @Shadow public abstract void setEntityBoundingBox(AxisAlignedBB bb);
+
+    @Shadow public abstract AxisAlignedBB getEntityBoundingBox();
+
+    @Shadow public abstract void resetPositionToBB();
+
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
         if (ModuleManager.getModuleByName("Freecam").isEnabled()) {
-            info.cancel();
+            this.setEntityBoundingBox(this.getEntityBoundingBox().offset(x, y, z));
+            this.resetPositionToBB();
         }
     }
     @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
