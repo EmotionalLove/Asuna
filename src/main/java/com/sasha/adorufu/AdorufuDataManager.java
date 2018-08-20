@@ -6,10 +6,13 @@ import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.misc.YMLParser;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.waypoint.Waypoint;
 import net.minecraft.block.Block;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -24,7 +27,28 @@ import static com.sasha.adorufu.module.ModuleManager.moduleRegistry;
 // maybe im just a complex kind of girl
 public class AdorufuDataManager {
     private final Lock threadLock = new ReentrantLock();
+    private final Lock waypointLock = new ReentrantLock();
     private final String dataFileName = "AdorufuData.yml";
+
+    public synchronized void saveWaypoint(Waypoint waypoint) throws IOException {
+        AdorufuMod.logMsg(true, "Saving waypoint " + waypoint.getName() + "...");
+        waypointLock.lock();
+        AdorufuMod.logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File("waypoints/" + waypoint.getName() + ".wypt");
+            if (f.exists()) {
+                f.delete();
+            }
+            FileOutputStream fstream = new FileOutputStream(f);
+            ObjectOutputStream stream = new ObjectOutputStream(fstream);
+            stream.writeObject(waypoint);
+            stream.close();
+            fstream.close();
+        } finally {
+            waypointLock.unlock();
+            AdorufuMod.logWarn(true, "Thread locking disengaged!");
+        }
+    }
 
     public synchronized void saveIgnorelist(ArrayList<String> ignores) throws IOException {
         AdorufuMod.logMsg(true, "Saving ignorelist...");

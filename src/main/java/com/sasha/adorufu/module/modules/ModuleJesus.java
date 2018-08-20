@@ -67,17 +67,25 @@ public class ModuleJesus extends AdorufuModule implements SimpleListener {
         return !inLiquid(AdorufuMod.minecraft.player) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
     }
     private boolean isOverWater(Entity e) {
-        BlockPos pos = e.getPosition();
-        IBlockState state = AdorufuMod.minecraft.world.getBlockState(pos.add(0, -1, 0));
-        if (state.getBlock() == Blocks.WATER || state.getBlock() == Blocks.LAVA) {
-            return !AdorufuMod.minecraft.player.isInWater() && state.getBlock() != Blocks.FLOWING_WATER && state.getBlock() != Blocks.FLOWING_LAVA;
+        try {
+            BlockPos pos = e.getPosition();
+            IBlockState state = AdorufuMod.minecraft.world.getBlockState(pos.add(0, -1, 0));
+            if (state.getBlock() == Blocks.WATER || state.getBlock() == Blocks.LAVA) {
+                return !AdorufuMod.minecraft.player.isInWater() && state.getBlock() != Blocks.FLOWING_WATER && state.getBlock() != Blocks.FLOWING_LAVA;
+            }
+            return false;
+        }catch (Exception ee) {
+            return false;
         }
-        return false;
     }
 
     private boolean inLiquid(Entity e) {
-        double Y = e.getPosition().getY() + 0.1;
-        Block block = AdorufuMod.minecraft.world.getBlockState(new BlockPos(e.getPosition().getX(), Y, e.getPosition().getZ())).getBlock();
-        return block instanceof BlockLiquid && block != Blocks.FLOWING_WATER && block != Blocks.FLOWING_LAVA;
+        try {
+            double Y = e.getPosition().getY() + 0.1;
+            Block block = AdorufuMod.minecraft.world.getBlockState(new BlockPos(e.getPosition().getX(), Y, e.getPosition().getZ())).getBlock();
+            return block instanceof BlockLiquid && block != Blocks.FLOWING_WATER && block != Blocks.FLOWING_LAVA;
+        }catch (Exception eee) {
+            return false;
+        }
     }
 }
