@@ -119,6 +119,7 @@ public class AdorufuMod {
             PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
             WAYPOINT_MANAGER = new WaypointManager();
         }, 0, TimeUnit.NANOSECONDS);
+        EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
         logMsg(true, "Adorufu cleanly initialised!");
     }
 
