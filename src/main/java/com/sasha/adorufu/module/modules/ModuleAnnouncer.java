@@ -18,7 +18,7 @@ import static com.sasha.adorufu.AdorufuMod.logMsg;
  * WHY TF DOESNT THIS WORK OMG ;-; i SWEAr
  **/
 @PostToggleExec
-@ModuleInfo(description = "Sends a message in chat every 30 seconds about what you're doing in the world.")
+@ModuleInfo(description = "Sends a message in chat every 15 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
 
     static boolean swap = false;

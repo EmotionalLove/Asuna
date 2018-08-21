@@ -3,7 +3,9 @@ package com.sasha.adorufu.module.modules;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
 
+@ModuleInfo(description = "Don't get kicked for being AFK")
 public class ModuleAntiAFK extends AdorufuModule {
     private int timer=0;
     public ModuleAntiAFK() {

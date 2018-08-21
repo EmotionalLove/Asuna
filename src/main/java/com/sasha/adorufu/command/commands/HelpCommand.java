@@ -42,6 +42,7 @@ public class HelpCommand extends AdorufuCommand {
         if (this.getArguments()[0].toLowerCase().equals("command")){
             for (AdorufuCommand AdorufuCommand : commandRegistry) {
                 if (AdorufuCommand.getCommandName(false).equalsIgnoreCase(this.getArguments()[1])){
+                    logMsg(false, "\247c" + AdorufuCommand.getDescription(AdorufuCommand.getClass()));
                     for (String sy : AdorufuCommand.getSyntax(AdorufuCommand.getClass())) logMsg(AdorufuCommand.getCommandName(true)+" "+sy);
                 }
             }
