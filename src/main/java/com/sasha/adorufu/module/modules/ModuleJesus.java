@@ -61,10 +61,14 @@ public class ModuleJesus extends AdorufuModule implements SimpleListener {
         }
     }
     public boolean doJesus() {
-        if (!this.isEnabled()) {
+        try {
+            if (!this.isEnabled()) {
+                return false;
+            }
+            return !inLiquid(AdorufuMod.minecraft.player) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
+        } catch (Exception e) {
             return false;
         }
-        return !inLiquid(AdorufuMod.minecraft.player) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
     }
     private boolean isOverWater(Entity e) {
         try {

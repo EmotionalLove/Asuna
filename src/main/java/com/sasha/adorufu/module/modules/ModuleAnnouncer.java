@@ -46,7 +46,7 @@ public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
     public void onTick() {
         if (!this.isEnabled()) return;
         counter++;
-        if (counter > 20*30) {
+        if (counter > 20*15) {
             counter = 0;
             Random rand = new Random();
             boolean randBool = rand.nextBoolean();

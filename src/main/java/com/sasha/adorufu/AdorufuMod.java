@@ -114,12 +114,12 @@ public class AdorufuMod {
                 }catch (IOException e){e.printStackTrace();}
             });
         }, 500, TimeUnit.MILLISECONDS);
-        logMsg(true, "Adorufu cleanly initialised!");
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
-        PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
         scheduler.schedule(() -> {
+            PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
             WAYPOINT_MANAGER = new WaypointManager();
         }, 0, TimeUnit.NANOSECONDS);
+        logMsg(true, "Adorufu cleanly initialised!");
     }
 
     private void registerCommands() throws Exception{
