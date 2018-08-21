@@ -96,7 +96,7 @@ public class AdorufuDataManager {
         }
     }
 
-    public synchronized void saveIgnorelist(ArrayList<String> ignores) throws IOException {
+    public synchronized void saveIgnorelist(List<String> ignores) throws IOException {
         logMsg(true, "Saving ignorelist...");
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");

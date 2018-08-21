@@ -17,7 +17,7 @@ public class CommandProcessor implements SimpleListener {
     @SimpleEventHandler
     public void onAdorufuCommand(PlayerAdorufuCommandEvent e) {
         commandRegistry.forEach(command -> {
-            if (e.getMsg().startsWith(command.getCommandName(true))) {
+            if (e.getMsg().split(" ")[0].equalsIgnoreCase(command.getCommandName(true))) {
                 command.setArguments(e.getMsg());
                 try {
                     command.onCommand();
