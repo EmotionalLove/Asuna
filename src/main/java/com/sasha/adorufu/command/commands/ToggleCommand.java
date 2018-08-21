@@ -2,16 +2,16 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.simplecmdsys.SimpleCommand;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
-@CommandInfo(description = "Toggle a named module", syntax = {"<module>"})
-public class ToggleCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Toggle a named module", syntax = {"<module>"})
+public class ToggleCommand extends SimpleCommand {
     public ToggleCommand() {
         super("toggle");
     }

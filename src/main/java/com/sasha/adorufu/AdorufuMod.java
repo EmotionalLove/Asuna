@@ -1,8 +1,8 @@
 package com.sasha.adorufu;
 
+import com.sasha.adorufu.command.CommandHandler;
 import com.sasha.adorufu.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventManager;
-import com.sasha.adorufu.command.CommandProcessor;
 import com.sasha.adorufu.command.commands.*;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.exception.AdorufuException;
@@ -16,6 +16,7 @@ import com.sasha.adorufu.module.modules.ModuleAntiAFK;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.*;
 import com.sasha.adorufu.module.modules.hudelements.*;
+import com.sasha.simplecmdsys.SimpleCommandProcessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -40,7 +41,7 @@ public class AdorufuMod {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.0.1";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
@@ -48,6 +49,7 @@ public class AdorufuMod {
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
     public static FriendManager FRIEND_MANAGER;
     public static WaypointManager WAYPOINT_MANAGER;
+    public static SimpleCommandProcessor COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL; // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
 
@@ -89,7 +91,7 @@ public class AdorufuMod {
                 throw new AdorufuException("Couldn't register! " + e.getMessage() );
             }
         }, 0, TimeUnit.NANOSECONDS);
-        EVENT_MANAGER.registerListener(new CommandProcessor());
+        EVENT_MANAGER.registerListener(new CommandHandler());
         EVENT_MANAGER.registerListener(new ModuleManager());
         logMsg(true, "Done!");
         logMsg(true, "Initialising HUD");
@@ -124,20 +126,19 @@ public class AdorufuMod {
     }
 
     private void registerCommands() throws Exception{
-        CommandProcessor.commandRegistry.clear();
-        CommandProcessor.commandRegistry.add(new AboutCommand());
-        CommandProcessor.commandRegistry.add(new ToggleCommand());
-        CommandProcessor.commandRegistry.add(new ModulesCommand());
-        CommandProcessor.commandRegistry.add(new HelpCommand());
-        CommandProcessor.commandRegistry.add(new BindCommand());
-        CommandProcessor.commandRegistry.add(new XrayCommand());
-        CommandProcessor.commandRegistry.add(new LagCommand());
-        CommandProcessor.commandRegistry.add(new IgnoreCommand());
-        CommandProcessor.commandRegistry.add(new IgnorelistCommand());
-        CommandProcessor.commandRegistry.add(new YawCommand());
-        CommandProcessor.commandRegistry.add(new FriendCommand());
-        CommandProcessor.commandRegistry.add(new FriendlistCommand());
-        CommandProcessor.commandRegistry.add(new WaypointCommand());
+        COMMAND_PROCESSOR.register(new AboutCommand());
+        COMMAND_PROCESSOR.register(new ToggleCommand());
+        COMMAND_PROCESSOR.register(new ModulesCommand());
+        COMMAND_PROCESSOR.register(new HelpCommand());
+        COMMAND_PROCESSOR.register(new BindCommand());
+        COMMAND_PROCESSOR.register(new XrayCommand());
+        COMMAND_PROCESSOR.register(new LagCommand());
+        COMMAND_PROCESSOR.register(new IgnoreCommand());
+        COMMAND_PROCESSOR.register(new IgnorelistCommand());
+        COMMAND_PROCESSOR.register(new YawCommand());
+        COMMAND_PROCESSOR.register(new FriendCommand());
+        COMMAND_PROCESSOR.register(new FriendlistCommand());
+        COMMAND_PROCESSOR.register(new WaypointCommand());
     }
 
     private void registerModules() throws Exception {
