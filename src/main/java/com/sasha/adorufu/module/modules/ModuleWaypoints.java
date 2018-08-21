@@ -3,11 +3,13 @@ package com.sasha.adorufu.module.modules;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.adorufu.waypoint.Waypoint;
 import com.sasha.adorufu.waypoint.WaypointManager;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
+@ModuleInfo(description = "Display tracers to enabled waypoints.")
 public class ModuleWaypoints extends AdorufuModule {
     public ModuleWaypoints() {
         super("Waypoints", AdorufuCategory.RENDER, false);

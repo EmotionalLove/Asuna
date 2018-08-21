@@ -12,7 +12,7 @@ import com.sasha.adorufu.module.PostToggleExec;
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
 @PostToggleExec
-@ModuleInfo(description = "Displays the Clickgui")
+@ModuleInfo(description = "Displays the WaypointGUI")
 public class ModuleWaypointGUI extends AdorufuModule {
     public ModuleWaypointGUI() {
         super("WaypointGUI", AdorufuCategory.GUI, false);

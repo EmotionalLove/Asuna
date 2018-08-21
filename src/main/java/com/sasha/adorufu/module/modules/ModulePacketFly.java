@@ -3,8 +3,10 @@ package com.sasha.adorufu.module.modules;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
 import net.minecraft.network.play.client.CPacketPlayer;
 
+@ModuleInfo(description = "NCP Flight bypass. Useful for 2b2t's nether roof.")
 public class ModulePacketFly extends AdorufuModule{
     public ModulePacketFly() {
         super("PacketFly", AdorufuCategory.MOVEMENT, false);

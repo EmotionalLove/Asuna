@@ -15,7 +15,7 @@ public class AboutCommand extends AdorufuCommand {
 
     @Override
     public void onCommand() {
-        AdorufuMod.logMsg(false, "Adorufu " + AdorufuMod.VERSION + " by Sasha and Sgt Pepper. All Rights Reserved.");
+        AdorufuMod.logMsg(false, "Adorufu " + AdorufuMod.VERSION + " by Sasha. All Rights Reserved.");
         AdorufuMod.logMsg(false, "Run -help for commands.");
     }
 }
