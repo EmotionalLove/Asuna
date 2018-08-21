@@ -22,11 +22,7 @@ public class HelpCommand extends SimpleCommand {
         if (this.getArguments() == null){
             logMsg(false, "Listing commands...");
             for (SimpleCommand simpleCommand : AdorufuMod.COMMAND_PROCESSOR.getCommandRegistry()) {
-                CommandInfo d = simpleCommand.getClass().getAnnotation(CommandInfo.class);
-                if (d == null){
-                    throw new AdorufuCommandAnnotationException("The developer didn't decorate " + simpleCommand.getClass().getName() + " with a CommandInfo annotation!");
-                }
-                String b = COMMAND_PROCESSOR.getCommandPrefix() + simpleCommand.getCommandName() + " | " + d.description();
+                String b = COMMAND_PROCESSOR.getCommandPrefix() + simpleCommand.getCommandName() + " | " + COMMAND_PROCESSOR.getDescription(simpleCommand.getClass());
                 logMsg(b);
             }
             return;
