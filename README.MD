@@ -22,7 +22,7 @@ Adorufu:
       tps: RT
 ```
 
-`RT` means right-top, `LB` means left-bottom, `RB` means right-bottom, `LT` means right-top. Make sure the game is CLOSED when editing these values.
+`RT` means right-top, `LB` means left-bottom, `RB` means right-bottom, `LT` means left-top. Make sure the game is CLOSED when editing these values.
 
 If you have any other questions, you can ask for help in our discord server
 
