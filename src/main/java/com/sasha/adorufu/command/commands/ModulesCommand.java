@@ -2,14 +2,14 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.module.ModuleManager;
-
+import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
  **/
-@CommandInfo(description = "Used for debugging. To be removed", syntax = {""})
-public class ModulesCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Used for debugging. To be removed", syntax = {""})
+public class ModulesCommand extends SimpleCommand {
     public ModulesCommand() {
         super("modules");
     }

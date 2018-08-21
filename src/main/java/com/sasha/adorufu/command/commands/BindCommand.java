@@ -2,9 +2,10 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.misc.AdorufuMath;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.simplecmdsys.SimpleCommand;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -13,8 +14,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
-@CommandInfo(description = "Set a module's keybind", syntax = {"<module> <key>", "<module> <'none'>"})
-public class BindCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Set a module's keybind", syntax = {"<module> <key>", "<module> <'none'>"})
+public class BindCommand extends SimpleCommand {
     public BindCommand() {
         super("bind");
     }

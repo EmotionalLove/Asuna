@@ -1,17 +1,16 @@
 package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.command.CommandInfo;
+import com.sasha.simplecmdsys.SimpleCommand;
 
 import static com.sasha.adorufu.AdorufuMod.logMsg;
-import static com.sasha.adorufu.module.modules.ModuleClientIgnore.ignorelist;
-
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
  **/
-@CommandInfo(description = "View your friends", syntax = {"", "[player]"})
-public class FriendlistCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "View your friends", syntax = {"", "[player]"})
+public class FriendlistCommand extends SimpleCommand {
     public FriendlistCommand() {
         super("friendlist");
     }

@@ -1,15 +1,12 @@
 package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.command.CommandInfo;
 import com.sasha.adorufu.waypoint.Waypoint;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-@CommandInfo(description = "Add or remove waypoints", syntax = {"<'add'/'del'> <name>", "<'add'/'del'> <name> <x> <y> <z>"})
-public class WaypointCommand extends AdorufuCommand {
+import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
+@SimpleCommandInfo(description = "Add or remove waypoints", syntax = {"<'add'/'del'> <name>", "<'add'/'del'> <name> <x> <y> <z>"})
+public class WaypointCommand extends SimpleCommand {
     public WaypointCommand() {
         super("waypoint");
     }

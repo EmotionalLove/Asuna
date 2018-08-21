@@ -1,24 +1,18 @@
 package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.friend.Friend;
-import com.sasha.adorufu.friend.FriendManager;
-import com.sasha.adorufu.misc.AdorufuMath;
-import com.sasha.adorufu.module.ModuleManager;
-import com.sasha.adorufu.module.modules.ModuleXray;
-import net.minecraft.block.Block;
+import com.sasha.simplecmdsys.SimpleCommand;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
-@CommandInfo(description = "Add or remove friends from your friendlist", syntax = {"<'add'/'del'> <player>"})
-public class FriendCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Add or remove friends from your friendlist", syntax = {"<'add'/'del'> <player>"})
+public class FriendCommand extends SimpleCommand {
     public FriendCommand() {
         super("friend");
     }

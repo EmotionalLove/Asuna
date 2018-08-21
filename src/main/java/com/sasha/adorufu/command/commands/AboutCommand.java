@@ -2,13 +2,14 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.command.AdorufuCommand;
+import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 /**
  * Created by Sasha on 08/08/2018 at 7:42 AM
  **/
-@CommandInfo(description = "Displays the authors of the client and the client's version.", syntax = {""})
-public class AboutCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Displays the authors of the client and the client's version.", syntax = {""})
+public class AboutCommand extends SimpleCommand {
     public AboutCommand() {
         super("about");
     }

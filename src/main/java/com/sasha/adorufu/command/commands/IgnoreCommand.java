@@ -2,16 +2,17 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.module.modules.ModuleClientIgnore;
+import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import java.io.IOException;
 
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
  **/
-@CommandInfo(description = "Ignore or unignore a player. The player's name is CaSe SeNsiTve", syntax = {"<player>"})
-public class IgnoreCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Ignore or unignore a player. The player's name is CaSe SeNsiTve", syntax = {"<player>"})
+public class IgnoreCommand extends SimpleCommand {
     public IgnoreCommand() {
         super("ignore");
     }

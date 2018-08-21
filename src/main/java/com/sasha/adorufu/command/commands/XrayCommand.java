@@ -2,18 +2,18 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.command.CommandInfo;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.module.modules.ModuleXray;
+import com.sasha.simplecmdsys.SimpleCommand;
 import net.minecraft.block.Block;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 11/08/2018 at 1:18 PM
  **/
-@CommandInfo(description = "Add, remote, or list blocks added to xray", syntax = {"<'add'/'del'> <block>", "<'list'>"})
-public class XrayCommand extends AdorufuCommand {
+@SimpleCommandInfo(description = "Add, remote, or list blocks added to xray", syntax = {"<'add'/'del'> <block>", "<'list'>"})
+public class XrayCommand extends SimpleCommand {
     public XrayCommand() {
         super("xray");
     }

@@ -1,7 +1,6 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.command.AdorufuCommand;
 import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
 import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -24,7 +23,7 @@ public class MixinEntityPlayerSP {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo info) {
-        if (message.startsWith(AdorufuCommand.commandDelimetre)) {
+        if (message.startsWith(AdorufuMod.COMMAND_PROCESSOR.getCommandPrefix())) {
             AdorufuMod.EVENT_MANAGER.invokeEvent(new PlayerAdorufuCommandEvent(message));
             info.cancel();
         }
