@@ -5,15 +5,15 @@ import com.sasha.adorufu.misc.PlayerIdentity;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityTameable;
 
-@ModuleInfo(description = "Show who tamed a wolf")
+@ModuleInfo(description = "Show who tamed a tameable entity")
 public class ModuleWolfIdentity extends AdorufuModule {
 
     public ModuleWolfIdentity() {
-        super("WolfIdentity", AdorufuCategory.RENDER, false);
+        super("TamedIdentity", AdorufuCategory.RENDER, false);
     }
 
     @Override
@@ -35,17 +35,15 @@ public class ModuleWolfIdentity extends AdorufuModule {
                     if (tameableEntity.isTamed()) {
                         tameableEntity.setAlwaysRenderNameTag(true);
                         PlayerIdentity identity = AdorufuMod.DATA_MANAGER.getPlayerIdentity(tameableEntity.getOwnerId().toString());
-                        tameableEntity.setCustomNameTag(identity.getDisplayName());
-                        EntityRenderer.drawNameplate(AdorufuMod.minecraft.fontRenderer, tameableEntity.getOwnerId().toString(),
-                                (float)tameableEntity.posX,
-                                (float)tameableEntity.posY + 1.5f,
-                                (float)tameableEntity.posZ,
-                                0,
-                                AdorufuMod.minecraft.player.rotationYaw,
-                                AdorufuMod.minecraft.player.rotationPitch,
-                                false,
-                                false
-                                );
+                        tameableEntity.setCustomNameTag(identity.getDisplayName() + " \2478(" + tameableEntity.getName() + ")");
+                    }
+                }
+                if (entity instanceof AbstractHorse) {
+                    AbstractHorse tameableEntity = (AbstractHorse) entity;
+                    if (tameableEntity.isTame()) {
+                        tameableEntity.setAlwaysRenderNameTag(true);
+                        PlayerIdentity identity = AdorufuMod.DATA_MANAGER.getPlayerIdentity(tameableEntity.getOwnerUniqueId().toString());
+                        tameableEntity.setCustomNameTag(identity.getDisplayName() + " \2478(" + tameableEntity.getName() + ")");
                     }
                 }
             }
