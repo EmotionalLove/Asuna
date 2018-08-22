@@ -25,11 +25,7 @@ public class PlayerIdentity implements Serializable {
         this.stringUuid = stringUuid;
         this.displayName = "Loading...";
         new Thread(() -> {
-            LinkedHashMap<String, Long> map = getNameHistory(formattedUuid);
-            AtomicReference<String> latest = new AtomicReference<>();
-            latest.set(stringUuid);
-            map.forEach((str, lon) -> latest.set(str));
-            this.displayName = latest.get();
+            this.displayName = getName(formattedUuid);
             AdorufuMod.DATA_MANAGER.identityCacheMap.put(this.getStringUuid(), this);
             try {
                 AdorufuMod.DATA_MANAGER.savePlayerIdentity(this, false);
@@ -67,7 +63,7 @@ public class PlayerIdentity implements Serializable {
 
 
 
-    private static LinkedHashMap<String, Long> getNameHistory(String UUID) {
+    private static String getName(String UUID) {
         LinkedHashMap<String, Long> nameHistories = new LinkedHashMap<>();
         try {
             URL e = new URL("https://api.mojang.com/user/profiles/" + UUID.replace("-", "") + "/names");
@@ -82,39 +78,28 @@ public class PlayerIdentity implements Serializable {
             reader.close();
 
             JsonArray array = new JsonParser().parse(formattedjson).getAsJsonArray();
-            for(int i = 0; i < array.size(); i++) {
-                JsonObject obj = array.get(i).getAsJsonObject();
-                String nameform = obj.get("name").getAsString();
-                try {
-                    obj.get("changedToAt");
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(obj.get("changedToAt").getAsLong());
-                    long changedAt = obj.get("changedToAt").getAsLong();
-                    int mYear = calendar.get(Calendar.YEAR);
-                    int mMonth = calendar.get(Calendar.MONTH);
-                    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                    //nameform = nameform + " @ " + getDateFormat(mMonth + 1, mDay, mYear);
-                    nameHistories.put(nameform, changedAt);
-                }catch (Exception ee) {
-                    /*
-                    StringWriter w = new StringWriter();
-                    PrintWriter writer = new PrintWriter(w);
-                    ee.printStackTrace(writer);
-                    pushNotify(w.toString());
-                    */
-                    nameHistories.put(nameform + " @ Before existence", null);
-                }
+            JsonObject obj = array.get(array.size() - 1).getAsJsonObject();
+            String nameform = obj.get("name").getAsString();
+            try {
+                obj.get("changedToAt");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(obj.get("changedToAt").getAsLong());
+                long changedAt = obj.get("changedToAt").getAsLong();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                //nameform = nameform + " @ " + getDateFormat(mMonth + 1, mDay, mYear);
+                nameHistories.put(nameform, changedAt);
+                return nameform;
+            } catch (Exception ee) {
+                return nameform;
             }
-
-            /*JSONObject jsonObject = new JSONObject(formattedjson);
-            JSONArray ja = jsonObject.getJSONArray("name");
-            for ()*/
         }
         catch (Exception e) {
             e.printStackTrace();
             System.out.print("fuck");
         }
-        return nameHistories;
+        return UUID;
     }
     private static String getDateFormat(int mm, int dd, int yyyy) {
         return mm + "/" + dd + "/" + yyyy;
