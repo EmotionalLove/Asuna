@@ -1,6 +1,7 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.events.ClientItemSpawnEvent;
 import com.sasha.adorufu.events.ClientPacketRecieveEvent;
 import com.sasha.adorufu.events.PlayerBlockBreakEvent;
 import com.sasha.adorufu.misc.AdorufuRender;
@@ -51,7 +52,7 @@ public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleList
     public void onBlockBreak(PlayerBlockBreakEvent e) {
         BlakeIsMyBoyfriendMap.put(new Coordinate(e.getBlockPos().x, e.getBlockPos().y, e.getBlockPos().z, AdorufuMod.minecraft.player.dimension), false);
     }
-    @SimpleEventHandler
+    /*@SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e) {
         if (this.isEnabled()) {
             if (e.getRecievedPacket() instanceof SPacketSpawnObject) {
@@ -66,6 +67,15 @@ public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleList
                         }
                     }
                 }
+            }
+        }
+    }*/
+    @SimpleEventHandler
+    public void onItemDrop(ClientItemSpawnEvent e) {
+        int[] coords = e.getCoordinate();
+        for (HashMap.Entry<Coordinate, Boolean> fugg : BlakeIsMyBoyfriendMap.entrySet()) {
+            if (!fugg.getValue() && between(fugg.getKey().getX(), coords[0], 0.25d, 0.25d) && between(fugg.getKey().getY(),coords[1], 0.25d, 0.25d) && between(fugg.getKey().getZ(),coords[2], 0.25d, 0.25d)){
+                BlakeIsMyBoyfriendMap.put(fugg.getKey(), true);
             }
         }
     }
