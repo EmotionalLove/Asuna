@@ -9,8 +9,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityTameable;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 @ModuleInfo(description = "Show who tamed a tameable entity")
 public class ModuleWolfIdentity extends AdorufuModule {
+
 
     public ModuleWolfIdentity() {
         super("TamedIdentity", AdorufuCategory.RENDER, false);
@@ -35,7 +39,7 @@ public class ModuleWolfIdentity extends AdorufuModule {
                     if (tameableEntity.isTamed()) {
                         tameableEntity.setAlwaysRenderNameTag(true);
                         PlayerIdentity identity = AdorufuMod.DATA_MANAGER.getPlayerIdentity(tameableEntity.getOwnerId().toString());
-                        tameableEntity.setCustomNameTag(identity.getDisplayName() + " \2478(" + tameableEntity.getName() + ")");
+                        tameableEntity.setCustomNameTag(identity.getDisplayName());
                     }
                 }
                 if (entity instanceof AbstractHorse) {
@@ -43,7 +47,7 @@ public class ModuleWolfIdentity extends AdorufuModule {
                     if (tameableEntity.isTame()) {
                         tameableEntity.setAlwaysRenderNameTag(true);
                         PlayerIdentity identity = AdorufuMod.DATA_MANAGER.getPlayerIdentity(tameableEntity.getOwnerUniqueId().toString());
-                        tameableEntity.setCustomNameTag(identity.getDisplayName() + " \2478(" + tameableEntity.getName() + ")");
+                        tameableEntity.setCustomNameTag(identity.getDisplayName());
                     }
                 }
             }
