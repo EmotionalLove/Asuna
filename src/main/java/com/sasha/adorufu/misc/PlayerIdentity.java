@@ -93,7 +93,7 @@ public class PlayerIdentity implements Serializable {
                     int mYear = calendar.get(Calendar.YEAR);
                     int mMonth = calendar.get(Calendar.MONTH);
                     int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                    nameform = nameform + " @ " + getDateFormat(mMonth + 1, mDay, mYear);
+                    //nameform = nameform + " @ " + getDateFormat(mMonth + 1, mDay, mYear);
                     nameHistories.put(nameform, changedAt);
                 }catch (Exception ee) {
                     /*
