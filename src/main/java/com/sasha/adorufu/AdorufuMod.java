@@ -122,7 +122,11 @@ public class AdorufuMod {
             WAYPOINT_MANAGER = new WaypointManager();
             try {
                 DATA_MANAGER.loadPlayerIdentities();
-                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> id.updateDisplayName());
+                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
+                    if (id.shouldUpdate()) {
+                        id.updateDisplayName();
+                    }
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
