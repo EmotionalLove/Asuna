@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -31,6 +32,8 @@ public class AdorufuDataManager {
     private final Lock waypointLock = new ReentrantLock();
     private final Lock identityLock = new ReentrantLock();
     private final String dataFileName = "AdorufuData.yml";
+
+    public LinkedHashMap<String, PlayerIdentity> identityCacheMap = new LinkedHashMap<>();
 
     public synchronized void savePlayerIdentity(PlayerIdentity id, boolean delete) throws IOException {
         logMsg(true, "Saving identity " + id.getStringUuid() + "...");
@@ -57,6 +60,13 @@ public class AdorufuDataManager {
         }
     }
 
+    public PlayerIdentity getPlayerIdentity(String UUID) {
+        if (identityCacheMap.containsKey(UUID)) {
+            return identityCacheMap.get(UUID);
+        }
+        return new PlayerIdentity(UUID);
+    }
+
     public synchronized void saveWaypoint(Waypoint waypoint, boolean delete) throws IOException {
         logMsg(true, "Saving waypoint " + waypoint.getName() + "...");
         waypointLock.lock();
@@ -78,6 +88,45 @@ public class AdorufuDataManager {
             fstream.close();
         } finally {
             waypointLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized void loadPlayerIdentities() throws IOException {
+        logMsg(true, "Loading id's...");
+        identityLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File("playeridentitycache");
+            if (!f.exists()) {
+                logMsg(true, "No id's to load, skipping.");
+                return; // nothing to load :p
+            }
+            if (!f.isDirectory()) {
+                f.delete();
+                return; // nothing to load :p
+            }
+            List<File> files = Arrays.asList(f.listFiles());
+            files.stream().filter(file -> file.getName().endsWith(".wypt")).forEach(wyptFile -> {
+                try {
+                    FileInputStream inputStream = new FileInputStream(wyptFile);
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                    Object wayptObj = objectInputStream.readObject();
+                    if (wayptObj instanceof PlayerIdentity) {
+                        identityCacheMap.put(((PlayerIdentity) wayptObj).getStringUuid(),(PlayerIdentity)wayptObj);
+                        objectInputStream.close();
+                        inputStream.close();
+                        return;
+                    }
+                    objectInputStream.close();
+                    inputStream.close();
+                    logWarn(true, wyptFile.getName() + " was not a id, skipping.");
+                }catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace(); //dont rly care
+                    return;
+                }
+            });
+        } finally {
+            identityLock.unlock();
             logWarn(true, "Thread locking disengaged!");
         }
     }

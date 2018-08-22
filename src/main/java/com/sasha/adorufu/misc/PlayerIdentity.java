@@ -8,6 +8,7 @@ import com.sasha.adorufu.AdorufuMod;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
@@ -15,32 +16,27 @@ import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PlayerIdentity {
+public class PlayerIdentity implements Serializable {
     private String displayName;
     private String stringUuid;
 
-    public static LinkedHashMap<String, PlayerIdentity> cacheMap = new LinkedHashMap<>();
-
-    /**
-     * use this only on seperate thread for best results.
-     */
     public PlayerIdentity(String stringUuid) {
         String formattedUuid = stringUuid.replace("-", "");
-        LinkedHashMap<String, Long> map = getNameHistory(formattedUuid);
-        AtomicReference<String> latest = new AtomicReference<>();
-        latest.set(stringUuid);
-        map.forEach((str, lon) -> {
-            latest.set(str);
-        });
-        this.displayName = latest.get();
-        cacheMap.put(this.displayName, this);
-        AdorufuMod.scheduler.schedule(() -> {
+        this.stringUuid = stringUuid;
+        this.displayName = "Loading...";
+        new Thread(() -> {
+            LinkedHashMap<String, Long> map = getNameHistory(formattedUuid);
+            AtomicReference<String> latest = new AtomicReference<>();
+            latest.set(stringUuid);
+            map.forEach((str, lon) -> latest.set(str));
+            this.displayName = latest.get();
+            AdorufuMod.DATA_MANAGER.identityCacheMap.put(this.getStringUuid(), this);
             try {
                 AdorufuMod.DATA_MANAGER.savePlayerIdentity(this, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }, 0, TimeUnit.NANOSECONDS);
+        }).start();
     }
 
     public String getDisplayName() {
