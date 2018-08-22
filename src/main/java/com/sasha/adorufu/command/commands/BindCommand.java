@@ -1,7 +1,6 @@
 package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.command.CommandInfo;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import com.sasha.adorufu.module.ModuleManager;
