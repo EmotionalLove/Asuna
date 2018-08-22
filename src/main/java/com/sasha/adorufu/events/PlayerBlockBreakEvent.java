@@ -11,12 +11,17 @@ import net.minecraft.util.math.BlockPos;
 public class PlayerBlockBreakEvent extends SimpleCancellableEvent {
 
     private Block block;
+    private BlockPos brokenPos;
 
     public PlayerBlockBreakEvent(BlockPos pos) {
         block = AdorufuMod.minecraft.world.getBlockState(pos).getBlock();
+        this.brokenPos = pos;
     }
 
     public Block getBlock() {
         return block;
+    }
+    public BlockPos getBlockPos() {
+        return brokenPos;
     }
 }
