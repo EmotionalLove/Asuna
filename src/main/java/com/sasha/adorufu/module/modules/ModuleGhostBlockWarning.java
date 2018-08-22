@@ -7,12 +7,13 @@ import com.sasha.adorufu.misc.AdorufuRender;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketSpawnObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class ModuleGhostBlockWarning extends AdorufuModule {
+public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleListener {
 
     /** dont ask why this variable is named this it was like this already HUSH PLS*/
     private static LinkedHashMap<Coordinate, Boolean> BlakeIsMyBoyfriendMap = new LinkedHashMap<>();
@@ -42,7 +43,7 @@ public class ModuleGhostBlockWarning extends AdorufuModule {
         }
         for (HashMap.Entry<Coordinate, Boolean> wow : BlakeIsMyBoyfriendMap.entrySet()){
             if(!wow.getValue()){
-                AdorufuRender.storageESP(wow.getKey().getX(), wow.getKey().getY(), wow.getKey().getZ(), 1.0f, 0.0f, 0.0f);
+                AdorufuRender.ghostBlock(wow.getKey().getX(), wow.getKey().getY(), wow.getKey().getZ(), 1.0f, 0.0f, 0.0f, 0.5f);
             }
         }
     }

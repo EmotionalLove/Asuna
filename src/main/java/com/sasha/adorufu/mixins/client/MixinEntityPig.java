@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 
 import javax.annotation.Nullable;
 
-@Mixin(EntityPig.class)
+@Mixin(value = EntityPig.class, priority = 999)
 public abstract class MixinEntityPig {
     @Shadow @Nullable public abstract Entity getControllingPassenger();
 

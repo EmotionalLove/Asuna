@@ -31,7 +31,7 @@ import static net.minecraft.client.Minecraft.getSystemTime;
 /**
  * Created by Sasha on 10/08/2018 at 1:40 PM
  **/
-@Mixin(Minecraft.class)
+@Mixin(value = Minecraft.class, priority = 999)
 public abstract class MixinMinecraft {
     //@Inject(method = "runTickKeyboard", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/settings/KeyBinding;setKeyBindState(IZ)V", ordinal = 2), cancellable = true)
     @Shadow

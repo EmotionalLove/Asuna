@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * Created by Sasha on 11/08/2018 at 5:31 PM
  **/
-@Mixin(PlayerControllerMP.class)
+@Mixin(value = PlayerControllerMP.class, priority = 999)
 public class MixinPlayerControllerMP {
     @Inject(method = "onPlayerDestroyBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playEvent(ILnet/minecraft/util/math/BlockPos;I)V"), cancellable = true)
     public void onPlayerDestroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> info){

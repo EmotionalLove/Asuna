@@ -27,7 +27,7 @@ import java.util.List;
 
 import static net.minecraft.client.gui.Gui.drawRect;
 
-@Mixin(GuiPlayerTabOverlay.class)
+@Mixin(value = GuiPlayerTabOverlay.class, priority = 999)
 public abstract class MixinGuiPlayerTabOverlay {
     @Shadow @Final private Minecraft mc;
 
