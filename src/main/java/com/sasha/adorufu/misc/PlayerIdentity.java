@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 public class PlayerIdentity implements Serializable {
     private String displayName;
     private String stringUuid;
+    private Long lastUpdated;
 
     public PlayerIdentity(String stringUuid) {
         String formattedUuid = stringUuid.replace("-", "");
@@ -31,6 +32,7 @@ public class PlayerIdentity implements Serializable {
                 e.printStackTrace();
             }
         }).start();
+        this.lastUpdated = System.currentTimeMillis();
     }
 
     public String getDisplayName() {
@@ -47,19 +49,14 @@ public class PlayerIdentity implements Serializable {
         new Thread(() -> {
             PlayerIdentity identity = new PlayerIdentity(this.stringUuid);
             this.displayName = identity.getDisplayName();
+            this.lastUpdated = System.currentTimeMillis();
             identity = null;
         }).start();
     }
 
-
-
-
-
-
-
-
-
-
+    public boolean shouldUpdate() {
+        return System.currentTimeMillis() - this.lastUpdated >= 6.048e+8 /* one week */;
+    }
 
     private static String getName(String UUID) {
         LinkedHashMap<String, Long> nameHistories = new LinkedHashMap<>();
