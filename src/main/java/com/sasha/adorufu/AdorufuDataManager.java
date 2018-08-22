@@ -106,7 +106,7 @@ public class AdorufuDataManager {
                 return; // nothing to load :p
             }
             List<File> files = Arrays.asList(f.listFiles());
-            files.stream().filter(file -> file.getName().endsWith(".wypt")).forEach(wyptFile -> {
+            files.stream().filter(file -> file.getName().endsWith(".mcid")).forEach(wyptFile -> {
                 try {
                     FileInputStream inputStream = new FileInputStream(wyptFile);
                     ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
