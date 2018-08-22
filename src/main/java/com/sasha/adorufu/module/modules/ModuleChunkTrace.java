@@ -24,11 +24,6 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
 
     public static LinkedHashMap<Integer, Integer> newChunks = new LinkedHashMap<>();
 
-    /*
-    public static boolean chunkESP = false;
-    public static boolean pearlNotify = false;
-    */
-
     public ModuleChunkTrace() {
         super("ChunkTrace", AdorufuCategory.RENDER, false, true);
         this.addOption("ChunkESP", true);
@@ -51,15 +46,18 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
         suffixMap.put("Chunks", this.getOption("ChunkESP"));
         suffixMap.put("Pearls", this.getOption("PearlNotify"));
         this.setSuffix(suffixMap);
+    }
+    @Override
+    public void onRender() {
         if (this.isEnabled() && this.getOption("ChunkESP")){
-            for (Map.Entry<Integer, Integer> chunk : newChunks.entrySet()) {
+            newChunks.forEach((chunkX, chunkZ) -> {
                 int x, z;
-                x = chunk.getKey()*16;
+                x = chunkX * 16;
+                z = chunkZ * 16;
                 double maxY = AdorufuMod.minecraft.player.posY + 25;
                 int y = 0;
-                z = chunk.getValue()* 16;
                 chunkESP(x, y, z, 1.0f, 0.0f, 0.0f, 0.5f, maxY);
-            }
+            });
         }
     }
     @SimpleEventHandler
@@ -77,8 +75,10 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
     @SimpleEventHandler
     public void onNewChunk(ServerGenerateChunkEvent e) {
         if (!this.isEnabled()) return;
-        if ((!(newChunks.containsKey(e.getChunkX())) && newChunks.containsValue(e.getChunkZ()))){
-            newChunks.put(e.getChunkX(), e.getChunkZ());
+        if (newChunks.containsKey(e.getChunkX()) && newChunks.containsValue(e.getChunkZ())){
+            return;
         }
+        newChunks.put(e.getChunkX(), e.getChunkZ());
+        AdorufuMod.logMsg(e.getChunkX() + " " + e.getChunkZ());
     }
 }
