@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Created by Sasha on 08/08/2018 at 7:53 AM
  **/
-@Mixin(EntityPlayerSP.class)
+@Mixin(value = EntityPlayerSP.class, priority = 999)
 public class MixinEntityPlayerSP {
 
     @Shadow public MovementInput movementInput;

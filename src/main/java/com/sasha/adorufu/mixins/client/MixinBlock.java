@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * Created by Sasha on 11/08/2018 at 12:53 PM
  **/
-@Mixin(Block.class)
+@Mixin(value = Block.class, priority = 999)
 public abstract class MixinBlock {
 
     @Inject(method = "isOpaqueCube", at = @At("HEAD") , cancellable = true)

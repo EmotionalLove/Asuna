@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 /**
  * Created by Sasha on 08/08/2018 at 8:08 PM
  **/
-@Mixin(NetworkManager.class)
+@Mixin(value = NetworkManager.class, priority = 999)
 public abstract class MixinNetworkManager {
 
     @Shadow protected abstract void dispatchPacket(Packet<?> inPacket, @Nullable GenericFutureListener<? extends Future<? super Void>>[] futureListeners);

@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Created by Sasha on 09/08/2018 at 7:37 PM
  **/
-@Mixin(EntityRenderer.class)
+@Mixin(value = EntityRenderer.class, priority = 999)
 public class MixinEntityRenderer {
 
 

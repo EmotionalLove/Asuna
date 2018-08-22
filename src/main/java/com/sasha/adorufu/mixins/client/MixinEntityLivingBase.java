@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
-@Mixin(EntityLivingBase.class)
+@Mixin(value = EntityLivingBase.class, priority = 999)
 public abstract class MixinEntityLivingBase {
 
 
