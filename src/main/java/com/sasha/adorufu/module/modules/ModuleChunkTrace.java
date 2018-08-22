@@ -1,5 +1,6 @@
 package com.sasha.adorufu.module.modules;
 
+import com.sasha.adorufu.events.ServerGenerateChunkEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.AdorufuMod;
@@ -30,8 +31,8 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
 
     public ModuleChunkTrace() {
         super("ChunkTrace", AdorufuCategory.RENDER, false, true);
-        this.addOption("ChunkESP", false);
-        this.addOption("PearlNotify", true);
+        this.addOption("ChunkESP", true);
+        this.addOption("PearlNotify", false);
     }
 
     @Override
@@ -72,11 +73,12 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
             AdorufuMod.logMsg(false, "\2478(\247bChunkTrace\2478) \2477Ender pearl loaded @ XYZ *x *y *z".replace("*x", pck.getX()+"")
             .replace("*y", pck.getY()+"").replace("*z", pck.getZ()+""));
         }
-        if (e.getRecievedPacket() instanceof SPacketChunkData){
-            SPacketChunkData pck = (SPacketChunkData) e.getRecievedPacket();
-            if (!pck.isFullChunk() && (!(newChunks.containsKey(pck.getChunkX())) && newChunks.containsValue(pck.getChunkZ()))){
-                newChunks.put(pck.getChunkX(), pck.getChunkZ());
-            }
+    }
+    @SimpleEventHandler
+    public void onNewChunk(ServerGenerateChunkEvent e) {
+        if (!this.isEnabled()) return;
+        if ((!(newChunks.containsKey(e.getChunkX())) && newChunks.containsValue(e.getChunkZ()))){
+            newChunks.put(e.getChunkX(), e.getChunkZ());
         }
     }
 }
