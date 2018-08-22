@@ -189,6 +189,7 @@ public class AdorufuMod {
         ModuleManager.register(new ModuleAutoTotem());
         ModuleManager.register(new ModuleWaypointGUI());
         ModuleManager.register(new ModuleWaypoints());
+        ModuleManager.register(new ModuleWolfIdentity());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
