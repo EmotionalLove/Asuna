@@ -120,6 +120,12 @@ public class AdorufuMod {
         scheduler.schedule(() -> {
             PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
             WAYPOINT_MANAGER = new WaypointManager();
+            try {
+                DATA_MANAGER.loadPlayerIdentities();
+                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> id.updateDisplayName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }, 0, TimeUnit.NANOSECONDS);
         EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
         logMsg(true, "Adorufu cleanly initialised!");
