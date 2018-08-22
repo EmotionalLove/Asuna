@@ -4,6 +4,7 @@ import com.sasha.adorufu.friend.Friend;
 import com.sasha.adorufu.gui.clickgui.elements.AdorufuWindow;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.misc.PlayerIdentity;
 import com.sasha.adorufu.misc.YMLParser;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.waypoint.Waypoint;
@@ -28,7 +29,33 @@ import static com.sasha.adorufu.module.ModuleManager.moduleRegistry;
 public class AdorufuDataManager {
     private final Lock threadLock = new ReentrantLock();
     private final Lock waypointLock = new ReentrantLock();
+    private final Lock identityLock = new ReentrantLock();
     private final String dataFileName = "AdorufuData.yml";
+
+    public synchronized void savePlayerIdentity(PlayerIdentity id, boolean delete) throws IOException {
+        logMsg(true, "Saving identity " + id.getStringUuid() + "...");
+        identityLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File dir = new File("playeridentitycache");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            File f = new File("playeridentitycache/" + id.getStringUuid() + ".mcid");
+            if (f.exists() || delete) {
+                f.delete();
+                if (delete) return;
+            }
+            FileOutputStream fstream = new FileOutputStream(f);
+            ObjectOutputStream stream = new ObjectOutputStream(fstream);
+            stream.writeObject(id);
+            stream.close();
+            fstream.close();
+        } finally {
+            identityLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
 
     public synchronized void saveWaypoint(Waypoint waypoint, boolean delete) throws IOException {
         logMsg(true, "Saving waypoint " + waypoint.getName() + "...");
