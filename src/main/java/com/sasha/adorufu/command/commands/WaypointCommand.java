@@ -1,7 +1,6 @@
 package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.command.CommandInfo;
 import com.sasha.adorufu.waypoint.Waypoint;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;

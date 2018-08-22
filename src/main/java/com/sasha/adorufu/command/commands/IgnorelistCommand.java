@@ -1,6 +1,5 @@
 package com.sasha.adorufu.command.commands;
 
-import com.sasha.adorufu.command.CommandInfo;
 import com.sasha.simplecmdsys.SimpleCommand;
 
 import static com.sasha.adorufu.AdorufuMod.logMsg;
