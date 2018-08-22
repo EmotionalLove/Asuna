@@ -32,6 +32,9 @@ public class ModuleWolfIdentity extends AdorufuModule {
                 if (entity instanceof EntityTameable) {
                     EntityTameable tameableEntity = (EntityTameable) entity;
                     if (tameableEntity.isTamed()) {
+
+                        tameableEntity.setAlwaysRenderNameTag(true);
+                        tameableEntity.setCustomNameTag(tameableEntity.getOwnerId().toString());
                         EntityRenderer.drawNameplate(AdorufuMod.minecraft.fontRenderer, tameableEntity.getOwnerId().toString(),
                                 (float)tameableEntity.posX,
                                 (float)tameableEntity.posY + 1.5f,
