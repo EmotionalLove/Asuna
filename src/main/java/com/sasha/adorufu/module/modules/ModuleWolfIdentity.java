@@ -36,7 +36,7 @@ public class ModuleWolfIdentity extends AdorufuModule {
             for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
                 if (entity instanceof EntityTameable) {
                     EntityTameable tameableEntity = (EntityTameable) entity;
-                    if (tameableEntity.isTamed()) {
+                    if (tameableEntity.isTamed() && tameableEntity.getOwnerId() != null) {
                         tameableEntity.setAlwaysRenderNameTag(true);
                         PlayerIdentity identity = AdorufuMod.DATA_MANAGER.getPlayerIdentity(tameableEntity.getOwnerId().toString());
                         tameableEntity.setCustomNameTag(identity.getDisplayName());
@@ -44,7 +44,7 @@ public class ModuleWolfIdentity extends AdorufuModule {
                 }
                 if (entity instanceof AbstractHorse) {
                     AbstractHorse tameableEntity = (AbstractHorse) entity;
-                    if (tameableEntity.isTame()) {
+                    if (tameableEntity.isTame() && tameableEntity.getOwnerUniqueId() != null) {
                         tameableEntity.setAlwaysRenderNameTag(true);
                         PlayerIdentity identity = AdorufuMod.DATA_MANAGER.getPlayerIdentity(tameableEntity.getOwnerUniqueId().toString());
                         tameableEntity.setCustomNameTag(identity.getDisplayName());
