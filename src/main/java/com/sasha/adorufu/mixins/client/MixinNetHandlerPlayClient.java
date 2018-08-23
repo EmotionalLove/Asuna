@@ -19,7 +19,7 @@ public class MixinNetHandlerPlayClient {
 
     @Shadow private WorldClient clientWorldController;
 
-    @Inject(method = "handleChunkData", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "handleChunkData", at = @At("RETURN"), cancellable = true)
     public void handleChunkData(SPacketChunkData packetIn, CallbackInfo info) {
         Chunk chk = this.clientWorldController.getChunkFromChunkCoords(packetIn.getChunkX(), packetIn.getChunkZ());
         if (chk.isTerrainPopulated()) {
