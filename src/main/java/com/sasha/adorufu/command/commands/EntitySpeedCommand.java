@@ -18,7 +18,7 @@ public class EntitySpeedCommand extends SimpleCommand {
     @Override
     public void onCommand() {
         if (this.getArguments() == null || this.getArguments().length > 1) {
-            AdorufuMod.logErr(false, "Incorrect Arguments. Try \"-help command " + this.getCommandName());
+            AdorufuMod.logErr(false, "Incorrect Arguments. Try \"-help command " + this.getCommandName() + "\"");
             return;
         }
         float newSpeed = Float.parseFloat(this.getArguments()[0]);
