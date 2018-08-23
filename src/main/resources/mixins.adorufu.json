@@ -17,6 +17,7 @@
     "MixinEntity",
     "MixinEntityPig",
     "MixinAbstractClientPlayer",
-    "MixinNetHandlerPlayClient"
+    "MixinNetHandlerPlayClient",
+    "MixinItemRenderer"
   ]
 }
