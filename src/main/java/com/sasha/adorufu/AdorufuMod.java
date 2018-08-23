@@ -201,6 +201,7 @@ public class AdorufuMod {
         ModuleManager.register(new ModuleWaypoints());
         ModuleManager.register(new ModuleWolfIdentity());
         ModuleManager.register(new ModuleGhostBlockWarning());
+        ModuleManager.register(new ModuleAntiFireOverlay());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());

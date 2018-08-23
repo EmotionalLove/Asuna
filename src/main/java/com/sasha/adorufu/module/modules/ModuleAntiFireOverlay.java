@@ -7,8 +7,8 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
 public class ModuleAntiFireOverlay extends AdorufuModule implements SimpleListener {
-    public ModuleAntiFireOverlay(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable, boolean hasOptions) {
-        super(moduleName, moduleCategory, isRenderable, hasOptions);
+    public ModuleAntiFireOverlay() {
+        super("AntiFireOverlay", AdorufuCategory.RENDER, false);
     }
 
     @Override
