@@ -1,5 +1,6 @@
 package com.sasha.adorufu;
 
+import com.sasha.adorufu.exception.AdorufuNoSuchElementInDataFileException;
 import com.sasha.adorufu.friend.Friend;
 import com.sasha.adorufu.gui.clickgui.elements.AdorufuWindow;
 import com.sasha.adorufu.gui.hud.RenderableObject;
@@ -10,6 +11,7 @@ import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.waypoint.Waypoint;
 import net.minecraft.block.Block;
 
+import javax.annotation.Nullable;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +36,49 @@ public class AdorufuDataManager {
     private final String dataFileName = "AdorufuData.yml";
 
     public LinkedHashMap<String, PlayerIdentity> identityCacheMap = new LinkedHashMap<>();
+
+    /**
+     * Used for saving a float,double,string,int,long... anything like that, really.
+     * @param path the path in the config to save it to. (recommended is Adorufu.something)
+     * @param varName the name of the variable in the cfg file
+     * @param obj the thing to save.
+     */
+    public synchronized void saveSomeGenericValue(String path, String varName, Object obj) throws IOException {
+        threadLock.lock();
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            YMLParser parser = new YMLParser(file);
+            parser.set(path + "." + varName, obj);
+            parser.save();
+        } finally {
+            threadLock.unlock();
+        }
+    }
+
+    /**
+     * You'll need to cast the final value to what you saved it as.
+     */
+    public synchronized Object loadSomeGenericValue(String path, String varName, @Nullable Object defaultVal) throws IOException {
+        threadLock.lock();
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            YMLParser parser = new YMLParser(file);
+            if (parser.exists(path + "." + varName)) {
+                if (defaultVal != null) return parser.get(path + "." + varName, defaultVal);
+                return parser.get(path + "." + varName);
+            }
+            if (defaultVal != null) return defaultVal;
+            throw new AdorufuNoSuchElementInDataFileException("\"" + path + "\" does not exist in " + dataFileName);
+        } finally {
+            threadLock.unlock();
+        }
+    }
 
     public synchronized void savePlayerIdentity(PlayerIdentity id, boolean delete) throws IOException {
         logMsg(true, "Saving identity " + id.getStringUuid() + "...");

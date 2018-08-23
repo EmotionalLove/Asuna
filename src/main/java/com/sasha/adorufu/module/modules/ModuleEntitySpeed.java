@@ -8,11 +8,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.MovementInput;
 
+import java.io.IOException;
+
 @ModuleInfo(description = "Speedhack for ridable animals")
 public class ModuleEntitySpeed extends AdorufuModule {
-    static float speed = 2.5f;
+    public static float speed;
     public ModuleEntitySpeed() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT, false);
+        try {
+            speed = (float)AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

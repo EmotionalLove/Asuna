@@ -41,7 +41,7 @@ public class AdorufuMod {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.0.2";
+    public static final String VERSION = "1.0.3";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
@@ -136,19 +136,20 @@ public class AdorufuMod {
     }
 
     private void registerCommands() throws Exception{
-        COMMAND_PROCESSOR.register(new AboutCommand());
-        COMMAND_PROCESSOR.register(new ToggleCommand());
-        COMMAND_PROCESSOR.register(new ModulesCommand());
-        COMMAND_PROCESSOR.register(new HelpCommand());
-        COMMAND_PROCESSOR.register(new BindCommand());
-        COMMAND_PROCESSOR.register(new XrayCommand());
-        COMMAND_PROCESSOR.register(new LagCommand());
-        COMMAND_PROCESSOR.register(new IgnoreCommand());
-        COMMAND_PROCESSOR.register(new IgnorelistCommand());
-        COMMAND_PROCESSOR.register(new YawCommand());
-        COMMAND_PROCESSOR.register(new FriendCommand());
-        COMMAND_PROCESSOR.register(new FriendlistCommand());
-        COMMAND_PROCESSOR.register(new WaypointCommand());
+        COMMAND_PROCESSOR.register(AboutCommand.class);
+        COMMAND_PROCESSOR.register(ToggleCommand.class);
+        COMMAND_PROCESSOR.register(ModulesCommand.class);
+        COMMAND_PROCESSOR.register(HelpCommand.class);
+        COMMAND_PROCESSOR.register(BindCommand.class);
+        COMMAND_PROCESSOR.register(XrayCommand.class);
+        COMMAND_PROCESSOR.register(LagCommand.class);
+        COMMAND_PROCESSOR.register(IgnoreCommand.class);
+        COMMAND_PROCESSOR.register(IgnorelistCommand.class);
+        COMMAND_PROCESSOR.register(YawCommand.class);
+        COMMAND_PROCESSOR.register(FriendCommand.class);
+        COMMAND_PROCESSOR.register(FriendlistCommand.class);
+        COMMAND_PROCESSOR.register(WaypointCommand.class);
+        COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
     }
 
     private void registerModules() throws Exception {
