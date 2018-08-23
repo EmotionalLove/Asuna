@@ -1,6 +1,6 @@
 ### About Adorufu
 
-Adorufu is a minecraft client made for Forge. "Adorufu" is Japanese for "Adolf"
+Adorufu is a minecraft mod that assists the player in survival anarchy environments. "Adorufu" is Japanese for "Adolf"
 
 ### Installation tutorial
 
