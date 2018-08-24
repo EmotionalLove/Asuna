@@ -15,16 +15,11 @@ public class ModuleEntitySpeed extends AdorufuModule {
     public static float speed;
     public ModuleEntitySpeed() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT, false);
-        try {
-            speed = (float)AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5f);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void onEnable() {
-        
+
     }
 
     @Override
