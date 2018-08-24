@@ -73,7 +73,7 @@ public abstract class MixinGuiPlayerTabOverlay {
         int i4 = l3;
         int j4;
 
-        for (j4 = 1; i4 > 20; i4 = (l3 + j4 - 1) / j4)
+        for (j4 = 1; i4 > (exTab && list.size() >= 80 ? 25 : 20); i4 = (l3 + j4 - 1) / j4)
         {
             ++j4;
         }
@@ -99,7 +99,7 @@ public abstract class MixinGuiPlayerTabOverlay {
 
         int i1 = Math.min(j4 * ((flag ? 9 : 0) + i + l + 13), width - 50) / j4;
         int j1 = width / 2 - (i1 * j4 + (j4 - 1) * 5) / 2;
-        int k1 = exTab ? 15:10; // makes the individual columns hold more players.
+        int k1 = 10; // makes the individual columns hold more players.
         int l1 = i1 * j4 + (j4 - 1) * 5;
         List<String> list1 = null;
 
