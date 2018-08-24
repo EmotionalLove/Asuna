@@ -50,6 +50,7 @@ public abstract class MixinGuiPlayerTabOverlay {
     @Overwrite
     public void renderPlayerlist(int width, Scoreboard scoreboardIn, @Nullable ScoreObjective scoreObjectiveIn)
     {
+        boolean exTab = ModuleManager.getModuleByName("ExtendedTablist").isEnabled();
         NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
         List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
         int i = 0;
@@ -67,7 +68,7 @@ public abstract class MixinGuiPlayerTabOverlay {
             }
         }
 
-        list = list.subList(0, Math.min(list.size(), (ModuleManager.getModuleByName("ExtendedTablist").isEnabled() ? 256 : 80)));
+        list = list.subList(0, Math.min(list.size(), (exTab ? 256 : 80)));
         int l3 = list.size();
         int i4 = l3;
         int j4;
@@ -98,7 +99,7 @@ public abstract class MixinGuiPlayerTabOverlay {
 
         int i1 = Math.min(j4 * ((flag ? 9 : 0) + i + l + 13), width - 50) / j4;
         int j1 = width / 2 - (i1 * j4 + (j4 - 1) * 5) / 2;
-        int k1 = 10;
+        int k1 = exTab ? 15:10; // makes the individual columns hold more players.
         int l1 = i1 * j4 + (j4 - 1) * 5;
         List<String> list1 = null;
 
