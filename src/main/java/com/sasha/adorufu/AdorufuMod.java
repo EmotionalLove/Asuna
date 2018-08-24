@@ -118,6 +118,11 @@ public class AdorufuMod {
         }, 500, TimeUnit.MILLISECONDS);
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         scheduler.schedule(() -> {
+            try {
+                ModuleEntitySpeed.speed = (Float)AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5f);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
             WAYPOINT_MANAGER = new WaypointManager();
             try {

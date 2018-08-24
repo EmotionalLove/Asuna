@@ -61,7 +61,7 @@ public class AdorufuDataManager {
     /**
      * You'll need to cast the final value to what you saved it as.
      */
-    public synchronized Object loadSomeGenericValue(String path, String varName, @Nullable Object defaultVal) throws IOException {
+    public synchronized Object loadSomeGenericValue(String path, String varName, Object defaultVal) throws IOException {
         threadLock.lock();
         try {
             File file = new File(dataFileName);
@@ -69,12 +69,12 @@ public class AdorufuDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            if (parser.exists(path + "." + varName)) {
-                if (defaultVal != null) return parser.get(path + "." + varName, defaultVal);
-                return parser.get(path + "." + varName);
+            if (!parser.exists(path + "." + varName)) {
+                if (defaultVal != null) return defaultVal;
+                throw new AdorufuNoSuchElementInDataFileException("\"" + path + "\" does not exist in " + dataFileName);
             }
-            if (defaultVal != null) return defaultVal;
-            throw new AdorufuNoSuchElementInDataFileException("\"" + path + "\" does not exist in " + dataFileName);
+            if (defaultVal != null) return parser.get(path + "." + varName, defaultVal);
+            return parser.get(path + "." + varName);
         } finally {
             threadLock.unlock();
         }
