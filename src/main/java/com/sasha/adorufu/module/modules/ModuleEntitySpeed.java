@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @ModuleInfo(description = "Speedhack for ridable animals")
 public class ModuleEntitySpeed extends AdorufuModule {
-    public static float speed;
+    public static double speed;
     public ModuleEntitySpeed() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT, false);
     }
