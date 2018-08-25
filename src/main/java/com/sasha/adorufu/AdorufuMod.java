@@ -119,7 +119,7 @@ public class AdorufuMod {
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         scheduler.schedule(() -> {
             try {
-                ModuleEntitySpeed.speed = (double)AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5f);
+                ModuleEntitySpeed.speed = (double)AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
             } catch (IOException e) {
                 e.printStackTrace();
             }
