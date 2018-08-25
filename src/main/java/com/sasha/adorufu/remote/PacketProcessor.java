@@ -2,6 +2,9 @@ package com.sasha.adorufu.remote;
 
 
 
+import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.remote.packet.DisconnectSessionPacket;
+import com.sasha.adorufu.remote.packet.LoginResponsePacket;
 import com.sasha.adorufu.remote.packet.Packet;
 
 import java.io.BufferedReader;
@@ -60,9 +63,17 @@ public class PacketProcessor {
                     if (data.equals("PCKEND")) {
                         switch (pckId) {
                             case -1:
-
+                                LoginResponsePacket lrp = new LoginResponsePacket(this);
+                                lrp.setDataVars(pckArr);
+                                lrp.processIncomingPacket();
+                                break;
                             case -2:
-
+                                DisconnectSessionPacket dsp = new DisconnectSessionPacket(this);
+                                dsp.setDataVars(pckArr);
+                                dsp.processIncomingPacket();
+                                break;
+                            default:
+                                AdorufuMod.logWarn(false, "Unregistered incoming packet. ID: " + pckId);
                         }
                         pckArr.clear();
                         pckId = 0;

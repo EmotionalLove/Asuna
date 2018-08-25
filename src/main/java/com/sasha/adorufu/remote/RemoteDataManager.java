@@ -17,6 +17,7 @@ public class RemoteDataManager {
 
     public static RemoteDataManager INSTANCE;
     public boolean loggedIn = false;
+    public String adorufuSessionId;
 
     public RemoteDataManager(String username, String password) throws UnknownHostException {
         INSTANCE = this;
