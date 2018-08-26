@@ -1,7 +1,5 @@
 package com.sasha.adorufu.remote.packet;
 
-
-
 import com.sasha.adorufu.remote.PacketProcessor;
 
 import java.util.ArrayList;

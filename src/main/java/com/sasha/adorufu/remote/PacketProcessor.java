@@ -82,6 +82,12 @@ public class PacketProcessor {
                                 RetrieveDataFilePacket rdp = new RetrieveDataFilePacket(this);
                                 rdp.setDataVars(pckArr);
                                 rdp.processIncomingPacket();
+                                break;
+                            case -6:
+                                RegisterResponsePacket rrp = new RegisterResponsePacket(this);
+                                rrp.setDataVars(pckArr);
+                                rrp.processIncomingPacket();
+                                break;
                             default:
                                 AdorufuMod.logWarn(true, "Unregistered incoming packet. ID: " + pckId);
                         }

@@ -2,10 +2,12 @@ package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.remote.PacketData;
 import com.sasha.adorufu.remote.PacketProcessor;
+import com.sasha.adorufu.remote.packet.Packet;
 
 public class AttemptLoginPacket extends Packet.Outgoing {
 
-    @PacketData private String username;
+    @PacketData
+    private String username;
     @PacketData private String password; //todo encryption.
 
     public AttemptLoginPacket(PacketProcessor processor) {

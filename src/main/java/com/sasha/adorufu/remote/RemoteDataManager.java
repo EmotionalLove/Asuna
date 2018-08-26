@@ -2,6 +2,7 @@ package com.sasha.adorufu.remote;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudRegister;
 import com.sasha.eventsys.SimpleEventManager;
 
 import java.net.InetAddress;
@@ -20,9 +21,11 @@ public class RemoteDataManager {
     public SimpleEventManager EVENT_MANAGER;
     public boolean loggedIn = false;
     public String adorufuSessionId;
+    public String username;
 
     public void connect() {
         AdorufuMod.EVENT_MANAGER.registerListener(new GuiCloudLogin.GuiCloudLoginEventHandler());
+        AdorufuMod.EVENT_MANAGER.registerListener(new GuiCloudRegister.GuiCloudRegisterEventHandler());
         try {
             AdorufuDataClient client = new AdorufuDataClient(InetAddress.getByName(/*todo*/"2b2tmuseum.com"), Integer.parseInt("42069"));
             AdorufuMod.logMsg(true, "\r\nConnected to data server: " + client.socket.getInetAddress() + ":" + client.socket.getPort());

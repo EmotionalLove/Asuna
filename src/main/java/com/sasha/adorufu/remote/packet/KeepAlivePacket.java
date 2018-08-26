@@ -1,5 +1,6 @@
 package com.sasha.adorufu.remote.packet;
 
+
 import com.sasha.adorufu.remote.PacketData;
 import com.sasha.adorufu.remote.PacketProcessor;
 
@@ -8,7 +9,8 @@ import com.sasha.adorufu.remote.PacketProcessor;
  */
 public class KeepAlivePacket extends Packet.Outgoing {
 
-    @PacketData private String sessionId;
+    @PacketData
+    private String sessionId;
 
     public KeepAlivePacket(PacketProcessor processor, String sessionId) {
         super(processor, 3);
