@@ -12,4 +12,8 @@ public class LoginResponseEvent extends SimpleEvent {
     public LoginResponseEvent(LoginResponsePacket pck) {
         this.pck = pck;
     }
+
+    public LoginResponsePacket getPck() {
+        return pck;
+    }
 }

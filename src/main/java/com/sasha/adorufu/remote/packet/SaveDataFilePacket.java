@@ -2,6 +2,8 @@ package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.exception.AdorufuSuspicousDataFileException;
 import com.sasha.adorufu.remote.PacketProcessor;
+import com.sasha.adorufu.remote.RemoteDataManager;
+import com.sasha.adorufu.remote.packet.events.SaveDataResponseEvent;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ public class SaveDataFilePacket extends Packet.Incoming {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        SaveDataResponseEvent event = new SaveDataResponseEvent(this);
+        RemoteDataManager.INSTANCE.EVENT_MANAGER.invokeEvent(event);
     }
 
     @Override

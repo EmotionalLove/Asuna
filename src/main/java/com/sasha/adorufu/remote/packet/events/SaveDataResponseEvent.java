@@ -12,4 +12,8 @@ public class SaveDataResponseEvent extends SimpleEvent {
     public SaveDataResponseEvent(SaveDataFilePacket pck) {
         this.pck = pck;
     }
+
+    public SaveDataFilePacket getPck() {
+        return pck;
+    }
 }

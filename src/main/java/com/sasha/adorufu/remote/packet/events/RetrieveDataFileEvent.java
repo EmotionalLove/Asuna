@@ -12,4 +12,8 @@ public class RetrieveDataFileEvent extends SimpleEvent {
     public RetrieveDataFileEvent(RetrieveDataFilePacket pck) {
         this.pck = pck;
     }
+
+    public RetrieveDataFilePacket getPck() {
+        return pck;
+    }
 }

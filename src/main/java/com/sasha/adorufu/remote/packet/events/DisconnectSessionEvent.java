@@ -14,4 +14,7 @@ public class DisconnectSessionEvent extends SimpleEvent {
         this.pck = pck;
     }
 
+    public DisconnectSessionPacket getPck() {
+        return pck;
+    }
 }
