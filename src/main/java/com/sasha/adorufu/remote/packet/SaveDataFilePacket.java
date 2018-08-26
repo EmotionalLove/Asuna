@@ -1,26 +1,25 @@
 package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.exception.AdorufuSuspicousDataFileException;
-import com.sasha.adorufu.remote.PacketData;
 import com.sasha.adorufu.remote.PacketProcessor;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by Sasha at 12:15 PM on 8/25/2018
  */
-public class SaveDataFilePacket extends Packet.Outgoing {
+public class SaveDataFilePacket extends Packet.Incoming {
 
-    @PacketData private String sessionId;
-    @PacketData private String fileData;
+    private String response;
+    private String fileData;
 
-    public SaveDataFilePacket(PacketProcessor processor, String sessionID) {
-        super(processor, 4);
-        this.sessionId = sessionID;
+    public SaveDataFilePacket(PacketProcessor processor) {
+        super(processor, -4);
     }
 
     @Override
-    public void dispatchPck() {
+    public void processIncomingPacket() {
         File file = new File("AdorufuData.yml");
         if (!file.exists()) {
             return; // nothing to do.
@@ -37,9 +36,14 @@ public class SaveDataFilePacket extends Packet.Outgoing {
                 b.append(line).append("\n");
             }
             this.fileData = b.toString();
-            this.getProcessor().send(PacketProcessor.formatPacket(SaveDataFilePacket.class, this));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setDataVars(ArrayList<String> pckData) {
+        this.response = pckData.get(0);
+        this.fileData = pckData.get(1);
     }
 }

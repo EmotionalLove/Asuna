@@ -1,6 +1,7 @@
 package com.sasha.adorufu.remote;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.eventsys.SimpleEventManager;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,6 +17,7 @@ import java.net.UnknownHostException;
 public class RemoteDataManager {
 
     public static RemoteDataManager INSTANCE;
+    public SimpleEventManager EVENT_MANAGER;
     public boolean loggedIn = false;
     public String adorufuSessionId;
 
