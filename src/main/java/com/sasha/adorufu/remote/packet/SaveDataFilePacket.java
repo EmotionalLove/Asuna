@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SaveDataFilePacket extends Packet.Incoming {
 
     private String response;
-    private String fileData;
+    private boolean proceed;
 
     public SaveDataFilePacket(PacketProcessor processor) {
         super(processor, -4);
@@ -29,18 +29,6 @@ public class SaveDataFilePacket extends Packet.Incoming {
         if (file.getTotalSpace() > 1000000 /*bytes*/) {/* Make sure malicious users can't upload extraordinary large data files. Needs server-side check as well*/
             throw new AdorufuSuspicousDataFileException("The data file's size cannot exceed 1MB (it should only be a few KB)");
         }
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-            String line;
-            StringBuilder b = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                b.append(line).append("\n");
-            }
-            this.fileData = b.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         SaveDataResponseEvent event = new SaveDataResponseEvent(this);
         AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(event);
     }
@@ -48,6 +36,6 @@ public class SaveDataFilePacket extends Packet.Incoming {
     @Override
     public void setDataVars(ArrayList<String> pckData) {
         this.response = pckData.get(0);
-        this.fileData = pckData.get(1);
+        this.proceed = Boolean.parseBoolean(pckData.get(1));
     }
 }
