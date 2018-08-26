@@ -5,7 +5,8 @@ import com.sasha.adorufu.remote.PacketProcessor;
 
 public class AttemptRegisterPacket extends Packet.Outgoing {
 
-    @PacketData private String username;
+    @PacketData
+    private String username;
     @PacketData private String password; //todo encryption.
     @PacketData private String passwordConfirm; //todo encryption.
 

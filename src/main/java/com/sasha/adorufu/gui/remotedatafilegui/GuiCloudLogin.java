@@ -1,11 +1,13 @@
 package com.sasha.adorufu.gui.remotedatafilegui;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.AdorufuDataClient;
 import com.sasha.adorufu.remote.packet.AttemptLoginPacket;
 import com.sasha.adorufu.remote.packet.events.LoginResponseEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import org.lwjgl.input.Keyboard;
@@ -30,6 +32,10 @@ public class GuiCloudLogin extends GuiScreen {
     public GuiCloudLogin(GuiScreen paramScreen)
     {
         this.parent = paramScreen;
+    }
+    public GuiCloudLogin()
+    {
+        this.parent = new GuiMainMenu();
     }
 
     public static class GuiCloudLoginEventHandler implements SimpleListener {
@@ -56,6 +62,7 @@ public class GuiCloudLogin extends GuiScreen {
         //altBox = new GuiTextField(4, this.fontRenderer, width / 2 - 100, 156-25, 200, 20);
         usernameBox.setMaxStringLength(16);
         passwordBox.setMaxStringLength(200);
+        AdorufuMod.REMOTE_DATA_MANAGER.loggedIn = false;
     }
 
     public void onGuiClosed()

@@ -2,7 +2,6 @@ package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.PacketProcessor;
-import com.sasha.adorufu.remote.RemoteDataManager;
 import com.sasha.adorufu.remote.packet.events.DisconnectSessionEvent;
 
 import java.util.ArrayList;

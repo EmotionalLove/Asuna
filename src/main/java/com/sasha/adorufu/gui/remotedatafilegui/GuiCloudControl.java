@@ -1,12 +1,12 @@
 package com.sasha.adorufu.gui.remotedatafilegui;
 
-import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.AdorufuDataClient;
 import com.sasha.adorufu.remote.packet.AttemptLoginPacket;
-import com.sasha.adorufu.remote.packet.events.RegisterResponseEvent;
+import com.sasha.adorufu.remote.packet.events.LoginResponseEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import org.lwjgl.input.Keyboard;
@@ -17,48 +17,46 @@ import java.io.IOException;
 /**
  * Created by Sasha at 7:22 PM on 8/25/2018
  */
-public class GuiCloudRegister extends GuiScreen {
+public class GuiCloudControl extends GuiScreen {
 
     public GuiScreen parent;
     private GuiTextField usernameBox;
     private GuiPasswordField passwordBox;
-    private GuiPasswordField passwordConfirmBox;
+    //private GuiPasswordField passwordConfirmBox;
     private GuiButton loginButton;
     private GuiButton registerButton;
     private GuiButton backButton;
-    private static String message = "\247fCreate a new Adorufu Cloud account.";
+    private static String message = "\247fUse your Adorufu Cloud credentials to log in, or, create an account";
 
-    public GuiCloudRegister(GuiScreen paramScreen)
+    public GuiCloudControl(GuiScreen paramScreen)
     {
         this.parent = paramScreen;
     }
 
-    public static class GuiCloudRegisterEventHandler implements SimpleListener {
+    public static class GuiCloudLoginEventHandler implements SimpleListener {
         @SimpleEventHandler
-        public void onLoginResponse(RegisterResponseEvent e) {
+        public void onLoginResponse(LoginResponseEvent e) {
             message = e.getPck().getResponse();
-            if (e.getPck().isRegistrationSuccessful()) {
-                AdorufuMod.minecraft.displayGuiScreen(new GuiCloudLogin());
+            if (e.getPck().isLoginSuccessful()) {
+                new GuiCloudControl(new GuiMainMenu());
             }
         }
     }
 
     public void initGui()
     {
-        this.loginButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Register");
-        this.backButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Back");
-        //this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Back");
+        this.loginButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Retrieve Data File");
+        this.registerButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Save Data File");
+        this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Log off");
         Keyboard.enableRepeatEvents(true);
         buttonList.add(loginButton);
         buttonList.add(registerButton);
         buttonList.add(backButton);
         usernameBox = new GuiTextField(0, this.fontRenderer, width / 2 - 100, 76 - 25, 200, 20);
-        passwordBox = new GuiPasswordField(1, this.fontRenderer, width / 2 - 100, 116 - 25, 200, 20);
-        passwordConfirmBox = new GuiPasswordField(2, this.fontRenderer, width / 2 - 100, 156 - 25, 200, 20);
+        passwordBox = new GuiPasswordField(2, this.fontRenderer, width / 2 - 100, 116 - 25, 200, 20);
         //altBox = new GuiTextField(4, this.fontRenderer, width / 2 - 100, 156-25, 200, 20);
         usernameBox.setMaxStringLength(16);
         passwordBox.setMaxStringLength(200);
-        passwordConfirmBox.setMaxStringLength(200);
     }
 
     public void onGuiClosed()
@@ -70,14 +68,14 @@ public class GuiCloudRegister extends GuiScreen {
     {
         usernameBox.updateCursorCounter();
         passwordBox.updateCursorCounter();
-        passwordConfirmBox.updateCursorCounter();
+        //passwordConfirmBox.updateCursorCounter();
     }
 
     public void mouseClicked(int x, int y, int b) throws IOException
     {
         usernameBox.mouseClicked(x, y, b);
         passwordBox.mouseClicked(x, y, b);
-        passwordConfirmBox.mouseClicked(x,y,b);
+        //passwordConfirmBox.mouseClicked(x,y,b);
         super.mouseClicked(x, y, b);
     }
 
@@ -94,17 +92,16 @@ public class GuiCloudRegister extends GuiScreen {
                     message = "\247cThe password field is empty!";
                     break;
                 }
-                if (this.passwordConfirmBox.getText().equalsIgnoreCase("")) {
+                /*if (this.passwordConfirmBox.getText().equalsIgnoreCase("")) {
                     message = "\247cThe password confirmation field is empty!";
                     break;
-                }
+                }*/
                 AttemptLoginPacket pck = new AttemptLoginPacket(AdorufuDataClient.processor);
                 pck.setCredentials(this.usernameBox.getText(), this.passwordBox.getText());
                 pck.dispatchPck();
                 break;
             case 2:
-                mc.displayGuiScreen(new GuiCloudRegister(this));
-                break;
+
             case 3:
                 mc.displayGuiScreen(parent);
                 break;
@@ -137,26 +134,26 @@ public class GuiCloudRegister extends GuiScreen {
     {
         usernameBox.textboxKeyTyped(c, i);
         passwordBox.textboxKeyTyped(c, i);
-        passwordConfirmBox.textboxKeyTyped(c, i);
+        //passwordConfirmBox.textboxKeyTyped(c, i);
         if(c == '\t')
         {
             if(usernameBox.isFocused())
             {
                 usernameBox.setFocused(false);
-                passwordConfirmBox.setFocused(false);
+                //passwordConfirmBox.setFocused(false);
                 passwordBox.setFocused(true);
             }
             else if(passwordBox.isFocused())
             {
                 usernameBox.setFocused(false);
-                passwordConfirmBox.setFocused(true);
+                //passwordConfirmBox.setFocused(true);
                 passwordBox.setFocused(false);
-            }
+            }/*
             else if (passwordConfirmBox.isFocused()) {
                 usernameBox.setFocused(false);
                 passwordBox.setFocused(false);
-                passwordConfirmBox.setFocused(false);
-            }
+                //passwordConfirmBox.setFocused(false);
+            }*/
         }
         if(c == '\r')
         {
@@ -170,12 +167,12 @@ public class GuiCloudRegister extends GuiScreen {
         drawString(this.fontRenderer, "Username", width / 2 - 100, 63 - 25, 0xA0A0A0);
         drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
         drawCenteredString(this.fontRenderer, message, width / 2, height - 40, 0xffffff);
-        drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
+        //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
         try{
-            passwordConfirmBox.setEnabled(true);
+            //passwordConfirmBox.setEnabled(true);
             usernameBox.setEnabled(true);
             passwordBox.setEnabled(true);
-            passwordConfirmBox.drawTextBox();
+            //passwordConfirmBox.drawTextBox();
             usernameBox.drawTextBox();
             passwordBox.drawTextBox();
         }catch(Exception err)

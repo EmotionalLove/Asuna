@@ -10,7 +10,8 @@ import java.io.File;
  */
 public class RequestSaveDataFilePacket extends Packet.Outgoing {
 
-    @PacketData private String sessionId;
+    @PacketData
+    private String sessionId;
     @PacketData private long fileBytes;
 
     public RequestSaveDataFilePacket(PacketProcessor processor, String sessionID) {

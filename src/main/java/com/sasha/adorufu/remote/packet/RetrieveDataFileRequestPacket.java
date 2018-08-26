@@ -8,7 +8,8 @@ import com.sasha.adorufu.remote.PacketProcessor;
  */
 public class RetrieveDataFileRequestPacket extends Packet.Outgoing {
 
-    @PacketData private String sessionId;
+    @PacketData
+    private String sessionId;
 
     public RetrieveDataFileRequestPacket(PacketProcessor processor, String sessionId) {
         super(processor, 5);
