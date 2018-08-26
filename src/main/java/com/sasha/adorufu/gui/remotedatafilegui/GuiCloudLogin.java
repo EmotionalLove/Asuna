@@ -3,9 +3,6 @@ package com.sasha.adorufu.gui.remotedatafilegui;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.AdorufuDataClient;
 import com.sasha.adorufu.remote.packet.AttemptLoginPacket;
-import com.sasha.adorufu.remote.packet.events.LoginResponseEvent;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
@@ -27,7 +24,8 @@ public class GuiCloudLogin extends GuiScreen {
     private GuiButton loginButton;
     private GuiButton registerButton;
     private GuiButton backButton;
-    private static String message = "\247fUse your Adorufu Cloud credentials to log in, or, create an account";
+    public static String message = "\247fUse your Adorufu Cloud credentials to log in, or, create an account";
+    public static boolean previouslyConnected = false;
 
     public GuiCloudLogin(GuiScreen paramScreen)
     {
@@ -38,15 +36,6 @@ public class GuiCloudLogin extends GuiScreen {
         this.parent = new GuiMainMenu();
     }
 
-    public static class GuiCloudLoginEventHandler implements SimpleListener {
-        @SimpleEventHandler
-        public void onLoginResponse(LoginResponseEvent e) {
-            message = e.getPck().getResponse();
-            if (e.getPck().isLoginSuccessful()) {
-                AdorufuMod.minecraft.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
-            }
-        }
-    }
 
     public void initGui()
     {
@@ -62,7 +51,10 @@ public class GuiCloudLogin extends GuiScreen {
         //altBox = new GuiTextField(4, this.fontRenderer, width / 2 - 100, 156-25, 200, 20);
         usernameBox.setMaxStringLength(16);
         passwordBox.setMaxStringLength(200);
-        AdorufuMod.REMOTE_DATA_MANAGER.connect();
+        if (!previouslyConnected) {
+            AdorufuMod.REMOTE_DATA_MANAGER.connect();
+            previouslyConnected = true;
+        }
         AdorufuMod.REMOTE_DATA_MANAGER.loggedIn = false;
     }
 

@@ -16,6 +16,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import static com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin.previouslyConnected;
+
 /**
  * The code in here is very "hacky" and ghetto. As long as it does it's job, I really don't care.
  */
@@ -101,9 +103,11 @@ public class PacketProcessor {
             }
         } catch (Exception e) {
             this.server.close();
-            System.out.println("disconnected due to " + e.getMessage());
+            e.printStackTrace();
+            AdorufuMod.logErr(true, "disconnected due to " + e.getMessage());
             if (keepAliveFuture != null) keepAliveFuture.cancel(true);
             keepAliveFuture = null;
+            previouslyConnected = false;
             // relaunch
         }
     }
