@@ -24,7 +24,7 @@ public class GuiCloudLogin extends GuiScreen {
     private GuiButton loginButton;
     private GuiButton registerButton;
     private GuiButton backButton;
-    public static String message = "\247fUse your Adorufu Cloud credentials to log in, or, create an account";
+    public static String message;
     public static boolean previouslyConnected = false;
 
     public GuiCloudLogin(GuiScreen paramScreen)
@@ -56,6 +56,7 @@ public class GuiCloudLogin extends GuiScreen {
             previouslyConnected = true;
         }
         AdorufuMod.REMOTE_DATA_MANAGER.loggedIn = false;
+        message = "fUse your Adorufu Cloud credentials to log in, or, create an account";
     }
 
     public void onGuiClosed()
@@ -100,7 +101,8 @@ public class GuiCloudLogin extends GuiScreen {
                 pck.dispatchPck();
                 break;
             case 2:
-
+                mc.displayGuiScreen(new GuiCloudRegister(new GuiMainMenu()));
+                break;
             case 3:
                 mc.displayGuiScreen(parent);
                 break;
@@ -165,7 +167,7 @@ public class GuiCloudLogin extends GuiScreen {
         drawDefaultBackground();
         drawString(this.fontRenderer, "Username", width / 2 - 100, 63 - 25, 0xA0A0A0);
         drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
-        drawCenteredString(this.fontRenderer, message, width / 2, height - 40, 0xffffff);
+        drawCenteredString(this.fontRenderer, "\247" + message, width / 2, height - 40, 0xffffff);
         //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
         try{
             //passwordConfirmBox.setEnabled(true);

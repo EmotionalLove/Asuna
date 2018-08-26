@@ -1,8 +1,8 @@
 package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
-import com.sasha.adorufu.remote.packet.events.LoginResponseEvent;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,7 @@ public class LoginResponsePacket extends Packet.Incoming {
 
     @Override
     public void processIncomingPacket() {
+        GuiCloudLogin.message = this.response;
         if (loginSuccessful) {
             AdorufuMod.REMOTE_DATA_MANAGER.loggedIn = true;
             AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId = this.adorufuSessionId;
@@ -28,7 +29,6 @@ public class LoginResponsePacket extends Packet.Incoming {
         else {
             AdorufuMod.logErr(true, "Data Server returned the \"failed login\" statuscode!");
         }
-        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new LoginResponseEvent(this));
     }
 
     public String getResponse() {
