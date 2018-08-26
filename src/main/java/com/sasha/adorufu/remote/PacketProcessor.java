@@ -35,8 +35,8 @@ public class PacketProcessor {
             e.printStackTrace();
         }
         keepAliveFuture = scheduler.scheduleWithFixedDelay(() -> {
-            if (RemoteDataManager.INSTANCE.adorufuSessionId != null) {
-                new KeepAlivePacket(this, RemoteDataManager.INSTANCE.adorufuSessionId).dispatchPck();
+            if (AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId != null) {
+                new KeepAlivePacket(this, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId).dispatchPck();
             }
         }, 13, 13, TimeUnit.SECONDS);
     }

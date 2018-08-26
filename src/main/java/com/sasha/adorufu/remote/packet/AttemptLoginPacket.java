@@ -12,6 +12,11 @@ public class AttemptLoginPacket extends Packet.Outgoing {
         super(processor, 1);
     }
 
+    public void setCredentials(String username, String passwd) {
+        this.username = username;
+        this.password = passwd;
+    }
+
     @Override
     public void dispatchPck() {
         this.getProcessor().send(PacketProcessor.formatPacket(AttemptLoginPacket.class, this));

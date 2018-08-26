@@ -42,7 +42,7 @@ public class SaveDataFilePacket extends Packet.Incoming {
             e.printStackTrace();
         }
         SaveDataResponseEvent event = new SaveDataResponseEvent(this);
-        RemoteDataManager.INSTANCE.EVENT_MANAGER.invokeEvent(event);
+        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(event);
     }
 
     @Override

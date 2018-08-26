@@ -2,15 +2,14 @@ package com.sasha.adorufu.remote;
 
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class AdorufuDataClient {
-    public Socket socket;
-    private Scanner scanner;
 
-    public AdorufuDataClient(InetAddress serverAddress, int serverPort, String username, String passwd) throws Exception {
+    public Socket socket;
+    public static PacketProcessor processor;
+
+    public AdorufuDataClient(InetAddress serverAddress, int serverPort) throws Exception {
         this.socket = new Socket(serverAddress, serverPort);
-        this.scanner = new Scanner(System.in);
     }
 
     public void start() {
@@ -22,6 +21,6 @@ public class AdorufuDataClient {
                 e.printStackTrace();
             }
         }).start();
-
+        AdorufuDataClient.processor = processor;
     }
 }
