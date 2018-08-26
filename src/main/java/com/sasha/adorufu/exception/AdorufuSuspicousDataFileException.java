@@ -6,7 +6,6 @@ package com.sasha.adorufu.exception;
 public class AdorufuSuspicousDataFileException extends AdorufuException {
     /**
      * Used if the data file is awkwardly big.
-     * @param error
      */
     public AdorufuSuspicousDataFileException(String error) {
         super(error);

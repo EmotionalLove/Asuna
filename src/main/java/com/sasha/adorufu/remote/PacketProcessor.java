@@ -1,11 +1,8 @@
 package com.sasha.adorufu.remote;
 
 
-
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.remote.packet.DisconnectSessionPacket;
-import com.sasha.adorufu.remote.packet.LoginResponsePacket;
-import com.sasha.adorufu.remote.packet.Packet;
+import com.sasha.adorufu.remote.packet.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +14,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The code in here is very "hacky" and ghetto. As long as it does it's job, I really don't care.
@@ -36,6 +34,11 @@ public class PacketProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        keepAliveFuture = scheduler.scheduleWithFixedDelay(() -> {
+            if (RemoteDataManager.INSTANCE.adorufuSessionId != null) {
+                new KeepAlivePacket(this, RemoteDataManager.INSTANCE.adorufuSessionId).dispatchPck();
+            }
+        }, 13, 13, TimeUnit.SECONDS);
     }
 
     public Socket getServer() {
@@ -47,7 +50,10 @@ public class PacketProcessor {
         BufferedReader in = new BufferedReader(new InputStreamReader(this.server.getInputStream()));
         try {
             ArrayList<String> pckArr = new ArrayList<>();
-            int status = 0; // 0 = ready for new packet // 1 = waiting for id // 2 = waitint for PCKEND
+            int status = 0;
+            // 0 = waiting for PCKSTART (no packets are being processed atm)
+            // 1 = waiting for the packet id (it should ALWAYS be sent right after PCKSTART, otherwise bad things will happen)
+            // 2 = waiting for PCKEND
             int pckId = 0;
             while ((data = in.readLine()) != null) {
                 if (data.startsWith("PCKSTART") && status == 0) {
@@ -57,9 +63,9 @@ public class PacketProcessor {
                 if (status == 1) {
                     pckId = Integer.parseInt(data);
                     status = 2;
+                    continue;
                 }
                 if (status == 2) {
-                    pckArr.add(data);
                     if (data.equals("PCKEND")) {
                         switch (pckId) {
                             case -1:
@@ -72,19 +78,26 @@ public class PacketProcessor {
                                 dsp.setDataVars(pckArr);
                                 dsp.processIncomingPacket();
                                 break;
+                            case -5:
+                                RetrieveDataFilePacket rdp = new RetrieveDataFilePacket(this);
+                                rdp.setDataVars(pckArr);
+                                rdp.processIncomingPacket();
                             default:
-                                AdorufuMod.logWarn(false, "Unregistered incoming packet. ID: " + pckId);
+                                AdorufuMod.logWarn(true, "Unregistered incoming packet. ID: " + pckId);
                         }
                         pckArr.clear();
                         pckId = 0;
                         status = 0;
+                        continue;
                     }
+                    pckArr.add(data);
                 }
             }
         } catch (Exception e) {
             this.server.close();
             System.out.println("disconnected due to " + e.getMessage());
             if (keepAliveFuture != null) keepAliveFuture.cancel(true);
+            keepAliveFuture = null;
             // relaunch
         }
     }
@@ -94,7 +107,7 @@ public class PacketProcessor {
         try {
             pckArr.add("PCKSTART");
             Packet.Outgoing pck = (Packet.Outgoing) instance;
-            pckArr.add(""+pck.getId());
+            pckArr.add("" + pck.getId());
             for (Field field : pckClass.getDeclaredFields()) {
                 field.setAccessible(true);
                 PacketData dd = field.getDeclaredAnnotation(PacketData.class);
@@ -111,12 +124,13 @@ public class PacketProcessor {
             return pckArr;
         }
     }
+
     public void send(ArrayList<String> s) {
         if (s.isEmpty()) {
             return;
         }
         for (String s1 : s) {
-            this.writer.println((String)s1);
+            this.writer.println((String) s1);
             this.writer.flush();
         }
 
