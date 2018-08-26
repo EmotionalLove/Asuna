@@ -85,11 +85,11 @@ public class GuiCloudLogin extends GuiScreen {
         switch (button.id) {
             case 1:
                 if (this.usernameBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe username field is empty!";
+                    message = "cThe username field is empty!";
                     break;
                 }
                 if (this.passwordBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe password field is empty!";
+                    message = "cThe password field is empty!";
                     break;
                 }
                 /*if (this.passwordConfirmBox.getText().equalsIgnoreCase("")) {
