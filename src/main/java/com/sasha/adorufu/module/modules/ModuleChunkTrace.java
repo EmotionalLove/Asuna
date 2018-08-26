@@ -1,18 +1,15 @@
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.adorufu.events.ServerGenerateChunkEvent;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientPacketRecieveEvent;
-import com.sasha.adorufu.module.ModuleInfo;
+import com.sasha.adorufu.events.ClientEnderPearlSpawnEvent;
+import com.sasha.adorufu.events.ServerGenerateChunkEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
-import net.minecraft.network.play.server.SPacketChunkData;
-import net.minecraft.network.play.server.SPacketSpawnObject;
+import com.sasha.adorufu.module.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import static com.sasha.adorufu.misc.AdorufuRender.chunkESP;
 
@@ -47,9 +44,10 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
         suffixMap.put("Pearls", this.getOption("PearlNotify"));
         this.setSuffix(suffixMap);
     }
+
     @Override
     public void onRender() {
-        if (this.isEnabled() && this.getOption("ChunkESP")){
+        if (this.isEnabled() && this.getOption("ChunkESP")) {
             newChunks.forEach((chunkX, chunkZ) -> {
                 int x, z;
                 x = chunkX * 16;
@@ -60,25 +58,18 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
             });
         }
     }
+
     @SimpleEventHandler
-    public void onPacketRecieve(ClientPacketRecieveEvent e ){
+    public void onEnderPearlSpawn(ClientEnderPearlSpawnEvent e) {
         if (!this.isEnabled()) return;
-        if (e.getRecievedPacket() instanceof SPacketSpawnObject){
-            SPacketSpawnObject pck = (SPacketSpawnObject) e.getRecievedPacket();
-            if (pck.getEntityID() != 65 || !this.getOption("PearlNotify")) {
-                return;
-            }
-            AdorufuMod.logMsg(false, "\2478(\247bChunkTrace\2478) \2477Ender pearl loaded @ XYZ *x *y *z".replace("*x", pck.getX()+"")
-            .replace("*y", pck.getY()+"").replace("*z", pck.getZ()+""));
-        }
+        AdorufuMod.logMsg(false, "\2478(\247bChunkTrace\2478) \2477Ender pearl loaded @ XYZ *x *y *z".replace("*x", e.getCoordinate()[0] + "")
+                .replace("*y", e.getCoordinate()[1] + "").replace("*z", e.getCoordinate()[2] + ""));
     }
+
     @SimpleEventHandler
     public void onNewChunk(ServerGenerateChunkEvent e) {
         if (!this.isEnabled()) return;
-        if (newChunks.containsKey(e.getChunkX()) && newChunks.containsValue(e.getChunkZ())){
-            return;
-        }
+        if (e.getChunk().ticked) return;
         newChunks.put(e.getChunkX(), e.getChunkZ());
-        AdorufuMod.logMsg(e.getChunkX() + " " + e.getChunkZ());
     }
 }
