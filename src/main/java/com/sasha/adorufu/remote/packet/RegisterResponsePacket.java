@@ -1,7 +1,7 @@
 package com.sasha.adorufu.remote.packet;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.PacketProcessor;
-import com.sasha.adorufu.remote.RemoteDataManager;
 import com.sasha.adorufu.remote.packet.events.RegisterResponseEvent;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class RegisterResponsePacket extends Packet.Incoming {
 
     @Override
     public void processIncomingPacket() {
-        RemoteDataManager.INSTANCE.EVENT_MANAGER.invokeEvent(new RegisterResponseEvent(this));
+        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new RegisterResponseEvent(this));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class DisconnectSessionPacket extends Packet.Incoming {
     @Override
     public void processIncomingPacket() {
         AdorufuMod.logErr(true, "Data server forcefully disconnected us: " + reason);
-        RemoteDataManager.INSTANCE.EVENT_MANAGER.invokeEvent(new DisconnectSessionEvent(this));
+        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new DisconnectSessionEvent(this));
     }
 
     @Override

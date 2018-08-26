@@ -1,6 +1,7 @@
 package com.sasha.adorufu;
 
 import com.sasha.adorufu.command.CommandHandler;
+import com.sasha.adorufu.remote.RemoteDataManager;
 import com.sasha.adorufu.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.adorufu.command.commands.*;
@@ -49,6 +50,7 @@ public class AdorufuMod {
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
     public static FriendManager FRIEND_MANAGER;
     public static WaypointManager WAYPOINT_MANAGER;
+    public static RemoteDataManager REMOTE_DATA_MANAGER = new RemoteDataManager();
     public static SimpleCommandProcessor COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL; // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
