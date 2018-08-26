@@ -43,7 +43,7 @@ public class GuiCloudLogin extends GuiScreen {
         public void onLoginResponse(LoginResponseEvent e) {
             message = e.getPck().getResponse();
             if (e.getPck().isLoginSuccessful()) {
-                // display the control panel todo
+                AdorufuMod.minecraft.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
             }
         }
     }
@@ -62,6 +62,7 @@ public class GuiCloudLogin extends GuiScreen {
         //altBox = new GuiTextField(4, this.fontRenderer, width / 2 - 100, 156-25, 200, 20);
         usernameBox.setMaxStringLength(16);
         passwordBox.setMaxStringLength(200);
+        AdorufuMod.REMOTE_DATA_MANAGER.connect();
         AdorufuMod.REMOTE_DATA_MANAGER.loggedIn = false;
     }
 

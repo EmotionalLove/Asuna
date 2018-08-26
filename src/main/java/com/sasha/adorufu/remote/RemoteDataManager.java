@@ -27,7 +27,7 @@ public class RemoteDataManager {
         AdorufuMod.EVENT_MANAGER.registerListener(new GuiCloudLogin.GuiCloudLoginEventHandler());
         AdorufuMod.EVENT_MANAGER.registerListener(new GuiCloudRegister.GuiCloudRegisterEventHandler());
         try {
-            AdorufuDataClient client = new AdorufuDataClient(InetAddress.getByName(/*todo*/"2b2tmuseum.com"), Integer.parseInt("42069"));
+            AdorufuDataClient client = new AdorufuDataClient(InetAddress.getByName(/*todo*/"127.0.0.1"), Integer.parseInt("42069"));
             AdorufuMod.logMsg(true, "\r\nConnected to data server: " + client.socket.getInetAddress() + ":" + client.socket.getPort());
             client.start();
         }catch (Exception ex) {

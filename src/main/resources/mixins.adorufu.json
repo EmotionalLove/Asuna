@@ -19,6 +19,7 @@
     "MixinAbstractClientPlayer",
     "MixinNetHandlerPlayClient",
     "MixinItemRenderer",
-    "MixinNetHandlerLoginClient"
+    "MixinNetHandlerLoginClient",
+    "MixinGuiMainMenu"
   ]
 }
