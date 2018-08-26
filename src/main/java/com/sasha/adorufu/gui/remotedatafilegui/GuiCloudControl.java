@@ -1,14 +1,14 @@
 package com.sasha.adorufu.gui.remotedatafilegui;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.AdorufuDataClient;
-import com.sasha.adorufu.remote.packet.AttemptLoginPacket;
+import com.sasha.adorufu.remote.packet.RetrieveDataFileRequestPacket;
 import com.sasha.adorufu.remote.packet.events.LoginResponseEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -20,13 +20,11 @@ import java.io.IOException;
 public class GuiCloudControl extends GuiScreen {
 
     public GuiScreen parent;
-    private GuiTextField usernameBox;
-    private GuiPasswordField passwordBox;
     //private GuiPasswordField passwordConfirmBox;
-    private GuiButton loginButton;
-    private GuiButton registerButton;
+    private GuiButton retrieveButton;
+    private GuiButton saveButton;
     private GuiButton backButton;
-    private static String message = "\247fUse your Adorufu Cloud credentials to log in, or, create an account";
+    private static String message = "fYou can save or retrieve your datafile from the server.";
 
     public GuiCloudControl(GuiScreen paramScreen)
     {
@@ -45,18 +43,18 @@ public class GuiCloudControl extends GuiScreen {
 
     public void initGui()
     {
-        this.loginButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Retrieve Data File");
-        this.registerButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Save Data File");
+        this.retrieveButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Retrieve Data File");
+        this.saveButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Save Data File");
         this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Log off");
         Keyboard.enableRepeatEvents(true);
-        buttonList.add(loginButton);
-        buttonList.add(registerButton);
+        buttonList.add(retrieveButton);
+        buttonList.add(saveButton);
         buttonList.add(backButton);
-        usernameBox = new GuiTextField(0, this.fontRenderer, width / 2 - 100, 76 - 25, 200, 20);
-        passwordBox = new GuiPasswordField(2, this.fontRenderer, width / 2 - 100, 116 - 25, 200, 20);
+        //usernameBox = new GuiTextField(0, this.fontRenderer, width / 2 - 100, 76 - 25, 200, 20);
+        //passwordBox = new GuiPasswordField(2, this.fontRenderer, width / 2 - 100, 116 - 25, 200, 20);
         //altBox = new GuiTextField(4, this.fontRenderer, width / 2 - 100, 156-25, 200, 20);
-        usernameBox.setMaxStringLength(16);
-        passwordBox.setMaxStringLength(200);
+        //usernameBox.setMaxStringLength(16);
+        //passwordBox.setMaxStringLength(200);
     }
 
     public void onGuiClosed()
@@ -66,16 +64,10 @@ public class GuiCloudControl extends GuiScreen {
 
     public void updateScreen()
     {
-        usernameBox.updateCursorCounter();
-        passwordBox.updateCursorCounter();
-        //passwordConfirmBox.updateCursorCounter();
     }
 
     public void mouseClicked(int x, int y, int b) throws IOException
     {
-        usernameBox.mouseClicked(x, y, b);
-        passwordBox.mouseClicked(x, y, b);
-        //passwordConfirmBox.mouseClicked(x,y,b);
         super.mouseClicked(x, y, b);
     }
 
@@ -84,22 +76,9 @@ public class GuiCloudControl extends GuiScreen {
     {
         switch (button.id) {
             case 1:
-                if (this.usernameBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe username field is empty!";
-                    break;
-                }
-                if (this.passwordBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe password field is empty!";
-                    break;
-                }
-                /*if (this.passwordConfirmBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe password confirmation field is empty!";
-                    break;
-                }*/
-                AttemptLoginPacket pck = new AttemptLoginPacket(AdorufuDataClient.processor);
-                pck.setCredentials(this.usernameBox.getText(), this.passwordBox.getText());
+                RetrieveDataFileRequestPacket pck = new RetrieveDataFileRequestPacket(AdorufuDataClient.processor, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId);
                 pck.dispatchPck();
-                break;
+                GuiCloudLogin.message = "bRetrieving the data file...";
             case 2:
 
             case 3:
@@ -132,33 +111,6 @@ public class GuiCloudControl extends GuiScreen {
     }
     protected void keyTyped(char c, int i)
     {
-        usernameBox.textboxKeyTyped(c, i);
-        passwordBox.textboxKeyTyped(c, i);
-        //passwordConfirmBox.textboxKeyTyped(c, i);
-        if(c == '\t')
-        {
-            if(usernameBox.isFocused())
-            {
-                usernameBox.setFocused(false);
-                //passwordConfirmBox.setFocused(false);
-                passwordBox.setFocused(true);
-            }
-            else if(passwordBox.isFocused())
-            {
-                usernameBox.setFocused(false);
-                //passwordConfirmBox.setFocused(true);
-                passwordBox.setFocused(false);
-            }/*
-            else if (passwordConfirmBox.isFocused()) {
-                usernameBox.setFocused(false);
-                passwordBox.setFocused(false);
-                //passwordConfirmBox.setFocused(false);
-            }*/
-        }
-        if(c == '\r')
-        {
-            actionPerformed((GuiButton) buttonList.get(0));
-        }
     }
 
     public void drawScreen(int x, int y, float f)
@@ -169,12 +121,6 @@ public class GuiCloudControl extends GuiScreen {
         drawCenteredString(this.fontRenderer, message, width / 2, height - 40, 0xffffff);
         //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
         try{
-            //passwordConfirmBox.setEnabled(true);
-            usernameBox.setEnabled(true);
-            passwordBox.setEnabled(true);
-            //passwordConfirmBox.drawTextBox();
-            usernameBox.drawTextBox();
-            passwordBox.drawTextBox();
         }catch(Exception err)
         {
             err.printStackTrace();
