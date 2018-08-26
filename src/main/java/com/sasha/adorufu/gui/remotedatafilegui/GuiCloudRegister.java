@@ -2,7 +2,7 @@ package com.sasha.adorufu.gui.remotedatafilegui;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.AdorufuDataClient;
-import com.sasha.adorufu.remote.packet.AttemptLoginPacket;
+import com.sasha.adorufu.remote.packet.AttemptRegisterPacket;
 import com.sasha.adorufu.remote.packet.events.RegisterResponseEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -24,9 +24,8 @@ public class GuiCloudRegister extends GuiScreen {
     private GuiPasswordField passwordBox;
     private GuiPasswordField passwordConfirmBox;
     private GuiButton loginButton;
-    private GuiButton registerButton;
+    //private GuiButton registerButton;
     private GuiButton backButton;
-    private static String message = "\247fCreate a new Adorufu Cloud account.";
 
     public GuiCloudRegister(GuiScreen paramScreen)
     {
@@ -36,7 +35,7 @@ public class GuiCloudRegister extends GuiScreen {
     public static class GuiCloudRegisterEventHandler implements SimpleListener {
         @SimpleEventHandler
         public void onLoginResponse(RegisterResponseEvent e) {
-            message = e.getPck().getResponse();
+            GuiCloudLogin.message = e.getPck().getResponse();
             if (e.getPck().isRegistrationSuccessful()) {
                 AdorufuMod.minecraft.displayGuiScreen(new GuiCloudLogin());
             }
@@ -50,7 +49,6 @@ public class GuiCloudRegister extends GuiScreen {
         //this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Back");
         Keyboard.enableRepeatEvents(true);
         buttonList.add(loginButton);
-        buttonList.add(registerButton);
         buttonList.add(backButton);
         usernameBox = new GuiTextField(0, this.fontRenderer, width / 2 - 100, 76 - 25, 200, 20);
         passwordBox = new GuiPasswordField(1, this.fontRenderer, width / 2 - 100, 116 - 25, 200, 20);
@@ -59,6 +57,7 @@ public class GuiCloudRegister extends GuiScreen {
         usernameBox.setMaxStringLength(16);
         passwordBox.setMaxStringLength(200);
         passwordConfirmBox.setMaxStringLength(200);
+        GuiCloudLogin.message = "fCreate a new Adorufu Cloud account.";
     }
 
     public void onGuiClosed()
@@ -87,25 +86,22 @@ public class GuiCloudRegister extends GuiScreen {
         switch (button.id) {
             case 1:
                 if (this.usernameBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe username field is empty!";
+                    GuiCloudLogin.message = "\247cThe username field is empty!";
                     break;
                 }
                 if (this.passwordBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe password field is empty!";
+                    GuiCloudLogin.message = "cThe password field is empty!";
                     break;
                 }
                 if (this.passwordConfirmBox.getText().equalsIgnoreCase("")) {
-                    message = "\247cThe password confirmation field is empty!";
+                    GuiCloudLogin.message = "cThe password confirmation field is empty!";
                     break;
                 }
-                AttemptLoginPacket pck = new AttemptLoginPacket(AdorufuDataClient.processor);
-                pck.setCredentials(this.usernameBox.getText(), this.passwordBox.getText());
+                AttemptRegisterPacket pck = new AttemptRegisterPacket(AdorufuDataClient.processor);
+                pck.setCredentials(this.usernameBox.getText(), this.passwordBox.getText(), this.passwordConfirmBox.getText());
                 pck.dispatchPck();
                 break;
             case 2:
-                mc.displayGuiScreen(new GuiCloudRegister(this));
-                break;
-            case 3:
                 mc.displayGuiScreen(parent);
                 break;
         }
@@ -169,7 +165,7 @@ public class GuiCloudRegister extends GuiScreen {
         drawDefaultBackground();
         drawString(this.fontRenderer, "Username", width / 2 - 100, 63 - 25, 0xA0A0A0);
         drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
-        drawCenteredString(this.fontRenderer, message, width / 2, height - 40, 0xffffff);
+        drawCenteredString(this.fontRenderer, "\247" + GuiCloudLogin.message, width / 2, height - 40, 0xffffff);
         drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
         try{
             passwordConfirmBox.setEnabled(true);

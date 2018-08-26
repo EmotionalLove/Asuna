@@ -14,6 +14,11 @@ public class AttemptRegisterPacket extends Packet.Outgoing {
         super(processor, 6);
     }
 
+    public void setCredentials(String username, String password, String passwordConfirm) {
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.username = username;
+    }
     @Override
     public void dispatchPck() {
         this.getProcessor().send(PacketProcessor.formatPacket(AttemptRegisterPacket.class, this));
