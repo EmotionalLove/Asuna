@@ -1,11 +1,10 @@
 package com.sasha.adorufu.remote.packet;
 
-import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.exception.AdorufuSuspicousDataFileException;
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
-import com.sasha.adorufu.remote.packet.events.SaveDataResponseEvent;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -26,11 +25,13 @@ public class SaveDataFilePacket extends Packet.Incoming {
         if (!file.exists()) {
             return; // nothing to do.
         }
-        if (file.getTotalSpace() > 1000000 /*bytes*/) {/* Make sure malicious users can't upload extraordinary large data files. Needs server-side check as well*/
-            throw new AdorufuSuspicousDataFileException("The data file's size cannot exceed 1MB (it should only be a few KB)");
+        if (file.length() > 1000000 /*bytes*/) {/* Make sure malicious users can't upload extraordinary large data files. Needs server-side check as well*/
+            throw new AdorufuSuspicousDataFileException("The data file's size cannot exceed 1MB (it should only be a few KB) (yours is " + file.getTotalSpace() + " bytes)");
         }
-        SaveDataResponseEvent event = new SaveDataResponseEvent(this);
-        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(event);
+        GuiCloudLogin.message = response;
+        if (this.proceed) {
+            new SaveDataFilePayloadPacket(this.getProcessor()).dispatchPck();
+        }
     }
 
     @Override

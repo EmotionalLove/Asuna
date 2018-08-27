@@ -1,5 +1,6 @@
 package com.sasha.adorufu.remote.packet;
 
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
 
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ public class SaveDataFilePayloadResponsePacket extends Packet.Incoming {
 
     @Override
     public void processIncomingPacket() {
-
+        GuiCloudLogin.message = response;
     }
 
     @Override
     public void setDataVars(ArrayList<String> pckData) {
-
+        this.response = pckData.get(0);
     }
 }
