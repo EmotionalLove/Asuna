@@ -35,11 +35,11 @@ public class MixinEntityRenderer {
         GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float)(isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
-        float scale = 0.025f;
+        float scale = 0.030f;
         if (ModuleManager.moduleRegistry.get(2).isEnabled()) {
             isSneaking = false;
             double distance = Math.sqrt(x * x + y * y + z * z);
-            if (distance > 10) {
+            if (distance > 5) {
                 scale *= distance / 10;
             }
         }

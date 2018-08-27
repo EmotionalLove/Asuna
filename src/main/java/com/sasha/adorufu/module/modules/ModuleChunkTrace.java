@@ -73,8 +73,10 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
     @SimpleEventHandler
     public void onNewChunk(ServerGenerateChunkEvent e) {
         if (!this.isEnabled() || !this.getOption("ChunkESP")) return;
-        if (e.getChunk().isTerrainPopulated()) return;
-        xChunks.add(e.getChunkX());
-        zChunks.add(e.getChunkZ());
+        if (e.getPacketIn().isFullChunk()) return;
+        if (xChunks.contains(e.getChunkX()) && zChunks.contains(e.getChunkZ())) {
+            xChunks.add(e.getChunkX());
+            zChunks.add(e.getChunkZ());
+        }
     }
 }

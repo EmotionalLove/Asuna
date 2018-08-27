@@ -2,7 +2,6 @@ package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientItemSpawnEvent;
-import com.sasha.adorufu.events.ClientPacketRecieveEvent;
 import com.sasha.adorufu.events.PlayerBlockBreakEvent;
 import com.sasha.adorufu.misc.AdorufuRender;
 import com.sasha.adorufu.module.AdorufuCategory;
@@ -10,7 +9,8 @@ import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import net.minecraft.network.play.server.SPacketSpawnObject;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -52,7 +52,9 @@ public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleList
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e) {
-        BlakeIsMyBoyfriendMap.put(new Coordinate(e.getBlockPos().x, e.getBlockPos().y, e.getBlockPos().z, AdorufuMod.minecraft.player.dimension), false);
+        if (Item.getItemFromBlock(e.getBlock()) != Items.AIR) {
+            BlakeIsMyBoyfriendMap.put(new Coordinate(e.getBlockPos().x, e.getBlockPos().y, e.getBlockPos().z, AdorufuMod.minecraft.player.dimension), false);
+        }
     }
     /*@SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e) {
