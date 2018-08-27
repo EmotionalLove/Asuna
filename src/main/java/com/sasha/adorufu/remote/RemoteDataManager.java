@@ -28,12 +28,14 @@ public class RemoteDataManager implements SimpleListener {
     public String adorufuSessionId;
     public String username;
 
+    public static String ip = "2b2tmuseum.com";
+    public static int port = 42069;
+
     @SimpleEventHandler
     public void onLoginResponse(LoginResponseEvent e) {
         GuiCloudLogin.message = e.getPck().getResponse();
         if (e.getPck().isLoginSuccessful()) {
             AdorufuMod.minecraft.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
-            System.out.println("lol");
         }
     }
     @SimpleEventHandler
@@ -47,7 +49,7 @@ public class RemoteDataManager implements SimpleListener {
     public void connect() {
         AdorufuMod.EVENT_MANAGER.registerListener(this);
         try {
-            AdorufuDataClient client = new AdorufuDataClient(InetAddress.getByName(/*todo*/"127.0.0.1"), Integer.parseInt("42069"));
+            AdorufuDataClient client = new AdorufuDataClient(InetAddress.getByName(ip), port);
             AdorufuMod.logMsg(true, "\r\nConnected to data server: " + client.socket.getInetAddress() + ":" + client.socket.getPort());
             client.start();
         }catch (Exception ex) {

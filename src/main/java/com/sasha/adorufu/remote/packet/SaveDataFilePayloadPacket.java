@@ -2,6 +2,7 @@ package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.exception.AdorufuSuspicousDataFileException;
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketData;
 import com.sasha.adorufu.remote.PacketProcessor;
 
@@ -25,6 +26,7 @@ public class SaveDataFilePayloadPacket extends Packet.Outgoing {
             return; // nothing to do.
         }
         if (file.length() > 1000000 /*bytes*/) {/* Make sure malicious users can't upload extraordinary large data files. Needs server-side check as well*/
+            GuiCloudLogin.message = "4Failure saving data file.";
             throw new AdorufuSuspicousDataFileException("The data file's size cannot exceed 1MB (it should only be a few KB) (yours is " + file.getTotalSpace() + " bytes)");
         }
         try {
