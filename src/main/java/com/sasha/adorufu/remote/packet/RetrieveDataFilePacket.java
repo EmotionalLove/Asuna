@@ -34,7 +34,7 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
                 file.delete();
                 file.createNewFile();
             }
-            PrintWriter writer = new PrintWriter("AdorufuData.yml");
+            PrintWriter writer = new PrintWriter(file);
             this.fileData.forEach(writer::println);
             writer.close();
         } catch (IOException e) {

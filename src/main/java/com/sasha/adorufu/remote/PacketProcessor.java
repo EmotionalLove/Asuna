@@ -90,6 +90,11 @@ public class PacketProcessor {
                                 rrp.setDataVars(pckArr);
                                 rrp.processIncomingPacket();
                                 break;
+                            case -7:
+                                SaveDataFilePayloadResponsePacket sdfprp = new SaveDataFilePayloadResponsePacket(this);
+                                sdfprp.setDataVars(pckArr);
+                                sdfprp.processIncomingPacket();
+                                break;
                             default:
                                 AdorufuMod.logWarn(true, "Unregistered incoming packet. ID: " + pckId);
                         }
