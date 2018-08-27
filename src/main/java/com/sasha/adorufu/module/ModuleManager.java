@@ -10,6 +10,8 @@ import com.sasha.adorufu.events.AdorufuModuleTogglePreEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.sasha.adorufu.AdorufuMod.DATA_MANAGER;
+
 /**
  * Created by Sasha on 08/08/2018 at 11:52 AM
  **/
@@ -34,7 +36,7 @@ public class ModuleManager implements SimpleListener {
     @SimpleEventHandler
     public void onModPostToggle(AdorufuModuleTogglePostEvent e){
         try {
-            AdorufuMod.DATA_MANAGER.saveModuleStates(true);
+            DATA_MANAGER.saveModuleStates(true);
         } catch (IOException e1) {
             AdorufuMod.logErr(false, "Couldn't save module state. " + e1.getMessage());
             e1.printStackTrace();
@@ -66,6 +68,22 @@ public class ModuleManager implements SimpleListener {
                 AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
             }
         }
+    }
+
+    public static void loadBinds() {
+        ModuleManager.moduleRegistry.forEach(mod -> {
+            try {
+                if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
+                    mod.forceState(ModuleState.ENABLE, false, true);
+                }
+                if (mod.hasForcefulAnnotation(mod.getClass())) {
+                    mod.forceState(ModuleState.ENABLE, false, true);
+                }
+                mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static AdorufuModule getModuleByName(String key) {
