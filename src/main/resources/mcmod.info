@@ -2,14 +2,14 @@
 {
   "modid": "adorufuforge",
   "name": "Adorufu",
-  "description": "Minecraft hacked client geared towards 2b2t and anarchy.",
+  "description": "Adorufu is a minecraft mod that assists the player in survival anarchy environments. \"Adorufu\" is Japanese for \"Adolf\". Adorufu is a continutaion of the legacy Xdolf 3.0 series, which was an MCP client.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
+  "url": "https://github.com/EmotionalLove/Adorufu",
+  "updateUrl": "https://github.com/EmotionalLove/Adorufu/releases",
   "authorList": ["Sasha"],
-  "credits": "",
-  "logoFile": "",
+  "credits": "Blake, for the emotional support and inspiration <3",
+  "logoFile": "adorufu.jpg",
   "screenshots": [],
   "dependencies": []
 }
