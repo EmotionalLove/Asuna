@@ -9,6 +9,7 @@ import com.sasha.adorufu.friend.FriendManager;
 import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.renderableobjects.*;
+import com.sasha.adorufu.misc.ModuleState;
 import com.sasha.adorufu.misc.TPS;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.*;
@@ -38,7 +39,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static com.sasha.adorufu.module.ModuleManager.loadBinds;
+import static com.sasha.adorufu.module.ModuleManager.loadBindsAndStates;
 
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true)
 public class AdorufuMod implements SimpleListener {
@@ -107,7 +108,7 @@ public class AdorufuMod implements SimpleListener {
         scheduler.schedule(() -> ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
-        AdorufuMod.scheduler.schedule(ModuleManager::loadBinds, 500, TimeUnit.MILLISECONDS);
+        AdorufuMod.scheduler.schedule(ModuleManager::loadBindsAndStates, 500, TimeUnit.MILLISECONDS);
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         scheduler.schedule(() -> {
             try {
@@ -136,19 +137,19 @@ public class AdorufuMod implements SimpleListener {
     public void reload(boolean async) {
         Thread thread = new Thread(() -> {
             try {
-                this.registerModules();
+                ModuleManager.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
                 this.registerRenderables();
                 ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
-                loadBinds();
+                loadBindsAndStates();
                 try {
                     ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                AdorufuHUD.setupHUD();
+                AdorufuHUD.resetHUD();
                 AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
             }catch (Exception e) {
-                throw new AdorufuException("Severe error occurred whilst reloading client");
+                throw new AdorufuException("Severe error occurred whilst reloading client " + e.getMessage());
             }
         });
         if (async) {

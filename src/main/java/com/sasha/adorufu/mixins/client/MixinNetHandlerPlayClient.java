@@ -27,7 +27,7 @@ public class MixinNetHandlerPlayClient {
                     target = "Lnet/minecraft/client/multiplayer/WorldClient;getChunkFromChunkCoords(II)Lnet/minecraft/world/chunk/Chunk;"),
             locals = LocalCapture.CAPTURE_FAILHARD)
     public void handleChunkData(SPacketChunkData packetIn, CallbackInfo info, /*local*/ Chunk chunk) {
-        ServerGenerateChunkEvent event = new ServerGenerateChunkEvent(chunk, chunk.x, chunk.z);
+        ServerGenerateChunkEvent event = new ServerGenerateChunkEvent(chunk, packetIn, chunk.x, chunk.z);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
     }
 

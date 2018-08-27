@@ -44,7 +44,6 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new RetrieveDataFileEvent(this));
     }
 
     @Override

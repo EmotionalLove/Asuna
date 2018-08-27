@@ -70,7 +70,7 @@ public class ModuleManager implements SimpleListener {
         }
     }
 
-    public static void loadBinds() {
+    public static void loadBindsAndStates() {
         ModuleManager.moduleRegistry.forEach(mod -> {
             try {
                 if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
