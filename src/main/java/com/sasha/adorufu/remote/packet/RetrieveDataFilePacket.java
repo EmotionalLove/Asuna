@@ -51,6 +51,6 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
             return;
         }
         String strData = pckData.get(1);
-        this.fileData = Arrays.asList(strData.split("\n"));
+        this.fileData = Arrays.asList(strData.split("\\R"));
     }
 }
