@@ -26,6 +26,7 @@ public class SaveDataFilePacket extends Packet.Incoming {
             return; // nothing to do.
         }
         if (file.length() > 1000000 /*bytes*/) {/* Make sure malicious users can't upload extraordinary large data files. Needs server-side check as well*/
+            GuiCloudLogin.message = "4Failure saving data file. Relaunch and try again.";
             throw new AdorufuSuspicousDataFileException("The data file's size cannot exceed 1MB (it should only be a few KB) (yours is " + file.getTotalSpace() + " bytes)");
         }
         GuiCloudLogin.message = response;

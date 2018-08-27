@@ -24,6 +24,7 @@ public class GuiCloudLogin extends GuiScreen {
     private GuiButton loginButton;
     private GuiButton registerButton;
     private GuiButton backButton;
+    private GuiButton ipButton;
     public static String message;
     public static boolean previouslyConnected = false;
 
@@ -42,10 +43,12 @@ public class GuiCloudLogin extends GuiScreen {
         this.loginButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Login");
         this.registerButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Register");
         this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Back");
+        this.ipButton = new GuiButton(4, 5, 5, fontRenderer.getStringWidth("Advanced") + 10, 20, "Advanced");
         Keyboard.enableRepeatEvents(true);
         buttonList.add(loginButton);
         buttonList.add(registerButton);
         buttonList.add(backButton);
+        buttonList.add(ipButton);
         usernameBox = new GuiTextField(0, this.fontRenderer, width / 2 - 100, 76 - 25, 200, 20);
         passwordBox = new GuiPasswordField(2, this.fontRenderer, width / 2 - 100, 116 - 25, 200, 20);
         //altBox = new GuiTextField(4, this.fontRenderer, width / 2 - 100, 156-25, 200, 20);
@@ -106,6 +109,8 @@ public class GuiCloudLogin extends GuiScreen {
             case 3:
                 mc.displayGuiScreen(parent);
                 break;
+            case 4:
+                mc.displayGuiScreen(new GuiCloudIp(this));
         }
         /*
         if (button.id == 1) {
