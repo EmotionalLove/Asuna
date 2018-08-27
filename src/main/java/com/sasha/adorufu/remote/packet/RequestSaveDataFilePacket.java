@@ -22,11 +22,9 @@ public class RequestSaveDataFilePacket extends Packet.Outgoing {
     public void dispatchPck() {
         File file = new File("AdorufuData.yml");
         if (!file.exists()) {
-            this.fileBytes = 0;
-            this.getProcessor().send(PacketProcessor.formatPacket(RequestSaveDataFilePacket.class, this));
             return;
         }
-        this.fileBytes = file.getTotalSpace();
+        this.fileBytes = file.length();
         this.getProcessor().send(PacketProcessor.formatPacket(RequestSaveDataFilePacket.class, this));
     }
 }

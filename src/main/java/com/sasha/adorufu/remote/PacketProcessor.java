@@ -80,6 +80,11 @@ public class PacketProcessor {
                                 dsp.setDataVars(pckArr);
                                 dsp.processIncomingPacket();
                                 break;
+                            case -4:
+                                SaveDataFilePacket sdfp = new SaveDataFilePacket(this);
+                                sdfp.setDataVars(pckArr);
+                                sdfp.processIncomingPacket();
+                                break;
                             case -5:
                                 RetrieveDataFilePacket rdp = new RetrieveDataFilePacket(this);
                                 rdp.setDataVars(pckArr);

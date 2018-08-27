@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Sasha at 4:18 PM on 8/25/2018
@@ -16,7 +14,7 @@ import java.util.List;
 public class RetrieveDataFilePacket extends Packet.Incoming {
 
     private String response;
-    private List<String> fileData;
+    private String[] fileData;
 
     public RetrieveDataFilePacket(PacketProcessor processor) {
         super(processor, -5);
@@ -35,7 +33,10 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
                 file.createNewFile();
             }
             PrintWriter writer = new PrintWriter(file);
-            this.fileData.forEach(writer::println);
+            for (String fileDatum : this.fileData) {
+                System.out.println(fileDatum);
+                writer.println(fileDatum);
+            }
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,6 +52,6 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
             return;
         }
         String strData = pckData.get(1);
-        this.fileData = Arrays.asList(strData.split("\\R"));
+        this.fileData = strData.split("/\\{oof}");
     }
 }

@@ -2,6 +2,7 @@ package com.sasha.adorufu.gui.remotedatafilegui;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.remote.AdorufuDataClient;
+import com.sasha.adorufu.remote.packet.RequestSaveDataFilePacket;
 import com.sasha.adorufu.remote.packet.RetrieveDataFileRequestPacket;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiButton;
@@ -73,6 +74,8 @@ public class GuiCloudControl extends GuiScreen {
                 GuiCloudLogin.message = "bRetrieving the data file...";
                 break;
             case 2:
+                RequestSaveDataFilePacket ssdfp = new RequestSaveDataFilePacket(AdorufuDataClient.processor, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId);
+                ssdfp.dispatchPck();
                 GuiCloudLogin.message = "bSaving the data file...";
                 break;
             case 3:
