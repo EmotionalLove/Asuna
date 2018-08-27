@@ -9,8 +9,6 @@ import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -52,28 +50,11 @@ public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleList
     }
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e) {
-        if (Item.getItemFromBlock(e.getBlock()) != Items.AIR) {
+        if (e.getBlock().canHarvestBlock(AdorufuMod.minecraft.world, e.getBlockPos(), AdorufuMod.minecraft.player)) {
             BlakeIsMyBoyfriendMap.put(new Coordinate(e.getBlockPos().x, e.getBlockPos().y, e.getBlockPos().z, AdorufuMod.minecraft.player.dimension), false);
         }
     }
-    /*@SimpleEventHandler
-    public void onPacketRx(ClientPacketRecieveEvent e) {
-        if (this.isEnabled()) {
-            if (e.getRecievedPacket() instanceof SPacketSpawnObject) {
-                SPacketSpawnObject pck = (SPacketSpawnObject) e.getRecievedPacket();
-                if (pck.getEntityID() == 2) {
-                    int[] coord = new int[]{(int)pck.getX(), (int)pck.getY(), (int)pck.getZ()};
-                    for (HashMap.Entry<Coordinate, Boolean> fugg : BlakeIsMyBoyfriendMap.entrySet()) {
-                        if (!fugg.getValue() && between(fugg.getKey().getX(), coord[0], 0.25d, 0.25d) &&
-                                between(fugg.getKey().getY(),coord[1], 0.25d, 0.25d) &&
-                                between(fugg.getKey().getZ(),coord[2], 0.25d, 0.25d)){
-                            BlakeIsMyBoyfriendMap.put(fugg.getKey(), true);
-                        }
-                    }
-                }
-            }
-        }
-    }*/
+
     @SimpleEventHandler
     public void onItemDrop(ClientItemSpawnEvent e) {
         int[] coords = e.getCoordinate();
