@@ -56,12 +56,8 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject element : registeredHudElements) {
             for (AdorufuModule moduleElement : ModuleManager.moduleRegistry) {
-                //AdorufuMod.logMsg(true, "Checking "+moduleElement.getModuleName().toLowerCase() +" & "
-                //+ element.getName());
                 if (element.getName().toLowerCase().equals(moduleElement.getModuleName().toLowerCase())){
-                    //AdorufuMod.logWarn(true, "Found matching module and renderable: " + element.getName().toLowerCase());
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
-                        //AdorufuMod.logMsg(true,"Sorting renderable...");
                         ScreenCornerPos thePos=element.getPos();
                         if (element.getPos() == null){
                             thePos=element.getDefaultPos();
@@ -69,19 +65,15 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
                         switch(thePos){
                             case LEFTTOP:
                                 leftTop.add(element);
-                                AdorufuMod.logMsg(true,element.getName() + " LT");
                                 break;
                             case LEFTBOTTOM:
                                 leftBottom.add(element);
-                                AdorufuMod.logMsg(true,element.getName() + " LB");
                                 break;
                             case RIGHTBOTTOM:
                                 rightBottom.add(element);
-                                AdorufuMod.logMsg(true,element.getName() + " RB");
                                 break;
                             case RIGHTTOP:
                                 rightTop.add(element);
-                                AdorufuMod.logMsg(true,element.getName() + " RT");
                                 break;
                         }
                         break;

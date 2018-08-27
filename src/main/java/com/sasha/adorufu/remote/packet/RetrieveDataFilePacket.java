@@ -1,5 +1,7 @@
 package com.sasha.adorufu.remote.packet;
 
+import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
 
@@ -38,6 +40,7 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
                 writer.println(fileDatum);
             }
             writer.close();
+            AdorufuMod.EVENT_MANAGER.invokeEvent(new AdorufuDataFileRetrievedEvent());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,22 +1,23 @@
 package com.sasha.adorufu;
 
 import com.sasha.adorufu.command.CommandHandler;
-import com.sasha.adorufu.remote.RemoteDataManager;
-import com.sasha.adorufu.waypoint.WaypointManager;
-import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.adorufu.command.commands.*;
+import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.exception.AdorufuException;
 import com.sasha.adorufu.friend.FriendManager;
-import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.renderableobjects.*;
-import com.sasha.adorufu.misc.ModuleState;
 import com.sasha.adorufu.misc.TPS;
-import com.sasha.adorufu.module.modules.ModuleAntiAFK;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.*;
 import com.sasha.adorufu.module.modules.hudelements.*;
+import com.sasha.adorufu.remote.RemoteDataManager;
+import com.sasha.adorufu.waypoint.WaypointManager;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleEventManager;
+import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
@@ -37,8 +38,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.sasha.adorufu.module.ModuleManager.loadBinds;
+
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true)
-public class AdorufuMod {
+public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
@@ -60,18 +63,18 @@ public class AdorufuMod {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
-        FRIEND_MANAGER= new FriendManager();
+        FRIEND_MANAGER = new FriendManager();
         try {
             if (DATA_MANAGER.getDRPEnabled()) {
                 AdorufuDiscordPresense.setupPresense();
-                Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                     AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
                 }));
             }
         } catch (IOException e) {
             e.printStackTrace();
             AdorufuDiscordPresense.setupPresense();
-            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
             }));
         }
@@ -80,17 +83,17 @@ public class AdorufuMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
-         logMsg(true, "Loading TTF fonts...");
-         Fonts.loadFonts();
-         logMsg(true, "Done!");
-         logMsg(true, "Registering commands, renderables and modules...");
+        logMsg(true, "Loading TTF fonts...");
+        Fonts.loadFonts();
+        logMsg(true, "Done!");
+        logMsg(true, "Registering commands, renderables and modules...");
         scheduler.schedule(() -> {
             try {
                 this.registerCommands();
                 this.registerModules();
                 this.registerRenderables();
-            } catch (Exception e){
-                throw new AdorufuException("Couldn't register! " + e.getMessage() );
+            } catch (Exception e) {
+                throw new AdorufuException("Couldn't register! " + e.getMessage());
             }
         }, 0, TimeUnit.NANOSECONDS);
         EVENT_MANAGER.registerListener(new CommandHandler());
@@ -101,27 +104,14 @@ public class AdorufuMod {
         EVENT_MANAGER.registerListener(new AdorufuHUD());
         logMsg(true, "Done!");
         logMsg(true, "Loading Xray");
-        scheduler.schedule(() -> ModuleXray.xrayBlocks =
-                           DATA_MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
+        scheduler.schedule(() -> ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
         TPS.INSTANCE = new TPS();
         EVENT_MANAGER.registerListener(TPS.INSTANCE);
-        AdorufuMod.scheduler.schedule(() -> {//todo test
-            ModuleManager.moduleRegistry.forEach(mod -> {
-                try {
-                    if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
-                        mod.forceState(ModuleState.ENABLE, false, true);
-                    }
-                    if (mod.hasForcefulAnnotation(mod.getClass())){
-                        mod.forceState(ModuleState.ENABLE, false, true);
-                    }
-                    mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
-                }catch (IOException e){e.printStackTrace();}
-            });
-        }, 500, TimeUnit.MILLISECONDS);
+        AdorufuMod.scheduler.schedule(ModuleManager::loadBinds, 500, TimeUnit.MILLISECONDS);
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         scheduler.schedule(() -> {
             try {
-                ModuleEntitySpeed.speed = (double)AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
+                ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -139,10 +129,36 @@ public class AdorufuMod {
             }
         }, 0, TimeUnit.NANOSECONDS);
         EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
+        EVENT_MANAGER.registerListener(this);
         logMsg(true, "Adorufu cleanly initialised!");
     }
 
-    private void registerCommands() throws Exception{
+    public void reload(boolean async) {
+        Thread thread = new Thread(() -> {
+            try {
+                this.registerModules();
+                this.registerRenderables();
+                ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
+                loadBinds();
+                try {
+                    ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                AdorufuHUD.setupHUD();
+                AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
+            }catch (Exception e) {
+                throw new AdorufuException("Severe error occurred whilst reloading client");
+            }
+        });
+        if (async) {
+            thread.start();
+            return;
+        }
+        thread.run();
+    }
+
+    private void registerCommands() throws Exception {
         COMMAND_PROCESSOR.register(AboutCommand.class);
         COMMAND_PROCESSOR.register(ToggleCommand.class);
         COMMAND_PROCESSOR.register(ModulesCommand.class);
@@ -220,7 +236,8 @@ public class AdorufuMod {
         }*///todo fix
     }
 
-    private void registerRenderables(){
+
+    private void registerRenderables() {
         AdorufuHUD.registeredHudElements.clear();
         AdorufuHUD.registeredHudElements.add(new RenderableWatermark());
         AdorufuHUD.registeredHudElements.add(new RenderableHacklist());
@@ -237,25 +254,33 @@ public class AdorufuMod {
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu\2478] \2477" + logMsg));
     }
+
     public static void logMsg(String logMsg) {
         minecraft.player.sendMessage(new TextComponentString("\2477" + logMsg));
     }
+
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu \247cERROR\2478] \247c" + logMsg));
     }
+
     public static void logWarn(boolean consoleOnly, String logMsg) {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu \247eWARNING\2478] \247e" + logMsg));
     }
+    @SimpleEventHandler
+    public void onDataFileRetrieved(AdorufuDataFileRetrievedEvent e) {
+        this.reload(true);
+    }
 }
+
 class ForgeEvent {
     @SubscribeEvent
-    public void onRenderLost(RenderGameOverlayEvent.Post e){
+    public void onRenderLost(RenderGameOverlayEvent.Post e) {
         RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.TEXT;
-        if (e.getType() == target){
+        if (e.getType() == target) {
             ClientOverlayRenderEvent event = new ClientOverlayRenderEvent(e.getPartialTicks());
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         }
