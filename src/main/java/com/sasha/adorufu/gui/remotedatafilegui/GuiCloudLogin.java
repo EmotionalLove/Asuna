@@ -164,6 +164,9 @@ public class GuiCloudLogin extends GuiScreen {
 
     public void drawScreen(int x, int y, float f)
     {
+        if (AdorufuMod.REMOTE_DATA_MANAGER.loggedIn) {
+            mc.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
+        }
         drawDefaultBackground();
         drawString(this.fontRenderer, "Username", width / 2 - 100, 63 - 25, 0xA0A0A0);
         drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
