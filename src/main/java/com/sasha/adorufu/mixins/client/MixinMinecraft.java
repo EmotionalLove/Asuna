@@ -7,6 +7,7 @@ import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.settings.GameSettings;
@@ -22,6 +23,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -178,5 +180,12 @@ public abstract class MixinMinecraft {
         ClientMouseClickEvent.Right event = new ClientMouseClickEvent.Right();
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) iinfo.cancel();
+    }
+    @Inject(method = "getAmbientMusicType", at = @At("RETURN"), cancellable = true)
+    public void getAmbientMusicType(CallbackInfoReturnable<MusicTicker.MusicType> info) {
+        if (ModuleManager.getModuleByName("creativemusic").isEnabled()) {
+            info.setReturnValue(MusicTicker.MusicType.CREATIVE);
+            info.cancel();
+        }
     }
 }

@@ -227,6 +227,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleWolfIdentity());
         ModuleManager.register(new ModuleGhostBlockWarning());
         ModuleManager.register(new ModuleAntiFireOverlay());
+        ModuleManager.register(new ModuleCreativeMusic());
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
