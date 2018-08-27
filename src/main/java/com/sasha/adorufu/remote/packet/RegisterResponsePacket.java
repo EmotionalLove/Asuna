@@ -2,8 +2,8 @@ package com.sasha.adorufu.remote.packet;
 
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
-import com.sasha.adorufu.remote.packet.events.RegisterResponseEvent;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,13 @@ public class RegisterResponsePacket extends Packet.Incoming {
 
     @Override
     public void processIncomingPacket() {
-        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new RegisterResponseEvent(this));
+        GuiCloudLogin.message = this.message;
+        if (registrationSuccessful) {
+            AdorufuMod.minecraft.displayGuiScreen(new GuiCloudLogin());
+        }
+        else {
+            AdorufuMod.logErr(true, "Data Server returned the \"failed login\" statuscode!");
+        }
     }
 
     @Override

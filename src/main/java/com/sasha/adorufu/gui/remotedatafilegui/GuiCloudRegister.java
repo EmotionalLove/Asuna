@@ -33,13 +33,7 @@ public class GuiCloudRegister extends GuiScreen {
     }
 
     public static class GuiCloudRegisterEventHandler implements SimpleListener {
-        @SimpleEventHandler
-        public void onLoginResponse(RegisterResponseEvent e) {
-            GuiCloudLogin.message = e.getPck().getResponse();
-            if (e.getPck().isRegistrationSuccessful()) {
-                AdorufuMod.minecraft.displayGuiScreen(new GuiCloudLogin());
-            }
-        }
+
     }
 
     public void initGui()

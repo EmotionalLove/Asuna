@@ -4,6 +4,7 @@ import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudControl;
 import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.packet.events.LoginResponseEvent;
+import com.sasha.adorufu.remote.packet.events.RegisterResponseEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
@@ -32,6 +33,14 @@ public class RemoteDataManager implements SimpleListener {
         GuiCloudLogin.message = e.getPck().getResponse();
         if (e.getPck().isLoginSuccessful()) {
             AdorufuMod.minecraft.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
+            System.out.println("lol");
+        }
+    }
+    @SimpleEventHandler
+    public void onLoginResponse(RegisterResponseEvent e) {
+        GuiCloudLogin.message = e.getPck().getResponse();
+        if (e.getPck().isRegistrationSuccessful()) {
+            AdorufuMod.minecraft.displayGuiScreen(new GuiCloudLogin());
         }
     }
 

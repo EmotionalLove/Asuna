@@ -1,11 +1,11 @@
 package com.sasha.adorufu.remote.packet;
 
-import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
-import com.sasha.adorufu.remote.packet.events.RetrieveDataFileEvent;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class RetrieveDataFilePacket extends Packet.Incoming {
 
+    private String response;
     private List<String> fileData;
 
     public RetrieveDataFilePacket(PacketProcessor processor) {
@@ -23,25 +24,33 @@ public class RetrieveDataFilePacket extends Packet.Incoming {
 
     @Override
     public void processIncomingPacket() {
+        GuiCloudLogin.message = response;
+        if (fileData == null) {
+            return;
+        }
         try {
-            FileWriter writer = new FileWriter("AdorufuData.yml", false);
-            this.fileData.forEach(e -> {
-                try {
-                    writer.write(e + "\r\n");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            });
+            File file = new File("AdorufuData.yml");
+            if (file.exists()) {
+                file.delete();
+                file.createNewFile();
+            }
+            PrintWriter writer = new PrintWriter("AdorufuData.yml");
+            this.fileData.forEach(writer::println);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new RetrieveDataFileEvent(this));
+        //AdorufuMod.REMOTE_DATA_MANAGER.EVENT_MANAGER.invokeEvent(new RetrieveDataFileEvent(this));
     }
 
     @Override
     public void setDataVars(ArrayList<String> pckData) {
-        String strData = pckData.get(0);
-        this.fileData = Arrays.asList(strData.split("\\\\n"));
+        this.response = pckData.get(0);
+        if (!response.equals("aOperation completed!")) {
+            this.fileData = null;
+            return;
+        }
+        String strData = pckData.get(1);
+        this.fileData = Arrays.asList(strData.split("\n"));
     }
 }
