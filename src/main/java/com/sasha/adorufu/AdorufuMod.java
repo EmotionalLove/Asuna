@@ -228,6 +228,8 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleGhostBlockWarning());
         ModuleManager.register(new ModuleAntiFireOverlay());
         ModuleManager.register(new ModuleCreativeMusic());
+        ModuleManager.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
+
         /*
         ModuleManager.moduleRegistry.clear();
         Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
