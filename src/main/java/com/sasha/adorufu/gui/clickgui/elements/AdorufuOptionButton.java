@@ -1,6 +1,5 @@
 package com.sasha.adorufu.gui.clickgui.elements;
 
-import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.misc.AdorufuMath;
@@ -67,7 +66,7 @@ public class AdorufuOptionButton {
 	
 	public void mouseClicked(int x, int y, int button) { //TODO: make sure only one button gets toggled even if the windows are overlapping
 		if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 0) {
-			AdorufuClickGUI.sendPanelToFront(window);
+			AdorufuClickGUI.focusWindow(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 			ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
 			    //mod.getModuleOptionsMap().forEach((str, bool) -> AdorufuMod.logMsg(str));
@@ -77,7 +76,7 @@ public class AdorufuOptionButton {
                 }
             });
 		} else if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && window.isOpen() && button == 1) {
-			AdorufuClickGUI.sendPanelToFront(window);
+			AdorufuClickGUI.focusWindow(window);
 		}
 	}
 
