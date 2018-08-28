@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Some of the code in this class is based off of the code in Xdolf 3's GUI code, which was based off of Xdolf 2's code (which was licensed under MIT at the time)
+ * <i>During Xdolf 3's phase, I was the only active developer on the project.</i>
  *
  * Credit goes to the original Xdolf team for the pieces of code that was used in Adorufu's GUI system. Much of it
  * has been reworked, and, to be honest, it's due for a rewrite
