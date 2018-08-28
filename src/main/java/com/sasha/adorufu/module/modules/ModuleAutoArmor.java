@@ -3,10 +3,10 @@ package com.sasha.adorufu.module.modules;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -61,13 +61,20 @@ public class ModuleAutoArmor extends AdorufuModule {
             if (isHelmet(s.getItem())) helms.put(s, x); // put all helmets in the map for processing, with their respective slot id
         }
         AtomicReference<ItemStack> betterHelmet = new AtomicReference<>();
+        AtomicReference<Integer> betterSlot = new AtomicReference<>();
         betterHelmet.set(null);
         helms.forEach((helm, slot)-> {
-
+            if(isBetter(betterHelmet.get() == null ? currentHelmet : betterHelmet.get(), helm)) {
+                betterHelmet.set(helm);
+                betterSlot.set(slot);
+            }
         });
         if (betterHelmet.get() == null) {
             return; // there aren't any helmets better than what the player currently has.
         }
+        AdorufuMod.minecraft.playerController.windowClick(0, 5, 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
+        AdorufuMod.minecraft.playerController.windowClick(0, betterSlot.get(), 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
+        AdorufuMod.minecraft.playerController.windowClick(0, 5, 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
     }
 
     public boolean isBetter(ItemStack old, ItemStack neew) {
@@ -128,10 +135,7 @@ public class ModuleAutoArmor extends AdorufuModule {
             return false;
         }
         if (old.isItemEnchanted()) {
-            for (NBTBase nbtBase : old.getEnchantmentTagList()) {
-                // todo
-            }
-
+            //todo
         }
         return neew.getItemDamage() > old.getItemDamage();
     }
