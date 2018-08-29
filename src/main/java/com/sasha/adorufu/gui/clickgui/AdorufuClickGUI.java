@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * The repo can be found HERE > https://github.com/LeafHacker/xdolf
  * The repo can also be found at that URL on the wayback machine.
  *
- * List of changes to this code to comply with the gpl 3 (this entire projects is already licensed under GPL 3)
+ * List of changes to this code to comply with the gpl 3 (this entire project is already licensed under GPL 3)
  *
  * - Save the positions of the gui to a file upon closing the GUI.
  * - Added compatability with the "OPTION" windows.
