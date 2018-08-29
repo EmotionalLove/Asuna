@@ -27,6 +27,7 @@ public class ModuleInventoryMove extends AdorufuModule {
 
     @Override
     public void onTick() {
+        if (this.isEnabled()) return;
         AdorufuMod.minecraft.setIngameFocus();
     }
 }
