@@ -3,6 +3,7 @@ package com.sasha.adorufu;
 import com.sasha.adorufu.command.CommandHandler;
 import com.sasha.adorufu.command.commands.*;
 import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
+import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.exception.AdorufuException;
 import com.sasha.adorufu.friend.FriendManager;
@@ -22,6 +23,7 @@ import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -289,5 +291,10 @@ class ForgeEvent {
             ClientOverlayRenderEvent event = new ClientOverlayRenderEvent(e.getPartialTicks());
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         }
+    }
+    @SubscribeEvent
+    public void onMoveUpdate(InputUpdateEvent e) {
+        ClientInputUpdateEvent ciup = new ClientInputUpdateEvent(e.getMovementInput());
+        AdorufuMod.EVENT_MANAGER.invokeEvent(ciup);
     }
 }
