@@ -34,8 +34,8 @@ public abstract class MixinEntityPlayerSP extends MixinEntityLivingBase {
         ClientSlowDownPlayerEvent event = new ClientSlowDownPlayerEvent();
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) {
-            this.moveForward *= 2;
-            this.moveStrafing *= 2;
+            this.moveForward *= 2F;
+            this.moveStrafing *= 2F;
         }
     }
 
