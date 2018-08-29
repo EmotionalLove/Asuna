@@ -7,6 +7,7 @@ import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.exception.AdorufuException;
 import com.sasha.adorufu.friend.FriendManager;
+import com.sasha.adorufu.gui.clickgui.windows.*;
 import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.renderableobjects.*;
@@ -41,6 +42,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.sasha.adorufu.gui.clickgui.AdorufuClickGUI.registeredWindows;
 import static com.sasha.adorufu.module.ModuleManager.loadBindsAndStates;
 
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true)
@@ -95,6 +97,7 @@ public class AdorufuMod implements SimpleListener {
                 this.registerCommands();
                 this.registerModules();
                 this.registerRenderables();
+                this.registerWindows();
             } catch (Exception e) {
                 throw new AdorufuException("Couldn't register! " + e.getMessage());
             }
@@ -176,6 +179,17 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(FriendlistCommand.class);
         COMMAND_PROCESSOR.register(WaypointCommand.class);
         COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
+    }
+
+    private void registerWindows() throws Exception {
+        registeredWindows.clear();
+        registeredWindows.add(new WindowChat());
+        registeredWindows.add(new WindowCombat());
+        registeredWindows.add(new WindowHUD());
+        registeredWindows.add(new WindowMisc());
+        registeredWindows.add(new WindowMovement());
+        registeredWindows.add(new WindowRender());
+
     }
 
     private void registerModules() throws Exception {

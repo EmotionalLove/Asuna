@@ -61,7 +61,6 @@ public class AdorufuWindow {
         this.isOpen = true;
         this.isShown = isShown;
         this.type = type;
-        AdorufuClickGUI.windowList.add(this);
         AdorufuClickGUI.unFocusedWindows.add(this);
     }
 

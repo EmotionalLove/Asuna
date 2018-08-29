@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AdorufuClickGUI extends GuiScreen {
 
-    public static ArrayList<AdorufuWindow> windowList = new ArrayList<>();
+    public static ArrayList<AdorufuWindow> registeredWindows = new ArrayList<>();
     public static ArrayList<AdorufuWindow> unFocusedWindows = new ArrayList<>();
 
 
@@ -39,7 +39,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
     @Override
     public void initGui() {
-        for (AdorufuWindow w : windowList) {
+        for (AdorufuWindow w : registeredWindows) {
             if (w.getType() == WindowType.OPTION) {
                 w.drag(3000, 3000);
             }
@@ -58,7 +58,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
 
     public void onGuiClosed() {
-        for (AdorufuWindow w : windowList) {
+        for (AdorufuWindow w : registeredWindows) {
             AdorufuMod.scheduler.schedule(() -> {
                 try {
                     AdorufuMod.DATA_MANAGER.saveGuiPos(w);
@@ -74,7 +74,7 @@ public class AdorufuClickGUI extends GuiScreen {
     }
 
     public void mouseClicked(int x, int y, int b) {
-        for (AdorufuWindow w : windowList) {
+        for (AdorufuWindow w : registeredWindows) {
             w.mouseClicked(x, y, b);
         }
         try {
@@ -84,7 +84,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
     public void mouseReleased(int x, int y, int state) {
         try {
-            for (AdorufuWindow w : windowList) {
+            for (AdorufuWindow w : registeredWindows) {
                 w.mouseReleased(x, y, state);
             }
             super.mouseReleased(x, y, state);
@@ -95,7 +95,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
     public void drawScreen(int x, int y, float ticks) {
         drawRect(0, 0, width, height, Integer.MIN_VALUE);
-        for (AdorufuWindow w : windowList) {
+        for (AdorufuWindow w : registeredWindows) {
             if (w.isShown()) {
                 w.drawWindow(x, y);
             }
@@ -109,14 +109,14 @@ public class AdorufuClickGUI extends GuiScreen {
     }
 
     public static void focusWindow(AdorufuWindow window) {
-        if (windowList.contains(window)) {
-            windowList.remove(window);
-            windowList.add(windowList.size(), window);
+        if (registeredWindows.contains(window)) {
+            registeredWindows.remove(window);
+            registeredWindows.add(registeredWindows.size(), window);
         }
     }
 
-    public static ArrayList<AdorufuWindow> getWindowList() {
-        return windowList;
+    public static ArrayList<AdorufuWindow> getRegisteredWindows() {
+        return registeredWindows;
     }
 }
 
