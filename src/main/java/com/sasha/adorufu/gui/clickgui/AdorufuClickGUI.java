@@ -11,26 +11,16 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Some of the code in this class is based off of the code in Xdolf 3's GUI code, which was based off of Xdolf 2's code (which was licensed under MIT at the time)
- * <i>During Xdolf 3's phase, I was the only active developer on the project.</i>
- * <p>
- * Credit goes to the original Xdolf team for the pieces of code that was used in Adorufu's GUI system. Much of it
- * has been reworked, and, to be honest, it's due for a rewrite
- * >todo
- * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- * and associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- * <p>
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * <p>
- * THE SOFTWARE IS PROVIDED "AS IS",
- * WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
- * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * Some of the code in this class is based off of the code in Xdolf 3's GUI code, which was based off of Xdolf 1 & 2's code
+ * (which was licensed under MIT at the time, and later changed to GPL 3)
+ * The repo can be found HERE > https://github.com/LeafHacker/xdolf
+ * The repo can also be found at that URL on the wayback machine.
+ *
+ * List of changes to this code to comply with the gpl 3 (this entire projects is already licensed under GPL 3)
+ *
+ * - Save the positions of the gui to a file upon closing the GUI.
+ * - Added compatability with the "OPTION" windows.
+ * - Optimised focusWindow().
  */
 
 public class AdorufuClickGUI extends GuiScreen {
