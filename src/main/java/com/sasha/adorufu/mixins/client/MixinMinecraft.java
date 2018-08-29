@@ -6,6 +6,7 @@ import com.sasha.adorufu.events.ClientMouseClickEvent;
 import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.modules.ModuleInventoryMove;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.gui.GuiScreen;
@@ -185,6 +186,12 @@ public abstract class MixinMinecraft {
     public void getAmbientMusicType(CallbackInfoReturnable<MusicTicker.MusicType> info) {
         if (ModuleManager.getModule("creativemusic").isEnabled()) {
             info.setReturnValue(MusicTicker.MusicType.CREATIVE);
+            info.cancel();
+        }
+    }
+    @Inject(method = "setIngameFocus", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/MouseHelper;grabMouseCursor()V"), cancellable = true)
+    public void setIngameFocus(CallbackInfo info) {
+        if (ModuleManager.getModule(ModuleInventoryMove.class).isEnabled()) {
             info.cancel();
         }
     }
