@@ -34,8 +34,8 @@ public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
     @SimpleEventHandler
     public void onSlowDown(ClientInputUpdateEvent e) {
         if (this.isEnabled()) {
-            e.getMovementInput().moveForward /= 0.5f;
-            e.getMovementInput().moveStrafe /= 0.5f;
+            e.getMovementInput().moveForward /= 0.05f;
+            e.getMovementInput().moveStrafe /= 0.05f;
         }
     }
 }
