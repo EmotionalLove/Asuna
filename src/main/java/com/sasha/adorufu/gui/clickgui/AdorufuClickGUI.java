@@ -39,26 +39,26 @@ public class AdorufuClickGUI extends GuiScreen {
 
     @Override
     public void initGui() {
-        for (AdorufuWindow w : registeredWindows) {
-            if (w.getType() == WindowType.OPTION) {
-                w.drag(3000, 3000);
+        registeredWindows.forEach(w -> {
+            switch (w.getType()) {
+                case OPTION:
+                    w.drag(3000, 3000);
+                    break;
+                case MODULE:
+                    try {
+                        int[] lol = AdorufuMod.DATA_MANAGER.getSavedGuiPos(w);
+                        w.dragX = lol[0];
+                        w.dragY = lol[1];
+                    } catch (Exception e) {
+                        AdorufuMod.logErr(true, "Couldn't load ClickGUI positions");
+                    }
+                    break;
             }
-            if (w.getType() == WindowType.MODULE) {
-                boolean isNew = false;
-                try {
-                    int[] lol = AdorufuMod.DATA_MANAGER.getSavedGuiPos(w);
-                    w.dragX = lol[0];
-                    w.dragY = lol[1];
-                } catch (Exception e) {
-                    AdorufuMod.logErr(true, "Couldn't load ClickGUI positions");
-                }
-            }
-        }
+        });
     }
 
-
     public void onGuiClosed() {
-        for (AdorufuWindow w : registeredWindows) {
+        registeredWindows.forEach(w -> {
             AdorufuMod.scheduler.schedule(() -> {
                 try {
                     AdorufuMod.DATA_MANAGER.saveGuiPos(w);
@@ -70,23 +70,19 @@ public class AdorufuClickGUI extends GuiScreen {
                 w.setShown(false);
                 w.drag(3000, 3000);
             }
-        }
+        });
     }
 
     public void mouseClicked(int x, int y, int b) {
-        for (AdorufuWindow w : registeredWindows) {
-            w.mouseClicked(x, y, b);
-        }
         try {
+            registeredWindows.forEach(w -> w.mouseClicked(x, y, b));
             super.mouseClicked(x, y, b);
-        } catch (IOException ex) {/* ignore this */}
+        } catch (Exception ex) {/* ignore this */}
     }
 
     public void mouseReleased(int x, int y, int state) {
         try {
-            for (AdorufuWindow w : registeredWindows) {
-                w.mouseReleased(x, y, state);
-            }
+            registeredWindows.forEach(w -> w.mouseReleased(x, y, state));
             super.mouseReleased(x, y, state);
         } catch (Exception e) {
             //
@@ -95,11 +91,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
     public void drawScreen(int x, int y, float ticks) {
         drawRect(0, 0, width, height, Integer.MIN_VALUE);
-        for (AdorufuWindow w : registeredWindows) {
-            if (w.isShown()) {
-                w.drawWindow(x, y);
-            }
-        }
+        registeredWindows.forEach(w -> w.drawWindow(x, y));
         super.drawScreen(x, y, ticks);
     }
 
@@ -111,7 +103,7 @@ public class AdorufuClickGUI extends GuiScreen {
     public static void focusWindow(AdorufuWindow window) {
         if (registeredWindows.contains(window)) {
             registeredWindows.remove(window);
-            registeredWindows.add(registeredWindows.size(), window);
+            registeredWindows.add(window);
         }
     }
 

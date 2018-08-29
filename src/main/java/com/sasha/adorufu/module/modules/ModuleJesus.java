@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 @PostToggleExec
 @ModuleInfo(description = "Walk on water!")
 public class ModuleJesus extends AdorufuModule implements SimpleListener {
-    public static AxisAlignedBB WATER_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
+    public static AxisAlignedBB WATER_JESUS_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
     public static ModuleJesus INSTANCE;
     public ModuleJesus() {
         super("Jesus", AdorufuCategory.MOVEMENT, false);
