@@ -1,7 +1,6 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientSlowDownPlayerEvent;
 import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
 import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -29,14 +28,15 @@ public abstract class MixinEntityPlayerSP extends MixinEntityLivingBase {
         ModuleManager.tickModules();
     }
 
-    @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/client/entity/EntityPlayerSP;sprintToggleTimer:I"))
+    //this doesnt work ;-;
+    /*@Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/client/entity/EntityPlayerSP;sprintToggleTimer:I"))
     public void onLivingUpdate(CallbackInfo info) {
-        ClientSlowDownPlayerEvent event = new ClientSlowDownPlayerEvent();
+        ClientInputUpdateEvent event = new ClientInputUpdateEvent();
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) {
-            this.moveForward *= 2F;
-            this.moveStrafing *= 2F;
+            this.moveForward *= 5F;
+            this.moveStrafing *= 5F;
         }
-    }
+    }*/
 
 }
