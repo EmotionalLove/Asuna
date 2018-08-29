@@ -50,7 +50,7 @@ public abstract class MixinGuiPlayerTabOverlay {
     @Overwrite
     public void renderPlayerlist(int width, Scoreboard scoreboardIn, @Nullable ScoreObjective scoreObjectiveIn)
     {
-        boolean exTab = ModuleManager.getModuleByName("ExtendedTablist").isEnabled();
+        boolean exTab = ModuleManager.getModule("ExtendedTablist").isEnabled();
         NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
         List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
         int i = 0;

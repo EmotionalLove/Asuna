@@ -31,7 +31,7 @@ public class ModuleAutoIgnore extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onEnable() {
-        if (!ModuleManager.getModuleByName("clientignore").isEnabled()) {
+        if (!ModuleManager.getModule("clientignore").isEnabled()) {
             logWarn(false, "You need to enable the ClientIgnore module for" +
                     " ignored players to actually be ignored.");
         }

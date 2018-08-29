@@ -20,12 +20,12 @@ public class ModuleManager implements SimpleListener {
     public static ArrayList<AdorufuModule> moduleRegistry = new ArrayList<>();
 
     @SimpleEventHandler
-    public void onPreToggle(AdorufuModuleTogglePreEvent e){
-        if (e.getToggledModule().hasForcefulAnnotation(e.getToggledModule().getClass()) && e.getToggleState() == ModuleState.DISABLE){
+    public void onPreToggle(AdorufuModuleTogglePreEvent e) {
+        if (e.getToggledModule().hasForcefulAnnotation(e.getToggledModule().getClass()) && e.getToggleState() == ModuleState.DISABLE) {
             e.setCancelled(true);
             return;
         }
-        if (e.getToggleState() == ModuleState.ENABLE && !e.getToggledModule().isPostExec(e.getToggledModule().getClass())){
+        if (e.getToggleState() == ModuleState.ENABLE && !e.getToggledModule().isPostExec(e.getToggledModule().getClass())) {
             e.getToggledModule().onEnable();
             return;
         }
@@ -34,14 +34,14 @@ public class ModuleManager implements SimpleListener {
     }
 
     @SimpleEventHandler
-    public void onModPostToggle(AdorufuModuleTogglePostEvent e){
+    public void onModPostToggle(AdorufuModuleTogglePostEvent e) {
         try {
             DATA_MANAGER.saveModuleStates(true);
         } catch (IOException e1) {
             AdorufuMod.logErr(false, "Couldn't save module state. " + e1.getMessage());
             e1.printStackTrace();
         }
-        if (e.getToggleState() == ModuleState.ENABLE){
+        if (e.getToggleState() == ModuleState.ENABLE) {
             if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onEnable();
 
             if (!e.getToggledModule().isRenderable()) {
@@ -51,7 +51,7 @@ public class ModuleManager implements SimpleListener {
             return;
         }
         if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onDisable();
-        if (!e.getToggledModule().isRenderable()){
+        if (!e.getToggledModule().isRenderable()) {
             AdorufuModule.displayList.remove(e.getToggledModule());
             return;
         }
@@ -63,7 +63,7 @@ public class ModuleManager implements SimpleListener {
     public static void register(AdorufuModule mod) {
         moduleRegistry.add(mod);
         if (mod.getClass().getInterfaces().length != 0) {
-            if (mod.getClass().getInterfaces()[0] == SimpleListener.class)  {
+            if (mod.getClass().getInterfaces()[0] == SimpleListener.class) {
                 AdorufuMod.logMsg(true, mod.getModuleName() + " is listening for events.");
                 AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
             }
@@ -86,22 +86,30 @@ public class ModuleManager implements SimpleListener {
         });
     }
 
-    public static AdorufuModule getModuleByName(String key) {
+    public static AdorufuModule getModule(String key) {
         for (AdorufuModule m : moduleRegistry) {
             if (m.getModuleName().toLowerCase().equals(key.toLowerCase())) return m;
         }
         return null;
     }
 
-    public static void tickModules(){
+    public static AdorufuModule getModule(Class<? extends AdorufuModule> clazz) {
+        for (AdorufuModule m : moduleRegistry) {
+            if (m.getClass() == clazz) return m;
+        }
+        return null;
+    }
+
+    public static void tickModules() {
         long l = System.currentTimeMillis();
         moduleRegistry.forEach(AdorufuModule::onTick);
-        AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int)(System.currentTimeMillis()-l));
+        AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));
     }
-    public static void renderModules(){
+
+    public static void renderModules() {
         long l = System.currentTimeMillis();
         moduleRegistry.forEach(AdorufuModule::onRender);
-        AdorufuMod.PERFORMANCE_ANAL.recordNewRenderTime((int)(System.currentTimeMillis()-l));
+        AdorufuMod.PERFORMANCE_ANAL.recordNewRenderTime((int) (System.currentTimeMillis() - l));
     }
 
 }

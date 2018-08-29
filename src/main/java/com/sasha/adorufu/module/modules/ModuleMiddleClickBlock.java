@@ -50,7 +50,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
         AdorufuMod.logMsg(false, b.getLocalizedName() + " removed.");
     }
     private static void refreshXray() {
-        if (ModuleManager.getModuleByName("X-Ray").isEnabled()) {
+        if (ModuleManager.getModule("X-Ray").isEnabled()) {
             AdorufuMod.minecraft.renderGlobal.loadRenderers();
         }
     }

@@ -26,7 +26,7 @@ public class RenderableCoordinates extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (ModuleManager.getModuleByName("Coordinates").isEnabled()) {
+        if (ModuleManager.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -40,7 +40,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (ModuleManager.getModuleByName("Coordinates").isEnabled()) {
+        if (ModuleManager.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -54,7 +54,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (ModuleManager.getModuleByName("Coordinates").isEnabled()) {
+        if (ModuleManager.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -72,7 +72,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (ModuleManager.getModuleByName("Coordinates").isEnabled()) {
+        if (ModuleManager.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
