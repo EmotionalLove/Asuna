@@ -3,11 +3,13 @@ package com.sasha.adorufu.module.modules;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -15,7 +17,9 @@ import static net.minecraft.init.Items.*;
 
 /**
  * Created by Sasha at 11:03 AM on 8/28/2018
+ * im like half asleep so liek i dont care if its a messs lol
  */
+@ModuleInfo(description = "automatically switches armour to better variants in your inventory")
 public class ModuleAutoArmor extends AdorufuModule {
     public ModuleAutoArmor() {
         super("AutoArmor", AdorufuCategory.COMBAT, false);
@@ -40,7 +44,28 @@ public class ModuleAutoArmor extends AdorufuModule {
         ItemStack feet = AdorufuMod.minecraft.player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
         if (AdorufuMod.minecraft.currentScreen == null) {
             if (isHelmet(helmet.getItem())) {
-
+                upgradeHelmetCheck(helmet, ArmorType.HELMET);
+            }
+            else {
+                upgradeHelmetCheck(null, ArmorType.HELMET);
+            }
+            if (isChestplate(chest.getItem())) {
+                upgradeHelmetCheck(chest, ArmorType.TOP);
+            }
+            else {
+                upgradeHelmetCheck(null, ArmorType.TOP);
+            }
+            if (isLegging(legs.getItem())) {
+                upgradeHelmetCheck(legs, ArmorType.BOTTOM);
+            }
+            else {
+                upgradeHelmetCheck(null, ArmorType.BOTTOM);
+            }
+            if (isBoot(feet.getItem())) {
+                upgradeHelmetCheck(feet, ArmorType.BOOTS);
+            }
+            else {
+                upgradeHelmetCheck(null, ArmorType.BOOTS);
             }
         }
     }
@@ -53,18 +78,54 @@ public class ModuleAutoArmor extends AdorufuModule {
         if (item == DIAMOND_HELMET) return true;
         return false;
     }
+    public boolean isChestplate(Item item) {
+        if (item == LEATHER_CHESTPLATE) return true;
+        if (item == CHAINMAIL_CHESTPLATE) return true;
+        if (item == IRON_CHESTPLATE) return true;
+        if (item == GOLDEN_CHESTPLATE) return true;
+        if (item == DIAMOND_CHESTPLATE) return true;
+        return false;
+    }
+    public boolean isLegging(Item item) {
+        if (item == LEATHER_LEGGINGS) return true;
+        if (item == CHAINMAIL_LEGGINGS) return true;
+        if (item == IRON_LEGGINGS) return true;
+        if (item == GOLDEN_LEGGINGS) return true;
+        if (item == DIAMOND_LEGGINGS) return true;
+        return false;
+    }
+    public boolean isBoot(Item item) {
+        if (item == LEATHER_BOOTS) return true;
+        if (item == CHAINMAIL_BOOTS) return true;
+        if (item == IRON_BOOTS) return true;
+        if (item == GOLDEN_BOOTS) return true;
+        if (item == DIAMOND_BOOTS) return true;
+        return false;
+    }
 
-    public void upgradeHelmetCheck(ItemStack currentHelmet) {
+    public void upgradeHelmetCheck(@Nullable ItemStack currentHelmet, ArmorType mode) {
+        ItemStack alternativeHelmet = null;
         LinkedHashMap<ItemStack, Integer> helms = new LinkedHashMap<>();
         for (int x = 9; x <= 44; x++) {
             ItemStack s = AdorufuMod.minecraft.player.inventory.getStackInSlot(x);
-            if (isHelmet(s.getItem())) helms.put(s, x); // put all helmets in the map for processing, with their respective slot id
+            if (isHelmet(s.getItem())) {
+                helms.put(s, x); // put all helmets in the map for processing, with their respective slot id
+                switch (mode) {
+                    case HELMET:
+                        if (alternativeHelmet == null) {
+                            alternativeHelmet = s;
+                        }
+                        break;
+                }
+
+            }
         }
         AtomicReference<ItemStack> betterHelmet = new AtomicReference<>();
         AtomicReference<Integer> betterSlot = new AtomicReference<>();
         betterHelmet.set(null);
+        final ItemStack finalAlternativeHelmet = alternativeHelmet;
         helms.forEach((helm, slot)-> {
-            if(isBetter(betterHelmet.get() == null ? currentHelmet : betterHelmet.get(), helm)) {
+            if(isBetter(betterHelmet.get() == null ? (currentHelmet == null ? finalAlternativeHelmet : currentHelmet) : betterHelmet.get(), helm, mode)) {
                 betterHelmet.set(helm);
                 betterSlot.set(slot);
             }
@@ -72,12 +133,12 @@ public class ModuleAutoArmor extends AdorufuModule {
         if (betterHelmet.get() == null) {
             return; // there aren't any helmets better than what the player currently has.
         }
-        AdorufuMod.minecraft.playerController.windowClick(0, 5, 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
+        AdorufuMod.minecraft.playerController.windowClick(0, getSlotId(mode), 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
         AdorufuMod.minecraft.playerController.windowClick(0, betterSlot.get(), 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
-        AdorufuMod.minecraft.playerController.windowClick(0, 5, 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
+        AdorufuMod.minecraft.playerController.windowClick(0, getSlotId(mode), 0, ClickType.PICKUP, AdorufuMod.minecraft.player);
     }
 
-    public boolean isBetter(ItemStack old, ItemStack neew) {
+    public boolean isBetter(ItemStack old, ItemStack neew, ArmorType mode) {
         MineralMaterial oldMineral = null;
         MineralMaterial newMineral = null;
         if (old.getItem().getUnlocalizedName().toLowerCase().contains("leather")) oldMineral = MineralMaterial.LEATHER;
@@ -95,6 +156,24 @@ public class ModuleAutoArmor extends AdorufuModule {
         if (neew.getItem().getUnlocalizedName().toLowerCase().contains("diamond")) newMineral = MineralMaterial.DIAMOND;
         if (newMineral == null) {
             return false; //invalid
+        }
+        switch (mode) {
+            case HELMET:
+                if (!isHelmet(old.getItem()) || !isHelmet(neew.getItem())) {
+                    return false;
+                }
+            case TOP:
+                if (!isChestplate(old.getItem()) || !isChestplate(neew.getItem())) {
+                    return false;
+                }
+            case BOTTOM:
+                if (!isLegging(old.getItem()) || !isLegging(neew.getItem())) {
+                    return false;
+                }
+            case BOOTS:
+                if (!isBoot(old.getItem()) || !isBoot(neew.getItem())) {
+                    return false;
+                }
         }
         if (oldMineral == MineralMaterial.LEATHER) {
             if (newMineral != MineralMaterial.LEATHER) {
@@ -139,7 +218,21 @@ public class ModuleAutoArmor extends AdorufuModule {
         }
         return neew.getItemDamage() > old.getItemDamage();
     }
+
+    private int getSlotId(ArmorType mode) {
+        switch (mode) {
+            case HELMET: return 5;
+            case TOP: return 6;
+            case BOTTOM: return 7;
+            case BOOTS: return 8;
+        }
+        return 5;
+    }
 }
 enum MineralMaterial {
     LEATHER, CHAIN, IRON, GOLD, DIAMOND
 }
+enum ArmorType {
+    HELMET, TOP, BOTTOM, BOOTS
+}
+// im a shitty person lol

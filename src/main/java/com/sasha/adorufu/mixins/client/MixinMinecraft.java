@@ -183,7 +183,7 @@ public abstract class MixinMinecraft {
     }
     @Inject(method = "getAmbientMusicType", at = @At("RETURN"), cancellable = true)
     public void getAmbientMusicType(CallbackInfoReturnable<MusicTicker.MusicType> info) {
-        if (ModuleManager.getModuleByName("creativemusic").isEnabled()) {
+        if (ModuleManager.getModule("creativemusic").isEnabled()) {
             info.setReturnValue(MusicTicker.MusicType.CREATIVE);
             info.cancel();
         }

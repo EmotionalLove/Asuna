@@ -25,7 +25,7 @@ public class RenderableHacklist extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
+        if (ModuleManager.getModule("Hacklist").isEnabled()) {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
@@ -41,13 +41,13 @@ public class RenderableHacklist extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
+        if (ModuleManager.getModule("Hacklist").isEnabled()) {
             // TODO
         }
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
+        if (ModuleManager.getModule("Hacklist").isEnabled()) {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
@@ -63,7 +63,7 @@ public class RenderableHacklist extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (ModuleManager.getModuleByName("Hacklist").isEnabled()) {
+        if (ModuleManager.getModule("Hacklist").isEnabled()) {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {

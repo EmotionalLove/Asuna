@@ -24,8 +24,8 @@ public class ModuleXray extends AdorufuModule {
 
     @Override
     public void onEnable() {
-        if (!ModuleManager.getModuleByName("NightVision").isEnabled()) {
-            ModuleManager.getModuleByName("NightVision").forceState(ModuleState.ENABLE, true, true);
+        if (!ModuleManager.getModule("NightVision").isEnabled()) {
+            ModuleManager.getModule("NightVision").forceState(ModuleState.ENABLE, true, true);
             wasNightVisionsOff = true;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();
@@ -34,7 +34,7 @@ public class ModuleXray extends AdorufuModule {
     @Override
     public void onDisable() {
         if (wasNightVisionsOff) {
-            ModuleManager.getModuleByName("NightVision").forceState(ModuleState.DISABLE, true, true);
+            ModuleManager.getModule("NightVision").forceState(ModuleState.DISABLE, true, true);
             wasNightVisionsOff = false;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();

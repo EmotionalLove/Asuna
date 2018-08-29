@@ -25,14 +25,14 @@ public abstract class MixinEntity {
 
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
-        if (ModuleManager.getModuleByName("Freecam").isEnabled()) {
+        if (ModuleManager.getModule("Freecam").isEnabled()) {
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(x, y, z));
             this.resetPositionToBB();
         }
     }
     @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
     public void isInsideOfMaterial(Material materialIn, CallbackInfoReturnable<Boolean> info) {
-        if (ModuleManager.getModuleByName("Freecam").isEnabled()) {
+        if (ModuleManager.getModule("Freecam").isEnabled()) {
             info.setReturnValue(false);
             info.cancel();
         }

@@ -27,7 +27,7 @@ public class RenderableHorseStats extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (ModuleManager.getModuleByName("HorseStats").isEnabled()) {
+        if (ModuleManager.getModule("HorseStats").isEnabled()) {
             String s = "\247" + "3Horse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
@@ -39,7 +39,7 @@ public class RenderableHorseStats extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (ModuleManager.getModuleByName("HorseStats").isEnabled()) {
+        if (ModuleManager.getModule("HorseStats").isEnabled()) {
             String s = "\247" + "3Horse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
@@ -51,7 +51,7 @@ public class RenderableHorseStats extends RenderableObject {
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (ModuleManager.getModuleByName("HorseStats").isEnabled()) {
+        if (ModuleManager.getModule("HorseStats").isEnabled()) {
             String s = "\247" + "3Horse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
@@ -63,7 +63,7 @@ public class RenderableHorseStats extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (ModuleManager.getModuleByName("HorseStats").isEnabled()) {
+        if (ModuleManager.getModule("HorseStats").isEnabled()) {
             String s = "\247" + "3Horse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
