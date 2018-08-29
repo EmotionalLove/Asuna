@@ -1,12 +1,11 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.events.ClientSlowDownPlayerEvent;
 import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
 import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.MovementInput;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,11 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Created by Sasha on 08/08/2018 at 7:53 AM
  **/
 @Mixin(value = EntityPlayerSP.class, priority = 999)
-public class MixinEntityPlayerSP {
+public abstract class MixinEntityPlayerSP extends MixinEntityLivingBase {
 
-    @Shadow public MovementInput movementInput;
-
-    @Shadow protected int sprintToggleTimer;
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo info) {
@@ -31,6 +27,16 @@ public class MixinEntityPlayerSP {
     @Inject(method = "onUpdate", at = @At("HEAD"), cancellable = true)
     public void onUpdate(CallbackInfo info) {
         ModuleManager.tickModules();
+    }
+
+    @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/client/entity/EntityPlayerSP;sprintToggleTimer:I"))
+    public void onLivingUpdate(CallbackInfo info) {
+        ClientSlowDownPlayerEvent event = new ClientSlowDownPlayerEvent();
+        AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()) {
+            this.moveForward *= 2;
+            this.moveStrafing *= 2;
+        }
     }
 
 }
