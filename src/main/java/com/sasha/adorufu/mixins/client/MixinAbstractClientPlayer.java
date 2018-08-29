@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = AbstractClientPlayer.class, priority = 999)
 public class MixinAbstractClientPlayer {
+
+
     @Inject(method = "isSpectator", at = @At("HEAD"), cancellable = true)
     public void isSpectator(CallbackInfoReturnable<Boolean> info) {
         if (ModuleManager.getModule("Freecam").isEnabled()) {

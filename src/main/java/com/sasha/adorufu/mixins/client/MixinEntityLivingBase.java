@@ -19,6 +19,10 @@ public abstract class MixinEntityLivingBase {
 
     @Shadow @Nullable public abstract PotionEffect getActivePotionEffect(Potion potionIn);
 
+    @Shadow public float moveForward;
+
+    @Shadow public float moveStrafing;
+
     /**
      * @author Sasha Stevens
      * @reason bc ZOZZLE ofc
