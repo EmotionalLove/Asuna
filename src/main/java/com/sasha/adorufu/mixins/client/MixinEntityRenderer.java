@@ -127,7 +127,8 @@ public class MixinEntityRenderer {
     }
 
     /**
-     * @author
+     * @author sasha stevens
+     * @reason highkey i couldn't get it to work with the normal injects prolly cuz im RETARDED
      */
     @Overwrite
     public void orientCamera(float partialTicks)
