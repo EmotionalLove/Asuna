@@ -81,7 +81,7 @@ public class AdorufuOptionButton {
 	}
 
 	private boolean isAnyWindowDragging() {
-		for (AdorufuWindow w : AdorufuClickGUI.windowList) {
+		for (AdorufuWindow w : AdorufuClickGUI.registeredWindows) {
 			if (w.dragging) {
 				return true;
 			}

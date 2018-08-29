@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 
-import static com.sasha.adorufu.gui.clickgui.AdorufuClickGUI.getWindowList;
+import static com.sasha.adorufu.gui.clickgui.AdorufuClickGUI.getRegisteredWindows;
 
 
 public class AdorufuButton {
@@ -33,6 +33,7 @@ public class AdorufuButton {
                 public NewOption() {
                     super(mod.getModuleName() + " Options", 2, 12, false, WindowType.OPTION);
                     mod.getModuleOptionsMap().forEach((str,bool) -> this.addOptionsButton(str));
+                    AdorufuClickGUI.registeredWindows.add(this);
                 }
             }
             new NewOption();
@@ -101,7 +102,7 @@ public class AdorufuButton {
 			AdorufuClickGUI.focusWindow(window);
 			mc.world.playSound(mc.player.posX, mc.player.posY, mc.player.posZ, SoundEvents.BLOCK_CHEST_OPEN ,SoundCategory.MASTER, 1f, 1f, false);
 			if (mod.hasOptions()) {
-				for (AdorufuWindow w : getWindowList()) {
+				for (AdorufuWindow w : getRegisteredWindows()) {
 					if (w.getTitle().toLowerCase().contains(mod.getModuleName().toLowerCase() +" options")) {
 						w.setShown(true);
 						w.drag((window.getX() + window.getDragX()) + 100, y);
@@ -113,7 +114,7 @@ public class AdorufuButton {
 	}
 
 	private boolean isAnyWindowDragging() {
-		for (AdorufuWindow w : AdorufuClickGUI.windowList) {
+		for (AdorufuWindow w : AdorufuClickGUI.registeredWindows) {
 			if (w.dragging) {
 				return true;
 			}

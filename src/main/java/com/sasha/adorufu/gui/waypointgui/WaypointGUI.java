@@ -93,7 +93,7 @@ public class WaypointGUI extends GuiScreen {
 	
 	//public static AsunaWindow getFocusedPanel()
 	//{
-	//	return windowList.get(windowList.size() - 1);
+	//	return registeredWindows.get(registeredWindows.size() - 1);
 	//}
 }
 
