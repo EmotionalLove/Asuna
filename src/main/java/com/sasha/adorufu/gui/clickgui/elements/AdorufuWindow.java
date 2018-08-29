@@ -9,7 +9,6 @@ import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -109,7 +108,7 @@ public class AdorufuWindow {
         }
     }
 
-    public void mouseClicked(int x, int y, int button) throws IOException {
+    public void mouseClicked(int x, int y, int button) {
         for (AdorufuButton b : buttonList) {
             b.mouseClicked(x, y, button);
         }
