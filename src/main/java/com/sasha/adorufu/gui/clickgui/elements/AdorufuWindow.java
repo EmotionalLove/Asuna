@@ -6,34 +6,16 @@ import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleManager;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
-
 /**
- * Some of the code in this class is based off of the code in Xdolf 3's GUI code, which was based off of Xdolf 2's code (which was licensed under MIT at the time)
- * <i>During Xdolf 3's phase, I was the only active developer on the project.</i>
- * <p>
- * Credit goes to the original Xdolf team for the pieces of code that was used in Adorufu's GUI system. Much of it
- * has been reworked, and, to be honest, it's due for a rewrite
- * >todo
- * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- * and associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- * <p>
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * <p>
- * THE SOFTWARE IS PROVIDED "AS IS",
- * WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
- * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+ * Some of the code in this class is based off of the code in Xdolf 3's GUI code, which was based off of Xdolf 1 & 2's code
+ * (which was licensed under MIT at the time, and later changed to GPL 3)
+ * The repo can be found HERE > https://github.com/LeafHacker/xdolf
+ * The repo can also be found at that URL on the wayback machine.
+ **/
 public class AdorufuWindow {
     private String title;
     private int x, y;
@@ -41,7 +23,6 @@ public class AdorufuWindow {
     public int dragY;
     private int lastDragX;
     private int lastDragY;
-    private boolean isOpen;
     private boolean isShown;
     private WindowType type;
     protected boolean dragging;
@@ -58,9 +39,9 @@ public class AdorufuWindow {
         this.title = title;
         this.x = x;
         this.y = y;
-        this.isOpen = true;
         this.isShown = isShown;
         this.type = type;
+        AdorufuClickGUI.registeredWindows.add(this);
         AdorufuClickGUI.unFocusedWindows.add(this);
     }
 
@@ -72,36 +53,25 @@ public class AdorufuWindow {
             if (dragging) {
                 drag(x, y);
             }
-            AdorufuMath.drawBetterBorderedRect(getXAndDrag(), getYAndDrag(), getXAndDrag() + 100, getYAndDrag() + 13 + (isOpen ? (12 * (buttonList.size() + optionButtonList.size()) + 0.5F) + (0 + (0 != 0 ? 2.5F : 0)) : 0) + toAdd, 0.5F, 0f, 0.5f, 1f, 1f, 0f, 0f, 0.5f, 0.3f);
+            AdorufuMath.drawBetterBorderedRect(getXAndDrag(), getYAndDrag(), getXAndDrag() + 100, getYAndDrag() + 13 + ((12 * (buttonList.size() + optionButtonList.size()) + 0.5F) + (0 + (0 != 0 ? 2.5F : 0))) + toAdd, 0.5F, 0f, 0.5f, 1f, 1f, 0f, 0f, 0.5f, 0.3f);
             Fonts.segoe_30.drawCenteredString(title, getXAndDrag() + 50, getYAndDrag() + 1, 0xFFFFFF, true);
-            if (Minecraft.getMinecraft().currentScreen instanceof AdorufuClickGUI) {
-                //ClientUtils.drawBetterBorderedRect(getXAndDrag() + 79, getYAndDrag() + 2, getXAndDrag() + 88, getYAndDrag() + 11, 0.5F, 0xFF000000, isPinned ? 0xFFFF0000 : 0xFF383b42);
-                //ClientUtils.drawBetterBorderedRect(getXAndDrag() + 89, getYAndDrag() + 2, getXAndDrag() + 98, getYAndDrag() + 11, 0.5F, 0xFF000000, isOpen ? 0x2480dbFF : 0xFF383b42);
-                if (isOpen) {
-                } else {
-                    //ClientUtils.drawTex(arrowup, 32, 32, 8, 8, 1f);
-                }
-            }
 
-            if (isOpen) {
-                for (AdorufuButton b : buttonList) {
-                    b.draw();
-                    if (x >= b.getX() + dragX && y >= b.getY() + dragY && x <= b.getX() + 96 + dragX && y <= b.getY() + 11 + dragY) {
-                        b.overButton = true;
-                    } else {
-                        b.overButton = false;
-                    }
-                }
-                for (AdorufuOptionButton b : optionButtonList) {
-                    b.draw();
-                    if (x >= b.getX() + dragX && y >= b.getY() + dragY && x <= b.getX() + 96 + dragX && y <= b.getY() + 11 + dragY) {
-                        b.overButton = true;
-                    } else {
-                        b.overButton = false;
-                    }
+            for (AdorufuButton b : buttonList) {
+                b.draw();
+                if (x >= b.getX() + dragX && y >= b.getY() + dragY && x <= b.getX() + 96 + dragX && y <= b.getY() + 11 + dragY) {
+                    b.overButton = true;
+                } else {
+                    b.overButton = false;
                 }
             }
-            //GL11.glEnable(GL11.GL_BLEND);
+            for (AdorufuOptionButton b : optionButtonList) {
+                b.draw();
+                if (x >= b.getX() + dragX && y >= b.getY() + dragY && x <= b.getX() + 96 + dragX && y <= b.getY() + 11 + dragY) {
+                    b.overButton = true;
+                } else {
+                    b.overButton = false;
+                }
+            }
             GL11.glPopMatrix();
             GL11.glPopAttrib();
         }
@@ -190,20 +160,12 @@ public class AdorufuWindow {
         this.y = y;
     }
 
-    public boolean isOpen() {
-        return isOpen;
-    }
-
     public boolean isShown() {
         return isShown;
     }
 
     public void setShown(boolean shownornot) {
         this.isShown = shownornot;
-    }
-
-    public void setOpen(boolean b) {
-        this.isOpen = true;
     }
 
     public ArrayList<AdorufuButton> getButtonList() {

@@ -97,7 +97,6 @@ public class AdorufuMod implements SimpleListener {
                 this.registerCommands();
                 this.registerModules();
                 this.registerRenderables();
-                this.registerWindows();
             } catch (Exception e) {
                 throw new AdorufuException("Couldn't register! " + e.getMessage());
             }
@@ -181,6 +180,7 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
     }
 
+    @Deprecated // needs to be reworked - later
     private void registerWindows() throws Exception {
         registeredWindows.clear();
         registeredWindows.add(new WindowChat());
@@ -224,7 +224,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleClientIgnore());
         ModuleManager.register(new ModuleAutoIgnore());
         ModuleManager.register(new ModuleAutoSprint());
-        /*ModuleManager.register(new ModuleCameraClip());*/ //todo
+        ModuleManager.register(new ModuleCameraClip());
         ModuleManager.register(new ModuleElytraBoost());
         ModuleManager.register(new ModuleElytraFlight());
         ModuleManager.register(new ModuleEntitySpeed());
@@ -246,15 +246,6 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleCreativeMusic());
         ModuleManager.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
         ModuleManager.register(new ModuleAutoArmor());
-        ModuleManager.register(new ModuleInventoryMove());
-        /*
-        ModuleManager.moduleRegistry.clear();
-        Reflections reflections = new Reflections(ModuleXray.class.getPackage().getName());
-        Set<Class<? extends AdorufuModule>> moduleClasses = reflections.getSubTypesOf(AdorufuModule.class);
-        for (Class<?> moduleClass : moduleClasses) {
-            AdorufuMod.logMsg(true, "Registered " +moduleClass.getName());
-            ModuleManager.register((AdorufuModule)moduleClass.getConstructor().newInstance());
-        }*///todo fix
     }
 
 
