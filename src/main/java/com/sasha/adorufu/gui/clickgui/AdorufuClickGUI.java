@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit;
  * (which was licensed under MIT at the time, and later changed to GPL 3)
  * The repo can be found HERE > https://github.com/LeafHacker/xdolf
  * The repo can also be found at that URL on the wayback machine.
- *
+ * <p>
  * List of changes to this code to comply with the gpl 3 (this entire project is already licensed under GPL 3)
- *
+ * <p>
  * - Save the positions of the gui to a file upon closing the GUI.
  * - Added compatability with the "OPTION" windows.
  * - Optimised focusWindow().
@@ -73,15 +73,13 @@ public class AdorufuClickGUI extends GuiScreen {
         }
     }
 
-    public void mouseClicked(int x, int y, int b) throws IOException {
-        try {
-            for (AdorufuWindow w : windowList) {
-                w.mouseClicked(x, y, b);
-            }
-            super.mouseClicked(x, y, b);
-        } catch (Exception e) {
-            //
+    public void mouseClicked(int x, int y, int b) {
+        for (AdorufuWindow w : windowList) {
+            w.mouseClicked(x, y, b);
         }
+        try {
+            super.mouseClicked(x, y, b);
+        } catch (IOException ex) {/* ignore this */}
     }
 
     public void mouseReleased(int x, int y, int state) {
