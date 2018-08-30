@@ -1,5 +1,6 @@
 package com.sasha.adorufu.module.modules;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
@@ -33,7 +34,7 @@ public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
 
     @SimpleEventHandler
     public void onSlowDown(ClientInputUpdateEvent e) {
-        if (this.isEnabled()) {
+        if (this.isEnabled() && AdorufuMod.minecraft.player.isHandActive()) {
             e.getMovementInput().moveForward /= 0.05f;
             e.getMovementInput().moveStrafe /= 0.05f;
         }
