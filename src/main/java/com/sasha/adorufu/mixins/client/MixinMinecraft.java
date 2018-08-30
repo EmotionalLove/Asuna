@@ -16,6 +16,7 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.math.RayTraceResult;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -189,5 +190,9 @@ public abstract class MixinMinecraft {
             info.setReturnValue(MusicTicker.MusicType.CREATIVE);
             info.cancel();
         }
+    }
+    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;create(Lorg/lwjgl/opengl/PixelFormat;)V"))
+    public void createDisplay(CallbackInfo info) {
+        Display.setTitle("Minecraft 1.12.2 with " + AdorufuMod.NAME + " " + AdorufuMod.VERSION);
     }
 }
