@@ -46,10 +46,11 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
             SPacketPlayerListItem pck = (SPacketPlayerListItem) e.getRecievedPacket();
             switch (pck.getAction()) {
                 case ADD_PLAYER:
-                    pck.getEntries().forEach(entry -> playerJoin(entry.getDisplayName().getUnformattedText()));
+                    pck.getEntries().forEach(entry -> playerJoin(entry.getProfile().getName()));
                     break;
                 case REMOVE_PLAYER:
-
+                    pck.getEntries().forEach(entry -> playerLeave(entry.getProfile().getName()));
+                    break;
             }
         }
     }
