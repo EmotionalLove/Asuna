@@ -2,11 +2,11 @@
   {
     "modid": "adorufuforge",
     "name": "Adorufu",
-    "description": "Adorufu is a minecraft mod that assists the player in survival anarchy environments. \"Adorufu\" is Japanese for \"Adolf\". Adorufu is a continuation of the legacy Xdolf 3.0 series, which was an MCP client.",
+    "description": "Adorufu is a minecraft mod that assists the player in survival anarchy environments. \"Adorufu\" is Japanese for \"Adolf\". Adorufu features many modules like Wireframe, AutoIgnore, Xray, Killaura, and more to help the player in Anarchy enviroments.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/EmotionalLove/Adorufu",
-    "updateUrl": "https://github.com/EmotionalLove/Adorufu/releases",
+    "url": "https://git.2b2tmuseum.com/EmotionalLove/Adorufu",
+    "updateUrl": "https://git.2b2tmuseum.com/EmotionalLove/Adorufu/tags",
     "authorList": [
       "Sasha"
     ],
