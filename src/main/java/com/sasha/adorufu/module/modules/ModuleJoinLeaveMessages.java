@@ -49,7 +49,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
                     pck.getEntries().forEach(entry -> playerJoin(entry.getProfile().getName()));
                     break;
                 case REMOVE_PLAYER:
-                    pck.getEntries().forEach(entry -> playerLeave(entry.getProfile().getName()));
+                    pck.getEntries().forEach(entry -> playerLeave(entry.getProfile().getName())); //todo fix npe
                     break;
             }
         }
