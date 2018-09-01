@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AdorufuClickGUI extends GuiScreen {
 
+
     public static ArrayList<AdorufuWindow> registeredWindows = new ArrayList<>();
     public static ArrayList<AdorufuWindow> unFocusedWindows = new ArrayList<>();
 
