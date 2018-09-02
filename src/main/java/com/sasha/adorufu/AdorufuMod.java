@@ -6,6 +6,7 @@ import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.exception.AdorufuException;
+import com.sasha.adorufu.exception.AdorufuInvalidYMLException;
 import com.sasha.adorufu.friend.FriendManager;
 import com.sasha.adorufu.gui.clickgui.windows.*;
 import com.sasha.adorufu.gui.fonts.Fonts;
@@ -124,6 +125,9 @@ public class AdorufuMod implements SimpleListener {
                 ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                // a yml exception (probs)
+                throw new AdorufuInvalidYMLException("AdorufuData.yml failed to parse! Check that there are no formatting errors!");
             }
 
             PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();

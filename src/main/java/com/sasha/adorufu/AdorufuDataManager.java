@@ -283,7 +283,7 @@ public class AdorufuDataManager {
                 ArrayList<String> defaultJoin = new ArrayList<>();
                 ArrayList<String> defaultLeave = new ArrayList<>();
                 defaultJoin.add("Hi, [player]");
-                defaultJoin.add("Bye, [player]");
+                defaultLeave.add("Bye, [player]");
                 ModuleJoinLeaveMessages.defaultloaded = true;
                 ArrayList<List<String>> defaults = new ArrayList<>();
                 defaults.add(defaultJoin);
@@ -293,6 +293,19 @@ public class AdorufuDataManager {
                 threadLock.lock();
             }
             YMLParser parser = new YMLParser(f);
+            if (!parser.exists("Adorufu.greeter.join") && !parser.exists("Adorufu.greeter.leave")) {
+                ArrayList<String> defaultJoin = new ArrayList<>();
+                ArrayList<String> defaultLeave = new ArrayList<>();
+                defaultJoin.add("Hi, [player]");
+                defaultLeave.add("Bye, [player]");
+                ModuleJoinLeaveMessages.defaultloaded = true;
+                ArrayList<List<String>> defaults = new ArrayList<>();
+                defaults.add(defaultJoin);
+                defaults.add(defaultLeave);
+                threadLock.unlock();
+                saveGreeterMsgs(defaults);
+                threadLock.lock();
+            }
             List<String> joins =  parser.getStringList("Adorufu.greeter.join");
             List<String> leaves =  parser.getStringList("Adorufu.greeter.leave");
             ArrayList<List<String>> theReturn = new ArrayList<>();

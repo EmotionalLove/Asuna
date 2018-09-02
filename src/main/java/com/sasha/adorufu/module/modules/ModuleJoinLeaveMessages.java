@@ -61,7 +61,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
             for (SPacketPlayerListItem.AddPlayerData item : pck.getEntries()) {
                 switch (pck.getAction()) {
                     case REMOVE_PLAYER:
-                        if (nameMap.containsKey(item.getProfile().getId())) {
+                        if (!nameMap.containsKey(item.getProfile().getId())) {
                             return;
                         }
                         playerLeave(nameMap.get(item.getProfile().getId()));
@@ -79,33 +79,34 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
     }
 
     private void playerLeave(String name) {
+        if (AdorufuMod.minecraft.currentScreen != null) return;
         AdorufuMod.logMsg("\2477" + name + " left.");
         if (this.getOption("Greeter")) {
             if (defaultloaded) {
                 AdorufuMod.logErr(false, "You haven't defined any greeter messages in the AdorufuData.yml file," +
                         " located in your .minecraft folder. You should go there and add some!");
-                AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name.");
+                AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name. You can also use \"[server]\" as a placeholder for the current server's IP address");
             }
             Random rand = new Random();
-            String greet = leaveMessages.get(rand.nextInt(leaveMessages.size() - 1));
-            greet = greet.replace("[player]", name);
+            String greet = leaveMessages.get(Math.abs(rand.nextInt(leaveMessages.size() - 1)));
+            greet = greet.replace("[player]", name).replace("[server]", AdorufuMod.minecraft.getCurrentServerData().serverIP);
             AdorufuMod.minecraft.player.sendChatMessage("> " + greet);
         }
     }
     private void playerJoin(String name) {
+        if (AdorufuMod.minecraft.currentScreen != null) return;
         AdorufuMod.logMsg("\2477" + name + " joined.");
         if (this.getOption("Greeter")) {
             if (defaultloaded) {
                 AdorufuMod.logErr(false, "You haven't defined any greeter messages in the AdorufuData.yml file," +
                         " located in your .minecraft folder. You should go there and add some!");
-                AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name.");
+                AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name. You can also use \"[server]\" as a placeholder for the current server's IP address");
                 return;
             }
             Random rand = new Random();
-            String greet = joinMessages.get(rand.nextInt(joinMessages.size() - 1));
-            greet = greet.replace("[player]", name);
+            String greet = joinMessages.get(Math.abs(rand.nextInt(joinMessages.size() - 1)));
+            greet = greet.replace("[player]", name).replace("[server]", AdorufuMod.minecraft.getCurrentServerData().serverIP);
             AdorufuMod.minecraft.player.sendChatMessage("> " + greet);
         }
     }
-
 }

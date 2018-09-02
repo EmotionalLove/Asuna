@@ -45,6 +45,7 @@ public class AdorufuClickGUI extends GuiScreen {
         });
     }
 
+    @Override
     public void onGuiClosed() {
         registeredWindows.forEach(w -> {
             AdorufuMod.scheduler.schedule(() -> {
@@ -61,6 +62,7 @@ public class AdorufuClickGUI extends GuiScreen {
         });
     }
 
+    @Override
     public void mouseClicked(int x, int y, int b) {
         try {
             registeredWindows.forEach(w -> w.mouseClicked(x, y, b));
@@ -68,6 +70,7 @@ public class AdorufuClickGUI extends GuiScreen {
         } catch (Exception ex) {/* ignore this */}
     }
 
+    @Override
     public void mouseReleased(int x, int y, int state) {
         try {
             registeredWindows.forEach(w -> w.mouseReleased(x, y, state));
