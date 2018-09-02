@@ -11,7 +11,6 @@ import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.waypoint.Waypoint;
 import net.minecraft.block.Block;
 
-import javax.annotation.Nullable;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -235,6 +234,25 @@ public class AdorufuDataManager {
             logWarn(true, "Thread locking disengaged!");
         }
     }
+    public synchronized void saveGreeterMsgs(ArrayList<List<String>> greets) throws IOException {
+        logMsg(true, "Saving greeter messages...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            parser.set("Adorufu.greeter.join", greets.get(0));
+            parser.set("Adorufu.greeter.leave", greets.get(1));
+            parser.save();
+        } finally {
+            threadLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
     public synchronized List<String> loadIgnorelist() throws IOException {
         logMsg(true, "Getting ignorelist...");
         threadLock.lock();
@@ -247,6 +265,28 @@ public class AdorufuDataManager {
             }
             YMLParser parser = new YMLParser(f);
             return parser.getStringList("Adorufu.ignorelist");
+        } finally {
+            threadLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized ArrayList<List<String>> loadGreets() throws IOException {
+        logMsg(true, "Getting greets...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            List<String> joins =  parser.getStringList("Adorufu.greeter.join");
+            List<String> leaves =  parser.getStringList("Adorufu.greeter.leave");
+            ArrayList<List<String>> theReturn = new ArrayList<>();
+            theReturn.add(joins);
+            theReturn.add(leaves);
+            return theReturn;
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");

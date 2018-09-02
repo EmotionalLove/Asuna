@@ -37,6 +37,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -116,10 +118,14 @@ public class AdorufuMod implements SimpleListener {
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         scheduler.schedule(() -> {
             try {
+                ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
+                ModuleJoinLeaveMessages.joinMessages = greets.get(0);
+                ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
                 ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
             WAYPOINT_MANAGER = new WaypointManager();
             try {
