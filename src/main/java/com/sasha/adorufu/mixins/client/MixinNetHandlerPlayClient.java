@@ -41,5 +41,22 @@ public class MixinNetHandlerPlayClient {
         ClientEnderPearlSpawnEvent event = new ClientEnderPearlSpawnEvent((int) packetIn.getX(), (int) packetIn.getY(), (int) packetIn.getZ());
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
     }
-
+    /* These methods collide with optifine's injections and break stuff! ;-;
+    @Inject(method = "handlePlayerListItem", at = @At(value = "INVOKE", target = "Ljava/util/Map;remove(Ljava/lang/Object;)Ljava/lang/Object;"),
+            locals = LocalCapture.CAPTURE_FAILHARD)
+    public void handlePlayerListItem(SPacketPlayerListItem packetIn, CallbackInfo info, SPacketPlayerListItem.AddPlayerData spacketplayerlistitem$addplayerdata) {
+        try {
+            ServerPlayerLeaveEvent event = new ServerPlayerLeaveEvent(spacketplayerlistitem$addplayerdata.getProfile());
+            AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        }catch (Exception e) {e.printStackTrace();}
+    }
+    @Inject(method = "handlePlayerListItem", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
+            locals = LocalCapture.CAPTURE_FAILHARD)
+    public void handlePlayerListItem$0(SPacketPlayerListItem packetIn, CallbackInfo info, SPacketPlayerListItem.AddPlayerData spacketplayerlistitem$addplayerdata, NetworkPlayerInfo networkPlayerInfo) {
+        try {
+            ServerPlayerJoinEvent event = new ServerPlayerJoinEvent(networkPlayerInfo.getGameProfile());
+            AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        }catch (Exception e){e.printStackTrace();}
+    }
+*/
 }
