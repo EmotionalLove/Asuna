@@ -1,8 +1,8 @@
 package com.sasha.adorufu.gui.clickgui.elements;
 
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.AdorufuClickGUI;
-import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.client.Minecraft;
@@ -87,7 +87,7 @@ public class AdorufuButton {
 			var4 = 0f;
 		}
 		AdorufuMath.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 96 + window.getDragX(), y + 11  + window.getDragY(), 0.5F, var1, var2,var3, var4,1f,1f,1f, varia);
-		Fonts.segoe_30.drawStringWithShadow(displayName, (x + 4 + window.getDragX()), (int)y + window.getDragY(), 0xFFFFFF);
+		AdorufuMod.FONT_MANAGER.segoe_30.drawStringWithShadow(displayName, (x + 4 + window.getDragX()), (int)y + window.getDragY(), 0xFFFFFF);
 		 if (mod.hasOptions()) {
 			 this.setDisplayName(mod.getModuleName() + " " + "\247" + "8[...]");
 		 }

@@ -2,6 +2,7 @@ package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
+import com.sasha.adorufu.events.ServerPlayerInventoryCloseEvent;
 import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Created by Sasha on 08/08/2018 at 7:53 AM
  **/
 @Mixin(value = EntityPlayerSP.class, priority = 999)
-public abstract class MixinEntityPlayerSP extends MixinEntityLivingBase {
+public abstract class MixinEntityPlayerSP extends MixinEntityPlayer {
 
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
@@ -23,20 +24,19 @@ public abstract class MixinEntityPlayerSP extends MixinEntityLivingBase {
             info.cancel();
         }
     }
+
     @Inject(method = "onUpdate", at = @At("HEAD"), cancellable = true)
     public void onUpdate(CallbackInfo info) {
         ModuleManager.tickModules();
     }
 
-    //this doesnt work ;-;
-    /*@Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/client/entity/EntityPlayerSP;sprintToggleTimer:I"))
-    public void onLivingUpdate(CallbackInfo info) {
-        ClientInputUpdateEvent event = new ClientInputUpdateEvent();
+    @Inject(method = "closeScreen", at = @At("HEAD"), cancellable = true)
+    public void closeScreen(CallbackInfo info) {
+        ServerPlayerInventoryCloseEvent event = new ServerPlayerInventoryCloseEvent(this.openContainer);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) {
-            this.moveForward *= 5F;
-            this.moveStrafing *= 5F;
+            info.cancel();
         }
-    }*/
+    }
 
 }

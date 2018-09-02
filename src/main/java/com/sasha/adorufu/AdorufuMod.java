@@ -6,10 +6,9 @@ import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.exception.AdorufuException;
-import com.sasha.adorufu.exception.AdorufuInvalidYMLException;
 import com.sasha.adorufu.friend.FriendManager;
 import com.sasha.adorufu.gui.clickgui.windows.*;
-import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.gui.fonts.FontManager;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.renderableobjects.*;
 import com.sasha.adorufu.misc.ModuleState;
@@ -31,6 +30,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
@@ -60,11 +60,12 @@ public class AdorufuMod implements SimpleListener {
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
     public static FriendManager FRIEND_MANAGER;
+    public static FontManager FONT_MANAGER;
     public static WaypointManager WAYPOINT_MANAGER;
     public static RemoteDataManager REMOTE_DATA_MANAGER = new RemoteDataManager();
-    public static SimpleCommandProcessor COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
+    public static SimpleCommandProcessor COMMAND_PROCESSOR;
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL; // no, stop, this ISN'T lewd... I SWEAR!!!
-    public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(8);
+    public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
 
@@ -92,60 +93,48 @@ public class AdorufuMod implements SimpleListener {
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
         logMsg(true, "Loading TTF fonts...");
-        Fonts.loadFonts();
         logMsg(true, "Done!");
         logMsg(true, "Registering commands, renderables and modules...");
         scheduler.schedule(() -> {
             try {
+                COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
                 this.registerCommands();
                 this.registerModules();
                 this.registerRenderables();
-            } catch (Exception e) {
-                throw new AdorufuException("Couldn't register! " + e.getMessage());
-            }
-        }, 0, TimeUnit.NANOSECONDS);
-        EVENT_MANAGER.registerListener(new CommandHandler());
-        EVENT_MANAGER.registerListener(new ModuleManager());
-        logMsg(true, "Done!");
-        logMsg(true, "Initialising HUD");
-        AdorufuHUD.setupHUD();
-        EVENT_MANAGER.registerListener(new AdorufuHUD());
-        logMsg(true, "Done!");
-        logMsg(true, "Loading Xray");
-        scheduler.schedule(() -> ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks(), 250, TimeUnit.MICROSECONDS);
-        TPS.INSTANCE = new TPS();
-        EVENT_MANAGER.registerListener(TPS.INSTANCE);
-        AdorufuMod.scheduler.schedule(ModuleManager::loadBindsAndStates, 500, TimeUnit.MILLISECONDS);
-        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
-        scheduler.schedule(() -> {
-            try {
+                EVENT_MANAGER.registerListener(new CommandHandler());
+                EVENT_MANAGER.registerListener(new ModuleManager());
+                AdorufuHUD.setupHUD();
+                EVENT_MANAGER.registerListener(new AdorufuHUD());
+                ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
+                TPS.INSTANCE = new TPS();
+                EVENT_MANAGER.registerListener(TPS.INSTANCE);
+                ModuleManager.loadBindsAndStates();
                 ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
                 ModuleJoinLeaveMessages.joinMessages = greets.get(0);
                 ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
                 ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                // a yml exception (probs)
-                throw new AdorufuInvalidYMLException("AdorufuData.yml failed to parse! Check that there are no formatting errors!");
-            }
-
-            PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
-            WAYPOINT_MANAGER = new WaypointManager();
-            try {
+                PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
+                WAYPOINT_MANAGER = new WaypointManager();
                 DATA_MANAGER.loadPlayerIdentities();
                 DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
                     if (id.shouldUpdate()) {
                         id.updateDisplayName();
                     }
                 });
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                throw new AdorufuException("Failure while initialising! " + e.getMessage());
             }
         }, 0, TimeUnit.NANOSECONDS);
+        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
         EVENT_MANAGER.registerListener(this);
         logMsg(true, "Adorufu cleanly initialised!");
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+        FONT_MANAGER = new FontManager();
+        FONT_MANAGER.loadFonts(); // I would load this on a seperate thread if I could, because it takes forEVER to exectute.
     }
 
     public void reload(boolean async) {
@@ -162,7 +151,7 @@ public class AdorufuMod implements SimpleListener {
                 }
                 AdorufuHUD.resetHUD();
                 AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
-            }catch (Exception e) {
+            } catch (Exception e) {
                 throw new AdorufuException("Severe error occurred whilst reloading client " + e.getMessage());
             }
         });
@@ -257,6 +246,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
         ModuleManager.register(new ModuleAutoArmor());
         ModuleManager.register(new ModuleJoinLeaveMessages());
+        ModuleManager.register(new ModuleCraftInventory());
     }
 
 
@@ -293,6 +283,7 @@ public class AdorufuMod implements SimpleListener {
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu \247eWARNING\2478] \247e" + logMsg));
     }
+
     @SimpleEventHandler
     public void onDataFileRetrieved(AdorufuDataFileRetrievedEvent e) {
         this.reload(true);
@@ -308,6 +299,7 @@ class ForgeEvent {
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         }
     }
+
     @SubscribeEvent
     public void onMoveUpdate(InputUpdateEvent e) {
         ClientInputUpdateEvent ciup = new ClientInputUpdateEvent(e.getMovementInput());

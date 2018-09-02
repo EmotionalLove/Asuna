@@ -7,7 +7,7 @@ import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.events.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.gui.fonts.FontManager;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.client.gui.GuiChat;
@@ -124,7 +124,7 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
 
 
         if (!AdorufuModule.displayList.isEmpty()) {
-            AdorufuModule.displayList.sort((m, m1) -> Fonts.segoe_36.getStringWidth(m1.getModuleName() + m1.getSuffix()) - Fonts.segoe_36.getStringWidth(m.getModuleName() + m.getSuffix()));
+            AdorufuModule.displayList.sort((m, m1) -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(m1.getModuleName() + m1.getSuffix()) - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(m.getModuleName() + m.getSuffix()));
         }
     }
 

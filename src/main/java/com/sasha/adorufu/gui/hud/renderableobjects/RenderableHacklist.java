@@ -4,7 +4,7 @@ package com.sasha.adorufu.gui.hud.renderableobjects;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
-import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.gui.fonts.FontManager;
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuModule;
 
@@ -29,11 +29,11 @@ public class RenderableHacklist extends RenderableObject {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), 4, (yyy) + (10 * count), 0xffffff);
+                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), 4, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
                 else if (module.isEnabled()) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
+                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
             }
@@ -51,11 +51,11 @@ public class RenderableHacklist extends RenderableObject {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) + (10 * count), 0xffffff);
+                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
                 else if (module.isEnabled()) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (yyy) + (10 * count), 0xffffff);
+                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
             }
@@ -67,11 +67,11 @@ public class RenderableHacklist extends RenderableObject {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) - (10 * count), 0xffffff);
+                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
                 else if (module.isEnabled()) {
-                    Fonts.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - Fonts.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (yyy) - (10 * count), 0xffffff);
+                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getModuleName() + module.getSuffix()) - 2, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
             }

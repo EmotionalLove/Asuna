@@ -2,10 +2,9 @@ package com.sasha.adorufu.gui.waypointgui;
 
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.gui.fonts.FontManager;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.waypoint.Waypoint;
-import com.sasha.adorufu.waypoint.WaypointManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -64,7 +63,7 @@ public class WaypointSearch {
 		//currentText=initText;
 		AdorufuMath.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 196 + window.getDragX(), y + 12 + window.getDragY(), 0.5F, var1, var2, var3, var4, 1f, 1f, 1f, varia);
 		//ClientUtils.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 96 + window.getDragX(), y + 11  + window.getDragY(), 0.5F, 0xF0F0F0FF, 0x00000000);
-		Fonts.segoe_30.drawStringWithShadow(currentText, (x + 4 + window.getDragX()), (int) y + window.getDragY(), 0xFFFFFF);
+		AdorufuMod.FONT_MANAGER.segoe_30.drawStringWithShadow(currentText, (x + 4 + window.getDragX()), (int) y + window.getDragY(), 0xFFFFFF);
 		//Fonts.segoe_30.drawStringWithShadow(Command.SECTION_SIGN + "7XYZ " + Command.SECTION_SIGN + "r" + mod.getCoords()[0] + " " + mod.getCoords()[1] + " " + mod.getCoords()[2], (x + 4 + window.getDragX()), (y + window.getDragY())+10, 0xFFFFFF);
 		text = currentText;
 	}

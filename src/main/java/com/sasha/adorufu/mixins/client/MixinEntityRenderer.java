@@ -2,12 +2,14 @@ package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.ModuleCameraClip;
+import com.sasha.adorufu.module.modules.ModuleNightVision;
 import com.sasha.adorufu.module.modules.ModuleTracers;
 import com.sasha.adorufu.module.modules.ModuleWaypoints;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Created by Sasha on 09/08/2018 at 7:37 PM
  **/
 @Mixin(value = EntityRenderer.class, priority = 999)
-public class MixinEntityRenderer {
+public abstract class MixinEntityRenderer {
 
 
     @Shadow @Final public Minecraft mc;
@@ -37,6 +39,14 @@ public class MixinEntityRenderer {
     @Shadow public float thirdPersonDistancePrev;
 
     @Shadow public boolean cloudFog;
+
+    @Shadow @Final public int[] lightmapColors;
+
+    @Shadow public abstract void updateLightmap(float partialTicks);
+
+    @Shadow @Final public DynamicTexture lightmapTexture;
+
+    @Shadow public boolean lightmapUpdateNeeded;
 
     /**
      * @author Sasha Stevens
@@ -237,5 +247,15 @@ public class MixinEntityRenderer {
         d1 = entity.prevPosY + (entity.posY - entity.prevPosY) * (double)partialTicks + (double)f;
         d2 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double)partialTicks;
         this.cloudFog = this.mc.renderGlobal.hasCloudFog(d0, d1, d2, partialTicks);
+    }
+
+    @Inject(method = "updateLightmap", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/EntityRenderer;lightmapColors:[I"), cancellable = true)
+    public void updateLightmap(float partialTicks, CallbackInfo info) {
+        if (!ModuleManager.getModule(ModuleNightVision.class).isEnabled()) return;
+        for (int i = 0; i < 256; ++i) this.lightmapColors[i] = -16777216 | -20 << 16 | -20 << 8 | -20;
+        this.lightmapTexture.updateDynamicTexture();
+        this.lightmapUpdateNeeded = false;
+        this.mc.mcProfiler.endSection();
+        info.cancel();
     }
 }

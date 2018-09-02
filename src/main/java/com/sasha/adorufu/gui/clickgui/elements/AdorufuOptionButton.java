@@ -1,10 +1,10 @@
 package com.sasha.adorufu.gui.clickgui.elements;
 
+import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.AdorufuClickGUI;
-import com.sasha.adorufu.gui.fonts.Fonts;
 import com.sasha.adorufu.misc.AdorufuMath;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -59,9 +59,7 @@ public class AdorufuOptionButton {
 			var4 = 0.7f;
 		}
 		AdorufuMath.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 96 + window.getDragX(), y + 11  + window.getDragY(), 0.5F, var1, var2,var3, var4,0f,0f,0f, 0f);
-		//ClientUtils.drawBetterBorderedRect(x + window.getDragX(), y + window.getDragY(), x + 96 + window.getDragX(), y + 11  + window.getDragY(), 0.5F, 0xF0F0F0FF, 0x00000000);
-		
-		Fonts.segoe_30.drawStringWithShadow(text, (int)(x + 4 + window.getDragX()), (int)y + window.getDragY(), 0xFFFFFF);
+		AdorufuMod.FONT_MANAGER.segoe_30.drawStringWithShadow(text, (int)(x + 4 + window.getDragX()), (int)y + window.getDragY(), 0xFFFFFF);
 	}
 	
 	public void mouseClicked(int x, int y, int button) { //TODO: make sure only one button gets toggled even if the windows are overlapping
@@ -88,6 +86,7 @@ public class AdorufuOptionButton {
 		return false;
 	}
 
+	@Deprecated
 	private void toggleBoolean(boolean booleanToToggle) {
 		booleanToToggle = !booleanToToggle;
 	}

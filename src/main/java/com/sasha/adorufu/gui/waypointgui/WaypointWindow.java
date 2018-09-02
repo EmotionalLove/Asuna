@@ -1,11 +1,10 @@
 package com.sasha.adorufu.gui.waypointgui;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.elements.WindowType;
-import com.sasha.adorufu.gui.fonts.Fonts;
+import com.sasha.adorufu.gui.fonts.FontManager;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.waypoint.Waypoint;
-import com.sasha.adorufu.waypoint.WaypointManager;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -55,7 +54,7 @@ public class WaypointWindow {
 				drag(x, y);
 			}
 			AdorufuMath.drawBetterBorderedRect(getXAndDrag(), getYAndDrag(), getXAndDrag() + 200, getYAndDrag() + 13 + (isEmpty ? 175 : (isOpen ? 12 + (24 * (buttonList.size()/* + optionButtonList.size()*/) + 0.5F) + (0 + (0 != 0 ? 2.5F : 0)) : 0) + toAdd), 0.5F, 0f, 0.5f, 1f, 1f, 0f, 0f, 0.5f, 0.3f);
-			Fonts.segoe_30.drawCenteredString(title, getXAndDrag() + 100, getYAndDrag() + 1, 0xFFFFFF, true);
+			AdorufuMod.FONT_MANAGER.segoe_30.drawCenteredString(title, getXAndDrag() + 100, getYAndDrag() + 1, 0xFFFFFF, true);
 			if (Minecraft.getMinecraft().currentScreen instanceof WaypointGUI) {
 				//ClientUtils.drawBetterBorderedRect(getXAndDrag() + 79, getYAndDrag() + 2, getXAndDrag() + 88, getYAndDrag() + 11, 0.5F, 0xFF000000, isPinned ? 0xFFFF0000 : 0xFF383b42);
 				//ClientUtils.drawBetterBorderedRect(getXAndDrag() + 89, getYAndDrag() + 2, getXAndDrag() + 98, getYAndDrag() + 11, 0.5F, 0xFF000000, isOpen ? 0x2480dbFF : 0xFF383b42);
@@ -83,8 +82,8 @@ public class WaypointWindow {
 					}
 				}
 				if (buttonList.size()==0){
-					Fonts.segoe_36.drawCenteredString("Well, you won't find anything useful here.",getXAndDrag() + 100, getYAndDrag()+75,0xFFFFFF, true);
-					Fonts.segoe_30.drawCenteredString("Use the -waypoint command to set and delete waypoints.",getXAndDrag() + 100, getYAndDrag()+85,0xFFFFFF, true);
+					AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString("Well, you won't find anything useful here.",getXAndDrag() + 100, getYAndDrag()+75,0xFFFFFF, true);
+					AdorufuMod.FONT_MANAGER.segoe_30.drawCenteredString("Use the -waypoint command to set and delete waypoints.",getXAndDrag() + 100, getYAndDrag()+85,0xFFFFFF, true);
 					isEmpty = true;
 				}
 				else {
