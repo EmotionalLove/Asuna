@@ -16,6 +16,7 @@ import java.util.*;
 public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleListener {
 
     private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
+    public static boolean defaultloaded = false;
     public static List<String> joinMessages = new ArrayList<>();
     public static List<String> leaveMessages = new ArrayList<>();
 
@@ -80,12 +81,10 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
     private void playerLeave(String name) {
         AdorufuMod.logMsg("\2477" + name + " left.");
         if (this.getOption("Greeter")) {
-            if (leaveMessages.size() == 0) {
-                AdorufuMod.minecraft.player.sendChatMessage("> Bye, " + name);
+            if (defaultloaded) {
                 AdorufuMod.logErr(false, "You haven't defined any greeter messages in the AdorufuData.yml file," +
                         " located in your .minecraft folder. You should go there and add some!");
                 AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name.");
-                return;
             }
             Random rand = new Random();
             String greet = leaveMessages.get(rand.nextInt(leaveMessages.size() - 1));
@@ -96,8 +95,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
     private void playerJoin(String name) {
         AdorufuMod.logMsg("\2477" + name + " joined.");
         if (this.getOption("Greeter")) {
-            if (joinMessages.size() == 0) {
-                AdorufuMod.minecraft.player.sendChatMessage("> Hi, " + name);
+            if (defaultloaded) {
                 AdorufuMod.logErr(false, "You haven't defined any greeter messages in the AdorufuData.yml file," +
                         " located in your .minecraft folder. You should go there and add some!");
                 AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name.");

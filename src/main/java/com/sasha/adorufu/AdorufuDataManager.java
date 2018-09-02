@@ -8,6 +8,7 @@ import com.sasha.adorufu.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.misc.PlayerIdentity;
 import com.sasha.adorufu.misc.YMLParser;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.modules.ModuleJoinLeaveMessages;
 import com.sasha.adorufu.waypoint.Waypoint;
 import net.minecraft.block.Block;
 
@@ -279,6 +280,17 @@ public class AdorufuDataManager {
             if (!f.exists()) {
                 AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
                 f.createNewFile();
+                ArrayList<String> defaultJoin = new ArrayList<>();
+                ArrayList<String> defaultLeave = new ArrayList<>();
+                defaultJoin.add("Hi, [player]");
+                defaultJoin.add("Bye, [player]");
+                ModuleJoinLeaveMessages.defaultloaded = true;
+                ArrayList<List<String>> defaults = new ArrayList<>();
+                defaults.add(defaultJoin);
+                defaults.add(defaultLeave);
+                threadLock.unlock();
+                saveGreeterMsgs(defaults);
+                threadLock.lock();
             }
             YMLParser parser = new YMLParser(f);
             List<String> joins =  parser.getStringList("Adorufu.greeter.join");
