@@ -1,16 +1,18 @@
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.PlayerBlockBreakEvent;
 import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
-import com.sasha.adorufu.module.ModuleInfo;
-import com.sasha.adorufu.module.PostToggleExec;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
-import java.util.*;
-import static com.sasha.adorufu.AdorufuMod.logMsg;
+import com.sasha.adorufu.module.ModuleInfo;
+import com.sasha.adorufu.module.PostToggleExec;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -94,13 +96,13 @@ public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
     public void onBlockBreak(PlayerBlockPlaceEvent e){
         if (!this.isEnabled()) return;
         //logMsg("ok");
-        if (blocksPlacedMap.containsKey(e.getBlock().getLocalizedName())){
+        if (blocksPlacedMap.containsKey(e.getBlock().getDisplayName())){
             //logMsg("ok 1");
-            blocksPlacedMap.put(e.getBlock().getLocalizedName(), blocksPlacedMap.get(e.getBlock().getLocalizedName())+1);
+            blocksPlacedMap.put(e.getBlock().getDisplayName(), blocksPlacedMap.get(e.getBlock().getDisplayName())+1);
             return;
         }
         //logMsg("oh ok");
-        blocksPlacedMap.put(e.getBlock().getLocalizedName(), 1);
+        blocksPlacedMap.put(e.getBlock().getDisplayName(), 1);
     }
 
 }

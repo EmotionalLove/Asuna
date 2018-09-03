@@ -78,7 +78,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "rightClickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;swingArm(Lnet/minecraft/util/EnumHand;)V"))
     public void rightClickMouse(CallbackInfo info){
-        PlayerBlockPlaceEvent event = new PlayerBlockPlaceEvent(this.objectMouseOver.getBlockPos());
+        PlayerBlockPlaceEvent event = new PlayerBlockPlaceEvent(AdorufuMod.minecraft.player.itemStackMainHand);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
     }
 
