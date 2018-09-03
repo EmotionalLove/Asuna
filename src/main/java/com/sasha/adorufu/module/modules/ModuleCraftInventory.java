@@ -1,6 +1,5 @@
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.adorufu.events.ClientPlayerInventoryCloseEvent;
 import com.sasha.adorufu.events.ServerPlayerInventoryCloseEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
@@ -31,13 +30,7 @@ public class ModuleCraftInventory extends AdorufuModule implements SimpleListene
 
     }
 
-    @SimpleEventHandler
-    public void onCloseInv(ClientPlayerInventoryCloseEvent e) {
-        if (!this.isEnabled()) return;
-        if (e.getContainer() instanceof ContainerPlayer) {
-            e.setCancelled(true);
-        }
-    }
+
     @SimpleEventHandler
     public void onPckCloseInv(ServerPlayerInventoryCloseEvent e) {
         if (!this.isEnabled()) return;
