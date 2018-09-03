@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = EntityPlayerSP.class, priority = 999)
 public abstract class MixinEntityPlayerSP extends MixinEntityPlayer {
 
-
     @Shadow public abstract void closeScreenAndDropStack();
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)

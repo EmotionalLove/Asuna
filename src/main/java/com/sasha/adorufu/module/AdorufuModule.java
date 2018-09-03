@@ -7,6 +7,7 @@ import com.sasha.adorufu.exception.AdorufuModuleOptionNotFoundException;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.misc.ModuleState;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,9 +28,41 @@ public abstract class AdorufuModule {
     private int keyBind;
     private boolean isRenderable = false;
     private boolean hasOptions = false;
+    private boolean optionMode = false;
     private LinkedHashMap<String, Boolean> moduleOptions;
 
     public static ArrayList<AdorufuModule> displayList = new ArrayList<>(); // used for the hud
+
+    public AdorufuModule(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable){
+        this.moduleName = moduleName;
+        this.moduleCategory = moduleCategory;
+        String c;
+        if (moduleCategory == AdorufuCategory.COMBAT) {
+            c = "4";
+        }
+        else if (moduleCategory == AdorufuCategory.CHAT) {
+            c = "3";
+        }
+        else if (moduleCategory == AdorufuCategory.GUI) {
+            c = "7";
+        }
+        else if (moduleCategory == AdorufuCategory.MISC) {
+            c = "b";
+        }
+        else if (moduleCategory == AdorufuCategory.MOVEMENT) {
+            c = "6";
+        }
+        else if (moduleCategory == AdorufuCategory.RENDER) {
+            c = "d";
+        }
+        else {
+            c = "8";
+        }
+        this.moduleNameColoured = "\247" + c + moduleName;
+        this.isRenderable= isRenderable;
+        this.isEnabled=false;
+    }
+
 
     public AdorufuModule(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable, boolean hasOptions) {
         this.hasOptions = hasOptions;
@@ -62,8 +95,10 @@ public abstract class AdorufuModule {
         this.isRenderable= isRenderable;
         this.isEnabled=false;
     }
-
-    public AdorufuModule(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable){
+    public AdorufuModule(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable, boolean hasOptions, boolean useMode) {
+        this.hasOptions = hasOptions;
+        this.optionMode = useMode;
+        if (hasOptions) this.moduleOptions = new LinkedHashMap<>();
         this.moduleName = moduleName;
         this.moduleCategory = moduleCategory;
         String c;
@@ -95,6 +130,11 @@ public abstract class AdorufuModule {
 
     ///getters
 
+
+
+    public boolean useModeSelection() {
+        return optionMode;
+    }
     /**
      * gets module name
      * @return String
@@ -158,11 +198,37 @@ public abstract class AdorufuModule {
     }
 
     public void addOption(String name, boolean def) {
-        this.moduleOptions.put(name.toLowerCase(), def);
+        this.moduleOptions.put(name.toLowerCase(), AdorufuMod.DATA_MANAGER.getSavedModuleOption(this.getModuleName(), name, def));
     }
     public void toggleOption(String name) {
+        if (!this.moduleOptions.containsKey(name.toLowerCase()))
+            throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
+        boolean toggle = !this.moduleOptions.get(name.toLowerCase());
+        this.moduleOptions.put(name.toLowerCase(), toggle);
+        try {
+            AdorufuMod.DATA_MANAGER.saveModuleOption(this.getModuleName(), name, toggle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Used if you only want to allow one option at a time
+     */
+    public void toggleOptionMode(String name) {
         if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");
-        this.moduleOptions.put(name.toLowerCase(), !this.moduleOptions.get(name.toLowerCase()));
+        boolean toggle = !this.moduleOptions.get(name.toLowerCase());
+        this.moduleOptions.put(name.toLowerCase(), toggle);
+        try {
+            AdorufuMod.DATA_MANAGER.saveModuleOption(this.getModuleName(), name, toggle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.getModuleOptionsMap().forEach((str, bool)-> {
+            if (bool) {
+                this.toggleOption(str);
+            }
+        });
     }
     public boolean getOption(String name) {
         if (!this.moduleOptions.containsKey(name.toLowerCase())) throw new AdorufuModuleOptionNotFoundException("The option" + name.toLowerCase() + "doesn't exist!");

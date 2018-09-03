@@ -68,6 +68,9 @@ public class AdorufuOptionButton {
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 			ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
                 if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
+                	if (mod.useModeSelection()){
+                		mod.toggleOption(this.toToggle);
+					}
                     mod.toggleOption(this.toToggle);
                     return;
                 }

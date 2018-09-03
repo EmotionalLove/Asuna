@@ -516,6 +516,23 @@ public class AdorufuDataManager {
             logWarn(true, "Thread locking disengaged!");
         }
     }
+    public synchronized void saveModuleOption(String modName, String optionName, boolean state) throws IOException {
+        logMsg(true, "Updating module option setting...");
+        threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            YMLParser parser = new YMLParser(file);
+            parser.set("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), state);
+            parser.save();
+        } finally {
+            threadLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
     public synchronized boolean getSavedModuleState(String modName) throws IOException {
         logMsg(true, "Getting module \"" + modName + "\"'s previously saved state...");
         threadLock.lock();
@@ -529,6 +546,28 @@ public class AdorufuDataManager {
             }
             YMLParser parser = new YMLParser(file);
             return parser.getBoolean("Adorufu.modules." + modName.toLowerCase() + ".state", false);
+        } finally {
+            threadLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized boolean getSavedModuleOption(String modName, String optionName, boolean def) {
+        logMsg(true, "Getting module \"" + modName + "\"'s previously saved options...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                AdorufuMod.logErr(true, "Module states file doesn't exist (maybe this is the client's first run?)");
+                return def;
+            }
+            YMLParser parser = new YMLParser(file);
+            if (!parser.exists("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def)) {
+                parser.set("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def);
+                parser.save();
+                return def;
+            }
+            return parser.getBoolean("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def);
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");

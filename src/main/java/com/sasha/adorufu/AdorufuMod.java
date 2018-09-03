@@ -247,6 +247,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleAutoArmor());
         ModuleManager.register(new ModuleJoinLeaveMessages());
         ModuleManager.register(new ModuleCraftInventory());
+        ModuleManager.register(new ModuleKnockbackSuppress());
     }
 
 
