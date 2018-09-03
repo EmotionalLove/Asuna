@@ -69,7 +69,7 @@ public class AdorufuOptionButton {
 			ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
                 if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
                 	if (mod.useModeSelection()){
-                		mod.toggleOption(this.toToggle);
+                		mod.toggleOptionMode(this.toToggle);
 					}
                     mod.toggleOption(this.toToggle);
                     return;

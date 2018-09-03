@@ -23,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 @PostToggleExec
 @ModuleInfo(description = "Walk on water!")
 public class ModuleJesus extends AdorufuModule implements SimpleListener {
+    private boolean waterjump = false;
     public static AxisAlignedBB WATER_JESUS_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
     public static ModuleJesus INSTANCE;
     public ModuleJesus() {
@@ -44,7 +45,13 @@ public class ModuleJesus extends AdorufuModule implements SimpleListener {
     public void onTick() {
         if (this.isEnabled()) {
             if (AdorufuMod.minecraft.player.isInWater()) {
-                AdorufuMod.minecraft.player.motionY = 0.05;
+                AdorufuMod.minecraft.player.motionY = 0.11;
+                waterjump = true;
+                return;
+            }
+            if (waterjump) {
+                AdorufuMod.minecraft.player.jump();
+                waterjump = false;
             }
         }
     }
@@ -65,7 +72,7 @@ public class ModuleJesus extends AdorufuModule implements SimpleListener {
             if (!this.isEnabled()) {
                 return false;
             }
-            return !inLiquid(AdorufuMod.minecraft.player) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
+            return !inLiquid(AdorufuMod.minecraft.player, false) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
         } catch (Exception e) {
             return false;
         }
@@ -83,9 +90,9 @@ public class ModuleJesus extends AdorufuModule implements SimpleListener {
         }
     }
 
-    private boolean inLiquid(Entity e) {
+    private boolean inLiquid(Entity e, boolean invert) {
         try {
-            double Y = e.getPosition().getY() + 0.1;
+            double Y = invert ? e.getPosition().getY() + 0.1 : e.getPosition().getY() + 0.1;
             Block block = AdorufuMod.minecraft.world.getBlockState(new BlockPos(e.getPosition().getX(), Y, e.getPosition().getZ())).getBlock();
             return block instanceof BlockLiquid && block != Blocks.FLOWING_WATER && block != Blocks.FLOWING_LAVA;
         }catch (Exception eee) {

@@ -211,7 +211,6 @@ public abstract class AdorufuModule {
             e.printStackTrace();
         }
     }
-
     /**
      * Used if you only want to allow one option at a time
      */
