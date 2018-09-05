@@ -18,23 +18,19 @@
 
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientPacketRecieveEvent;
 import com.sasha.adorufu.events.ClientPacketSendEvent;
 import com.sasha.adorufu.events.ClientPushOutOfBlocksEvent;
-import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.client.CPacketInput;
-import net.minecraft.network.play.client.CPacketKeepAlive;
 import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.network.play.server.SPacketChat;
-import net.minecraft.network.play.server.SPacketTimeUpdate;
 import net.minecraft.world.GameType;
 
-import static com.sasha.adorufu.AdorufuMod.logMsg;
 import static com.sasha.adorufu.AdorufuMod.minecraft;
 
 /**
@@ -43,7 +39,7 @@ import static com.sasha.adorufu.AdorufuMod.minecraft;
 @ModuleInfo(description = "Client-sided spectator mode.") //todo fix the fact that you cant fly thru stuff
 public class ModuleFreecam extends AdorufuModule implements SimpleListener {
 
-    public static double oldX, oldY, oldZ;
+    public static double oldX, oldY, oldZ, oldYaw, oldPitch;
     public static GameType oldGameType;
 
     public ModuleFreecam() {
@@ -55,6 +51,8 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
         oldX=AdorufuMod.minecraft.player.posX;
         oldY=AdorufuMod.minecraft.player.posY;
         oldZ=AdorufuMod.minecraft.player.posZ;
+        oldYaw = AdorufuMod.minecraft.player.rotationYaw;
+        oldPitch = AdorufuMod.minecraft.player.rotationPitch;
         oldGameType = AdorufuMod.minecraft.playerController.currentGameType;
         AdorufuMod.minecraft.playerController.setGameType(GameType.SPECTATOR);
         AdorufuMod.minecraft.player.setGameType(GameType.SPECTATOR);
@@ -63,7 +61,10 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onDisable() {
-        AdorufuMod.minecraft.player.setLocationAndAngles(oldX, oldY, oldZ, AdorufuMod.minecraft.player.rotationYaw, AdorufuMod.minecraft.player.rotationPitch);
+        AdorufuMod.minecraft.player.motionX = 0.0;
+        AdorufuMod.minecraft.player.motionY = 0.0;
+        AdorufuMod.minecraft.player.motionZ = 0.0;
+        AdorufuMod.minecraft.player.setLocationAndAngles(oldX, oldY, oldZ, (float)oldYaw, (float)oldPitch);
         AdorufuMod.minecraft.playerController.setGameType(oldGameType);
         AdorufuMod.minecraft.player.setGameType(oldGameType);
         AdorufuMod.minecraft.player.noClip = false;
@@ -77,16 +78,9 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
         if (this.isEnabled()) {
-            if (e.getRecievedPacket() instanceof SPacketTimeUpdate) {
-                return;
+            if (e.getRecievedPacket() instanceof CPacketPlayer) {
+                this.toggle();
             }
-            if (e.getRecievedPacket() instanceof CPacketKeepAlive) {
-                return;
-            }
-            if (e.getRecievedPacket() instanceof SPacketChat) {
-                return;
-            }
-            e.setCancelled(true);
         }
     }
     @SimpleEventHandler

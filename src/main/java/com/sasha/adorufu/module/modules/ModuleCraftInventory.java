@@ -30,7 +30,9 @@ import net.minecraft.inventory.ContainerPlayer;
  */
 public class ModuleCraftInventory extends AdorufuModule implements SimpleListener {
     public ModuleCraftInventory() {
-        super("CraftInventory", AdorufuCategory.MOVEMENT, false);
+        super("CraftInventory", AdorufuCategory.MOVEMENT, false, true, true);
+        this.addOption("Normal", true);
+        this.addOption("32K", false);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class ModuleCraftInventory extends AdorufuModule implements SimpleListene
 
     @Override
     public void onTick() {
-
+        this.setSuffix(this.getModuleOptionsMap());
     }
 
 
@@ -53,6 +55,9 @@ public class ModuleCraftInventory extends AdorufuModule implements SimpleListene
     public void onPckCloseInv(ServerPlayerInventoryCloseEvent e) {
         if (!this.isEnabled()) return;
         if (e.getContainer() instanceof ContainerPlayer) {
+            e.setCancelled(true);
+        }
+        if (this.getOption("32K") && !e.isCancelled()) {
             e.setCancelled(true);
         }
     }
