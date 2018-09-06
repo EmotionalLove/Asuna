@@ -82,7 +82,7 @@ public class AdorufuMod implements SimpleListener {
     public static WaypointManager WAYPOINT_MANAGER;
     public static RemoteDataManager REMOTE_DATA_MANAGER = new RemoteDataManager();
     public static SimpleCommandProcessor COMMAND_PROCESSOR;
-    public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL; // no, stop, this ISN'T lewd... I SWEAR!!!
+    public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
@@ -110,8 +110,6 @@ public class AdorufuMod implements SimpleListener {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
-        logMsg(true, "Loading TTF fonts...");
-        logMsg(true, "Done!");
         logMsg(true, "Registering commands, renderables and modules...");
         scheduler.schedule(() -> {
             try {
@@ -131,7 +129,6 @@ public class AdorufuMod implements SimpleListener {
                 ModuleJoinLeaveMessages.joinMessages = greets.get(0);
                 ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
                 ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
-                PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser();
                 WAYPOINT_MANAGER = new WaypointManager();
                 DATA_MANAGER.loadPlayerIdentities();
                 DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
@@ -140,7 +137,7 @@ public class AdorufuMod implements SimpleListener {
                     }
                 });
             } catch (Exception e) {
-                throw new AdorufuException("Failure while initialising! " + e.getMessage());
+                e.printStackTrace();
             }
         }, 0, TimeUnit.NANOSECONDS);
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
@@ -195,6 +192,8 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(FriendlistCommand.class);
         COMMAND_PROCESSOR.register(WaypointCommand.class);
         COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
+        COMMAND_PROCESSOR.register(FilterCommand.class);
+        COMMAND_PROCESSOR.register(FilterlistCommand.class);
     }
 
     @Deprecated // needs to be reworked - later
@@ -267,6 +266,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleJoinLeaveMessages());
         ModuleManager.register(new ModuleCraftInventory());
         ModuleManager.register(new ModuleKnockbackSuppress());
+        ModuleManager.register(new ModuleEquipmentDamage());
     }
 
 
@@ -280,6 +280,7 @@ public class AdorufuMod implements SimpleListener {
         AdorufuHUD.registeredHudElements.add(new RenderableHorseStats());
         AdorufuHUD.registeredHudElements.add(new RenderableFramerate());
         AdorufuHUD.registeredHudElements.add(new RenderableTickrate());
+        AdorufuHUD.registeredHudElements.add(new RenderableEquipmentDamage());
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {

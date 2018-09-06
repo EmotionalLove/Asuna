@@ -253,6 +253,24 @@ public class AdorufuDataManager {
             logWarn(true, "Thread locking disengaged!");
         }
     }
+    public synchronized void saveFilterList(List<String> wordlist) throws IOException {
+        logMsg(true, "Saving filterlist...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            parser.set("Adorufu.wordfilter", wordlist);
+            parser.save();
+        } finally {
+            threadLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
     public synchronized void saveGreeterMsgs(ArrayList<List<String>> greets) throws IOException {
         logMsg(true, "Saving greeter messages...");
         threadLock.lock();
@@ -284,6 +302,23 @@ public class AdorufuDataManager {
             }
             YMLParser parser = new YMLParser(f);
             return parser.getStringList("Adorufu.ignorelist");
+        } finally {
+            threadLock.unlock();
+            logWarn(true, "Thread locking disengaged!");
+        }
+    }
+    public synchronized List<String> loadFilterList() throws IOException {
+        logMsg(true, "Getting worldfilter...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            return parser.getStringList("Adorufu.wordfilter");
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");
