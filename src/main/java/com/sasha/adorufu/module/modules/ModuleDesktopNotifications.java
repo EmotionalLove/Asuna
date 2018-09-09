@@ -28,6 +28,7 @@ import java.awt.*;
 /**
  * Created by Sasha at 3:30 PM on 9/9/2018
  */
+
 public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener {
     TrayIcon trayIcon = null;
     public ModuleDesktopNotifications() {
@@ -42,6 +43,12 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
             AdorufuMod.logErr(false, "Your OS doesn't support this!");
             this.toggle();
         }
+        try {
+            setup();
+        } catch (AWTException e) {
+            AdorufuMod.logErr(false, "Couldn't initialise the tray icon!");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,16 +58,21 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
 
     @Override
     public void onTick() {
-
+        if (this.isEnabled() && this.trayIcon == null) {
+            this.onEnable();
+        }
     }
-    private void setup() {
+    private void setup() throws AWTException {
         SystemTray tray = SystemTray.getSystemTray();
-        Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("adorufu_tray.png"));
+        Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("adorufu_tray.jpg").getFile());
+        trayIcon.setImageAutoSize(true);
         trayIcon = new TrayIcon(image, "Adorufu " + AdorufuMod.VERSION);
         trayIcon.setToolTip("Minecraft - Adorufu " + AdorufuMod.VERSION);
         PopupMenu pm = new PopupMenu("Adorufu");
         MenuItem mu = new MenuItem("Quit Game");
         mu.addActionListener(e -> AdorufuMod.minecraft.shutdown());
         pm.add(mu);
+        trayIcon.setPopupMenu(pm);
+        tray.add(trayIcon);
     }
 }
