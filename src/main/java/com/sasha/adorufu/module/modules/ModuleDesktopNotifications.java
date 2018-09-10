@@ -25,6 +25,8 @@ import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import org.lwjgl.opengl.Display;
 
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
@@ -130,5 +132,12 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     public void onScreenChanged(ClientScreenChangedEvent e) {
         if (trayIcon == null) return;
         if (this.isEnabled()) AdorufuMod.scheduler.schedule(this::rebuildMenu,0, TimeUnit.NANOSECONDS);
+    }
+    @SimpleEventHandler
+    public void onChat(ClientChatReceivedEvent e) {
+        if (this.isEnabled() && this.getOption("Chat mentions") && !Display.isActive()) {
+            if (e.getMessage().getUnformattedText().contains(AdorufuMod.minecraft.player.getName()))
+            trayIcon.displayMessage("Chat Mention", e.getMessage().getUnformattedText(), TrayIcon.MessageType.INFO);
+        }
     }
 }
