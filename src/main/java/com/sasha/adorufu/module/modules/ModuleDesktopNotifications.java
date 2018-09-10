@@ -25,6 +25,7 @@ import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import org.lwjgl.opengl.Display;
@@ -69,6 +70,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     @Override
     public void onTick() {
         if (!this.isEnabled()) return;
+        this.setSuffix(this.getModuleOptionsMap());
         if (this.trayIcon == null) {
             this.onEnable();
         }
@@ -139,6 +141,10 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     public void onScreenChanged(ClientScreenChangedEvent e) {
         if (trayIcon == null) return;
         if (this.isEnabled()) AdorufuMod.scheduler.schedule(this::rebuildMenu,0, TimeUnit.NANOSECONDS);
+        if (e.getScreen() instanceof GuiDisconnected) {
+            if (Display.isActive() || !this.getOption("Server kick")) return;
+            trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).reason.replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
+        }
     }
     @SimpleEventHandler
     public void onChat(ClientChatReceivedEvent e) {
