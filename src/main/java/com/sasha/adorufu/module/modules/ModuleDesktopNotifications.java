@@ -20,6 +20,7 @@ package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientScreenChangedEvent;
+import com.sasha.adorufu.misc.ModuleState;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
@@ -47,19 +48,22 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     public void onEnable() {
         if (!SystemTray.isSupported()) {
             AdorufuMod.logErr(false, "Your OS doesn't support this!");
-            this.toggle();
+            this.forceState(ModuleState.DISABLE, false, false);
         }
         try {
             setup();
         } catch (AWTException e) {
             AdorufuMod.logErr(false, "Couldn't initialise the tray icon!");
             e.printStackTrace();
+            this.forceState(ModuleState.DISABLE, false, false);
+
         }
     }
 
     @Override
     public void onDisable() {
-
+        if (trayIcon == null) return;
+        SystemTray.getSystemTray().remove(trayIcon);
     }
 
     @Override
@@ -92,6 +96,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
         });
         MenuItem quitGame = new MenuItem("Quit Game");
         quitGame.addActionListener(e -> AdorufuMod.minecraft.shutdown());
+        pm.addSeparator();
         pm.add(killCmd);
         pm.add(disconnect);
         pm.addSeparator();
@@ -123,6 +128,8 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
         });
         MenuItem quitGame = new MenuItem("Quit Game");
         quitGame.addActionListener(e -> AdorufuMod.minecraft.shutdown());
+        pm.addSeparator();
+        pm.add(killCmd);
         pm.add(disconnect);
         pm.addSeparator();
         pm.add(quitGame);
