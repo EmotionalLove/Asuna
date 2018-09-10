@@ -21,6 +21,7 @@ package com.sasha.adorufu.mixins.client;
 import com.mojang.authlib.properties.PropertyMap;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientMouseClickEvent;
+import com.sasha.adorufu.events.ClientScreenChangedEvent;
 import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleManager;
@@ -212,5 +213,14 @@ public abstract class MixinMinecraft {
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;create(Lorg/lwjgl/opengl/PixelFormat;)V"))
     public void createDisplay(CallbackInfo info) {
         Display.setTitle("Minecraft 1.12.2 with " + AdorufuMod.NAME + " " + AdorufuMod.VERSION);
+    }
+    @Inject(method = "displayGuiScreen", at = @At("HEAD"), cancellable = true)
+    public void displayGuiScreen(GuiScreen screenIn, CallbackInfo info) {
+        ClientScreenChangedEvent event = new ClientScreenChangedEvent(screenIn);
+        AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()) {
+            info.cancel();
+        }
+        screenIn = event.getScreen();
     }
 }

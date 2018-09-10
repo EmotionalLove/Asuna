@@ -19,11 +19,16 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.events.ClientScreenChangedEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import net.minecraft.client.gui.GuiMainMenu;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Sasha at 3:30 PM on 9/9/2018
@@ -45,7 +50,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
         }
         try {
             setup();
-        } catch (AWTException e) {
+        } catch (AWTException | ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException e) {
             AdorufuMod.logErr(false, "Couldn't initialise the tray icon!");
             e.printStackTrace();
         }
@@ -58,21 +63,51 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
 
     @Override
     public void onTick() {
-        if (this.isEnabled() && this.trayIcon == null) {
+        if (!this.isEnabled()) return;
+        if (this.trayIcon == null) {
             this.onEnable();
         }
     }
-    private void setup() throws AWTException {
+    private void setup() throws AWTException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         SystemTray tray = SystemTray.getSystemTray();
-        Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("adorufu_tray.jpg").getFile());
-        trayIcon.setImageAutoSize(true);
+        Image image = Toolkit.getDefaultToolkit().createImage(getClass().getClassLoader().getResource("adorufu_tray.jpg"));
         trayIcon = new TrayIcon(image, "Adorufu " + AdorufuMod.VERSION);
+        trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Minecraft - Adorufu " + AdorufuMod.VERSION);
         PopupMenu pm = new PopupMenu("Adorufu");
-        MenuItem mu = new MenuItem("Quit Game");
-        mu.addActionListener(e -> AdorufuMod.minecraft.shutdown());
-        pm.add(mu);
+        MenuItem disconnect = new MenuItem("Disconnect");
+        disconnect.addActionListener(e -> {
+            if (AdorufuMod.minecraft.world != null) {
+                AdorufuMod.minecraft.world.sendQuittingDisconnectingPacket();
+                AdorufuMod.minecraft.displayGuiScreen(new GuiMainMenu());
+            }
+        });
+        MenuItem quitGame = new MenuItem("Quit Game");
+        quitGame.addActionListener(e -> AdorufuMod.minecraft.shutdown());
+        pm.add(quitGame);
         trayIcon.setPopupMenu(pm);
         tray.add(trayIcon);
+    }
+    public void rebuildMenu() {
+        PopupMenu pm = new PopupMenu("Adorufu");
+        MenuItem disconnect = new MenuItem("Disconnect");
+        if (AdorufuMod.minecraft.world == null) {
+            disconnect.setEnabled(false);
+        }
+        disconnect.addActionListener(e -> {
+            if (AdorufuMod.minecraft.world != null) {
+                AdorufuMod.minecraft.world.sendQuittingDisconnectingPacket();
+                AdorufuMod.minecraft.displayGuiScreen(new GuiMainMenu());
+            }
+        });
+        MenuItem quitGame = new MenuItem("Quit Game");
+        quitGame.addActionListener(e -> AdorufuMod.minecraft.shutdown());
+        pm.add(quitGame);
+        trayIcon.setPopupMenu(pm);
+    }
+    @SimpleEventHandler
+    public void onScreenChanged(ClientScreenChangedEvent e) {
+        if (this.isEnabled()) AdorufuMod.scheduler.schedule(this::rebuildMenu,0, TimeUnit.NANOSECONDS);
     }
 }
