@@ -89,6 +89,7 @@ public class ModuleManager implements SimpleListener {
                 AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
             }
         }
+        mod.init();
     }
 
     public static void loadBindsAndStates() {

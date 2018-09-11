@@ -50,6 +50,22 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     }
 
     @Override
+    public void init() {
+        if (!SystemTray.isSupported()) {
+            AdorufuMod.logErr(false, "Your OS doesn't support this!");
+            this.forceState(ModuleState.DISABLE, false, false);
+        }
+        try {
+            setup();
+        } catch (Exception e) {
+            AdorufuMod.logErr(false, "Couldn't initialise the tray icon!");
+            e.printStackTrace();
+            this.forceState(ModuleState.DISABLE, false, false);
+
+        }
+    }
+
+    @Override
     public void onEnable() {
         if (!SystemTray.isSupported()) {
             AdorufuMod.logErr(false, "Your OS doesn't support this!");
@@ -144,13 +160,15 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     @SimpleEventHandler
     public void onScreenChanged(ClientScreenChangedEvent e) {
         try {
-            if (trayIcon == null || AdorufuMod.minecraft.world == null) return;
+            if (trayIcon == null) return;
             if (this.isEnabled()) AdorufuMod.scheduler.schedule(this::rebuildMenu, 0, TimeUnit.NANOSECONDS);
             if (e.getScreen() instanceof GuiDisconnected) {
                 if (Display.isActive() || !this.getOption("Server kick")) return;
                 trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).reason.replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
             }
-        }catch (Exception xe) {}
+        }catch (Exception xe) {
+            xe.printStackTrace();
+        }
     }
     @SimpleEventHandler
     public void onChat(ClientChatReceivedEvent e) {

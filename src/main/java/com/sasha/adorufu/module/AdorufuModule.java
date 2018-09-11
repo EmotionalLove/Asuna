@@ -349,6 +349,7 @@ public abstract class AdorufuModule {
 
 
     public abstract void onEnable();
+    public void init(){}
     public  abstract void onDisable();
     public void onRender(){} // called a lot more than 20x per second
     public abstract void onTick(); // callee 20x per second
