@@ -136,6 +136,9 @@ public class AdorufuMod implements SimpleListener {
                         id.updateDisplayName();
                     }
                 });
+                ModuleDesktopNotifications m = new ModuleDesktopNotifications();
+                ModuleManager.register(m);
+                EVENT_MANAGER.registerListener(m);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -208,8 +211,7 @@ public class AdorufuMod implements SimpleListener {
 
     }
 
-    private void registerModules() throws Exception {
-
+    private void registerModules() {
         ModuleManager.moduleRegistry.clear();
         ModuleManager.register(new ModuleXray());
         ModuleManager.register(new ModuleWireframe());
@@ -267,7 +269,6 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleCraftInventory());
         ModuleManager.register(new ModuleKnockbackSuppress());
         ModuleManager.register(new ModuleEquipmentDamage());
-        ModuleManager.register(new ModuleDesktopNotifications());
     }
 
 

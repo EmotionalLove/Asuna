@@ -23,6 +23,7 @@ import com.sasha.adorufu.events.ClientScreenChangedEvent;
 import com.sasha.adorufu.misc.ModuleState;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ManualListener;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiDisconnected;
@@ -37,8 +38,11 @@ import java.util.concurrent.TimeUnit;
  * Created by Sasha at 3:30 PM on 9/9/2018
  */
 
+@ManualListener
 public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener {
-    TrayIcon trayIcon = null;
+
+    private TrayIcon trayIcon;
+
     public ModuleDesktopNotifications() {
         super("DesktopNotifications", AdorufuCategory.MISC, false, true);
         this.addOption("Chat mentions", true);
@@ -53,7 +57,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
         }
         try {
             setup();
-        } catch (AWTException e) {
+        } catch (Exception e) {
             AdorufuMod.logErr(false, "Couldn't initialise the tray icon!");
             e.printStackTrace();
             this.forceState(ModuleState.DISABLE, false, false);
@@ -107,7 +111,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
         trayIcon.setPopupMenu(pm);
         tray.add(trayIcon);
     }
-    public void rebuildMenu() {
+    private void rebuildMenu() {
         PopupMenu pm = new PopupMenu("Adorufu");
         MenuItem killCmd = new MenuItem("/kill");
         if (AdorufuMod.minecraft.world == null) {
@@ -139,18 +143,23 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     }
     @SimpleEventHandler
     public void onScreenChanged(ClientScreenChangedEvent e) {
-        if (trayIcon == null) return;
-        if (this.isEnabled()) AdorufuMod.scheduler.schedule(this::rebuildMenu,0, TimeUnit.NANOSECONDS);
-        if (e.getScreen() instanceof GuiDisconnected) {
-            if (Display.isActive() || !this.getOption("Server kick")) return;
-            trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).reason.replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
-        }
+        try {
+            if (trayIcon == null || AdorufuMod.minecraft.world == null) return;
+            if (this.isEnabled()) AdorufuMod.scheduler.schedule(this::rebuildMenu, 0, TimeUnit.NANOSECONDS);
+            if (e.getScreen() instanceof GuiDisconnected) {
+                if (Display.isActive() || !this.getOption("Server kick")) return;
+                trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).reason.replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
+            }
+        }catch (Exception xe) {}
     }
     @SimpleEventHandler
     public void onChat(ClientChatReceivedEvent e) {
-        if (this.isEnabled() && this.getOption("Chat mentions") && !Display.isActive()) {
-            if (e.getMessage().getUnformattedText().contains(AdorufuMod.minecraft.player.getName()))
-            trayIcon.displayMessage("Chat Mention", e.getMessage().getUnformattedText(), TrayIcon.MessageType.INFO);
-        }
+        try {
+            if (trayIcon == null) return;
+            if (this.isEnabled() && this.getOption("Chat mentions") && !Display.isActive()) {
+                if (e.getMessage().getUnformattedText().contains(AdorufuMod.minecraft.player.getName()))
+                    trayIcon.displayMessage("Chat Mention", e.getMessage().getUnformattedText(), TrayIcon.MessageType.INFO);
+            }
+        }catch (Exception ex){}
     }
 }

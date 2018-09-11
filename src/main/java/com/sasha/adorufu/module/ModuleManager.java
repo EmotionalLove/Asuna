@@ -82,6 +82,9 @@ public class ModuleManager implements SimpleListener {
         moduleRegistry.add(mod);
         if (mod.getClass().getInterfaces().length != 0) {
             if (mod.getClass().getInterfaces()[0] == SimpleListener.class) {
+                if (mod.getClass().getAnnotation(ManualListener.class) != null) {
+                    return;
+                }
                 AdorufuMod.logMsg(true, mod.getModuleName() + " is listening for events.");
                 AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
             }
