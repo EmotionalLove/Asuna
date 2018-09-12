@@ -43,6 +43,8 @@ public class AdorufuSystemTrayManager {
             trayIcon.setToolTip("Minecraft - Adorufu " + AdorufuMod.VERSION);
             PopupMenu pm = new PopupMenu("Adorufu");
             //
+            MenuItem herobrineCmd = new MenuItem("Summon Herobrine...");
+            herobrineCmd.setEnabled(false);
             MenuItem killCmd = new MenuItem("/kill");
             killCmd.addActionListener(e -> {
                 if (AdorufuMod.minecraft.world != null) {
@@ -58,6 +60,7 @@ public class AdorufuSystemTrayManager {
             });
             MenuItem quitGame = new MenuItem("Quit Game");
             quitGame.addActionListener(e -> AdorufuMod.minecraft.shutdown());
+            pm.add(herobrineCmd);
             pm.addSeparator();
             pm.add(killCmd);
             pm.add(disconnect);
@@ -76,6 +79,8 @@ public class AdorufuSystemTrayManager {
     protected void rebuild() {
         if (trayIcon == null) return;
         PopupMenu pm = new PopupMenu("Adorufu");
+        MenuItem herobrineCmd = new MenuItem("Summon Herobrine...");
+        herobrineCmd.setEnabled(false);
         MenuItem killCmd = new MenuItem("/kill");
         if (AdorufuMod.minecraft.world == null) {
             killCmd.setEnabled(false);
@@ -97,6 +102,7 @@ public class AdorufuSystemTrayManager {
         });
         MenuItem quitGame = new MenuItem("Quit Game");
         quitGame.addActionListener(e -> AdorufuMod.minecraft.shutdown());
+        pm.add(herobrineCmd);
         pm.addSeparator();
         pm.add(killCmd);
         pm.add(disconnect);
