@@ -78,7 +78,7 @@ public class AdorufuMod implements SimpleListener {
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
-    public static AdorufuSystemTrayManager TRAY_MANAGER = new AdorufuSystemTrayManager();
+    public static AdorufuSystemTrayManager TRAY_MANAGER;
     public static FriendManager FRIEND_MANAGER;
     public static FontManager FONT_MANAGER;
     public static WaypointManager WAYPOINT_MANAGER;
@@ -138,6 +138,7 @@ public class AdorufuMod implements SimpleListener {
                         id.updateDisplayName();
                     }
                 });
+                TRAY_MANAGER = new AdorufuSystemTrayManager();
             } catch (Exception e) {
                 e.printStackTrace();
             }

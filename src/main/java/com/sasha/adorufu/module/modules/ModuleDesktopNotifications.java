@@ -58,7 +58,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
     public void onScreenChanged(ClientScreenChangedEvent e) {
         if (e.getScreen() instanceof GuiDisconnected) {
             if (Display.isActive() || !this.getOption("Server kick")) return;
-            AdorufuMod.TRAY_MANAGER.trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).reason.replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
+            AdorufuMod.TRAY_MANAGER.trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).message.getUnformattedText().replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
         }
     }
 }
