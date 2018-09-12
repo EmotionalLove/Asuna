@@ -20,6 +20,7 @@ package com.sasha.adorufu;
 
 import com.sasha.adorufu.command.CommandHandler;
 import com.sasha.adorufu.command.commands.*;
+import com.sasha.adorufu.desktop.AdorufuSystemTrayManager;
 import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
@@ -77,6 +78,7 @@ public class AdorufuMod implements SimpleListener {
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
+    public static AdorufuSystemTrayManager TRAY_MANAGER = new AdorufuSystemTrayManager();
     public static FriendManager FRIEND_MANAGER;
     public static FontManager FONT_MANAGER;
     public static WaypointManager WAYPOINT_MANAGER;
@@ -136,9 +138,6 @@ public class AdorufuMod implements SimpleListener {
                         id.updateDisplayName();
                     }
                 });
-                ModuleDesktopNotifications m = new ModuleDesktopNotifications();
-                ModuleManager.register(m);
-                EVENT_MANAGER.registerListener(m);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -269,6 +268,8 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleCraftInventory());
         ModuleManager.register(new ModuleKnockbackSuppress());
         ModuleManager.register(new ModuleEquipmentDamage());
+        ModuleDesktopNotifications m = new ModuleDesktopNotifications();
+        ModuleManager.register(m);
     }
 
 
