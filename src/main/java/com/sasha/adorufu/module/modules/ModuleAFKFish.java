@@ -25,8 +25,6 @@ import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 
 /**
@@ -49,30 +47,24 @@ public class ModuleAFKFish extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-        if (this.isEnabled()) {
-            for (Entity e : AdorufuMod.minecraft.world.getLoadedEntityList()) {
-                if (e instanceof EntityFishHook){
-                    if (e.motionY >= 0.1 && e.motionY < 0.7){
-                        new Thread(() -> {
-                            AdorufuMod.minecraft.rightClickMouse();
-                            try {
-                                Thread.sleep(1000L);
-                            } catch (InterruptedException e1) {
-                                e1.printStackTrace();
-                            }
-                            AdorufuMod.minecraft.rightClickMouse();
-                        }).start();
-                    }
-                }
-            }
-        }
+
     }
     @SimpleEventHandler
     public void onSplash(ClientPacketRecieveEvent e) {
         if (!this.isEnabled()) return;
         if (e.getRecievedPacket() instanceof SPacketSoundEffect) {
             SPacketSoundEffect pck = (SPacketSoundEffect) e.getRecievedPacket();
-            System.out.println(pck.getSound().getSoundName().toString().equals("minecraft:entity.bobber.splash"));
+            if(pck.getSound().getSoundName().toString().equalsIgnoreCase("minecraft:entity.bobber.splash")){
+                new Thread(() -> {
+                    AdorufuMod.minecraft.rightClickMouse();
+                    try {
+                        Thread.sleep(1000L);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    AdorufuMod.minecraft.rightClickMouse();
+                }).start();
+            }
         }
     }
 }
