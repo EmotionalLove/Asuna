@@ -39,8 +39,8 @@ public class FilterCommand extends SimpleCommand {
             AdorufuMod.logErr(false, "Too few or too many arguments. Try -help command ignore");
             return;
         }
-        if (!ModuleClientIgnore.ignorelist.contains(this.getArguments()[0])) {
-            ModuleClientIgnore.ignorelist.add(this.getArguments()[0]);
+        if (!ModuleClientIgnore.filterList.contains(this.getArguments()[0])) {
+            ModuleClientIgnore.filterList.add(this.getArguments()[0]);
             AdorufuMod.logMsg(false, "\"" + this.getArguments()[0] + "\" will now be filtered.");
             try {
                 AdorufuMod.DATA_MANAGER.saveFilterList(ModuleClientIgnore.filterList);
@@ -49,7 +49,7 @@ public class FilterCommand extends SimpleCommand {
             }
             return;
         }
-        ModuleClientIgnore.ignorelist.remove(this.getArguments()[0]);
+        ModuleClientIgnore.filterList.remove(this.getArguments()[0]);
         AdorufuMod.logMsg(false, "\"" + this.getArguments()[0] + "\" will no longer be filtered.");
         try {
             AdorufuMod.DATA_MANAGER.saveFilterList(ModuleClientIgnore.filterList);

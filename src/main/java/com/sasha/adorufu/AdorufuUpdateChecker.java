@@ -55,7 +55,8 @@ public class AdorufuUpdateChecker implements SimpleListener {
             }
             AdorufuMod.scheduler.schedule(() -> {
                 AdorufuMod.logMsg("\247eThere is an update available for Adorufu.");
-                AdorufuMod.logMsg("http://github.com/EmotionalLove/Adorufu");
+                AdorufuMod.logMsg("http://sashadev.me/EmotionalLove/Adorufu");
+                AdorufuMod.logMsg("Run \247l-update");
                 AdorufuMod.logMsg("Current Version \247l" + AdorufuMod.VERSION);
                 AdorufuMod.logMsg("Latest Version \247l" + latestVer);
             }, 10, TimeUnit.SECONDS);

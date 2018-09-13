@@ -197,6 +197,7 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
         COMMAND_PROCESSOR.register(FilterCommand.class);
         COMMAND_PROCESSOR.register(FilterlistCommand.class);
+        COMMAND_PROCESSOR.register(UpdateCommand.class);
     }
 
     @Deprecated // needs to be reworked - later

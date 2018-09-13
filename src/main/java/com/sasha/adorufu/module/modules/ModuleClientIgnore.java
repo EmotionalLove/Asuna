@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class ModuleClientIgnore extends AdorufuModule implements SimpleListener {
     public static List<String> ignorelist = new ArrayList<>();
     public static List<String> filterList = new ArrayList<>();
+
     public ModuleClientIgnore() {
         super("ClientIgnore", AdorufuCategory.CHAT, false, true);
         this.addOption("Players", true);
@@ -59,17 +60,32 @@ public class ModuleClientIgnore extends AdorufuModule implements SimpleListener 
 
     @Override
     public void onTick() {
+        this.setSuffix(this.getModuleOptionsMap());
         if (this.isEnabled()) {
-            this.setSuffix(ignorelist.size() + " ignored players");
+            this.setSuffix(ignorelist.size() + ":" + filterList.size());
         }
     }
+
     @SimpleEventHandler
     public void onPckRx(ClientPacketRecieveEvent e) {
         if (this.isEnabled() && e.getRecievedPacket() instanceof SPacketChat) {
             String msg = ModuleAutoIgnore.stripColours(((SPacketChat) e.getRecievedPacket()).getChatComponent().getUnformattedText());
-            for (String s : ignorelist) {
-                if (msg.toLowerCase().startsWith("<" + s.toLowerCase() + ">")){
-                    e.setCancelled(true);
+            if (this.getOption("Players")) {
+                for (String s : ignorelist) {
+                    if (msg.toLowerCase().startsWith("<" + s.toLowerCase() + ">")) {
+                        e.setCancelled(true);
+                    }
+                }
+            }
+            if (this.getOption("Words")) {
+                String[] msgs = msg.split(" ");
+                for (String s : filterList) {
+                    for (String msg1 : msgs) {
+                        if (msg1.equalsIgnoreCase(s)) {
+                            e.setCancelled(true);
+                            return;
+                        }
+                    }
                 }
             }
         }
