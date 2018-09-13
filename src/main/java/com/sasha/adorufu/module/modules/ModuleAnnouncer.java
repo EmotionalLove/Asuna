@@ -35,7 +35,6 @@ import java.util.Random;
 
 /**
  * Created by Sasha on 11/08/2018 at 4:31 PM
- * WHY TF DOESNT THIS WORK OMG ;-; i SWEAr
  **/
 @PostToggleExec
 @ModuleInfo(description = "Sends a message in chat every 15 seconds about what you're doing in the world.")

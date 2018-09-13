@@ -18,20 +18,17 @@
 
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.adorufu.events.ClientPacketSendEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 
 /**
- * Created by Sasha at 11:00 AM on 8/28/2018
+ * Created by Sasha at 5:59 PM on 9/12/2018
  */
-@ModuleInfo(description = "Suspend packets")
-public class ModuleBlink extends AdorufuModule implements SimpleListener {
-    public ModuleBlink() {
-        super("Blink", AdorufuCategory.COMBAT, false);
+@ModuleInfo(description = "Limits the framerate to 5FPS when the game isn't in focus.")
+public class ModuleCPUControl extends AdorufuModule {
+    public ModuleCPUControl() {
+        super("CPUControl", AdorufuCategory.MISC, false);
     }
 
     @Override
@@ -46,12 +43,5 @@ public class ModuleBlink extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-
     }
-
-    @SimpleEventHandler
-    public void onPacketTx(ClientPacketSendEvent e) {
-        if (this.isEnabled()) e.setCancelled(true);
-    }
-
 }

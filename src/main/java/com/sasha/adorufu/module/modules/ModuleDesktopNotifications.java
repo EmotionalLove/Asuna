@@ -19,12 +19,15 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.events.ClientPacketRecieveEvent;
 import com.sasha.adorufu.events.ClientScreenChangedEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiDisconnected;
+import net.minecraft.network.play.server.SPacketChat;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -33,6 +36,7 @@ import java.awt.*;
  * Created by Sasha at 3:30 PM on 9/9/2018
  */
 
+@ModuleInfo(description = "Uses balloon notifications to notify you of events when the game is minimised")
 public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener {
 
     public ModuleDesktopNotifications() {
@@ -51,7 +55,7 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
 
     @Override
     public void onTick() {
-
+        this.setSuffix(this.getModuleOptionsMap());
     }
 
     @SimpleEventHandler
@@ -60,5 +64,19 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
             if (Display.isActive() || !this.getOption("Server kick")) return;
             AdorufuMod.TRAY_MANAGER.trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).message.getUnformattedText().replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
         }
+    }
+    @SimpleEventHandler
+    public void onChatRx(ClientPacketRecieveEvent e) {
+        if (!this.isEnabled() || this.getOption("Chat mentions")) return;
+        if (e.getRecievedPacket() instanceof SPacketChat) {
+            SPacketChat pck = (SPacketChat) e.getRecievedPacket();
+            if (!Display.isActive() && pck.getChatComponent().getUnformattedText().contains(AdorufuMod.minecraft.player.getName())) {
+                AdorufuMod.TRAY_MANAGER.trayIcon.displayMessage("Mentioned in Chat",
+                        pck.getChatComponent().getUnformattedText(),
+                        TrayIcon.MessageType.WARNING);
+
+            }
+        }
+
     }
 }

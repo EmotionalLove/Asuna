@@ -21,6 +21,7 @@ package com.sasha.adorufu.module.modules;
 import com.sasha.adorufu.events.ServerPlayerInventoryCloseEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.inventory.ContainerPlayer;
@@ -28,6 +29,7 @@ import net.minecraft.inventory.ContainerPlayer;
 /**
  * Created by Sasha at 12:44 PM on 9/2/2018
  */
+@ModuleInfo(description = "Use the crafting slots in your inventory as inventory spaces")
 public class ModuleCraftInventory extends AdorufuModule implements SimpleListener {
     public ModuleCraftInventory() {
         super("CraftInventory", AdorufuCategory.MOVEMENT, false, true, true);

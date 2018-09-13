@@ -25,9 +25,11 @@ import com.sasha.adorufu.events.ClientScreenChangedEvent;
 import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.module.modules.ModuleCPUControl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -94,6 +96,8 @@ public abstract class MixinMinecraft {
     @Shadow public RayTraceResult objectMouseOver;
 
     @Shadow public boolean inGameHasFocus;
+
+    @Shadow public WorldClient world;
 
     @Inject(method = "rightClickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;swingArm(Lnet/minecraft/util/EnumHand;)V"))
     public void rightClickMouse(CallbackInfo info){
@@ -222,5 +226,19 @@ public abstract class MixinMinecraft {
             info.cancel();
         }
         screenIn = event.getScreen();
+    }
+    /**
+     * @author Sasha Stevens
+     * @reason CPUControl
+     */
+    @Overwrite
+    public int getLimitFramerate() {
+        if (this.world == null && this.currentScreen != null) {
+            return 30;
+        }
+        if (!Display.isActive() && ModuleManager.getModule(ModuleCPUControl.class).isEnabled()) {
+            return 5;
+        }
+        return (this.gameSettings.limitFramerate);
     }
 }

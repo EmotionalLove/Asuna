@@ -271,6 +271,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleManager.register(new ModuleEquipmentDamage());
         ModuleDesktopNotifications m = new ModuleDesktopNotifications();
         ModuleManager.register(m);
+        ModuleManager.register(new ModuleCPUControl());
     }
 
 
