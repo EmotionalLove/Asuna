@@ -237,7 +237,7 @@ public abstract class MixinMinecraft {
             return 30;
         }
         if (!Display.isActive() && ModuleManager.getModule(ModuleCPUControl.class).isEnabled()) {
-            return 5;
+            return 0;
         }
         return (this.gameSettings.limitFramerate);
     }

@@ -68,7 +68,7 @@ import java.util.concurrent.TimeUnit;
 import static com.sasha.adorufu.gui.clickgui.AdorufuClickGUI.registeredWindows;
 import static com.sasha.adorufu.module.ModuleManager.loadBindsAndStates;
 
-@Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true)
+@Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true, clientSideOnly = true)
 public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
@@ -85,7 +85,7 @@ public class AdorufuMod implements SimpleListener {
     public static WaypointManager WAYPOINT_MANAGER;
     public static RemoteDataManager REMOTE_DATA_MANAGER = new RemoteDataManager();
     public static SimpleCommandProcessor COMMAND_PROCESSOR;
-    public static AdorufuWindowsBatteryManager BATTERY_MANAGER;
+    public static AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS BATTERY_MANAGER;
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
@@ -113,6 +113,7 @@ public class AdorufuMod implements SimpleListener {
             AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
             AdorufuWindowsBatteryManager.INSTANCE.GetSystemPowerStatus(batteryStatus);
             logMsg(true, batteryStatus.getBatteryLifePercent());
+            BATTERY_MANAGER = batteryStatus;
         }catch (Exception x) {
             //
         }
@@ -282,6 +283,7 @@ public class AdorufuMod implements SimpleListener {
         ModuleDesktopNotifications m = new ModuleDesktopNotifications();
         ModuleManager.register(m);
         ModuleManager.register(new ModuleCPUControl());
+        ModuleManager.register(new ModuleBatteryLife());
     }
 
 
@@ -296,6 +298,7 @@ public class AdorufuMod implements SimpleListener {
         AdorufuHUD.registeredHudElements.add(new RenderableFramerate());
         AdorufuHUD.registeredHudElements.add(new RenderableTickrate());
         AdorufuHUD.registeredHudElements.add(new RenderableEquipmentDamage());
+        AdorufuHUD.registeredHudElements.add(new RenderableBatteryLife());
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {
