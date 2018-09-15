@@ -21,6 +21,7 @@ package com.sasha.adorufu;
 import com.sasha.adorufu.command.CommandHandler;
 import com.sasha.adorufu.command.commands.*;
 import com.sasha.adorufu.desktop.AdorufuSystemTrayManager;
+import com.sasha.adorufu.desktop.AdorufuWindowsBatteryManager;
 import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.events.ClientInputUpdateEvent;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
@@ -72,7 +73,7 @@ public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.2.2";
+    public static final String VERSION = "1.2.3";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
@@ -84,6 +85,7 @@ public class AdorufuMod implements SimpleListener {
     public static WaypointManager WAYPOINT_MANAGER;
     public static RemoteDataManager REMOTE_DATA_MANAGER = new RemoteDataManager();
     public static SimpleCommandProcessor COMMAND_PROCESSOR;
+    public static AdorufuWindowsBatteryManager BATTERY_MANAGER;
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
@@ -106,6 +108,13 @@ public class AdorufuMod implements SimpleListener {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
             }));
+        }
+        try {
+            AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
+            AdorufuWindowsBatteryManager.INSTANCE.GetSystemPowerStatus(batteryStatus);
+            logMsg(true, batteryStatus.getBatteryLifePercent());
+        }catch (Exception x) {
+            //
         }
     }
 
