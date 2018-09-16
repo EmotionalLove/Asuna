@@ -21,6 +21,7 @@ package com.sasha.adorufu.gui.hud.renderableobjects;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.desktop.AdorufuWindowsBatteryManager;
+import com.sasha.adorufu.events.AdorufuBatteryLevelChangedEvent;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
@@ -30,6 +31,7 @@ import java.io.IOException;
 public class RenderableBatteryLife extends RenderableObject {
 
     public boolean isSupported = false;
+    private int lastPercent = -1;
 
     public RenderableBatteryLife() {
         super("BatteryLife", ScreenCornerPos.LEFTBOTTOM);
@@ -63,9 +65,14 @@ public class RenderableBatteryLife extends RenderableObject {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     private String formatBattery() {
-        AdorufuWindowsBatteryManager.INSTANCE.GetSystemPowerStatus(AdorufuMod.BATTERY_MANAGER);
         if (!isSupported) {
             return "\2478Battery status is unavailable on this machine...";
+        }
+        AdorufuWindowsBatteryManager.INSTANCE.GetSystemPowerStatus(AdorufuMod.BATTERY_MANAGER);
+        if (lastPercent != AdorufuMod.BATTERY_MANAGER.BatteryLifePercent) {
+            lastPercent = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;
+            AdorufuBatteryLevelChangedEvent event = new AdorufuBatteryLevelChangedEvent(lastPercent, AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte)1);
+            AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         }
         int battery = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;
         if (battery == (byte)255) {

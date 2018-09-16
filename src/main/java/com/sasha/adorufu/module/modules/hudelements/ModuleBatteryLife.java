@@ -18,15 +18,19 @@
 
 package com.sasha.adorufu.module.modules.hudelements;
 
+import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.events.AdorufuBatteryLevelChangedEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 
 /**
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Displays your computer's battery percent.")
-public class ModuleBatteryLife extends AdorufuModule {
+public class ModuleBatteryLife extends AdorufuModule implements SimpleListener {
     public ModuleBatteryLife() {
         super("BatteryLife", AdorufuCategory.GUI, true);
     }
@@ -44,5 +48,18 @@ public class ModuleBatteryLife extends AdorufuModule {
     @Override
     public void onTick() {
 
+    }
+    @SimpleEventHandler
+    public void onBtCnge(AdorufuBatteryLevelChangedEvent e) {
+        if (this.isEnabled()) {
+            if (e.isCharging()) return;
+            if (e.getNewBatteryPercent() == 20) {
+                AdorufuMod.logWarn(false, "Low battery! 20% remains.");
+                return;
+            }
+            if (e.getNewBatteryPercent() == 10) {
+                AdorufuMod.logWarn(false, "Very low battery! 10% remains.");
+            }
+        }
     }
 }
