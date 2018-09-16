@@ -16,19 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.mixins.client;
+package com.sasha.adorufu.events;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import com.sasha.eventsys.SimpleEvent;
+import net.minecraft.item.ItemStack;
 
 /**
- * Created by Sasha at 12:59 PM on 9/2/2018
+ * Created by Sasha at 3:49 PM on 9/16/2018
  */
-@Mixin(value = GuiScreen.class, priority = 999)
-public class MixinGuiScreen {
+public class ClientSaveBookEvent extends SimpleEvent {
 
+    private ItemStack book;
 
-    @Shadow public Minecraft mc;
+    public ClientSaveBookEvent(ItemStack book) {
+        this.book = book;
+    }
+
+    public ItemStack getBook() {
+        return book;
+    }
 }

@@ -24,6 +24,7 @@
     "MixinGuiScreen",
     "MixinEntityPlayer",
     "MixinGuiContainer",
-    "MixinItemBow"
+    "MixinItemBow",
+    "MixinGuiScreenBook"
   ]
 }

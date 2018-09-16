@@ -20,11 +20,16 @@ package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.ModulePowerBow;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 /**
  * Created by Sasha at 12:45 PM on 9/16/2018
@@ -32,11 +37,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = ItemBow.class, priority = 999)
 public class MixinItemBow {
 
-    @Inject(method = "getArrowVelocity", at = @At("HEAD"), cancellable = true)
-    private static void getArrowVelocity(int charge, CallbackInfoReturnable<Float> info) {
+    @Inject(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemBow;getArrowVelocity(I)F"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
+    private void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft, CallbackInfo info, EntityPlayer entityplayer, boolean flag, ItemStack itemstack, int i) {
         if (ModuleManager.getModule(ModulePowerBow.class).isEnabled()) {
-            info.setReturnValue(5f);
-            info.cancel();
+            i *= 2;
         }
     }
 }
