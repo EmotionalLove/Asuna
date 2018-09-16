@@ -280,7 +280,7 @@ public abstract class AdorufuMath {
 
     public static void drawRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float r, float g, float b, float a) {
         GL11.glPushMatrix();
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(3553);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(2848);

@@ -23,9 +23,6 @@ import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 
 import java.io.IOException;
 
@@ -58,26 +55,6 @@ public class RenderableEquipmentDamage extends RenderableObject {
     public void renderObjectRB(int yyy) {
         String s = getTheWholeFuckingString();
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
-    }
-    public static String getFoodItemsInInventory(EntityPlayerSP player) {
-        int i = 0;
-        for (ItemStack stack : player.inventory.mainInventory) {
-            if (stack.getItem().getCreativeTab() == CreativeTabs.FOOD) {
-                i += stack.getCount();
-            }
-        }
-        if (i <= 5) {
-            return "\247" + "4" + i;
-        }
-        if (i <= 10) {
-            return "\247" + "c" + i;
-        }
-        if (i <= 32) {
-            return "\247" + "e" + i;
-        }
-        else {
-            return "\247" + "a" + i;
-        }
     }
     public static String getTheWholeFuckingString() {
         StringBuilder boolder = new StringBuilder("\247fEquipment Damage:");
@@ -209,10 +186,7 @@ public class RenderableEquipmentDamage extends RenderableObject {
             if ((max / 8) < max - cur) {
                 color += "4";
                 boolder.append(color).append(max - cur);
-            }
-            else {
-                color += "d";
-                boolder.append(color).append(max - cur);
+                break HELDCLR;
             }
         }
         return boolder.toString();
