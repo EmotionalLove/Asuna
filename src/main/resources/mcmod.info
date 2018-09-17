@@ -5,8 +5,8 @@
     "description": "Adorufu is a minecraft mod that assists the player in survival anarchy environments. \"Adorufu\" is Japanese for \"Adolf\". Adorufu features many modules like Wireframe, AutoIgnore, Xray, Killaura, and more to help the player in Anarchy enviroments.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://git.2b2tmuseum.com/EmotionalLove/Adorufu",
-    "updateUrl": "https://git.2b2tmuseum.com/EmotionalLove/Adorufu/tags",
+    "url": "https://sashadev.me/EmotionalLove/Adorufu",
+    "updateUrl": "http://sashadev.me/EmotionalLove/Adorufu/tree/master/releases",
     "authorList": [
       "Sasha"
     ],
