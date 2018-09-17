@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mixins.client;
 
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.modules.ModuleCameraClip;
 import com.sasha.adorufu.module.modules.ModuleNightVision;
 import com.sasha.adorufu.module.modules.ModuleTracers;
@@ -78,7 +78,7 @@ public abstract class MixinEntityRenderer {
         GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float) (isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
         float scale = 0.030f;
-        if (ModuleManager.moduleRegistry.get(2).isEnabled()) {
+        if (Manager.Module.moduleRegistry.get(2).isEnabled()) {
             isSneaking = false;
             double distance = Math.sqrt(x * x + y * y + z * z);
             if (distance > 5) {
@@ -108,7 +108,7 @@ public abstract class MixinEntityRenderer {
         GlStateManager.enableTexture2D();
 
         if (!isSneaking) {
-            fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, ModuleManager.moduleRegistry.get(2).isEnabled() ? 0xFFFFFF : 553648127);
+            fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, Manager.Module.moduleRegistry.get(2).isEnabled() ? 0xFFFFFF : 553648127);
             GlStateManager.enableDepth();
         }
 
@@ -123,7 +123,7 @@ public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GlStateManager;matrixMode(I)V", ordinal = 4))
     public void renderWorldPass$0(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
-        if (ModuleManager.moduleRegistry.get(1).isEnabled()) {
+        if (Manager.Module.moduleRegistry.get(1).isEnabled()) {
             GL11.glPushAttrib(1048575);
             GL11.glEnable(32823);
             GL11.glPolygonOffset(-1.0f, -1.0f);
@@ -135,14 +135,14 @@ public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GlStateManager;shadeModel(I)V", ordinal = 1))
     public void renderWorldPass$1(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
-        if (ModuleManager.moduleRegistry.get(1).isEnabled()) {
+        if (Manager.Module.moduleRegistry.get(1).isEnabled()) {
             GL11.glPopAttrib();
         }
     }
 
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;renderHand(FI)V"))
     public void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
-        ModuleManager.renderModules();
+        Manager.Module.renderModules();
         GL11.glColor4f(0f, 0f, 0f, 0f);
     }
 
@@ -214,7 +214,7 @@ public abstract class MixinEntityRenderer {
                     f5 = f5 * 0.1F;
                     RayTraceResult raytraceresult = this.mc.world.rayTraceBlocks(new Vec3d(d0 + (double)f3, d1 + (double)f4, d2 + (double)f5), new Vec3d(d0 - d4 + (double)f3 + (double)f5, d1 - d6 + (double)f4, d2 - d5 + (double)f5));
 
-                    if (raytraceresult != null && !ModuleManager.getModule(ModuleCameraClip.class).isEnabled())
+                    if (raytraceresult != null && !Manager.Module.getModule(ModuleCameraClip.class).isEnabled())
                     {
                         double d7 = raytraceresult.hitVec.distanceTo(new Vec3d(d0, d1, d2));
 
@@ -269,7 +269,7 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "updateLightmap", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/EntityRenderer;lightmapColors:[I"), cancellable = true)
     public void updateLightmap(float partialTicks, CallbackInfo info) {
-        if (!ModuleManager.getModule(ModuleNightVision.class).isEnabled()) return;
+        if (!Manager.Module.getModule(ModuleNightVision.class).isEnabled()) return;
         for (int i = 0; i < 256; ++i) this.lightmapColors[i] = -16777216 | -20 << 16 | -20 << 8 | -20;
         this.lightmapTexture.updateDynamicTexture();
         this.lightmapUpdateNeeded = false;

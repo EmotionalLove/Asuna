@@ -21,8 +21,8 @@ package com.sasha.adorufu.gui.clickgui.elements;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.misc.AdorufuMath;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.AdorufuModule;
-import com.sasha.adorufu.module.ModuleManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -52,7 +52,7 @@ public class AdorufuOptionButton {
 		float var3 = 0f;
 		float var4 = 0.5f;
 		AtomicBoolean isTrue = new AtomicBoolean(false);
-		ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
+		Manager.Module.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
 			if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
 				if (mod.getOption(this.toToggle)) isTrue.set(true);
 				return;
@@ -84,7 +84,7 @@ public class AdorufuOptionButton {
 		if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && button == 0) {
 			AdorufuClickGUI.focusWindow(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
-			ModuleManager.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
+			Manager.Module.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
                 if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
                 	if (mod.useModeSelection()){
                 		mod.toggleOptionMode(this.toToggle);

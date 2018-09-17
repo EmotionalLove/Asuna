@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mixins.client;
 
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,7 +49,7 @@ public abstract class MixinEntityPig {
         else
         {
             EntityPlayer entityplayer = (EntityPlayer)entity;
-            if (ModuleManager.getModule("PigControl").isEnabled()) {
+            if (Manager.Module.getModule("PigControl").isEnabled()) {
                 return true;
             }
             return entityplayer.getHeldItemMainhand().getItem() == Items.CARROT_ON_A_STICK || entityplayer.getHeldItemOffhand().getItem() == Items.CARROT_ON_A_STICK;

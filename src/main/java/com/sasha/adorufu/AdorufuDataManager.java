@@ -40,7 +40,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static com.sasha.adorufu.AdorufuMod.logMsg;
 import static com.sasha.adorufu.AdorufuMod.logWarn;
-import static com.sasha.adorufu.module.ModuleManager.moduleRegistry;
+import static com.sasha.adorufu.misc.Manager.Module.moduleRegistry;
 
 /**
  * Created by Sasha on 08/08/2018 at 12:47 PM
@@ -665,6 +665,48 @@ public class AdorufuDataManager {
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");
+        }
+    }
+
+    // ------------------- plugin api ------------------------- //
+
+    /**
+     * Used for saving a float,double,string,int,long... anything like that, really.
+     * @param path the path in the config to save it to. (recommended is Adorufu.something)
+     * @param varName the name of the variable in the cfg file
+     * @param obj the thing to save.
+     */
+    public synchronized void savePluginData(String path, String varName, Object obj) throws IOException {
+        threadLock.lock();
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            YMLParser parser = new YMLParser(file);
+            parser.set("plugindata." + path + "." + varName, obj);
+            parser.save();
+        } finally {
+            threadLock.unlock();
+        }
+    }
+
+    public synchronized Object loadPluginData(String path, String varName, Object defaultVal) throws IOException {
+        threadLock.lock();
+        try {
+            File file = new File(dataFileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            YMLParser parser = new YMLParser(file);
+            if (!parser.exists(path + "." + varName)) {
+                if (defaultVal != null) return defaultVal;
+                throw new AdorufuNoSuchElementInDataFileException("\"" + path + "\" does not exist in " + dataFileName);
+            }
+            if (defaultVal != null) return parser.get("plugindata." + path + "." + varName, defaultVal);
+            return parser.get(path + "." + varName);
+        } finally {
+            threadLock.unlock();
         }
     }
 

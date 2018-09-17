@@ -20,7 +20,7 @@ package com.sasha.adorufu.mixins.client;
 
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
@@ -68,7 +68,7 @@ public abstract class MixinGuiPlayerTabOverlay {
     @Overwrite
     public void renderPlayerlist(int width, Scoreboard scoreboardIn, @Nullable ScoreObjective scoreObjectiveIn)
     {
-        boolean exTab = ModuleManager.getModule("ExtendedTablist").isEnabled();
+        boolean exTab = Manager.Module.getModule("ExtendedTablist").isEnabled();
         NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
         List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
         int i = 0;

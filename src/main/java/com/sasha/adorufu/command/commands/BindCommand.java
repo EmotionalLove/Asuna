@@ -20,8 +20,8 @@ package com.sasha.adorufu.command.commands;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.misc.AdorufuMath;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.simplecmdsys.SimpleCommand;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class BindCommand extends SimpleCommand {
             return;
         }
         AtomicBoolean found = new AtomicBoolean(false);
-        ModuleManager.moduleRegistry.forEach(mod -> {
+        Manager.Module.moduleRegistry.forEach(mod -> {
             if (mod.getModuleName().equalsIgnoreCase(this.getArguments()[0])){
                 mod.setKeyBind(AdorufuMath.determineKeyCode(this.getArguments()[1]));
                 AdorufuMod.logMsg(false, "Changed " + mod.getModuleName() + "'s keybind!");

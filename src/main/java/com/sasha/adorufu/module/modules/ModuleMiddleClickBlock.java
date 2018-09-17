@@ -18,12 +18,12 @@
 
 package com.sasha.adorufu.module.modules;
 
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientMouseClickEvent;
 import com.sasha.adorufu.module.ModuleInfo;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.block.Block;
@@ -68,7 +68,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
         AdorufuMod.logMsg(false, b.getLocalizedName() + " removed.");
     }
     private static void refreshXray() {
-        if (ModuleManager.getModule("X-Ray").isEnabled()) {
+        if (Manager.Module.getModule("X-Ray").isEnabled()) {
             AdorufuMod.minecraft.renderGlobal.loadRenderers();
         }
     }

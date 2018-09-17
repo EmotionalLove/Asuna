@@ -19,9 +19,9 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.misc.ModuleState;
 import com.sasha.adorufu.module.ModuleInfo;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.block.Block;
@@ -42,8 +42,8 @@ public class ModuleXray extends AdorufuModule {
 
     @Override
     public void onEnable() {
-        if (!ModuleManager.getModule("NightVision").isEnabled()) {
-            ModuleManager.getModule("NightVision").forceState(ModuleState.ENABLE, true, true);
+        if (!Manager.Module.getModule("NightVision").isEnabled()) {
+            Manager.Module.getModule("NightVision").forceState(ModuleState.ENABLE, true, true);
             wasNightVisionsOff = true;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();
@@ -52,7 +52,7 @@ public class ModuleXray extends AdorufuModule {
     @Override
     public void onDisable() {
         if (wasNightVisionsOff) {
-            ModuleManager.getModule("NightVision").forceState(ModuleState.DISABLE, true, true);
+            Manager.Module.getModule("NightVision").forceState(ModuleState.DISABLE, true, true);
             wasNightVisionsOff = false;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();

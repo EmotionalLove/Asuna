@@ -22,7 +22,7 @@ import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientEntityCollideEvent;
 import com.sasha.adorufu.events.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.events.PlayerKnockbackEvent;
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -55,14 +55,14 @@ public abstract class MixinEntity {
 
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
-        if (ModuleManager.getModule("Freecam").isEnabled()) {
+        if (Manager.Module.getModule("Freecam").isEnabled()) {
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(x, y, z));
             this.resetPositionToBB();
         }
     }
     @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
     public void isInsideOfMaterial(Material materialIn, CallbackInfoReturnable<Boolean> info) {
-        if (ModuleManager.getModule("Freecam").isEnabled()) {
+        if (Manager.Module.getModule("Freecam").isEnabled()) {
             info.setReturnValue(false);
             info.cancel();
         }

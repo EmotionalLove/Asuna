@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mixins.client;
 
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.modules.ModulePowerBow;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +39,7 @@ public class MixinItemBow {
 
     @Inject(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemBow;getArrowVelocity(I)F"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     private void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft, CallbackInfo info, EntityPlayer entityplayer, boolean flag, ItemStack itemstack, int i) {
-        if (ModuleManager.getModule(ModulePowerBow.class).isEnabled()) {
+        if (Manager.Module.getModule(ModulePowerBow.class).isEnabled()) {
             i *= 2;
         }
     }

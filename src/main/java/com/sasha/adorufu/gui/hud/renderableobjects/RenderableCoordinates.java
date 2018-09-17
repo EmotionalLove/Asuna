@@ -22,8 +22,7 @@ import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
-import com.sasha.adorufu.gui.fonts.FontManager;
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import net.minecraft.client.gui.ScaledResolution;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class RenderableCoordinates extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (ModuleManager.getModule("Coordinates").isEnabled()) {
+        if (Manager.Module.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -58,7 +57,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (ModuleManager.getModule("Coordinates").isEnabled()) {
+        if (Manager.Module.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -72,7 +71,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (ModuleManager.getModule("Coordinates").isEnabled()) {
+        if (Manager.Module.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -90,7 +89,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (ModuleManager.getModule("Coordinates").isEnabled()) {
+        if (Manager.Module.getModule("Coordinates").isEnabled()) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);

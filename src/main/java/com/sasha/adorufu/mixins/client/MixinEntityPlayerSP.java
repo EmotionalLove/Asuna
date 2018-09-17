@@ -21,7 +21,7 @@ package com.sasha.adorufu.mixins.client;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
 import com.sasha.adorufu.events.ServerPlayerInventoryCloseEvent;
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,7 +47,7 @@ public abstract class MixinEntityPlayerSP extends MixinEntityPlayer {
 
     @Inject(method = "onUpdate", at = @At("HEAD"), cancellable = true)
     public void onUpdate(CallbackInfo info) {
-        ModuleManager.tickModules();
+        Manager.Module.tickModules();
     }
 
     @Inject(method = "closeScreen", at = @At(value = "HEAD"), cancellable = true)

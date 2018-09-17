@@ -16,23 +16,15 @@
  *
  */
 
-package com.sasha.adorufu.command.commands;
+package com.sasha.adorufu.api.exception;
 
-import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.misc.Manager;
-import com.sasha.simplecmdsys.SimpleCommand;
-import com.sasha.simplecmdsys.SimpleCommandInfo;
+import com.sasha.adorufu.exception.AdorufuException;
+
 /**
- * Created by Sasha on 09/08/2018 at 3:28 PM
- **/
-@SimpleCommandInfo(description = "Used for debugging. To be removed", syntax = {""})
-public class ModulesCommand extends SimpleCommand {
-    public ModulesCommand() {
-        super("modules");
-    }
-
-    public void onCommand(){
-        Manager.Module.moduleRegistry.forEach(module -> AdorufuMod.logMsg(false, module.getModuleName() + (module.isEnabled() ? "\247aenabled" : "\247cdisabled")
-        + " " + (module.isRenderable() ? "\247arenderable" : "\247crenderable")));
+ * Created by Sasha at 9:37 AM on 9/17/2018
+ */
+public class AdorufuPluginLoaderException extends AdorufuException {
+    public AdorufuPluginLoaderException(String error) {
+        super(error);
     }
 }

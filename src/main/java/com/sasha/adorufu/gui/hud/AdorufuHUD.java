@@ -19,14 +19,13 @@
 package com.sasha.adorufu.gui.hud;
 
 
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.events.ClientOverlayRenderEvent;
 import com.sasha.adorufu.events.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.misc.AdorufuMath;
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.gui.fonts.FontManager;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
@@ -35,13 +34,13 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 
+import static com.sasha.adorufu.misc.Manager.Renderable.renderableRegistry;
+
 
 public class AdorufuHUD extends GuiScreen implements SimpleListener {
 
     public static int sHeight;
     public static int sWidth;
-
-    public static ArrayList<RenderableObject> registeredHudElements = new ArrayList<>();
 
     // starts at x = 12
     private static ArrayList<RenderableObject> leftTop = new ArrayList<>();
@@ -72,8 +71,8 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     /* todo optimise this */
     public static void setupHUD(){
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
-        for (RenderableObject element : registeredHudElements) {
-            for (AdorufuModule moduleElement : ModuleManager.moduleRegistry) {
+        for (RenderableObject element : renderableRegistry) {
+            for (AdorufuModule moduleElement : Manager.Module.moduleRegistry) {
                 if (element.getName().toLowerCase().equals(moduleElement.getModuleName().toLowerCase())){
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
                         ScreenCornerPos thePos=element.getPos();

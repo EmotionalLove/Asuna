@@ -18,6 +18,8 @@
 
 package com.sasha.adorufu;
 
+import com.sasha.adorufu.api.AdorufuPlugin;
+import com.sasha.adorufu.api.AdorufuPluginLoader;
 import com.sasha.adorufu.command.CommandHandler;
 import com.sasha.adorufu.command.commands.*;
 import com.sasha.adorufu.desktop.AdorufuSystemTrayManager;
@@ -31,9 +33,9 @@ import com.sasha.adorufu.gui.clickgui.windows.*;
 import com.sasha.adorufu.gui.fonts.FontManager;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.renderableobjects.*;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.misc.ModuleState;
 import com.sasha.adorufu.misc.TPS;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.*;
 import com.sasha.adorufu.module.modules.hudelements.*;
 import com.sasha.adorufu.remote.RemoteDataManager;
@@ -57,6 +59,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +69,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static com.sasha.adorufu.gui.clickgui.AdorufuClickGUI.registeredWindows;
-import static com.sasha.adorufu.module.ModuleManager.loadBindsAndStates;
+import static com.sasha.adorufu.misc.Manager.Module.loadBindsAndStates;
+import static com.sasha.adorufu.misc.Manager.Renderable.renderableRegistry;
 
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true, clientSideOnly = true)
 public class AdorufuMod implements SimpleListener {
@@ -114,8 +118,25 @@ public class AdorufuMod implements SimpleListener {
             AdorufuWindowsBatteryManager.INSTANCE.GetSystemPowerStatus(batteryStatus);
             logMsg(true, batteryStatus.getBatteryLifePercent());
             BATTERY_MANAGER = batteryStatus;
-        }catch (Exception x) {
+        } catch (Exception x) {
             //
+        }
+        // plugin loading
+        AdorufuPluginLoader pluginLoader = new AdorufuPluginLoader();
+        try {
+            logMsg(true, "Finding plugins...");
+            List<File> files = pluginLoader.findPlugins();
+            if (files.size() == 0) {
+                logMsg(true, "No plugins to load, continuing the initialisation of vanilla Adorufu");
+                return;
+            }
+            logMsg(true, "Preparing plugins...");
+            int i = pluginLoader.preparePlugins(files);
+            logMsg(true, "Prepared " + i + "plugin(s)");
+            pluginLoader.loadPlugins();
+            logMsg(true, "Successfully loaded the plugins!");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -130,13 +151,13 @@ public class AdorufuMod implements SimpleListener {
                 this.registerModules();
                 this.registerRenderables();
                 EVENT_MANAGER.registerListener(new CommandHandler());
-                EVENT_MANAGER.registerListener(new ModuleManager());
+                EVENT_MANAGER.registerListener(new Manager.Module());
                 AdorufuHUD.setupHUD();
                 EVENT_MANAGER.registerListener(new AdorufuHUD());
                 ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
-                ModuleManager.loadBindsAndStates();
+                Manager.Module.loadBindsAndStates();
                 ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
                 ModuleJoinLeaveMessages.joinMessages = greets.get(0);
                 ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
@@ -168,7 +189,7 @@ public class AdorufuMod implements SimpleListener {
     public void reload(boolean async) {
         Thread thread = new Thread(() -> {
             try {
-                ModuleManager.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
+                Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
                 this.registerRenderables();
                 ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
                 loadBindsAndStates();
@@ -208,6 +229,7 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(FilterCommand.class);
         COMMAND_PROCESSOR.register(FilterlistCommand.class);
         COMMAND_PROCESSOR.register(UpdateCommand.class);
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
     @Deprecated // needs to be reworked - later
@@ -223,83 +245,86 @@ public class AdorufuMod implements SimpleListener {
     }
 
     private void registerModules() {
-        ModuleManager.moduleRegistry.clear();
-        ModuleManager.register(new ModuleXray());
-        ModuleManager.register(new ModuleWireframe());
-        ModuleManager.register(new ModuleNamePlates());
-        ModuleManager.register(new ModuleTPS());
-        ModuleManager.register(new ModuleFPS());
-        ModuleManager.register(new ModuleCoordinates());
-        ModuleManager.register(new ModuleSaturation());
-        ModuleManager.register(new ModuleInventoryStats());
-        ModuleManager.register(new ModuleHorsestats());
-        ModuleManager.register(new ModuleHacklist());
-        ModuleManager.register(new ModuleWatermark());
-        ModuleManager.register(new ModuleKillaura());
-        ModuleManager.register(new ModuleStorageESP());
-        ModuleManager.register(new ModuleTracers());
-        ModuleManager.register(new ModuleAntiHunger());
-        ModuleManager.register(new ModuleClickGUI());
-        ModuleManager.register(new ModuleNightVision());
-        ModuleManager.register(new ModuleNoSlow());
-        ModuleManager.register(new ModuleAnnouncer());
-        ModuleManager.register(new ModuleAFKFish());
-        ModuleManager.register(new ModuleAutoRespawn());
-        ModuleManager.register(new ModuleChunkTrace());
-        ModuleManager.register(new ModuleFreecam());
-        ModuleManager.register(new ModuleCrystalAura());
-        ModuleManager.register(new ModuleCrystalLogout());
-        ModuleManager.register(new ModuleFlight());
-        ModuleManager.register(new ModuleJesus());
-        ModuleManager.register(new ModuleClientIgnore());
-        ModuleManager.register(new ModuleAutoIgnore());
-        ModuleManager.register(new ModuleAutoSprint());
-        ModuleManager.register(new ModuleCameraClip());
-        ModuleManager.register(new ModuleElytraBoost());
-        ModuleManager.register(new ModuleElytraFlight());
-        ModuleManager.register(new ModuleEntitySpeed());
-        ModuleManager.register(new ModuleLowJump());
-        ModuleManager.register(new ModuleMiddleClickBlock());
-        ModuleManager.register(new ModuleExtendedTablist());
-        ModuleManager.register(new ModuleAntiAFK());
-        ModuleManager.register(new ModuleYawLock());
-        ModuleManager.register(new ModuleQueueTime());
-        ModuleManager.register(new ModuleNoPush());
-        ModuleManager.register(new ModulePacketFly());
-        ModuleManager.register(new ModulePigControl());
-        ModuleManager.register(new ModuleAutoTotem());
-        ModuleManager.register(new ModuleWaypointGUI());
-        ModuleManager.register(new ModuleWaypoints());
-        ModuleManager.register(new ModuleWolfIdentity());
-        ModuleManager.register(new ModuleGhostBlockWarning());
-        ModuleManager.register(new ModuleAntiFireOverlay());
-        ModuleManager.register(new ModuleCreativeMusic());
-        ModuleManager.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
-        ModuleManager.register(new ModuleAutoArmor());
-        ModuleManager.register(new ModuleJoinLeaveMessages());
-        ModuleManager.register(new ModuleCraftInventory());
-        ModuleManager.register(new ModuleKnockbackSuppress());
-        ModuleManager.register(new ModuleEquipmentDamage());
-        ModuleManager.register(new ModuleDesktopNotifications());
-        ModuleManager.register(new ModuleCPUControl());
-        ModuleManager.register(new ModuleBatteryLife());
-        ModuleManager.register(new ModulePowerBow());
-        ModuleManager.register(new ModuleBookForger());
+        Manager.Module.moduleRegistry.clear();
+        Manager.Module.register(new ModuleXray());
+        Manager.Module.register(new ModuleWireframe());
+        Manager.Module.register(new ModuleNamePlates());
+        Manager.Module.register(new ModuleTPS());
+        Manager.Module.register(new ModuleFPS());
+        Manager.Module.register(new ModuleCoordinates());
+        Manager.Module.register(new ModuleSaturation());
+        Manager.Module.register(new ModuleInventoryStats());
+        Manager.Module.register(new ModuleHorsestats());
+        Manager.Module.register(new ModuleHacklist());
+        Manager.Module.register(new ModuleWatermark());
+        Manager.Module.register(new ModuleKillaura());
+        Manager.Module.register(new ModuleStorageESP());
+        Manager.Module.register(new ModuleTracers());
+        Manager.Module.register(new ModuleAntiHunger());
+        Manager.Module.register(new ModuleClickGUI());
+        Manager.Module.register(new ModuleNightVision());
+        Manager.Module.register(new ModuleNoSlow());
+        Manager.Module.register(new ModuleAnnouncer());
+        Manager.Module.register(new ModuleAFKFish());
+        Manager.Module.register(new ModuleAutoRespawn());
+        Manager.Module.register(new ModuleChunkTrace());
+        Manager.Module.register(new ModuleFreecam());
+        Manager.Module.register(new ModuleCrystalAura());
+        Manager.Module.register(new ModuleCrystalLogout());
+        Manager.Module.register(new ModuleFlight());
+        Manager.Module.register(new ModuleJesus());
+        Manager.Module.register(new ModuleClientIgnore());
+        Manager.Module.register(new ModuleAutoIgnore());
+        Manager.Module.register(new ModuleAutoSprint());
+        Manager.Module.register(new ModuleCameraClip());
+        Manager.Module.register(new ModuleElytraBoost());
+        Manager.Module.register(new ModuleElytraFlight());
+        Manager.Module.register(new ModuleEntitySpeed());
+        Manager.Module.register(new ModuleLowJump());
+        Manager.Module.register(new ModuleMiddleClickBlock());
+        Manager.Module.register(new ModuleExtendedTablist());
+        Manager.Module.register(new ModuleAntiAFK());
+        Manager.Module.register(new ModuleYawLock());
+        Manager.Module.register(new ModuleQueueTime());
+        Manager.Module.register(new ModuleNoPush());
+        Manager.Module.register(new ModulePacketFly());
+        Manager.Module.register(new ModulePigControl());
+        Manager.Module.register(new ModuleAutoTotem());
+        Manager.Module.register(new ModuleWaypointGUI());
+        Manager.Module.register(new ModuleWaypoints());
+        Manager.Module.register(new ModuleWolfIdentity());
+        Manager.Module.register(new ModuleGhostBlockWarning());
+        Manager.Module.register(new ModuleAntiFireOverlay());
+        Manager.Module.register(new ModuleCreativeMusic());
+        Manager.Module.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
+        Manager.Module.register(new ModuleAutoArmor());
+        Manager.Module.register(new ModuleJoinLeaveMessages());
+        Manager.Module.register(new ModuleCraftInventory());
+        Manager.Module.register(new ModuleKnockbackSuppress());
+        Manager.Module.register(new ModuleEquipmentDamage());
+        Manager.Module.register(new ModuleDesktopNotifications());
+        Manager.Module.register(new ModuleCPUControl());
+        Manager.Module.register(new ModuleBatteryLife());
+        Manager.Module.register(new ModulePowerBow());
+        Manager.Module.register(new ModuleBookForger());
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
 
 
     private void registerRenderables() {
-        AdorufuHUD.registeredHudElements.clear();
-        AdorufuHUD.registeredHudElements.add(new RenderableWatermark());
-        AdorufuHUD.registeredHudElements.add(new RenderableHacklist());
-        AdorufuHUD.registeredHudElements.add(new RenderableCoordinates());
-        AdorufuHUD.registeredHudElements.add(new RenderableSaturation());
-        AdorufuHUD.registeredHudElements.add(new RenderableInventoryStats());
-        AdorufuHUD.registeredHudElements.add(new RenderableHorseStats());
-        AdorufuHUD.registeredHudElements.add(new RenderableFramerate());
-        AdorufuHUD.registeredHudElements.add(new RenderableTickrate());
-        AdorufuHUD.registeredHudElements.add(new RenderableEquipmentDamage());
-        AdorufuHUD.registeredHudElements.add(new RenderableBatteryLife());
+        renderableRegistry.clear();
+        Manager.Renderable.register(new RenderableWatermark());
+        Manager.Renderable.register(new RenderableHacklist());
+        Manager.Renderable.register(new RenderableCoordinates());
+        Manager.Renderable.register(new RenderableSaturation());
+        Manager.Renderable.register(new RenderableInventoryStats());
+        Manager.Renderable.register(new RenderableHorseStats());
+        Manager.Renderable.register(new RenderableFramerate());
+        Manager.Renderable.register(new RenderableTickrate());
+        Manager.Renderable.register(new RenderableEquipmentDamage());
+        Manager.Renderable.register(new RenderableBatteryLife());
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
+
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {

@@ -18,12 +18,12 @@
 
 package com.sasha.adorufu.module.modules;
 
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientPacketRecieveEvent;
 import com.sasha.adorufu.module.ModuleInfo;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import net.minecraft.network.play.server.SPacketChat;
@@ -49,7 +49,7 @@ public class ModuleAutoIgnore extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onEnable() {
-        if (!ModuleManager.getModule("clientignore").isEnabled()) {
+        if (!Manager.Module.getModule("clientignore").isEnabled()) {
             logWarn(false, "You need to enable the ClientIgnore module for" +
                     " ignored players to actually be ignored.");
         }

@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mixins.client;
 
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.modules.ModuleNamePlates;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
@@ -56,7 +56,7 @@ public abstract class MixinRender {
             float f2 = entityIn.height + 0.5F - (flag ? 0.25F : 0.0F);
             int i = "deadmau5".equals(str) ? -10 : 0;
             String nameplatestr = str;
-            if ((entityIn instanceof EntityOtherPlayerMP) && ModuleManager.getModule("NamePlates").isEnabled()) {
+            if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Module.getModule("NamePlates").isEnabled()) {
                 //todo asuna
                 nameplatestr = str + " " + ModuleNamePlates.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
             }

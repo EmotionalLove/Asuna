@@ -16,24 +16,33 @@
  *
  */
 
-package com.sasha.adorufu.mixins.client;
+package com.sasha.adorufu.api;
 
-import com.sasha.adorufu.misc.Manager;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.sasha.adorufu.AdorufuMod;
 
-@Mixin(value = AbstractClientPlayer.class, priority = 999)
-public class MixinAbstractClientPlayer {
+import java.io.IOException;
 
+/**
+ * Created by Sasha at 9:17 AM on 9/17/2018
+ * The data manager used for the Adorufu Plugin API.
+ */
+public class AdorufuPluginDataManager {
 
-    @Inject(method = "isSpectator", at = @At("HEAD"), cancellable = true)
-    public void isSpectator(CallbackInfoReturnable<Boolean> info) {
-        if (Manager.Module.getModule("Freecam").isEnabled()) {
-            info.setReturnValue(true);
-            info.cancel();
+    public void write(String path, String varName, Object obj) {
+        try {
+            AdorufuMod.DATA_MANAGER.savePluginData(path, varName, obj);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    public Object read(String path, String varName, Object defaultVal) {
+        try {
+            return AdorufuMod.DATA_MANAGER.loadPluginData(path,varName,defaultVal);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

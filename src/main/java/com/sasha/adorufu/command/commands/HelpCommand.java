@@ -26,7 +26,7 @@ import com.sasha.simplecmdsys.SimpleCommandInfo;
 import java.util.HashMap;
 
 import static com.sasha.adorufu.AdorufuMod.*;
-import static com.sasha.adorufu.module.ModuleManager.moduleRegistry;
+import static com.sasha.adorufu.misc.Manager.Module.moduleRegistry;
 /**
  * Created by Sasha on 10/08/2018 at 9:28 AM
  **/

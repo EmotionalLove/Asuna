@@ -22,8 +22,7 @@ package com.sasha.adorufu.gui.hud.renderableobjects;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;
-import com.sasha.adorufu.gui.fonts.FontManager;
-import com.sasha.adorufu.module.ModuleManager;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.AdorufuModule;
 
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class RenderableHacklist extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (ModuleManager.getModule("Hacklist").isEnabled()) {
+        if (Manager.Module.getModule("Hacklist").isEnabled()) {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
@@ -59,13 +58,13 @@ public class RenderableHacklist extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (ModuleManager.getModule("Hacklist").isEnabled()) {
+        if (Manager.Module.getModule("Hacklist").isEnabled()) {
             // TODO
         }
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (ModuleManager.getModule("Hacklist").isEnabled()) {
+        if (Manager.Module.getModule("Hacklist").isEnabled()) {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
@@ -81,7 +80,7 @@ public class RenderableHacklist extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (ModuleManager.getModule("Hacklist").isEnabled()) {
+        if (Manager.Module.getModule("Hacklist").isEnabled()) {
             int count = 0;
             for (AdorufuModule module : AdorufuModule.displayList) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {

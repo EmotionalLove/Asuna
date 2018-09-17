@@ -23,8 +23,8 @@ import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.events.ClientMouseClickEvent;
 import com.sasha.adorufu.events.ClientScreenChangedEvent;
 import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.AdorufuModule;
-import com.sasha.adorufu.module.ModuleManager;
 import com.sasha.adorufu.module.modules.ModuleCPUControl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MusicTicker;
@@ -176,7 +176,7 @@ public abstract class MixinMinecraft {
                     }
                 } else {
                     KeyBinding.setKeyBindState(i, false);
-                    ModuleManager.moduleRegistry.stream().filter(m -> m.getKeyBind()==i).forEach(AdorufuModule::toggle);
+                    Manager.Module.moduleRegistry.stream().filter(m -> m.getKeyBind()==i).forEach(AdorufuModule::toggle);
 
                     if (i == 61) {
                         if (this.actionKeyF3) {
@@ -209,7 +209,7 @@ public abstract class MixinMinecraft {
     }
     @Inject(method = "getAmbientMusicType", at = @At("RETURN"), cancellable = true)
     public void getAmbientMusicType(CallbackInfoReturnable<MusicTicker.MusicType> info) {
-        if (ModuleManager.getModule("creativemusic").isEnabled()) {
+        if (Manager.Module.getModule("creativemusic").isEnabled()) {
             info.setReturnValue(MusicTicker.MusicType.CREATIVE);
             info.cancel();
         }
@@ -236,7 +236,7 @@ public abstract class MixinMinecraft {
         if (this.world == null && this.currentScreen != null) {
             return 30;
         }
-        if (!Display.isActive() && ModuleManager.getModule(ModuleCPUControl.class).isEnabled()) {
+        if (!Display.isActive() && Manager.Module.getModule(ModuleCPUControl.class).isEnabled()) {
             return 1;
         }
         return (this.gameSettings.limitFramerate);

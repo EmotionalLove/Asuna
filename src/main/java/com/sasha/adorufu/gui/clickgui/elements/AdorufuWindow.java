@@ -21,9 +21,9 @@ package com.sasha.adorufu.gui.clickgui.elements;
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.misc.AdorufuMath;
+import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
-import com.sasha.adorufu.module.ModuleManager;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -126,7 +126,7 @@ public class AdorufuWindow {
     }
 
     public void loadButtonsFromCategory(AdorufuCategory category) {
-        for (AdorufuModule m : ModuleManager.moduleRegistry) {
+        for (AdorufuModule m : Manager.Module.moduleRegistry) {
             if (m.getModuleCategory() == category) {
                 addButton(m);
             }
