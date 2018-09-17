@@ -16,21 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.adorufu;
 
-import com.sasha.eventsys.SimpleEvent;
+import com.sasha.eventsys.SimpleCancellableEvent;
 
 /**
- * Created by Sasha on 09/08/2018 at 11:30 AM
+ * Created by Sasha on 06/08/2018 at 4:23 PM
  **/
-public class ClientOverlayRenderEvent extends SimpleEvent {
-    private float partialTicks;
+public class AdorufuCommandEvent extends SimpleCancellableEvent {
 
-    public ClientOverlayRenderEvent(float partialTicks) {
-        this.partialTicks = partialTicks;
+    private String msg;
+
+    public AdorufuCommandEvent(String msg){
+        this.msg = msg;
     }
 
-    public float getPartialTicks() {
-        return partialTicks;
+
+    public String getMsg() {
+        return msg;
     }
 }

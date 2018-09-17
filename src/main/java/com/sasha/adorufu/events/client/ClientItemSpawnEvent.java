@@ -16,30 +16,22 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
 import com.sasha.eventsys.SimpleEvent;
-import com.sasha.adorufu.misc.ModuleState;
-import com.sasha.adorufu.module.AdorufuModule;
+import net.minecraft.item.Item;
 
-/**
- * Created by Sasha on 08/08/2018 at 9:18 AM
- **/
-public class AdorufuModuleTogglePostEvent extends SimpleEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
+public class ClientItemSpawnEvent extends SimpleEvent {
 
-    public AdorufuModuleTogglePostEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+    private int x,y,z;
+
+    public ClientItemSpawnEvent(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    public int[] getCoordinate() {
+        return new int[] {this.x, this.y, this.z};
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
-    }
-
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
-    }
 }
-

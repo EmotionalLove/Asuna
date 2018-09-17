@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientPlayerInventoryCloseEvent;
+import com.sasha.adorufu.events.client.ClientPlayerInventoryCloseEvent;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import org.spongepowered.asm.mixin.Mixin;

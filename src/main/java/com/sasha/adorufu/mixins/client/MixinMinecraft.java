@@ -20,9 +20,9 @@ package com.sasha.adorufu.mixins.client;
 
 import com.mojang.authlib.properties.PropertyMap;
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientMouseClickEvent;
-import com.sasha.adorufu.events.ClientScreenChangedEvent;
-import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
+import com.sasha.adorufu.events.client.ClientMouseClickEvent;
+import com.sasha.adorufu.events.client.ClientScreenChangedEvent;
+import com.sasha.adorufu.events.playerclient.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.misc.Manager;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.modules.ModuleCPUControl;

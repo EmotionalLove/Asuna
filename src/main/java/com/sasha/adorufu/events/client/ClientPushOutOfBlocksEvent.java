@@ -16,23 +16,29 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
 
-/**
- * Created by Sasha on 06/08/2018 at 4:23 PM
- **/
-public class PlayerAdorufuCommandEvent extends SimpleCancellableEvent {
-
-    private String msg;
-
-    public PlayerAdorufuCommandEvent(String msg){
-        this.msg = msg;
+public class ClientPushOutOfBlocksEvent extends SimpleCancellableEvent {
+    private double x;
+    private double y;
+    private double z;
+    public ClientPushOutOfBlocksEvent(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
+    public double getX() {
+        return x;
+    }
 
-    public String getMsg() {
-        return msg;
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
     }
 }

@@ -19,8 +19,8 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientPacketRecieveEvent;
-import com.sasha.adorufu.events.ClientPacketSendEvent;
+import com.sasha.adorufu.events.client.ClientPacketRecieveEvent;
+import com.sasha.adorufu.events.client.ClientPacketSendEvent;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.concurrent.Future;

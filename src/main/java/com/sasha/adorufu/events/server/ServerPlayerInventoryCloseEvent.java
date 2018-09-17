@@ -16,7 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.server;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
 import net.minecraft.inventory.Container;
@@ -24,15 +24,15 @@ import net.minecraft.inventory.Container;
 /**
  * Created by Sasha at 12:52 PM on 9/2/2018
  */
-public class ClientPlayerInventoryCloseEvent extends SimpleCancellableEvent {
+public class ServerPlayerInventoryCloseEvent extends SimpleCancellableEvent {
 
-    private Container container;
+    private Container inv;
 
-    public ClientPlayerInventoryCloseEvent(Container container) {
-        this.container = container;
+    public ServerPlayerInventoryCloseEvent(Container container) {
+        this.inv = container;
     }
 
     public Container getContainer() {
-        return container;
+        return inv;
     }
 }

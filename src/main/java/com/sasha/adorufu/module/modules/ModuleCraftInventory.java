@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.adorufu.events.ServerPlayerInventoryCloseEvent;
+import com.sasha.adorufu.events.server.ServerPlayerInventoryCloseEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;

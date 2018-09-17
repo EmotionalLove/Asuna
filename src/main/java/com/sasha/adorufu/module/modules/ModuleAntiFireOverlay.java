@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.adorufu.events.ClientRenderFireOverlayEvent;
+import com.sasha.adorufu.events.client.ClientRenderFireOverlayEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;

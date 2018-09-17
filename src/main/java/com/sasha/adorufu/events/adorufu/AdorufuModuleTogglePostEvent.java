@@ -16,15 +16,30 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.adorufu;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
+import com.sasha.eventsys.SimpleEvent;
+import com.sasha.adorufu.misc.ModuleState;
+import com.sasha.adorufu.module.AdorufuModule;
 
-public class ClientMouseClickEvent {
-    public static class Middle extends SimpleCancellableEvent {
-        public Middle(){}
+/**
+ * Created by Sasha on 08/08/2018 at 9:18 AM
+ **/
+public class AdorufuModuleTogglePostEvent extends SimpleEvent {
+    private AdorufuModule toggledModule;
+    private ModuleState toggleState;
+
+    public AdorufuModuleTogglePostEvent(AdorufuModule toggledModule, ModuleState toggleState){
+        this.toggledModule= toggledModule;
+        this.toggleState= toggleState;
     }
-    public static class Right extends SimpleCancellableEvent {
-        public Right(){}
+
+    public ModuleState getToggleState() {
+        return toggleState;
+    }
+
+    public AdorufuModule getToggledModule() {
+        return toggledModule;
     }
 }
+

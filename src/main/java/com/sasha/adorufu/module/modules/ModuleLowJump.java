@@ -20,7 +20,7 @@ package com.sasha.adorufu.module.modules;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.adorufu.events.PlayerJumpEvent;
+import com.sasha.adorufu.events.playerclient.PlayerJumpEvent;
 import com.sasha.adorufu.module.ModuleInfo;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;

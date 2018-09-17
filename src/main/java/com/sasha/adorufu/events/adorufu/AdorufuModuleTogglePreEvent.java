@@ -16,23 +16,30 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.adorufu;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
-import net.minecraft.inventory.Container;
+import com.sasha.adorufu.misc.ModuleState;
+import com.sasha.adorufu.module.AdorufuModule;
 
 /**
- * Created by Sasha at 12:52 PM on 9/2/2018
- */
-public class ServerPlayerInventoryCloseEvent extends SimpleCancellableEvent {
+ * Created by Sasha on 08/08/2018 at 9:18 AM
+ **/
+public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
+    private AdorufuModule toggledModule;
+    private ModuleState toggleState;
 
-    private Container inv;
-
-    public ServerPlayerInventoryCloseEvent(Container container) {
-        this.inv = container;
+    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
+        this.toggledModule= toggledModule;
+        this.toggleState= toggleState;
     }
 
-    public Container getContainer() {
-        return inv;
+    public ModuleState getToggleState() {
+        return toggleState;
+    }
+
+    public AdorufuModule getToggledModule() {
+        return toggledModule;
     }
 }
+

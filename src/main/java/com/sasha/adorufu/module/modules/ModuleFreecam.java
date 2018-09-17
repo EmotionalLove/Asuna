@@ -19,9 +19,9 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientPacketRecieveEvent;
-import com.sasha.adorufu.events.ClientPacketSendEvent;
-import com.sasha.adorufu.events.ClientPushOutOfBlocksEvent;
+import com.sasha.adorufu.events.client.ClientPacketRecieveEvent;
+import com.sasha.adorufu.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;

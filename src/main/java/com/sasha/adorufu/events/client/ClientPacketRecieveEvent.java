@@ -16,29 +16,27 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
+import net.minecraft.network.Packet;
 
-public class ClientPushOutOfBlocksEvent extends SimpleCancellableEvent {
-    private double x;
-    private double y;
-    private double z;
-    public ClientPushOutOfBlocksEvent(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+/**
+ * Created by Sasha on 08/08/2018 at 8:03 PM
+ **/
+public class ClientPacketRecieveEvent extends SimpleCancellableEvent {
+
+    private Packet<?> recievedPacket;
+
+    public ClientPacketRecieveEvent(Packet<?> recievedPacket){
+        this.recievedPacket = recievedPacket;
     }
 
-    public double getX() {
-        return x;
+    public Packet<?> getRecievedPacket() {
+        return recievedPacket;
     }
 
-    public double getY() {
-        return y;
-    }
-
-    public double getZ() {
-        return z;
+    public void setRecievedPacket(Packet<?> recievedPacket) {
+        this.recievedPacket = recievedPacket;
     }
 }

@@ -19,7 +19,7 @@
 package com.sasha.adorufu.desktop;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientScreenChangedEvent;
+import com.sasha.adorufu.events.client.ClientScreenChangedEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 

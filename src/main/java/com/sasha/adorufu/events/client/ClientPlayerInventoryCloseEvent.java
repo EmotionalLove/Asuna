@@ -16,22 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
+import net.minecraft.inventory.Container;
 
-public class PlayerJumpEvent extends SimpleCancellableEvent {
-    private float jumpHeight;
+/**
+ * Created by Sasha at 12:52 PM on 9/2/2018
+ */
+public class ClientPlayerInventoryCloseEvent extends SimpleCancellableEvent {
 
-    public PlayerJumpEvent(float jumpHeight) {
-        this.jumpHeight = jumpHeight;
+    private Container container;
+
+    public ClientPlayerInventoryCloseEvent(Container container) {
+        this.container = container;
     }
 
-    public float getJumpHeight() {
-        return jumpHeight;
-    }
-
-    public void setJumpHeight(float jumpHeight) {
-        this.jumpHeight = jumpHeight;
+    public Container getContainer() {
+        return container;
     }
 }

@@ -16,10 +16,27 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
+import net.minecraft.network.Packet;
 
-public class ClientRenderFireOverlayEvent extends SimpleCancellableEvent {
+/**
+ * Created by Sasha on 08/08/2018 at 8:02 PM
+ **/
+public class ClientPacketSendEvent extends SimpleCancellableEvent {
 
+    private Packet<?> sendPacket;
+
+    public ClientPacketSendEvent(Packet<?> sendPacket){
+        this.sendPacket= sendPacket;
+    }
+
+    public Packet<?> getSendPacket() {
+        return sendPacket;
+    }
+
+    public void setSendPacket(Packet<?> sendPacket) {
+        this.sendPacket = sendPacket;
+    }
 }

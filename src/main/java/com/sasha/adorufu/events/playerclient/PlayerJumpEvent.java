@@ -16,21 +16,22 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.playerclient;
 
-import com.mojang.authlib.GameProfile;
-import com.sasha.eventsys.SimpleEvent;
+import com.sasha.eventsys.SimpleCancellableEvent;
 
-/**
- * Created by Sasha at 9:21 PM on 9/1/2018
- */
-public class ServerPlayerLeaveEvent extends SimpleEvent {
+public class PlayerJumpEvent extends SimpleCancellableEvent {
+    private float jumpHeight;
 
-    private GameProfile gp;
+    public PlayerJumpEvent(float jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
 
-    public ServerPlayerLeaveEvent(GameProfile gp) {this.gp = gp;}
+    public float getJumpHeight() {
+        return jumpHeight;
+    }
 
-    public GameProfile getGameProfile() {
-        return gp;
+    public void setJumpHeight(float jumpHeight) {
+        this.jumpHeight = jumpHeight;
     }
 }

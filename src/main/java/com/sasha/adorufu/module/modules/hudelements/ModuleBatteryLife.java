@@ -19,7 +19,7 @@
 package com.sasha.adorufu.module.modules.hudelements;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.AdorufuBatteryLevelChangedEvent;
+import com.sasha.adorufu.events.adorufu.AdorufuBatteryLevelChangedEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;

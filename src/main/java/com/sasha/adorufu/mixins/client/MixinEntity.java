@@ -19,9 +19,9 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientEntityCollideEvent;
-import com.sasha.adorufu.events.ClientPushOutOfBlocksEvent;
-import com.sasha.adorufu.events.PlayerKnockbackEvent;
+import com.sasha.adorufu.events.client.ClientEntityCollideEvent;
+import com.sasha.adorufu.events.client.ClientPushOutOfBlocksEvent;
+import com.sasha.adorufu.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.misc.Manager;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

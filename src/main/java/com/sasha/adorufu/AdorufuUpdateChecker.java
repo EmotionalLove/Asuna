@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu;
 
-import com.sasha.adorufu.events.ClientPacketRecieveEvent;
+import com.sasha.adorufu.events.client.ClientPacketRecieveEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketServerDifficulty;

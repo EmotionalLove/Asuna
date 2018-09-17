@@ -19,8 +19,8 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
-import com.sasha.adorufu.events.ServerPlayerInventoryCloseEvent;
+import com.sasha.adorufu.events.adorufu.AdorufuCommandEvent;
+import com.sasha.adorufu.events.server.ServerPlayerInventoryCloseEvent;
 import com.sasha.adorufu.misc.Manager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +40,7 @@ public abstract class MixinEntityPlayerSP extends MixinEntityPlayer {
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String message, CallbackInfo info) {
         if (message.startsWith(AdorufuMod.COMMAND_PROCESSOR.getCommandPrefix())) {
-            AdorufuMod.EVENT_MANAGER.invokeEvent(new PlayerAdorufuCommandEvent(message));
+            AdorufuMod.EVENT_MANAGER.invokeEvent(new AdorufuCommandEvent(message));
             info.cancel();
         }
     }

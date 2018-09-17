@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.module.modules;
 
-import com.sasha.adorufu.events.PlayerKnockbackEvent;
+import com.sasha.adorufu.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;

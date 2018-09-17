@@ -16,21 +16,28 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.adorufu;
 
-import com.mojang.authlib.GameProfile;
 import com.sasha.eventsys.SimpleEvent;
 
 /**
- * Created by Sasha at 9:21 PM on 9/1/2018
+ * Created by Sasha at 11:54 AM on 9/16/2018
  */
-public class ServerPlayerJoinEvent extends SimpleEvent {
+public class AdorufuBatteryLevelChangedEvent extends SimpleEvent {
 
-    private GameProfile gp;
+    private int newBatteryPercent;
+    private boolean isCharging;
 
-    public ServerPlayerJoinEvent(GameProfile gp) {this.gp = gp;}
+    public AdorufuBatteryLevelChangedEvent(int newBatteryPercent, boolean isCharging) {
+        this.newBatteryPercent = newBatteryPercent;
+        this.isCharging = isCharging;
+    }
 
-    public GameProfile getGameProfile() {
-        return gp;
+    public boolean isCharging() {
+        return isCharging;
+    }
+
+    public int getNewBatteryPercent() {
+        return newBatteryPercent;
     }
 }

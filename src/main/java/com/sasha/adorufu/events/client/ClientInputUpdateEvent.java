@@ -16,28 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
-import com.sasha.eventsys.SimpleEvent;
+import com.sasha.eventsys.SimpleCancellableEvent;
+import net.minecraft.util.MovementInput;
 
 /**
- * Created by Sasha at 11:54 AM on 9/16/2018
+ * Created by Sasha at 6:10 AM on 8/29/2018
  */
-public class AdorufuBatteryLevelChangedEvent extends SimpleEvent {
+public class ClientInputUpdateEvent extends SimpleCancellableEvent {
 
-    private int newBatteryPercent;
-    private boolean isCharging;
+    private MovementInput movementInput;
 
-    public AdorufuBatteryLevelChangedEvent(int newBatteryPercent, boolean isCharging) {
-        this.newBatteryPercent = newBatteryPercent;
-        this.isCharging = isCharging;
+    public ClientInputUpdateEvent(MovementInput movementInput) {
+        this.movementInput= movementInput;
     }
 
-    public boolean isCharging() {
-        return isCharging;
-    }
-
-    public int getNewBatteryPercent() {
-        return newBatteryPercent;
+    public MovementInput getMovementInput() {
+        return movementInput;
     }
 }

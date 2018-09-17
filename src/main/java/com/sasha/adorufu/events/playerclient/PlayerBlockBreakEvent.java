@@ -16,30 +16,30 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.playerclient;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.misc.ModuleState;
-import com.sasha.adorufu.module.AdorufuModule;
+import com.sasha.adorufu.AdorufuMod;
+import net.minecraft.block.Block;
+import net.minecraft.util.math.BlockPos;
 
 /**
- * Created by Sasha on 08/08/2018 at 9:18 AM
+ * Created by Sasha on 11/08/2018 at 5:19 PM
  **/
-public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
+public class PlayerBlockBreakEvent extends SimpleCancellableEvent {
 
-    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+    private Block block;
+    private BlockPos brokenPos;
+
+    public PlayerBlockBreakEvent(BlockPos pos) {
+        block = AdorufuMod.minecraft.world.getBlockState(pos).getBlock();
+        this.brokenPos = pos;
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
+    public Block getBlock() {
+        return block;
     }
-
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
+    public BlockPos getBlockPos() {
+        return brokenPos;
     }
 }
-

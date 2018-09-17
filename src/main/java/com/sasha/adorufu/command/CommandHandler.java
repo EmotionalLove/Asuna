@@ -20,10 +20,7 @@ package com.sasha.adorufu.command;
 
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.PlayerAdorufuCommandEvent;
-
-import java.util.ArrayList;
+import com.sasha.adorufu.events.adorufu.AdorufuCommandEvent;
 
 import static com.sasha.adorufu.AdorufuMod.COMMAND_PROCESSOR;
 
@@ -33,7 +30,7 @@ import static com.sasha.adorufu.AdorufuMod.COMMAND_PROCESSOR;
 public class CommandHandler implements SimpleListener {
 
     @SimpleEventHandler
-    public void onAdorufuCommand(PlayerAdorufuCommandEvent e) {
+    public void onAdorufuCommand(AdorufuCommandEvent e) {
         if (e.getMsg().startsWith(COMMAND_PROCESSOR.getCommandPrefix()))
         COMMAND_PROCESSOR.processCommand(e.getMsg());
     }

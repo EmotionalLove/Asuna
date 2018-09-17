@@ -16,30 +16,21 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.server;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.AdorufuMod;
-import net.minecraft.block.Block;
-import net.minecraft.util.math.BlockPos;
+import com.mojang.authlib.GameProfile;
+import com.sasha.eventsys.SimpleEvent;
 
 /**
- * Created by Sasha on 11/08/2018 at 5:19 PM
- **/
-public class PlayerBlockBreakEvent extends SimpleCancellableEvent {
+ * Created by Sasha at 9:21 PM on 9/1/2018
+ */
+public class ServerPlayerLeaveEvent extends SimpleEvent {
 
-    private Block block;
-    private BlockPos brokenPos;
+    private GameProfile gp;
 
-    public PlayerBlockBreakEvent(BlockPos pos) {
-        block = AdorufuMod.minecraft.world.getBlockState(pos).getBlock();
-        this.brokenPos = pos;
-    }
+    public ServerPlayerLeaveEvent(GameProfile gp) {this.gp = gp;}
 
-    public Block getBlock() {
-        return block;
-    }
-    public BlockPos getBlockPos() {
-        return brokenPos;
+    public GameProfile getGameProfile() {
+        return gp;
     }
 }

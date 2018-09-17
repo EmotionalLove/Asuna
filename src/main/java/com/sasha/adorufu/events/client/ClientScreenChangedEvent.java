@@ -16,12 +16,27 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
-import com.sasha.eventsys.SimpleEvent;
+import com.sasha.eventsys.SimpleCancellableEvent;
+import net.minecraft.client.gui.GuiScreen;
 
 /**
- * Created by Sasha at 2:49 PM on 8/27/2018
+ * Created by Sasha at 6:48 PM on 9/9/2018
  */
-public class AdorufuDataFileRetrievedEvent extends SimpleEvent {
+public class ClientScreenChangedEvent extends SimpleCancellableEvent {
+
+    private GuiScreen screen;
+
+    public ClientScreenChangedEvent(GuiScreen screen) {
+        this.screen = screen;
+    }
+
+    public GuiScreen getScreen() {
+        return screen;
+    }
+
+    public void setScreen(GuiScreen screen) {
+        this.screen = screen;
+    }
 }

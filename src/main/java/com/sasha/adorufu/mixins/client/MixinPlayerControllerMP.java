@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.PlayerBlockBreakEvent;
+import com.sasha.adorufu.events.playerclient.PlayerBlockBreakEvent;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;

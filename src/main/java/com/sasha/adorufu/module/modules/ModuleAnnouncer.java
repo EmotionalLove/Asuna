@@ -19,8 +19,8 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.PlayerBlockBreakEvent;
-import com.sasha.adorufu.events.PlayerBlockPlaceEvent;
+import com.sasha.adorufu.events.playerclient.PlayerBlockBreakEvent;
+import com.sasha.adorufu.events.playerclient.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;

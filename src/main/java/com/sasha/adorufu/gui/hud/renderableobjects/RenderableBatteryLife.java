@@ -21,7 +21,7 @@ package com.sasha.adorufu.gui.hud.renderableobjects;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.adorufu.desktop.AdorufuWindowsBatteryManager;
-import com.sasha.adorufu.events.AdorufuBatteryLevelChangedEvent;
+import com.sasha.adorufu.events.adorufu.AdorufuBatteryLevelChangedEvent;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.gui.hud.RenderableObject;
 import com.sasha.adorufu.gui.hud.ScreenCornerPos;

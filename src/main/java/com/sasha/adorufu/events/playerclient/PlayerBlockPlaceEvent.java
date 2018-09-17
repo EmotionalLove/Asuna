@@ -16,27 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.playerclient;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import net.minecraft.client.gui.GuiScreen;
+import com.sasha.eventsys.SimpleEvent;
+import net.minecraft.item.ItemStack;
 
 /**
- * Created by Sasha at 6:48 PM on 9/9/2018
- */
-public class ClientScreenChangedEvent extends SimpleCancellableEvent {
+ * Created by Sasha on 11/08/2018 at 5:19 PM
+ **/
+public class PlayerBlockPlaceEvent extends SimpleEvent {
 
-    private GuiScreen screen;
+    private ItemStack block;
 
-    public ClientScreenChangedEvent(GuiScreen screen) {
-        this.screen = screen;
+    public PlayerBlockPlaceEvent(ItemStack pos) {
+        block = pos;
     }
 
-    public GuiScreen getScreen() {
-        return screen;
-    }
-
-    public void setScreen(GuiScreen screen) {
-        this.screen = screen;
+    public ItemStack getBlock() {
+        return block;
     }
 }

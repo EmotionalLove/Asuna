@@ -16,7 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.playerclient;
 
 import com.sasha.eventsys.SimpleCancellableEvent;
 

@@ -16,23 +16,21 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.server;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import net.minecraft.util.MovementInput;
+import com.mojang.authlib.GameProfile;
+import com.sasha.eventsys.SimpleEvent;
 
 /**
- * Created by Sasha at 6:10 AM on 8/29/2018
+ * Created by Sasha at 9:21 PM on 9/1/2018
  */
-public class ClientInputUpdateEvent extends SimpleCancellableEvent {
+public class ServerPlayerJoinEvent extends SimpleEvent {
 
-    private MovementInput movementInput;
+    private GameProfile gp;
 
-    public ClientInputUpdateEvent(MovementInput movementInput) {
-        this.movementInput= movementInput;
-    }
+    public ServerPlayerJoinEvent(GameProfile gp) {this.gp = gp;}
 
-    public MovementInput getMovementInput() {
-        return movementInput;
+    public GameProfile getGameProfile() {
+        return gp;
     }
 }

@@ -16,27 +16,21 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import net.minecraft.network.Packet;
+import com.sasha.eventsys.SimpleEvent;
 
 /**
- * Created by Sasha on 08/08/2018 at 8:02 PM
+ * Created by Sasha on 09/08/2018 at 11:30 AM
  **/
-public class ClientPacketSendEvent extends SimpleCancellableEvent {
+public class ClientOverlayRenderEvent extends SimpleEvent {
+    private float partialTicks;
 
-    private Packet<?> sendPacket;
-
-    public ClientPacketSendEvent(Packet<?> sendPacket){
-        this.sendPacket= sendPacket;
+    public ClientOverlayRenderEvent(float partialTicks) {
+        this.partialTicks = partialTicks;
     }
 
-    public Packet<?> getSendPacket() {
-        return sendPacket;
-    }
-
-    public void setSendPacket(Packet<?> sendPacket) {
-        this.sendPacket = sendPacket;
+    public float getPartialTicks() {
+        return partialTicks;
     }
 }

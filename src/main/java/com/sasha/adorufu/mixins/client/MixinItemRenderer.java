@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientRenderFireOverlayEvent;
+import com.sasha.adorufu.events.client.ClientRenderFireOverlayEvent;
 import net.minecraft.client.renderer.ItemRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

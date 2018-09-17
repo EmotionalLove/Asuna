@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.PlayerJumpEvent;
+import com.sasha.adorufu.events.playerclient.PlayerJumpEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;

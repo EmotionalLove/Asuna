@@ -19,8 +19,8 @@
 package com.sasha.adorufu.module;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.AdorufuModuleTogglePostEvent;
-import com.sasha.adorufu.events.AdorufuModuleTogglePreEvent;
+import com.sasha.adorufu.events.adorufu.AdorufuModuleTogglePostEvent;
+import com.sasha.adorufu.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.exception.AdorufuModuleOptionNotFoundException;
 import com.sasha.adorufu.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.misc.ModuleState;

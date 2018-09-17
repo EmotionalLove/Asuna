@@ -16,23 +16,43 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.client;
 
 import com.sasha.eventsys.SimpleEvent;
+import net.minecraft.block.Block;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
-public class MinecraftGetAABBEvent extends SimpleEvent {
-    private AxisAlignedBB axisAlignedBB;
+/**
+ * Created by Sasha on 12/08/2018 at 2:58 PM
+ **/
+public class ClientCollisionBoxFormedEvent extends SimpleEvent {
+    private Block block;
+    private BlockPos pos;
+    private AxisAlignedBB aabb;
 
-    public MinecraftGetAABBEvent(AxisAlignedBB axisAlignedBB) {
-        this.axisAlignedBB = axisAlignedBB;
+    public ClientCollisionBoxFormedEvent(Block block, BlockPos pos, AxisAlignedBB aabb) {
+        this.block = block;
+        this.pos = pos;
+        this.aabb = aabb;
+    }
+    public Block getBlock() {
+        return block;
     }
 
-    public AxisAlignedBB getAxisAlignedBB() {
-        return axisAlignedBB;
+    public BlockPos getPos() {
+        return pos;
     }
 
-    public void setAxisAlignedBB(AxisAlignedBB axisAlignedBB) {
-        this.axisAlignedBB = axisAlignedBB;
+    public AxisAlignedBB getAabb() {
+        return aabb;
+    }
+
+    public void setAabb(AxisAlignedBB aabb) {
+        this.aabb = aabb;
+    }
+
+    public void setPos(BlockPos pos) {
+        this.pos = pos;
     }
 }

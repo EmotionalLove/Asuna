@@ -16,23 +16,39 @@
  *
  */
 
-package com.sasha.adorufu.events;
+package com.sasha.adorufu.events.server;
 
 import com.sasha.eventsys.SimpleEvent;
-import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SPacketChunkData;
+import net.minecraft.world.chunk.Chunk;
 
-/**
- * Created by Sasha at 3:49 PM on 9/16/2018
- */
-public class ClientSaveBookEvent extends SimpleEvent {
+public class ServerGenerateChunkEvent extends SimpleEvent {
 
-    private ItemStack book;
+    private int chunkX;
+    private int chunkZ;
+    private Chunk chunk;
+    private SPacketChunkData packetIn;
 
-    public ClientSaveBookEvent(ItemStack book) {
-        this.book = book;
+    public ServerGenerateChunkEvent(Chunk chunk, SPacketChunkData packetIn, int chunkX, int chunkY) {
+        this.chunkX = chunkX;
+        this.chunkZ = chunkY;
+        this.chunk = chunk;
+        this.packetIn = packetIn;
     }
 
-    public ItemStack getBook() {
-        return book;
+    public int getChunkX() {
+        return chunkX;
+    }
+
+    public int getChunkZ() {
+        return chunkZ;
+    }
+
+    public Chunk getChunk() {
+        return chunk;
+    }
+
+    public SPacketChunkData getPacketIn() {
+        return packetIn;
     }
 }

@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mixins.client;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientEnderPearlSpawnEvent;
-import com.sasha.adorufu.events.ClientItemSpawnEvent;
-import com.sasha.adorufu.events.PlayerKnockbackEvent;
-import com.sasha.adorufu.events.ServerGenerateChunkEvent;
+import com.sasha.adorufu.events.client.ClientEnderPearlSpawnEvent;
+import com.sasha.adorufu.events.client.ClientItemSpawnEvent;
+import com.sasha.adorufu.events.playerclient.PlayerKnockbackEvent;
+import com.sasha.adorufu.events.server.ServerGenerateChunkEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;

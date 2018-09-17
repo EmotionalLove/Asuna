@@ -19,7 +19,7 @@
 package com.sasha.adorufu.remote.packet;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.AdorufuDataFileRetrievedEvent;
+import com.sasha.adorufu.events.adorufu.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.gui.remotedatafilegui.GuiCloudLogin;
 import com.sasha.adorufu.remote.PacketProcessor;
 

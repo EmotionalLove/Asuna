@@ -19,7 +19,7 @@
 package com.sasha.adorufu.module.modules;
 
 import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.events.ClientPacketRecieveEvent;
+import com.sasha.adorufu.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.module.AdorufuCategory;
 import com.sasha.adorufu.module.AdorufuModule;
 import com.sasha.adorufu.module.ModuleInfo;
