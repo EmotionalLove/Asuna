@@ -132,9 +132,9 @@ public class AdorufuMod implements SimpleListener {
             }
             logMsg(true, "Preparing plugins...");
             int i = pluginLoader.preparePlugins(files);
-            logMsg(true, "Prepared " + i + "plugin(s)");
+            logMsg(true, "Prepared " + i + " plugin(s)");
             pluginLoader.loadPlugins();
-            logMsg(true, "Successfully loaded the plugins!");
+            logMsg(true, "Successfully loaded plugins!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -184,6 +184,10 @@ public class AdorufuMod implements SimpleListener {
     public void postInit(FMLPostInitializationEvent e) {
         FONT_MANAGER = new FontManager();
         FONT_MANAGER.loadFonts(); // I would load this on a seperate thread if I could, because it takes forEVER to exectute.
+        if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
+            AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
+                    "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
+                    " developers can run malicious code in their plugins.");
     }
 
     public void reload(boolean async) {
@@ -229,6 +233,7 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(FilterCommand.class);
         COMMAND_PROCESSOR.register(FilterlistCommand.class);
         COMMAND_PROCESSOR.register(UpdateCommand.class);
+        COMMAND_PROCESSOR.register(PluginsCommand.class);
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
@@ -241,7 +246,6 @@ public class AdorufuMod implements SimpleListener {
         registeredWindows.add(new WindowMisc());
         registeredWindows.add(new WindowMovement());
         registeredWindows.add(new WindowRender());
-
     }
 
     private void registerModules() {

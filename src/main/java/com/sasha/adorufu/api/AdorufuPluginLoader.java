@@ -113,11 +113,12 @@ public class AdorufuPluginLoader {
                 // set the plugin's information.
                 plugin.setInfo(parser.getString("name"), parser.getString("description"), parser.getString("author"));
                 // add to list of loaded plugins
+                AdorufuMod.logMsg(true, plugin.getPluginName() + " by " + plugin.getPluginAuthor() + " was loaded and enabled.");
                 loadedPlugins.add(plugin);
                 // run the onEnable() method
                 plugin.onEnable();
                 // register if SimpleListener is implemented
-                if (mainClass.getInterfaces()[0] == SimpleListener.class) {
+                if ((mainClass.getInterfaces() != null && mainClass.getInterfaces().length > 0) && mainClass.getInterfaces()[0] == SimpleListener.class) {
                     AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) plugin);
                 }
             } catch (MalformedURLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {

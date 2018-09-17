@@ -50,4 +50,16 @@ public abstract class AdorufuPlugin {
         this.pluginName = pluginName;
         infoSet = true;
     }
+
+    public String getPluginAuthor() {
+        return pluginAuthor;
+    }
+
+    public String getPluginName() {
+        return pluginName;
+    }
+
+    public String getPluginDescription() {
+        return pluginDescription;
+    }
 }
