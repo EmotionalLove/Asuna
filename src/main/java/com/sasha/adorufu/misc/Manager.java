@@ -147,7 +147,7 @@ public class Manager {
                     StringWriter sw = new StringWriter();
                     PrintWriter w = new PrintWriter(sw);
                     e.printStackTrace(w);
-                    AdorufuMod.logMsg("\247c" + sw.toString());
+                    AdorufuMod.logMsg("\247c" + sw.toString().replace("\r\n", "\n"));
                 }
             });
             AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));

@@ -51,43 +51,51 @@ public class MinecraftAdapter {
     /**
      * Finds specific instance-methods based on the parameters you specify and their types. In generic cases where a class may have
      * two functions that take an int as a parameter, both will be returned in the array.
-     *
+     * <p>
      * This is to get around Forge's obfuscation when a plugin developer is trying to call Minecraft methods in their plugin, as simply
      * importing an unobfuscated mc jar simply throws ClassNotFoundException's when it's in obfuscated enviroment
-     *
+     * <p>
      * blah blah blah im also really fucking retarded so that's that
      *
      * @param args the arguments to the function you're trying to invoke
      * @return a list of possible methods
      */
     @Nullable
-    public List<Method> findFunc(Object... args) {
+    public List<Method> findFunc(boolean debug, Object... args) {
         List<Method> preFuncs = new ArrayList<>();
-        Arrays.stream(targetClass.getDeclaredMethods()).filter(f -> f.isAccessible() && !Modifier.isStatic(f.getModifiers())).forEach(preFuncs::add);
+        Arrays.stream(targetClass.getDeclaredMethods()).filter(f -> Modifier.isPublic(f.getModifiers()) && !Modifier.isStatic(f.getModifiers())).forEach(preFuncs::add);
         List<Method> parametreSizeFuncs = new ArrayList<>();
         preFuncs.stream()
                 .filter(f -> f.getParameterCount() == args.length)
-                .forEach(parametreSizeFuncs::add);
+                .forEach(func -> {
+                    parametreSizeFuncs.add(func);
+                    if (debug) AdorufuMod.logMsg(true, "Parametre count matched: " + func.getName());
+                });
         if (parametreSizeFuncs.size() == 0) {
+            if (debug) AdorufuMod.logMsg(true, "No matching functions were found!");
             return null;
         }
         if (parametreSizeFuncs.size() == 1) {
-            List<Method> l = new ArrayList<Method>();
+            List<Method> l = new ArrayList<>();
             l.add(parametreSizeFuncs.get(0));
+            if (debug) AdorufuMod.logMsg(true, "Found exactly one function: " + l.get(0).getName());
             return l;
         }
         /* ok so like there's multiple functions in this arraylist so now we have to narrow them down
          * EVEN MORE smh ;-;
          **/
+        if (debug) AdorufuMod.logMsg(true, "Need to be more specific...");
         List<Method> theMethods = new ArrayList<>();
         parametreSizeFuncs.forEach(func -> {
             for (int i = 0; i < args.length; i++) {
-                AdorufuMod.logWarn(true, func.getParameterTypes()[i].getSimpleName()
-                        + " vs " + args[i].getClass().getSimpleName());
-                if (!func.getParameterTypes()[i].isInstance(args[i])) {
+                boolean flag = func.getParameterTypes()[i].isInstance(args[i]);
+                if (debug) AdorufuMod.logWarn(true, func.getParameterTypes()[i].getSimpleName()
+                        + " vs " + args[i].getClass().getSimpleName() + " = " + flag);
+                if (!flag) {
                     return;
                 }
             }
+            if (debug) AdorufuMod.logMsg(true, "Specifically found: " + func.getName());
             theMethods.add(func);
         });
         return theMethods;
@@ -95,6 +103,7 @@ public class MinecraftAdapter {
 
     @Nullable
     public Object invoke(Method func, Object... args) {
+        func.setAccessible(true);
         if (func.getGenericReturnType().getTypeName().equalsIgnoreCase("void")) {
             try {
                 func.invoke(this.targetInstance, args);
@@ -109,5 +118,31 @@ public class MinecraftAdapter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Nullable
+    public List<Object> invoke(List<Method> funcs, Object... args) {
+        List<Object> returns = new ArrayList<>();
+        int c = -1;
+        for (Method func : funcs) {
+            c++;
+            AdorufuMod.logMsg(false, "Executing " + func.getName() + " @ position " + c);
+            func.setAccessible(true);
+            if (func.getGenericReturnType().getTypeName().equalsIgnoreCase("void")) {
+                try {
+                    func.invoke(this.targetInstance, args);
+                    returns.add(null);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                returns.add(func.invoke(this.targetInstance, args));
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            returns.add(null);
+        }
+        return returns;
     }
 }
