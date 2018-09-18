@@ -23,6 +23,7 @@ import com.sasha.adorufu.AdorufuMod;
 import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,20 +48,30 @@ public class MinecraftAdapter {
                 [constructorIndex].newInstance(args);
     }
 
+    /**
+     * Finds specific instance-methods based on the parameters you specify and their types. In generic cases where a class may have
+     * two functions that take an int as a parameter, both will be returned in the array.
+     *
+     * This is to get around Forge's obfuscation when a plugin developer is trying to call Minecraft methods in their plugin, as simply
+     * importing an unobfuscated mc jar simply throws ClassNotFoundException's when it's in obfuscated enviroment
+     *
+     * blah blah blah im also really fucking retarded so that's that
+     *
+     * @param args the arguments to the function you're trying to invoke
+     * @return a list of possible methods
+     */
     @Nullable
     public List<Method> findFunc(Object... args) {
-        AdorufuMod.logWarn(true, "Finding Function...");
-        Method[] preFuncs = targetClass.getDeclaredMethods();
+        List<Method> preFuncs = new ArrayList<>();
+        Arrays.stream(targetClass.getDeclaredMethods()).filter(f -> f.isAccessible() && !Modifier.isStatic(f.getModifiers())).forEach(preFuncs::add);
         List<Method> parametreSizeFuncs = new ArrayList<>();
-        Arrays.stream(preFuncs)
+        preFuncs.stream()
                 .filter(f -> f.getParameterCount() == args.length)
                 .forEach(parametreSizeFuncs::add);
         if (parametreSizeFuncs.size() == 0) {
-            AdorufuMod.logWarn(true, "Found nothing...");
             return null;
         }
         if (parametreSizeFuncs.size() == 1) {
-            AdorufuMod.logWarn(true, "Returned " + parametreSizeFuncs.get(0).getName());
             List<Method> l = new ArrayList<Method>();
             l.add(parametreSizeFuncs.get(0));
             return l;
@@ -68,18 +79,14 @@ public class MinecraftAdapter {
         /* ok so like there's multiple functions in this arraylist so now we have to narrow them down
          * EVEN MORE smh ;-;
          **/
-        AdorufuMod.logWarn(true, "Finding function phase 2...");
         List<Method> theMethods = new ArrayList<>();
         parametreSizeFuncs.forEach(func -> {
             for (int i = 0; i < args.length; i++) {
                 AdorufuMod.logWarn(true, func.getParameterTypes()[i].getSimpleName()
-                + " vs " + args[i].getClass().getSimpleName());
+                        + " vs " + args[i].getClass().getSimpleName());
                 if (!func.getParameterTypes()[i].isInstance(args[i])) {
                     return;
                 }
-                /*if (!args[i].getClass().cast(func.getParameterTypes()[i])) {
-                    return;
-                }*/
             }
             theMethods.add(func);
         });
@@ -103,5 +110,4 @@ public class MinecraftAdapter {
         }
         return null;
     }
-
 }

@@ -28,6 +28,8 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import static com.sasha.adorufu.AdorufuMod.DATA_MANAGER;
@@ -136,7 +138,18 @@ public class Manager {
 
         public static void tickModules() {
             long l = System.currentTimeMillis();
-            moduleRegistry.forEach(AdorufuModule::onTick);
+            moduleRegistry.forEach(mod -> {
+                try {
+                    mod.onTick();
+                } catch (Exception e) {
+                    AdorufuMod.logErr(false, "A severe uncaught exception occurred inside of a module onTick() function");
+                    mod.forceState(ModuleState.DISABLE, false, true);
+                    StringWriter sw = new StringWriter();
+                    PrintWriter w = new PrintWriter(sw);
+                    e.printStackTrace(w);
+                    AdorufuMod.logMsg("\247c" + sw.toString());
+                }
+            });
             AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));
         }
 
