@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu;
 
+import com.sasha.adorufu.api.AdorufuPluginLoader;
 import com.sasha.adorufu.events.client.ClientPacketRecieveEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -50,6 +51,13 @@ public class AdorufuUpdateChecker implements SimpleListener {
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e) {
         if (e.getRecievedPacket() instanceof SPacketServerDifficulty) {
+            if (AdorufuPluginLoader.getLoadedPlugins().size() > 0) {
+                AdorufuMod.scheduler.schedule(() -> {
+                    AdorufuMod.logWarn(false, "\2474There are " + AdorufuPluginLoader.getLoadedPlugins().size() + " plugins" +
+                            " loaded. Please make sure that you know what these plugins are doing, as developers can " +
+                            "put malicious code in their plugins and gain access to your coordinates/session ids/and other sensitive info.");
+                }, 10, TimeUnit.SECONDS);
+            }
             if (!checkForUpdates()) {
                 return;
             }
