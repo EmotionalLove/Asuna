@@ -26,7 +26,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Sasha at 6:53 PM on 9/17/2018
@@ -49,7 +48,7 @@ public class MinecraftAdapter {
     }
 
     @Nullable
-    public Method[] findFunc(Object... args) {
+    public List<Method> findFunc(Object... args) {
         AdorufuMod.logWarn(true, "Finding Function...");
         Method[] preFuncs = targetClass.getDeclaredMethods();
         List<Method> parametreSizeFuncs = new ArrayList<>();
@@ -62,27 +61,27 @@ public class MinecraftAdapter {
         }
         if (parametreSizeFuncs.size() == 1) {
             AdorufuMod.logWarn(true, "Returned " + parametreSizeFuncs.get(0).getName());
-            return new Method[]{parametreSizeFuncs.get(0)};
+            List<Method> l = new ArrayList<Method>();
+            l.add(parametreSizeFuncs.get(0));
+            return l;
         }
         /* ok so like there's multiple functions in this arraylist so now we have to narrow them down
          * EVEN MORE smh ;-;
          **/
         AdorufuMod.logWarn(true, "Finding function phase 2...");
-        AtomicInteger count = new AtomicInteger();
-        Method[] theMethods = new Method[]{};
+        List<Method> theMethods = new ArrayList<>();
         parametreSizeFuncs.forEach(func -> {
             for (int i = 0; i < args.length; i++) {
                 AdorufuMod.logWarn(true, func.getParameterTypes()[i].getSimpleName()
                 + " vs " + args[i].getClass().getSimpleName());
-                /*if (func.getParameterTypes()[i] != args[i].getClass()) {
-                    return;
-                }*/
-                if (!args[i].getClass().isAssignableFrom(func.getParameterTypes()[i])) {
+                if (!func.getParameterTypes()[i].isInstance(args[i])) {
                     return;
                 }
+                /*if (!args[i].getClass().cast(func.getParameterTypes()[i])) {
+                    return;
+                }*/
             }
-            theMethods[count.get()] = func;
-            count.getAndIncrement();
+            theMethods.add(func);
         });
         return theMethods;
     }
