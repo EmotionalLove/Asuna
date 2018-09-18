@@ -20,6 +20,8 @@ package com.sasha.adorufu.api;
 
 import com.sasha.adorufu.AdorufuMod;
 import com.sasha.eventsys.SimpleEventManager;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 
 /**
  * Created by Sasha at 9:07 AM on 9/17/2018
@@ -61,5 +63,11 @@ public abstract class AdorufuPlugin {
 
     public String getPluginDescription() {
         return pluginDescription;
+    }
+    public EntityPlayerSP getPlayer() {
+        return AdorufuMod.minecraft.player;
+    }
+    public Minecraft getMinecraft() {
+        return AdorufuMod.minecraft;
     }
 }
