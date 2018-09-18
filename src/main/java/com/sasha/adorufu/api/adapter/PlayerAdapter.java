@@ -92,27 +92,16 @@ public class PlayerAdapter {
     public PlayerAdapter(EntityPlayerSP player) {
         this.player = player;
     }
-    public int getSprintingTicksLeft() {
-        return player.sprintingTicksLeft;
-    }
-    public float getRenderArmYaw() {
-        return player.renderArmYaw;
-    }
-    public float getRenderArmPitch() {
-        return player.renderArmPitch;
-    }
-    public float getPrevRenderArmYaw() {
-        return player.prevRenderArmYaw;
-    }
-    public float getPrevRenderArmPitch() {
-        return player.prevRenderArmPitch;
-    }
-    public float getTimeInPortal() {
-        return player.timeInPortal;
-    }
-    public float getPrevTimeInPortal() {
-        return player.prevTimeInPortal;
-    }
+
+
+
+
+
+
+
+
+
+
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return player.attackEntityFrom(source, amount);
