@@ -20,6 +20,7 @@ package com.sasha.adorufu;
 
 import com.sasha.adorufu.api.AdorufuPlugin;
 import com.sasha.adorufu.api.AdorufuPluginLoader;
+import com.sasha.adorufu.api.adapter.MinecraftMappingUpdater;
 import com.sasha.adorufu.command.CommandHandler;
 import com.sasha.adorufu.command.commands.*;
 import com.sasha.adorufu.desktop.AdorufuSystemTrayManager;
@@ -97,6 +98,7 @@ public class AdorufuMod implements SimpleListener {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        MinecraftMappingUpdater.updateMappings();
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
         FRIEND_MANAGER = new FriendManager();
         try {
