@@ -18,8 +18,8 @@
 
 package com.sasha.adorufu.api.adapter;
 
-import com.sasha.adorufu.AdorufuMod;
-import com.sasha.adorufu.misc.Pair;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.Pair;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;

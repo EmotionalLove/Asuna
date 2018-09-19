@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.api.exception;
 
-import com.sasha.adorufu.exception.AdorufuException;
+import com.sasha.adorufu.mod.exception.AdorufuException;
 
 /**
  * Created by Sasha at 9:37 AM on 9/17/2018

@@ -41,7 +41,7 @@ minecraft {
     version = project.forgeVersion
     runDir = "run"
     mappings = project.mcpVersion
-    coreMod = "com.sasha.adorufu.mixins.MixinLoaderForge"
+    coreMod = "com.sasha.adorufu.mod.mixins.MixinLoaderForge"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
@@ -164,7 +164,7 @@ jar {
                 "tweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
                 "TweakOrder": 0,
                 'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.sasha.adorufu.mixins.MixinLoaderForge',
+                'FMLCorePlugin': 'com.sasha.adorufu.mod.mixins.MixinLoaderForge',
                 'ForceLoadAsMod': 'true',
                 'FMLAT': 'adorufu_at.cfg'
         )

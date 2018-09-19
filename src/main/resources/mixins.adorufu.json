@@ -1,7 +1,7 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "com.sasha.adorufu.mixins.client",
+  "package": "com.sasha.adorufu.mod.mixins.client",
   "refmap": "mixins.adorufu.refmap.json",
   "client": [
     "MixinEntityPlayerSP",

@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.api;
 
-import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.mod.AdorufuMod;
 
 import java.io.IOException;
 
