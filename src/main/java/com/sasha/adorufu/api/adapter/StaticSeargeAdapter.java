@@ -32,11 +32,11 @@ import java.util.List;
  * Created by Sasha at 6:53 PM on 9/17/2018
  * ok take two of sasha's retardation: live action 2018
  */
-public class StaticMinecraftAdapter {
+public class StaticSeargeAdapter {
 
     private final Class<?> targetClass;
 
-    public StaticMinecraftAdapter(Class<?> targetClass) {
+    public StaticSeargeAdapter(Class<?> targetClass) {
         this.targetClass = targetClass;
     }
 

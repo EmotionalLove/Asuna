@@ -18,6 +18,8 @@
 
 package com.sasha.adorufu.api.adapter;
 
+import com.sasha.adorufu.AdorufuMod;
+
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -33,27 +35,27 @@ import java.util.Map;
 public class MappingUtils {
     private static final File MAP_FIELD = new File("mc_mappings" + File.separator + "fields.csv");
     private static final File MAP_FUNC = new File("mc_mappings" + File.separator + "methods.csv");
-    private static final File MAP_PARAM = new File("mc_mappings" + File.separator + "parameters.csv");
+    private static final File MAP_PARAM = new File("mc_mappings" + File.separator + "params.csv");
 
     public static String translateUnobf(Class<?> targetClass, String unobfuscatedName, TranslateTypeEnum type) {
         List<String> possibilities = new ArrayList<>();
         LinkedHashMap<String, String> map = getUnobfVsObfMap(type);
         for (Map.Entry<String, String> stringStringEntry : map.entrySet()) {
-            if (stringStringEntry.getKey().equals(unobfuscatedName)) {
+            if (stringStringEntry.getValue().equals(unobfuscatedName)) {
                 possibilities.add(stringStringEntry.getKey());
             }
         }
         for (String possibility : possibilities) {
+            AdorufuMod.logMsg(true, possibility);
             if (determineByClass(targetClass, possibility, type)) return possibility;
         }
         return "";
     }
 
     protected static boolean determineByClass(Class<?> targetClass,
-                                             String obfuscatedName,
-                                             TranslateTypeEnum type)
-    {
-        switch(type) {
+                                              String obfuscatedName,
+                                              TranslateTypeEnum type) {
+        switch (type) {
             case FIELD:
                 Field[] fields = targetClass.getDeclaredFields();
                 for (Field field : fields) {
@@ -66,6 +68,7 @@ public class MappingUtils {
             case FUNCTION:
                 Method[] functions = targetClass.getMethods();
                 for (Method func : functions) {
+                    if (Modifier.isStatic(func.getModifiers())) continue;
                     if (func.getName()/* obfuscated name */.equals(obfuscatedName)) {
                         return true;
                     }
@@ -87,34 +90,34 @@ public class MappingUtils {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         String[] thangs = line.split(",");
-                        if (!thangs[1].startsWith("field_")) continue;
+                        if (!thangs[0].startsWith("field_")) continue;
                         map.put(thangs[1], thangs[0]);
                     }
-                    break;
+                    return map;
                 case FUNCTION:
-                    BufferedReader reader$0 = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_FIELD)));
+                    BufferedReader reader$0 = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_FUNC)));
                     String line$0;
                     while ((line$0 = reader$0.readLine()) != null) {
                         String[] thangs = line$0.split(",");
-                        if (!thangs[1].startsWith("func_")) continue;
+                        if (!thangs[0].startsWith("func_")) continue;
                         map.put(thangs[1], thangs[0]);
                     }
-                    break;
+                    return map;
                 case PARAMETRE:
-                    BufferedReader reader$1 = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_FIELD)));
+                    BufferedReader reader$1 = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_PARAM)));
                     String line$1;
                     while ((line$1 = reader$1.readLine()) != null) {
                         String[] thangs = line$1.split(",");
-                        if (!thangs[1].startsWith("func_")) continue;
+                        if (!thangs[0].startsWith("param_")) continue;
                         map.put(thangs[1], thangs[0]);
                     }
-                    break;
+                    return map;
             }
             return map;
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return new LinkedHashMap<>();
+        return null;
     }
 
 }

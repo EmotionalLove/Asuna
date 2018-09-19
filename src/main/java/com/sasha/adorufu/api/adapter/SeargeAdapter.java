@@ -33,17 +33,17 @@ import java.util.List;
  * Created by Sasha at 6:53 PM on 9/17/2018
  * ok take two of sasha's retardation: live action 2018
  */
-public class MinecraftAdapter {
+public class SeargeAdapter {
 
     private final Class<?> targetClass;
     private final Object targetInstance;
 
-    public MinecraftAdapter(Class<?> targetClass, Object targetInstance) {
+    public SeargeAdapter(Class<?> targetClass, Object targetInstance) {
         this.targetClass = targetClass;
         this.targetInstance = targetInstance;
     }
 
-    public MinecraftAdapter(Class<?> targetClass, int constructorIndex, Object... args) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public SeargeAdapter(Class<?> targetClass, int constructorIndex, Object... args) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         this.targetClass = targetClass;
         this.targetInstance = targetClass.getDeclaredConstructors()
                 [constructorIndex].newInstance(args);
@@ -51,7 +51,7 @@ public class MinecraftAdapter {
 
     /**
      * Gets the value of a field in this MinecraftAdapter's set class.
-     * @see StaticMinecraftAdapter for getting the value of STATIC fields.
+     * @see StaticSeargeAdapter for getting the value of STATIC fields.
      * @param unobfFieldName The unobfuscated name of the field you're trying to get.
      * @return a generic object of the returned thingy
      */
@@ -59,7 +59,7 @@ public class MinecraftAdapter {
     public Object getField(String unobfFieldName) {
         String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
-            Field f = this.getClass().getDeclaredField(obfname);
+            Field f = this.targetClass.getDeclaredField(obfname);
             f.setAccessible(true);
             return f.get(this.targetInstance);
         }catch (Exception e) {
@@ -70,11 +70,27 @@ public class MinecraftAdapter {
     public void setField(String unobfFieldName, Object value) {
         String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
-            Field f = this.getClass().getDeclaredField(obfname);
+            Field f = this.targetClass.getDeclaredField(obfname);
             f.setAccessible(true);
             f.set(this.targetInstance, value);
         }catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    @Nullable
+    public Object invokeFunction(String unobfFuncName, @Nullable Object... params) {
+        String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFuncName, TranslateTypeEnum.FUNCTION);
+        try {
+            Class<?>[] classes = new Class<?>[params.length];
+            for (int i = 0; i < params.length; i++) {
+                classes[i] = params[i].getClass();
+            }
+            Method f = this.targetClass.getDeclaredMethod(obfname, classes);
+            f.setAccessible(true);
+            return f.invoke(this.targetInstance, params);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
