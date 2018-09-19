@@ -19,6 +19,7 @@
 package com.sasha.adorufu.api.adapter;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.misc.Pair;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
@@ -57,10 +58,10 @@ public class SeargeAdapter {
      */
     @Nullable
     public Object getField(String unobfFieldName) {
-        String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
+        Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
             AdorufuMod.logMsg(true, ">>>>>>>>>>>>>>>>> " + obfname);
-            Field f = this.targetClass.getDeclaredField(obfname);
+            Field f = obfname.getValue().getDeclaredField(obfname.getKey());
             f.setAccessible(true);
             return f.get(this.targetInstance);
         }catch (Exception e) {
@@ -69,9 +70,9 @@ public class SeargeAdapter {
         }
     }
     public void setField(String unobfFieldName, Object value) {
-        String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
+        Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
-            Field f = this.targetClass.getDeclaredField(obfname);
+            Field f = obfname.getValue().getDeclaredField(obfname.getKey());
             f.setAccessible(true);
             f.set(this.targetInstance, value);
         }catch (Exception e) {
@@ -80,13 +81,13 @@ public class SeargeAdapter {
     }
     @Nullable
     public Object invokeFunction(String unobfFuncName, @Nullable Object... params) {
-        String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFuncName, TranslateTypeEnum.FUNCTION);
+        Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFuncName, TranslateTypeEnum.FUNCTION);
         try {
             Class<?>[] classes = new Class<?>[params.length];
             for (int i = 0; i < params.length; i++) {
                 classes[i] = params[i].getClass();
             }
-            Method f = this.targetClass.getDeclaredMethod(obfname, classes);
+            Method f = obfname.getValue().getDeclaredMethod(obfname.getKey(), classes);
             f.setAccessible(true);
             return f.invoke(this.targetInstance, params);
         }catch (Exception e) {

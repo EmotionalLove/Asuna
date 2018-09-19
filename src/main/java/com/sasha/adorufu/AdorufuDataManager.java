@@ -242,7 +242,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -260,7 +260,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -278,7 +278,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -297,7 +297,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -314,7 +314,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -331,7 +331,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
                 ArrayList<String> defaultJoin = new ArrayList<>();
                 ArrayList<String> defaultLeave = new ArrayList<>();
@@ -378,7 +378,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 return true; // assuming true
             }
             YMLParser parser = new YMLParser(f);
@@ -402,7 +402,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -421,7 +421,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?) Returning empty ArrayList...");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?) Returning empty ArrayList...");
                 return new ArrayList<>();
             }
             YMLParser parser = new YMLParser(f);
@@ -445,7 +445,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()){
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 return new int[]{0,0};
             }
             YMLParser parser = new YMLParser(f);
@@ -470,7 +470,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()){
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
             }
             YMLParser parser = new YMLParser(f);
@@ -490,7 +490,7 @@ public class AdorufuDataManager {
         try {
             File f = new File(dataFileName);
             if (!f.exists()){
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 f.createNewFile();
                 logMsg(true, "Creating new data file with default HUD poaitions.");
                 YMLParser parser = new YMLParser(f);
@@ -518,7 +518,7 @@ public class AdorufuDataManager {
         try {
             File file = new File(dataFileName);
             if (!file.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 return 0;
             }
             YMLParser parser = new YMLParser(file);
@@ -540,7 +540,7 @@ public class AdorufuDataManager {
         try {
             File file = new File(dataFileName);
             if (!file.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
@@ -593,7 +593,7 @@ public class AdorufuDataManager {
         try {
             File file = new File(dataFileName);
             if (!file.exists()) {
-                AdorufuMod.logErr(true, "Module states file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Module states file doesn't exist (maybe this is the client's getKey run?)");
                 saveModuleStates(false);
                 return false;
             }
@@ -611,7 +611,7 @@ public class AdorufuDataManager {
         try {
             File file = new File(dataFileName);
             if (!file.exists()) {
-                AdorufuMod.logErr(true, "Module states file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Module states file doesn't exist (maybe this is the client's getKey run?)");
                 return def;
             }
             YMLParser parser = new YMLParser(file);
@@ -654,7 +654,7 @@ public class AdorufuDataManager {
         try {
             File file = new File(dataFileName);
             if (!file.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's first run?)");
+                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
                 return new ArrayList<>();
             }
             YMLParser parser = new YMLParser(file);

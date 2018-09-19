@@ -40,7 +40,7 @@ public class AdorufuDiscordPresense {
         handlers.ready = discordUser -> AdorufuMod.logMsg(true, "Connected to Discord Rich Presense API");
         discordRpc.Discord_Initialize(applicationId, handlers, true, null);
         DiscordRichPresence presence = new DiscordRichPresence();
-        presence.startTimestamp = System.currentTimeMillis() / 1000L; // epoch second
+        presence.startTimestamp = System.currentTimeMillis() / 1000L; // epoch getValue
         presence.details = details;
         presence.largeImageKey = "xdolfcover";
         presence.smallImageKey = "xdolfsmol_2";
