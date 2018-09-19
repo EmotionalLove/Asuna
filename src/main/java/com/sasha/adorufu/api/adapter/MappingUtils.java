@@ -40,9 +40,10 @@ public class MappingUtils {
     public static String translateUnobf(Class<?> targetClass, String unobfuscatedName, TranslateTypeEnum type) {
         List<String> possibilities = new ArrayList<>();
         LinkedHashMap<String, String> map = getUnobfVsObfMap(type);
-        for (Map.Entry<String, String> stringStringEntry : map.entrySet()) {
-            if (stringStringEntry.getValue().equals(unobfuscatedName)) {
-                possibilities.add(stringStringEntry.getKey());
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            //AdorufuMod.logMsg(true, "key: " + entry.getKey() + " value: " + entry.getValue());
+            if (entry.getKey().equals(unobfuscatedName)) {
+                possibilities.add(entry.getValue());
             }
         }
         for (String possibility : possibilities) {
@@ -66,7 +67,7 @@ public class MappingUtils {
                 }
                 return false;
             case FUNCTION:
-                Method[] functions = targetClass.getMethods();
+                Method[] functions = targetClass.getDeclaredMethods();
                 for (Method func : functions) {
                     if (Modifier.isStatic(func.getModifiers())) continue;
                     if (func.getName()/* obfuscated name */.equals(obfuscatedName)) {
