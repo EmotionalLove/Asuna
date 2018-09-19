@@ -59,6 +59,7 @@ public class SeargeAdapter {
     public Object getField(String unobfFieldName) {
         String obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
+            AdorufuMod.logMsg(true, ">>>>>>>>>>>>>>>>> " + obfname);
             Field f = this.targetClass.getDeclaredField(obfname);
             f.setAccessible(true);
             return f.get(this.targetInstance);

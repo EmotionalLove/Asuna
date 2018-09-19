@@ -19,6 +19,7 @@
 package com.sasha.adorufu.api.adapter;
 
 import com.sasha.adorufu.AdorufuMod;
+import com.sasha.adorufu.misc.Pair;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -37,7 +38,7 @@ public class MappingUtils {
     private static final File MAP_FUNC = new File("mc_mappings" + File.separator + "methods.csv");
     private static final File MAP_PARAM = new File("mc_mappings" + File.separator + "params.csv");
 
-    public static String translateUnobf(Class<?> targetClass, String unobfuscatedName, TranslateTypeEnum type) {
+    public static Pair<String, /*superclass*/Class<?>> translateUnobf(Class<?> targetClass, String unobfuscatedName, TranslateTypeEnum type) {
         List<String> possibilities = new ArrayList<>();
         LinkedHashMap<String, String> map = getUnobfVsObfMap(type);
         for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -48,38 +49,53 @@ public class MappingUtils {
         }
         for (String possibility : possibilities) {
             AdorufuMod.logMsg(true, possibility);
-            if (determineByClass(targetClass, possibility, type)) return possibility;
+            Class<?> clazz = determineByClass(targetClass, possibility, type);
+            if (determineByClass(targetClass, possibility, type) != null) return new Pair<>(possibility, clazz);
         }
-        return "";
+        return new Pair<>("", null);
     }
 
-    protected static boolean determineByClass(Class<?> targetClass,
-                                              String obfuscatedName,
-                                              TranslateTypeEnum type) {
+    protected static Class<?> determineByClass(Class<?> targetClass,
+                                               String obfuscatedName,
+                                               TranslateTypeEnum type) {
         switch (type) {
             case FIELD:
-                Field[] fields = targetClass.getDeclaredFields();
-                for (Field field : fields) {
-                    if (Modifier.isStatic(field.getModifiers())) continue;
-                    if (field.getName()/* obfuscated name */.equals(obfuscatedName)) {
-                        return true;
+                Class<?> currentSuper = targetClass;
+                while (true) {
+                    Field[] fields = currentSuper.getDeclaredFields();
+                    for (Field field : fields) {
+                        if (Modifier.isStatic(field.getModifiers())) continue;
+                        if (field.getName()/* obfuscated name */.equals(obfuscatedName)) {
+                            return currentSuper;
+                        }
+                    }
+                    currentSuper = currentSuper.getSuperclass();
+                    if (currentSuper == null || currentSuper == Object.class) {
+                        break;
                     }
                 }
-                return false;
+                return null;
             case FUNCTION:
                 Method[] functions = targetClass.getDeclaredMethods();
-                for (Method func : functions) {
-                    if (Modifier.isStatic(func.getModifiers())) continue;
-                    if (func.getName()/* obfuscated name */.equals(obfuscatedName)) {
-                        return true;
+                Class<?> currentSuper$0 = targetClass;
+                while (true) {
+                    for (Method func : functions) {
+                        if (Modifier.isStatic(func.getModifiers())) continue;
+                        if (func.getName()/* obfuscated name */.equals(obfuscatedName)) {
+                            return currentSuper$0;
+                        }
+                    }
+                    currentSuper$0 = currentSuper$0.getSuperclass();
+                    if (currentSuper$0 == null || currentSuper$0 == Object.class) {
+                        break;
                     }
                 }
-                return false;
+                return null;
             case PARAMETRE:
                 // todo?
-                return false;
+                return null;
         }
-        return false;
+        return null;
     }
 
     private static LinkedHashMap<String, String> getUnobfVsObfMap(TranslateTypeEnum type) {
