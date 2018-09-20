@@ -301,7 +301,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleWolfIdentity());
         Manager.Module.register(new ModuleGhostBlockWarning());
         Manager.Module.register(new ModuleAntiFireOverlay());
-        Manager.Module.register(new ModuleCreativeMusic());
+        Manager.Module.register(new ModuleMinecraftMusic());
         Manager.Module.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
         Manager.Module.register(new ModuleAutoArmor());
         Manager.Module.register(new ModuleJoinLeaveMessages());

@@ -22,6 +22,7 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.sasha.adorufu.api.AdorufuPlugin;
 import com.sasha.adorufu.api.AdorufuPluginLoader;
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientGetMusicTypeEvent;
 import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
 import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockPlaceEvent;
@@ -211,10 +212,9 @@ public abstract class MixinMinecraft {
     }
     @Inject(method = "getAmbientMusicType", at = @At("RETURN"), cancellable = true)
     public void getAmbientMusicType(CallbackInfoReturnable<MusicTicker.MusicType> info) {
-        if (Manager.Module.getModule("creativemusic").isEnabled()) {
-            info.setReturnValue(MusicTicker.MusicType.CREATIVE);
-            info.cancel();
-        }
+        ClientGetMusicTypeEvent event = new ClientGetMusicTypeEvent(info.getReturnValue());
+        AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        info.setReturnValue(event.getMusicType());
     }
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;create(Lorg/lwjgl/opengl/PixelFormat;)V"))
     public void createDisplay(CallbackInfo info) {
