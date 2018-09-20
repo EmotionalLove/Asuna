@@ -18,7 +18,6 @@
 
 package com.sasha.adorufu.api.adapter;
 
-import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Pair;
 
 import java.io.*;
@@ -42,13 +41,11 @@ public class MappingUtils {
         List<String> possibilities = new ArrayList<>();
         LinkedHashMap<String, String> map = getUnobfVsObfMap(type);
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            //AdorufuMod.logMsg(true, "key: " + entry.getKey() + " value: " + entry.getValue());
             if (entry.getKey().equals(unobfuscatedName)) {
                 possibilities.add(entry.getValue());
             }
         }
         for (String possibility : possibilities) {
-            AdorufuMod.logMsg(true, possibility);
             Class<?> clazz = determineByClass(targetClass, possibility, type);
             if (determineByClass(targetClass, possibility, type) != null) return new Pair<>(possibility, clazz);
         }
