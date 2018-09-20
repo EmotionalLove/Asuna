@@ -19,6 +19,8 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.mojang.authlib.properties.PropertyMap;
+import com.sasha.adorufu.api.AdorufuPlugin;
+import com.sasha.adorufu.api.AdorufuPluginLoader;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
 import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
@@ -240,5 +242,9 @@ public abstract class MixinMinecraft {
             return 1;
         }
         return (this.gameSettings.limitFramerate);
+    }
+    @Inject(method = "shutdownMinecraftApplet", at = @At("HEAD"), cancellable = true)
+    public void shutdownMinecraftApplet(CallbackInfo info) {
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onDisable);
     }
 }
