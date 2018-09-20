@@ -29,12 +29,12 @@ import net.minecraft.inventory.ContainerPlayer;
 /**
  * Created by Sasha at 12:44 PM on 9/2/2018
  */
-@ModuleInfo(description = "Use the crafting slots in your inventory as inventory spaces")
+@ModuleInfo(description = "Use the crafting slots in your inventory as inventory spaces. Also makes illegal items usable on 2b2t.")
 public class ModuleCraftInventory extends AdorufuModule implements SimpleListener {
     public ModuleCraftInventory() {
         super("CraftInventory", AdorufuCategory.MOVEMENT, false, true, true);
         this.addOption("Normal", true);
-        this.addOption("32K", false);
+        this.addOption("Illegals", false);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ModuleCraftInventory extends AdorufuModule implements SimpleListene
         if (e.getContainer() instanceof ContainerPlayer) {
             e.setCancelled(true);
         }
-        if (this.getOption("32K") && !e.isCancelled()) {
+        if (this.getOption("Illegals") && !e.isCancelled()) {
             e.setCancelled(true);
         }
     }
