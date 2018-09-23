@@ -20,22 +20,23 @@ package com.sasha.adorufu.mod.module.modules;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Sasha at 8:10 PM on 9/22/2018
  */
-@ModuleInfo(description = "Highlights blocks that were modified since the last time you were in that chunk")
+@ModuleInfo(description = "Highlights blocks that were added since the last time you were in that chunk")
 public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
 
     static volatile ArrayList<ChunkCheckData> chunkDatas;
@@ -72,7 +73,8 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
     }
     @Override
     public void onRender() {
-        // todo render the changed blocks here
+        if (changedBlocks.isEmpty()) return;
+        changedBlocks.forEach(pos -> AdorufuRender.ghostBlock(pos.x, pos.y, pos.z, 0.2f, 1.0f, 0.5f, 0.4f));
     }
 
     @SimpleEventHandler
@@ -94,9 +96,8 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
                 for (int y = 0; y < 256; y++) {
                     for (int z = (e.getChunkZ() * 16); z < (e.getChunkZ() * 16) + 16; z++) {
                         BlockPos pos = new BlockPos(x, y, z);
-                        Block block = AdorufuMod.minecraft.world.getBlockState(pos).getBlock();
-                        int id = Block.getIdFromBlock(block);
-                        thisNewChunk.add(id);
+                        //Block block = AdorufuMod.minecraft.world.getBlockState(pos).getBlock();
+                        thisNewChunk.add(pos);
                     }
                 }
             }
@@ -114,6 +115,14 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
                 return;
             }
             // compare
+            List<BlockPos> newBlocks = thisNewChunk.populate();
+            List<BlockPos> prevBlocks = prevCachedChunk.populate();
+            for (BlockPos newBlock : newBlocks) {
+                if (!prevBlocks.contains(newBlock)) {
+                    // new block
+                    changedBlocks.add(newBlock);
+                }
+            }
         }).start();
     }
 }
@@ -195,17 +204,49 @@ class ChunkCheckData implements Serializable {
     private String serverIp;
     final Integer chunkXPos;
     final Integer chunkZPos;
-    private ArrayList<Integer> blocksIds;
+    /**
+     * ugh this needs to be serialisable and i dont think blockpos is serialisable
+     */
+    private ArrayList<Integer> blockX;
+    private ArrayList<Integer> blockY;
+    private ArrayList<Integer> blockZ;
 
     public ChunkCheckData(int chunkXPos, int chunkZPos) {
         this.chunkXPos = chunkXPos;
         this.chunkZPos = chunkZPos;
     }
-    public void add(int id) {
-        this.blocksIds.add(id);
+    public void add(int x, int y, int z) {
+        this.blockX.add(x);
+        this.blockY.add(y);
+        this.blockZ.add(z);
     }
-    public void del(int id) {
-        if (!this.blocksIds.contains(id)) return;
-        this.blocksIds.remove(id);
+    public void add(BlockPos pos) {
+        this.blockX.add(pos.x);
+        this.blockY.add(pos.y);
+        this.blockZ.add(pos.z);
     }
+
+    public final ArrayList<Integer> getXBlocks() {
+        return blockX;
+    }
+    public final ArrayList<Integer> getYBlocks() {
+        return blockY;
+    }
+    public final ArrayList<Integer> getZBlocks() {
+        return blockZ;
+    }
+
+    public List<BlockPos> populate() {
+        List<BlockPos> list = new ArrayList<>();
+        for (Integer x : this.blockX) {
+            for (Integer y : this.blockY) {
+                for (Integer z : this.blockZ) {
+                    BlockPos pos = new BlockPos(x, y, z);
+                    list.add(pos);
+                }
+            }
+        }
+        return list;
+    }
+
 }
