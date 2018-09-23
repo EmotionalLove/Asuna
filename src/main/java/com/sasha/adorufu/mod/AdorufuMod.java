@@ -313,6 +313,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleBatteryLife());
         Manager.Module.register(new ModulePowerBow());
         Manager.Module.register(new ModuleBookForger());
+        Manager.Module.register(new ModuleChunkCheck());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
 

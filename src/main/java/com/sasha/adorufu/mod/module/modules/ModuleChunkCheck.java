@@ -73,7 +73,7 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
     }
     @Override
     public void onRender() {
-        if (changedBlocks.isEmpty()) return;
+        if (!this.isEnabled() || changedBlocks == null || changedBlocks.isEmpty()) return;
         changedBlocks.forEach(pos -> AdorufuRender.ghostBlock(pos.x, pos.y, pos.z, 0.2f, 1.0f, 0.5f, 0.4f));
     }
 
@@ -207,9 +207,9 @@ class ChunkCheckData implements Serializable {
     /**
      * ugh this needs to be serialisable and i dont think blockpos is serialisable
      */
-    private ArrayList<Integer> blockX;
-    private ArrayList<Integer> blockY;
-    private ArrayList<Integer> blockZ;
+    private ArrayList<Integer> blockX = new ArrayList<>();
+    private ArrayList<Integer> blockY = new ArrayList<>();
+    private ArrayList<Integer> blockZ = new ArrayList<>();
 
     public ChunkCheckData(int chunkXPos, int chunkZPos) {
         this.chunkXPos = chunkXPos;
