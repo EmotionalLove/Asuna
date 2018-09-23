@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientEnderPearlSpawnEvent;
 import com.sasha.adorufu.mod.events.client.ClientItemSpawnEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
-import com.sasha.adorufu.mod.events.server.ServerGenerateChunkEvent;
+import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -51,7 +51,7 @@ public class MixinNetHandlerPlayClient {
                     target = "Lnet/minecraft/client/multiplayer/WorldClient;getChunkFromChunkCoords(II)Lnet/minecraft/world/chunk/Chunk;"),
             locals = LocalCapture.CAPTURE_FAILHARD)
     public void handleChunkData(SPacketChunkData packetIn, CallbackInfo info, /*local*/ Chunk chunk) {
-        ServerGenerateChunkEvent event = new ServerGenerateChunkEvent(chunk, packetIn, chunk.x, chunk.z);
+        ServerLoadChunkEvent event = new ServerLoadChunkEvent(chunk, packetIn, chunk.x, chunk.z);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
     }
 

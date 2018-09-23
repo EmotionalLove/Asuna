@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod.module.modules;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientEnderPearlSpawnEvent;
-import com.sasha.adorufu.mod.events.server.ServerGenerateChunkEvent;
+import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
@@ -87,7 +87,7 @@ public class ModuleChunkTrace extends AdorufuModule implements SimpleListener {
     }
 
     @SimpleEventHandler
-    public void onNewChunk(ServerGenerateChunkEvent e) {
+    public void onNewChunk(ServerLoadChunkEvent e) {
         if (!this.isEnabled() || !this.getOption("ChunkESP")) return;
         if (e.getPacketIn().isFullChunk()) return;
         if (!chks.contains(e.getChunk())) {
