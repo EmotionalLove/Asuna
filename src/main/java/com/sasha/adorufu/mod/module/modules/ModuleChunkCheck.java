@@ -25,6 +25,7 @@ import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.*;
@@ -38,6 +39,7 @@ import java.util.Arrays;
 public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
 
     static volatile ArrayList<ChunkCheckData> chunkDatas;
+    private static ArrayList<BlockPos> changedBlocks;
 
     public ModuleChunkCheck() {
         super("ChunkCheck", AdorufuCategory.RENDER, false);
@@ -68,25 +70,85 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
         }
 
     }
+    @Override
+    public void onRender() {
+        // todo render the changed blocks here
+    }
 
     @SimpleEventHandler
     public void onChunkLoad(ServerLoadChunkEvent e) {
         if (!this.isEnabled()) return;
         new Thread(() -> {
+            boolean havePreviousChunk = false;
+            ChunkCheckData prevCachedChunk = null;
+            for (ChunkCheckData chunkData : chunkDatas) {
+                if (chunkData.chunkXPos == e.getChunkX() && chunkData.chunkZPos == e.getChunkZ()) {
+                    havePreviousChunk = true;
+                    prevCachedChunk = chunkData;
+                    break;
+                }
+            }
+            // make a new chunk obj to compare to the old one
+            ChunkCheckData thisNewChunk = new ChunkCheckData(e.getChunkX(), e.getChunkZ());
             for (int x = (e.getChunkX() * 16); x < (e.getChunkX() * 16) + 16; x++) {
                 for (int y = 0; y < 256; y++) {
                     for (int z = (e.getChunkZ() * 16); z < (e.getChunkZ() * 16) + 16; z++) {
                         BlockPos pos = new BlockPos(x, y, z);
-                        AdorufuMod.minecraft.world.getBlockState(pos);
-                        // todo daily reminder that llane is a sexual deviant
+                        Block block = AdorufuMod.minecraft.world.getBlockState(pos).getBlock();
+                        int id = Block.getIdFromBlock(block);
+                        thisNewChunk.add(id);
                     }
                 }
             }
+            if (!havePreviousChunk) {
+                if (AdorufuMod.minecraft.getCurrentServerData() == null) {
+                    this.toggle();
+                    return;
+                }
+                try {
+                    ModuleChunkCheckData.saveData(thisNewChunk, AdorufuMod.minecraft.getCurrentServerData().serverIP);
+                } catch (IOException e1) {
+                    AdorufuMod.logErr(false, "Error occured while saving check data " + e1.getMessage());
+                    e1.printStackTrace();
+                }
+                return;
+            }
+            // compare
         }).start();
     }
 }
 
 class ModuleChunkCheckData {
+
+    public static void saveData(ChunkCheckData data, String ip) throws IOException {
+        if (!ModuleChunkCheck.chunkDatas.contains(data)) ModuleChunkCheck.chunkDatas.add(data);
+        File dir = new File("checkdata");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        if (!dir.isDirectory()) {
+            dir.delete();
+            dir.mkdir();
+        }
+        String ipformat = ip.toLowerCase().replace("_", "-").replace(".", "_");
+        File ipDir = new File(dir, ipformat);
+        if (!ipDir.exists()) {
+            ipDir.mkdir();
+            return;
+            // no data
+        }
+        if (!ipDir.isDirectory()) {
+            ipDir.delete();
+            ipDir.mkdir();
+            return;
+            // no data
+        }
+        File file = new File(ipDir, data.chunkXPos + "_" + data.chunkZPos + ".mcdat");
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+        oos.writeObject(data);
+        AdorufuMod.logMsg("Wrote ChunkCheck data for " + ip + ", " + data.chunkXPos + " " + data.chunkZPos);
+        oos.close();
+    }
 
     public static void loadData(String ip) {
         File dir = new File("checkdata");
@@ -125,7 +187,6 @@ class ModuleChunkCheckData {
                 return;
             }
         });
-
     }
 
 }
@@ -134,10 +195,17 @@ class ChunkCheckData implements Serializable {
     private String serverIp;
     final Integer chunkXPos;
     final Integer chunkZPos;
-    private ArrayList<String> blocks;
+    private ArrayList<Integer> blocksIds;
 
     public ChunkCheckData(int chunkXPos, int chunkZPos) {
         this.chunkXPos = chunkXPos;
         this.chunkZPos = chunkZPos;
+    }
+    public void add(int id) {
+        this.blocksIds.add(id);
+    }
+    public void del(int id) {
+        if (!this.blocksIds.contains(id)) return;
+        this.blocksIds.remove(id);
     }
 }
