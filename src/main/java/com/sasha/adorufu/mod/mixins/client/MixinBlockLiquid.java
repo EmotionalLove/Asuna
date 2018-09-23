@@ -33,10 +33,11 @@ import static com.sasha.adorufu.mod.module.modules.ModuleJesus.WATER_JESUS_AABB;
 import static net.minecraft.block.Block.NULL_AABB;
 
 @Mixin(value = BlockLiquid.class, priority = 999)
-public class MixinBlockLiquid {
+public abstract class MixinBlockLiquid extends MixinBlock {
     @Inject(method = "getCollisionBoundingBox", at = @At("HEAD"), cancellable = true)
     public void getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<AxisAlignedBB> info) {
-        info.setReturnValue(ModuleJesus.INSTANCE.doJesus() ? WATER_JESUS_AABB : NULL_AABB);
+        boolean flag = ModuleJesus.INSTANCE.doJesus();
+        info.setReturnValue(flag ? WATER_JESUS_AABB : NULL_AABB);
         info.cancel();
     }
 }
