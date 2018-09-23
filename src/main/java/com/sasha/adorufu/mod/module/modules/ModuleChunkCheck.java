@@ -25,6 +25,7 @@ import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import net.minecraft.util.math.BlockPos;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -67,14 +68,24 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
         }
 
     }
+
     @SimpleEventHandler
     public void onChunkLoad(ServerLoadChunkEvent e) {
         if (!this.isEnabled()) return;
         new Thread(() -> {
-            
+            for (int x = (e.getChunkX() * 16); x < (e.getChunkX() * 16) + 16; x++) {
+                for (int y = 0; y < 256; y++) {
+                    for (int z = (e.getChunkZ() * 16); z < (e.getChunkZ() * 16) + 16; z++) {
+                        BlockPos pos = new BlockPos(x, y, z);
+                        AdorufuMod.minecraft.world.getBlockState(pos);
+                        // todo daily reminder that llane is a sexual deviant
+                    }
+                }
+            }
         }).start();
     }
 }
+
 class ModuleChunkCheckData {
 
     public static void loadData(String ip) {
@@ -118,6 +129,7 @@ class ModuleChunkCheckData {
     }
 
 }
+
 class ChunkCheckData implements Serializable {
     private String serverIp;
     final Integer chunkXPos;
