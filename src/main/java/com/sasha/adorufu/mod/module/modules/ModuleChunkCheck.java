@@ -35,12 +35,15 @@ import java.util.List;
 
 /**
  * Created by Sasha at 8:10 PM on 9/22/2018
+ * ok so this module is way too harsh on the computer rn...
  */
 @ModuleInfo(description = "Highlights blocks that were added since the last time you were in that chunk")
 public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
 
-    static volatile ArrayList<ChunkCheckData> chunkDatas;
-    private static ArrayList<BlockPos> changedBlocks;
+    static volatile ArrayList<ChunkCheckData> chunkDatas = new ArrayList<>();
+    private static ArrayList<BlockPos> changedBlocks = new ArrayList<>();
+
+    public static boolean didPrep = false;
 
     public ModuleChunkCheck() {
         super("ChunkCheck", AdorufuCategory.RENDER, false);
@@ -56,6 +59,8 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
         new Thread(() -> {
             chunkDatas.clear();
             ModuleChunkCheckData.loadData(AdorufuMod.minecraft.getCurrentServerData().serverIP);
+            AdorufuMod.logMsg(false, "Loaded " + chunkDatas.size() + " entries");
+            didPrep = true;
         }).start();
     }
 
@@ -66,7 +71,7 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-        if (chunkDatas == null) {
+        if (chunkDatas.isEmpty()) {
             onEnable();
         }
 
@@ -106,12 +111,12 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
                     this.toggle();
                     return;
                 }
-                try {
-                    ModuleChunkCheckData.saveData(thisNewChunk, AdorufuMod.minecraft.getCurrentServerData().serverIP);
+                /* {
+                    //ModuleChunkCheckData.saveData(thisNewChunk, AdorufuMod.minecraft.getCurrentServerData().serverIP);
                 } catch (IOException e1) {
                     AdorufuMod.logErr(false, "Error occured while saving check data " + e1.getMessage());
                     e1.printStackTrace();
-                }
+                }*/
                 return;
             }
             // compare
@@ -120,6 +125,7 @@ public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
             for (BlockPos newBlock : newBlocks) {
                 if (!prevBlocks.contains(newBlock)) {
                     // new block
+                    AdorufuMod.logMsg(false, "changge cblock");
                     changedBlocks.add(newBlock);
                 }
             }
@@ -153,9 +159,13 @@ class ModuleChunkCheckData {
             // no data
         }
         File file = new File(ipDir, data.chunkXPos + "_" + data.chunkZPos + ".mcdat");
+        if (file.exists()) {
+            file.delete();
+            file.createNewFile();
+        }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
         oos.writeObject(data);
-        AdorufuMod.logMsg("Wrote ChunkCheck data for " + ip + ", " + data.chunkXPos + " " + data.chunkZPos);
+        //AdorufuMod.logMsg("Wrote ChunkCheck data for " + ip + ", " + data.chunkXPos + " " + data.chunkZPos);
         oos.close();
     }
 
@@ -191,7 +201,7 @@ class ModuleChunkCheckData {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dat));
                 ChunkCheckData obj = (ChunkCheckData) ois.readObject();
                 ModuleChunkCheck.chunkDatas.add(obj);
-                AdorufuMod.logMsg("Loaded ChunkCheck data for " + ip + ", " + obj.chunkXPos + " " + obj.chunkZPos);
+                //AdorufuMod.logMsg("Loaded ChunkCheck data for " + ip + ", " + obj.chunkXPos + " " + obj.chunkZPos);
             } catch (IOException | ClassNotFoundException e) {
                 return;
             }

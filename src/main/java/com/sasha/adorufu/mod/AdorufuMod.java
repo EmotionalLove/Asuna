@@ -46,6 +46,7 @@ import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -313,7 +314,8 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleBatteryLife());
         Manager.Module.register(new ModulePowerBow());
         Manager.Module.register(new ModuleBookForger());
-        Manager.Module.register(new ModuleChunkCheck());
+        Manager.Module.register(new ModuleAutoWalk());
+        //Manager.Module.register(new ModuleChunkCheck());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
 
@@ -332,6 +334,10 @@ public class AdorufuMod implements SimpleListener {
         Manager.Renderable.register(new RenderableBatteryLife());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
 
+    }
+
+    public static void setPressed(KeyBinding key, boolean pressed) {
+        KeyBinding.setKeyBindState(key.getKeyCode(), pressed);
     }
 
     public static void logMsg(boolean consoleOnly, String logMsg) {
