@@ -32,7 +32,9 @@ import com.sasha.eventsys.SimpleListener;
 @ModuleInfo(description = "Don't slow down whilst eating.") //todo
 public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
     public ModuleNoSlow() {
-        super("NoSlow", AdorufuCategory.MOVEMENT, false);
+        super("NoSlow", AdorufuCategory.MOVEMENT, false, true, true);
+        this.addOption("NCP", true);
+        this.addOption("AAC", false);
     }
 
     @Override
@@ -47,14 +49,14 @@ public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-
+        this.setSuffix(this.getModuleOptionsMap());
     }
 
     @SimpleEventHandler
     public void onSlowDown(ClientInputUpdateEvent e) {
         if (this.isEnabled() && AdorufuMod.minecraft.player.isHandActive()) {
-            e.getMovementInput().moveForward /= 0.05f;
-            e.getMovementInput().moveStrafe /= 0.05f;
+            e.getMovementInput().moveForward /= this.getOption("NCP") ? 0.05f : 0.25f;
+            e.getMovementInput().moveStrafe /= this.getOption("NCP") ? 0.05f : 0.25f;
         }
     }
 }
