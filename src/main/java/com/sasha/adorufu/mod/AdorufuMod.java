@@ -79,7 +79,7 @@ public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.3.2";
+    public static final String VERSION = "1.3.1";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
