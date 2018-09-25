@@ -45,6 +45,7 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
+import com.sun.jna.Native;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextComponentString;
@@ -93,6 +94,7 @@ public class AdorufuMod implements SimpleListener {
     public static SimpleCommandProcessor COMMAND_PROCESSOR;
     public static AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS BATTERY_MANAGER;
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
+    public static AdorufuWindowsBatteryManager BATTERY_MANAGER_INTERFACE;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
@@ -117,8 +119,9 @@ public class AdorufuMod implements SimpleListener {
             }));
         }
         try {
+            BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
             AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
-            AdorufuWindowsBatteryManager.INSTANCE.GetSystemPowerStatus(batteryStatus);
+            BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
             logMsg(true, batteryStatus.getBatteryLifePercent());
             BATTERY_MANAGER = batteryStatus;
         } catch (Exception x) {
@@ -315,6 +318,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModulePowerBow());
         Manager.Module.register(new ModuleBookForger());
         Manager.Module.register(new ModuleAutoWalk());
+        Manager.Module.register(new ModuleBoatFly());
         //Manager.Module.register(new ModuleChunkCheck());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }

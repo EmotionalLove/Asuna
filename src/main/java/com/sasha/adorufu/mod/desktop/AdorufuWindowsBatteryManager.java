@@ -18,7 +18,6 @@
 
 package com.sasha.adorufu.mod.desktop;
 
-import com.sun.jna.Native;
 import com.sun.jna.Structure;
 import com.sun.jna.win32.StdCallLibrary;
 
@@ -31,7 +30,7 @@ import java.util.List;
  */
 public interface AdorufuWindowsBatteryManager extends StdCallLibrary {
 
-    AdorufuWindowsBatteryManager INSTANCE = (AdorufuWindowsBatteryManager)Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
+
 
     public class SYSTEM_POWER_STATUS extends Structure {
         public byte ACLineStatus;
@@ -40,6 +39,7 @@ public interface AdorufuWindowsBatteryManager extends StdCallLibrary {
         public byte Reserved1;
         public int BatteryLifeTime;
         public int BatteryFullLifeTime;
+
 
         @Override
         protected List<String> getFieldOrder() {

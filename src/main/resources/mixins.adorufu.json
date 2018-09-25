@@ -25,6 +25,8 @@
     "MixinEntityPlayer",
     "MixinGuiContainer",
     "MixinItemBow",
-    "MixinGuiScreenBook"
+    "MixinGuiScreenBook",
+    "MixinGuiRecipeBook",
+    "MixinGui"
   ]
 }
