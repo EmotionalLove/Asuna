@@ -64,13 +64,14 @@ public class RenderableBatteryLife extends RenderableObject {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
     private String formatBattery() {
+        int old = lastPercent;
         if (!isSupported || AdorufuMod.BATTERY_MANAGER_INTERFACE == null) {
             return "\2478Battery status is unavailable on this machine...";
         }
         AdorufuMod.BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(AdorufuMod.BATTERY_MANAGER);
         if (lastPercent != AdorufuMod.BATTERY_MANAGER.BatteryLifePercent) {
             lastPercent = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;
-            AdorufuBatteryLevelChangedEvent event = new AdorufuBatteryLevelChangedEvent(lastPercent, AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte)1);
+            AdorufuBatteryLevelChangedEvent event = new AdorufuBatteryLevelChangedEvent(old, lastPercent, AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte)1);
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         }
         int battery = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;

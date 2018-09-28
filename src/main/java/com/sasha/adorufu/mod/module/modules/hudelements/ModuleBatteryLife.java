@@ -53,11 +53,11 @@ public class ModuleBatteryLife extends AdorufuModule implements SimpleListener {
     public void onBtCnge(AdorufuBatteryLevelChangedEvent e) {
         if (this.isEnabled()) {
             if (e.isCharging()) return;
-            if (e.getNewBatteryPercent() == 20) {
+            if (e.getNewBatteryPercent() == 20 && e.getOldBatteryPercent() > 20) {
                 AdorufuMod.logWarn(false, "Low battery! 20% remains.");
                 return;
             }
-            if (e.getNewBatteryPercent() == 10) {
+            if (e.getNewBatteryPercent() == 10 && e.getOldBatteryPercent() > 10) {
                 AdorufuMod.logWarn(false, "Very low battery! 10% remains.");
             }
         }

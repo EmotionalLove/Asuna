@@ -25,10 +25,12 @@ import com.sasha.eventsys.SimpleEvent;
  */
 public class AdorufuBatteryLevelChangedEvent extends SimpleEvent {
 
+    private int oldBatteryPercent;
     private int newBatteryPercent;
     private boolean isCharging;
 
-    public AdorufuBatteryLevelChangedEvent(int newBatteryPercent, boolean isCharging) {
+    public AdorufuBatteryLevelChangedEvent(int oldBatteryPercent, int newBatteryPercent, boolean isCharging) {
+        this.oldBatteryPercent = oldBatteryPercent;
         this.newBatteryPercent = newBatteryPercent;
         this.isCharging = isCharging;
     }
@@ -39,5 +41,9 @@ public class AdorufuBatteryLevelChangedEvent extends SimpleEvent {
 
     public int getNewBatteryPercent() {
         return newBatteryPercent;
+    }
+
+    public int getOldBatteryPercent() {
+        return oldBatteryPercent;
     }
 }
