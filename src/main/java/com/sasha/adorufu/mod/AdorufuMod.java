@@ -48,6 +48,7 @@ import com.sasha.simplecmdsys.SimpleCommandProcessor;
 import com.sun.jna.Native;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -80,7 +81,7 @@ public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.3.2";
+    public static final String VERSION = "1.3.3";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
@@ -119,11 +120,13 @@ public class AdorufuMod implements SimpleListener {
             }));
         }
         try {
-            BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
-            AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
-            BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
-            logMsg(true, batteryStatus.getBatteryLifePercent());
-            BATTERY_MANAGER = batteryStatus;
+            if (Util.getOSType() != Util.EnumOS.WINDOWS) {
+                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
+                AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
+                BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
+                logMsg(true, batteryStatus.getBatteryLifePercent());
+                BATTERY_MANAGER = batteryStatus;
+            }
         } catch (Exception x) {
             //
         }

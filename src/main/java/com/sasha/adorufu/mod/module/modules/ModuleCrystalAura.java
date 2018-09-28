@@ -19,13 +19,20 @@
 package com.sasha.adorufu.mod.module.modules;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.module.ModuleInfo;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.lwjgl.input.Mouse;
 
 import static com.sasha.adorufu.mod.module.modules.ModuleKillaura.rotateTowardsEntity;
@@ -36,7 +43,10 @@ import static com.sasha.adorufu.mod.module.modules.ModuleKillaura.rotateTowardsE
 @ModuleInfo(description = "Automatically hit nearby crystals")
 public class ModuleCrystalAura extends AdorufuModule {
     public ModuleCrystalAura() {
-        super("CrystalAura", AdorufuCategory.COMBAT, false);
+        super("CrystalAura", AdorufuCategory.COMBAT, false, true, true);
+        this.addOption("aura", true);
+        this.addOption("auto", false); // will not hit crystals if a friended player is nearby, or if you're vulnerable to dying.
+        this.addOption("auto all", false); // will hit crystals no matter what
     }
 
     @Override
@@ -52,29 +62,64 @@ public class ModuleCrystalAura extends AdorufuModule {
     @Override
     public void onTick() {
         if (this.isEnabled()) {
-            for (Entity e : AdorufuMod.minecraft.world.loadedEntityList) {
-                if (e instanceof EntityEnderCrystal) {
-                    //float attacktime = AdorufuMod.minecraft.player.getCooledAttackStrength(1);
-                    if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f/* && AdorufuMod.minecraft.player.canEntityBeSeen(e)*/) {
-                        if(Mouse.isButtonDown(1) && AdorufuMod.minecraft.player.inventory.getCurrentItem().getItem() != Items.END_CRYSTAL){
-                            return; //dont fuggin do anythint
-                        }
-                        if (e.isEntityAlive()) {
-                            float yaw =  AdorufuMod.minecraft.player.rotationYaw;
-                            float pitch =  AdorufuMod.minecraft.player.rotationPitch;
-                            float yawh =  AdorufuMod.minecraft.player.rotationYawHead;
-                            boolean wasSprinting = AdorufuMod.minecraft.player.isSprinting();
-                            rotateTowardsEntity(e);
-                            AdorufuMod.minecraft.player.setSprinting(false);
-                            AdorufuMod.minecraft.playerController.attackEntity(AdorufuMod.minecraft.player, e);
-                            AdorufuMod.minecraft.player.swingArm(EnumHand.MAIN_HAND);
-                            AdorufuMod.minecraft.player.rotationYaw = yaw;
-                            AdorufuMod.minecraft.player.rotationPitch = pitch;
-                            AdorufuMod.minecraft.player.rotationYawHead = yawh;
-                            if (wasSprinting) {
-                                AdorufuMod.minecraft.player.setSprinting(true);
+            this.setSuffix(this.getModuleOptionsMap());
+            if (this.getOption("auto")) { // use radius of 3
+                boolean hasCrystals = false; // make sure the player even has crystal in their hotbar.
+                for (int s = 36; s <= 44; s++) {
+                    ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
+                    AdorufuMod.logMsg(stack.getUnlocalizedName());
+                    if (stack.getItem() == Items.END_CRYSTAL) {
+                        AdorufuMod.minecraft.player.inventory.currentItem = s;
+                        AdorufuMod.logMsg("ender crystal @ " + s);
+                        hasCrystals = true;
+                        break;
+                    }
+                }
+                if (!hasCrystals) {
+                    return; // no use in continuing without crystals.
+                }
+                World theCurrentWorld = AdorufuMod.minecraft.world;
+                for (int x = ((int) AdorufuMod.minecraft.player.posX - 3); x < AdorufuMod.minecraft.player.posX + 3; x++) {
+                    for (int y = ((int) AdorufuMod.minecraft.player.posY - 3); y < AdorufuMod.minecraft.player.posY + 3; y++) {
+                        for (int z = ((int) AdorufuMod.minecraft.player.posZ - 3); z < AdorufuMod.minecraft.player.posZ + 3; z++) {
+                            BlockPos pos = new BlockPos(x, y, z);
+                            Block currentBlock = theCurrentWorld.getBlockState(pos).getBlock();
+                            if (currentBlock == Blocks.OBSIDIAN || currentBlock == Blocks.BEDROCK) {
+                                Block aboveBlock = theCurrentWorld.getBlockState(pos.up()).getBlock();
+                                if (aboveBlock == Blocks.AIR) {
+                                    AdorufuMod.minecraft.getConnection().sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, EnumFacing.UP, EnumHand.MAIN_HAND, 0.1f, 0.1f, 0.1f));
+                                }
                             }
-                            break;
+                        }
+                    }
+                }
+            }
+
+
+            if (this.getOption("aura")) {
+                for (Entity e : AdorufuMod.minecraft.world.loadedEntityList) {
+                    if (e instanceof EntityEnderCrystal) {
+                        if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f) {
+                            if (Mouse.isButtonDown(1) && AdorufuMod.minecraft.player.inventory.getCurrentItem().getItem() != Items.END_CRYSTAL) {
+                                return; // dont do anything if the player is eating or anything
+                            }
+                            if (e.isEntityAlive()) {
+                                float yaw = AdorufuMod.minecraft.player.rotationYaw;
+                                float pitch = AdorufuMod.minecraft.player.rotationPitch;
+                                float yawh = AdorufuMod.minecraft.player.rotationYawHead;
+                                boolean wasSprinting = AdorufuMod.minecraft.player.isSprinting();
+                                rotateTowardsEntity(e);
+                                AdorufuMod.minecraft.player.setSprinting(false);
+                                AdorufuMod.minecraft.playerController.attackEntity(AdorufuMod.minecraft.player, e);
+                                AdorufuMod.minecraft.player.swingArm(EnumHand.MAIN_HAND);
+                                AdorufuMod.minecraft.player.rotationYaw = yaw;
+                                AdorufuMod.minecraft.player.rotationPitch = pitch;
+                                AdorufuMod.minecraft.player.rotationYawHead = yawh;
+                                if (wasSprinting) {
+                                    AdorufuMod.minecraft.player.setSprinting(true);
+                                }
+                                break;
+                            }
                         }
                     }
                 }
