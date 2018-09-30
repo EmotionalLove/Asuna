@@ -31,4 +31,4 @@ If you have any other questions, you can ask for help in our discord server
 Coming soon...
 
 ### Official Discord
-https://discord.gg/Z2Cm4de
+https://discord.gg/bvuJ3Wy
