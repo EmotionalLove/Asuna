@@ -41,7 +41,7 @@ public class ModuleBatteryLife extends AdorufuModule implements SimpleListener {
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable()
 
     }
 
