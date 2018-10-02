@@ -21,6 +21,7 @@ package com.sasha.adorufu.mod.module.modules;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 
 /**
@@ -31,6 +32,7 @@ public class ModuleBoatFly extends AdorufuModule {
         super("BoatFly", AdorufuCategory.MOVEMENT, false, true);
         this.addOption("yawlock", false);
         this.addOption("gravity", true);
+        this.addOption("all entities", false);
     }
 
     @Override
@@ -48,15 +50,16 @@ public class ModuleBoatFly extends AdorufuModule {
         if (!this.isEnabled()) return;
         this.setSuffix(this.getModuleOptionsMap());
         if (AdorufuMod.minecraft.player.isRiding()) {
-            if (AdorufuMod.minecraft.player.getRidingEntity() instanceof EntityBoat) {
-                EntityBoat e = (EntityBoat) AdorufuMod.minecraft.player.getRidingEntity();
+            if (AdorufuMod.minecraft.player.getRidingEntity() instanceof EntityBoat || this.getOption("all entities")) {
+                Entity e = AdorufuMod.minecraft.player.getRidingEntity();
+                if (e == null) return;
                 if (!this.getOption("gravity")) {
                     e.setNoGravity(true);
                 }
                 else {
                     e.setNoGravity(false);
                 }
-                if (this.getOption("yawlock")) e.setRotationYawHead(AdorufuMod.minecraft.player.rotationYaw);
+                if (this.getOption("yawlock")) e.rotationYaw = (AdorufuMod.minecraft.player.rotationYaw);
                 // actual boatfly
                 if (AdorufuMod.minecraft.gameSettings.keyBindJump.isPressed()) {
                     e.motionY = 0.5f;
