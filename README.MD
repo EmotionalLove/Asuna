@@ -28,7 +28,7 @@ If you have any other questions, you can ask for help in our discord server
 
 ### Workspace setup tutorial
 
-Coming soon...
+Coming soon....
 
 ### Official Discord
 https://discord.gg/W2skUdj
