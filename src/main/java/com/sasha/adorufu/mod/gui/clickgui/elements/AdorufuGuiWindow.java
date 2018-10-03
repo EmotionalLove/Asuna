@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.misc.AdorufuMath;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AdorufuGuiWindow implements IAdorufuGuiElement {
 
@@ -30,9 +31,9 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     private int themeColour = 0xffffff;
     private List<AdorufuGuiModuleButton> moduleElements = new ArrayList<>();
     private int x;
-    private int width;
-    private int y;
     private int length;
+    private int y;
+    private int width;
 
     public AdorufuGuiWindow(int x, int y, int length, int width, String title, List<AdorufuGuiModuleButton> moduleElements) {
         this.x = x;
@@ -54,15 +55,25 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
 
     @Override
     public void drawElement() {
-
+        drawTitlebar();
+        drawRestOfWindow();
     }
 
     private void drawTitlebar() {
         AdorufuMath.drawRect(this.x, this.y,
-                this.x + (this.width - 40),
-                this.y + this.length,
+                this.x + this.width,
+                this.y + 40,
                 this.themeColour);
         AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + this.width) / 2, this.y, 0xffffff, false);
+    }
+    private void drawRestOfWindow() {
+        AdorufuMath.drawRect(this.x, (this.y - 40), this.y + this.length, (this.y - 40) + this.width, Integer.MIN_VALUE);
+        AtomicInteger c = new AtomicInteger();
+        this.moduleElements.forEach(button -> {
+            button.setX(this.x);
+            button.setY(this.y + (15 * c.get()));
+            c.getAndIncrement();
+        });
     }
 
     @Override

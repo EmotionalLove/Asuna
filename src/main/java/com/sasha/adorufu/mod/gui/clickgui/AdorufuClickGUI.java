@@ -21,4 +21,14 @@ package com.sasha.adorufu.mod.gui.clickgui;
 import net.minecraft.client.gui.GuiScreen;
 
 public class AdorufuClickGUI extends GuiScreen {
+
+    /**
+     * Calculates what the length of you list should be
+     * @param i the amount of buttons that the window will have
+     * @return the length value
+     */
+    public static int calcListLength(int i) {
+        return 0; //todo
+    }
+
 }
