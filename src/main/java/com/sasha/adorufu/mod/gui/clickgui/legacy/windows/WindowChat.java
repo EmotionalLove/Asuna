@@ -16,12 +16,18 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui.elements;
+package com.sasha.adorufu.mod.gui.clickgui.legacy.windows;
 
-/**
- * Created by Sasha Stevens on 5/12/2017.
- */
-public enum WindowType {
-    MODULE,
-    OPTION
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
+
+import static com.sasha.adorufu.mod.module.AdorufuCategory.CHAT;
+
+public class WindowChat extends AdorufuWindow {
+	
+	public WindowChat() {
+		super("Chat", 206, 12, true, WindowType.MODULE);
+		this.loadButtonsFromCategory(CHAT);
+	}
 }
+

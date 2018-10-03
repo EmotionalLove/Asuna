@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod;
 
 import com.sasha.adorufu.mod.exception.AdorufuNoSuchElementInDataFileException;
 import com.sasha.adorufu.mod.friend.Friend;
-import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuWindow;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.PlayerIdentity;

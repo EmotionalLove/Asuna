@@ -16,10 +16,10 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui.windows;
+package com.sasha.adorufu.mod.gui.clickgui.legacy.windows;
 
-import com.sasha.adorufu.mod.gui.clickgui.elements.WindowType;
-import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuWindow;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
 
 import static com.sasha.adorufu.mod.module.AdorufuCategory.COMBAT;
 

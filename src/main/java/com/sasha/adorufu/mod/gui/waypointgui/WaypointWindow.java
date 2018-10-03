@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mod.gui.waypointgui;
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.elements.WindowType;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.waypoint.Waypoint;

@@ -16,18 +16,12 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui.windows;
+package com.sasha.adorufu.mod.gui.clickgui.legacy.elements;
 
-import com.sasha.adorufu.mod.gui.clickgui.elements.WindowType;
-import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuWindow;
-
-import static com.sasha.adorufu.mod.module.AdorufuCategory.CHAT;
-
-public class WindowChat extends AdorufuWindow {
-	
-	public WindowChat() {
-		super("Chat", 206, 12, true, WindowType.MODULE);
-		this.loadButtonsFromCategory(CHAT);
-	}
+/**
+ * Created by Sasha Stevens on 5/12/2017.
+ */
+public enum WindowType {
+    MODULE,
+    OPTION
 }
-

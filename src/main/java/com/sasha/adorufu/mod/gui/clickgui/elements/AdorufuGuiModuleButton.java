@@ -16,38 +16,42 @@
  *
  */
 
-package com.sasha.adorufu.mod.module.modules;
+package com.sasha.adorufu.mod.gui.clickgui.elements;
 
-import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
-import com.sasha.adorufu.mod.module.ModuleInfo;
-import com.sasha.adorufu.mod.module.PostToggleExec;
-import com.sasha.adorufu.mod.module.AdorufuCategory;
-import com.sasha.adorufu.mod.module.AdorufuModule;
-
-/**
- * Created by Sasha on 11/08/2018 at 10:27 AM
- **/
-@PostToggleExec
-@ModuleInfo(description = "Displays the Clickgui")
-public class ModuleClickGUI extends AdorufuModule {
-    public ModuleClickGUI() {
-        super("ClickGUI", AdorufuCategory.GUI, false);
-    }
+public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
 
     @Override
-    public void onEnable(){
-        AdorufuMod.minecraft.displayGuiScreen(new AdorufuClickGUI());
-        this.toggle();
-    }
-
-    @Override
-    public void onDisable() {
+    public void drawElement() {
 
     }
 
     @Override
-    public void onTick() {
+    public void onMouseEngage(int x, int y, int b) {
+
+    }
+
+    @Override
+    public void onMouseRelease(int x, int y, int b) {
+
+    }
+
+    @Override
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
+    public void setX(int x) {
+
+    }
+
+    @Override
+    public void setY(int y) {
 
     }
 }

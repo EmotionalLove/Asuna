@@ -16,10 +16,10 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui.elements;
+package com.sasha.adorufu.mod.gui.clickgui.legacy.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.AdorufuModule;

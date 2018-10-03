@@ -16,16 +16,18 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui.windows;
+package com.sasha.adorufu.mod.gui.clickgui.legacy.windows;
 
 
-import com.sasha.adorufu.mod.gui.clickgui.elements.WindowType;
-import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuWindow;
-import com.sasha.adorufu.mod.module.AdorufuCategory;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
 
-public class WindowRender extends AdorufuWindow {
-	public WindowRender() {
-		super("Render", 308, 12, true, WindowType.MODULE);
-		loadButtonsFromCategory(AdorufuCategory.RENDER);
+import static com.sasha.adorufu.mod.module.AdorufuCategory.MISC;
+
+public class WindowMisc extends AdorufuWindow
+{
+	public WindowMisc() {
+		super("Misc", 410, 12, true, WindowType.MODULE);
+		this.loadButtonsFromCategory(MISC);
 	}
 }

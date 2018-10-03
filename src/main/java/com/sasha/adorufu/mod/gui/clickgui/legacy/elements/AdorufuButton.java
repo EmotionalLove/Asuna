@@ -16,18 +16,18 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui.elements;
+package com.sasha.adorufu.mod.gui.clickgui.legacy.elements;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.module.AdorufuModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 
-import static com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI.getRegisteredWindows;
+import static com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI.getRegisteredWindows;
 
 
 public class AdorufuButton {

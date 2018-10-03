@@ -19,19 +19,19 @@
 package com.sasha.adorufu.mod.module.modules;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
-import com.sasha.adorufu.mod.module.ModuleInfo;
-import com.sasha.adorufu.mod.module.PostToggleExec;
+import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.module.ModuleInfo;
+import com.sasha.adorufu.mod.module.PostToggleExec;
 
 /**
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
 @PostToggleExec
 @ModuleInfo(description = "Displays the Clickgui")
-public class ModuleClickGUI extends AdorufuModule {
-    public ModuleClickGUI() {
+public class ModuleNewClickGUI extends AdorufuModule {
+    public ModuleNewClickGUI() {
         super("ClickGUI", AdorufuCategory.GUI, false);
     }
 

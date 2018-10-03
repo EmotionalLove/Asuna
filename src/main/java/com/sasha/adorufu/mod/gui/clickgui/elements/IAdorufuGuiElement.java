@@ -16,9 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui;
+package com.sasha.adorufu.mod.gui.clickgui.elements;
 
-import net.minecraft.client.gui.GuiScreen;
+public interface IAdorufuGuiElement {
 
-public class AdorufuClickGUI extends GuiScreen {
+    void drawElement();
+    void onMouseEngage(int x, int y, int b);
+    void onMouseRelease(int x, int y, int b);
+    int getX();
+    int getY();
+    void setX(int x);
+    void setY(int y);
+
 }

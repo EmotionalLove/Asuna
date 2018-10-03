@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.gui.waypointgui;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.elements.WindowType;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import net.minecraft.client.gui.GuiScreen;
 

@@ -30,7 +30,7 @@ import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
 import com.sasha.adorufu.mod.friend.FriendManager;
-import com.sasha.adorufu.mod.gui.clickgui.windows.*;
+import com.sasha.adorufu.mod.gui.clickgui.legacy.windows.*;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.renderableobjects.*;
@@ -72,7 +72,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI.registeredWindows;
+import static com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI.registeredWindows;
 import static com.sasha.adorufu.mod.misc.Manager.Module.loadBindsAndStates;
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
