@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.gui.clickgui.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     public AdorufuGuiWindow(int x, int y, int length, int width, String title, List<AdorufuGuiModuleButton> moduleElements) {
         this.x = x;
         this.y = y;
+        this.length = length;
+        this.width = width;
         this.title = title;
         this.moduleElements = moduleElements;
     }
@@ -55,8 +58,12 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
 
     @Override
     public void drawElement() {
+        GL11.glPushMatrix();
+        GL11.glPushAttrib(8256);
         drawTitlebar();
         drawRestOfWindow();
+        GL11.glPopMatrix();
+        GL11.glPopAttrib();
     }
 
     private void drawTitlebar() {

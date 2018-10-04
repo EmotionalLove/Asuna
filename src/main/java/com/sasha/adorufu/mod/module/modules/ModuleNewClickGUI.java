@@ -32,7 +32,7 @@ import com.sasha.adorufu.mod.module.PostToggleExec;
 @ModuleInfo(description = "Displays the Clickgui")
 public class ModuleNewClickGUI extends AdorufuModule {
     public ModuleNewClickGUI() {
-        super("ClickGUI", AdorufuCategory.GUI, false);
+        super("NewClickGUI", AdorufuCategory.GUI, false);
     }
 
     @Override

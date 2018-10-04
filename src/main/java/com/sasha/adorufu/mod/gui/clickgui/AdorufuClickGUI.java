@@ -18,9 +18,24 @@
 
 package com.sasha.adorufu.mod.gui.clickgui;
 
+import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
+import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
 import net.minecraft.client.gui.GuiScreen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdorufuClickGUI extends GuiScreen {
+    private List<IAdorufuGuiElement> elementList = new ArrayList<>();
+
+    public AdorufuClickGUI() {
+        elementList.add(new AdorufuGuiWindow(100, 100, 60, 50, "Test", new ArrayList<>()));
+    }
+
+    @Override
+    public void drawScreen(int x, int y, float ticks) {
+        elementList.forEach(e -> e.drawElement());
+    }
 
     /**
      * Calculates what the length of you list should be
