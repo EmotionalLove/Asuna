@@ -89,12 +89,12 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     private void drawTitlebar() {
         AdorufuMath.drawRect(this.x, this.y,
                 this.x + this.width,
-                this.y + 40,
+                this.y + 20,
                 themeColourR, themeColourG, themeColourB, themeColourA);
-        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y, 0xffffff, false);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y - 10, 0xffffff, true);
     }
     private void drawRestOfWindow() {
-        AdorufuMath.drawRect(this.x, (this.y + 40), this.y + this.length, (this.y - 40) + this.width, Integer.MIN_VALUE);
+        AdorufuMath.drawRect(this.x, (this.y + 20), this.x + this.width, (this.y + 20) + this.length, Integer.MIN_VALUE);
         AtomicInteger c = new AtomicInteger();
         this.moduleElements.forEach(button -> {
             button.setX(this.x);

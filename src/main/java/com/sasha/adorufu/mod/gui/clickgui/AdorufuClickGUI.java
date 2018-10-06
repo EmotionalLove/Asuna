@@ -29,7 +29,7 @@ public class AdorufuClickGUI extends GuiScreen {
     private List<IAdorufuGuiElement> elementList = new ArrayList<>();
 
     public AdorufuClickGUI() {
-        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 101f, 119f, 255f,  "Test", new ArrayList<>()));
+        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 35f, 91f, 255f,  "Test", new ArrayList<>()));
     }
 
     @Override

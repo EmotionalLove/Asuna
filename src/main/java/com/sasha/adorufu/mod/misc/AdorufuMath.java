@@ -285,7 +285,7 @@ public abstract class AdorufuMath {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(2848);
 
-        GL11.glColor4f(r, g, b, a);
+        GL11.glColor4f(r/255f, g/255f, b/255f, a/255f);
         glBegin(GL11.GL_QUADS);
         GL11.glVertex2d(paramXEnd, paramYStart);
         GL11.glVertex2d(paramXStart, paramYStart);
