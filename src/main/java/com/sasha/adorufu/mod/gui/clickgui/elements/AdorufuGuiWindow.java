@@ -29,14 +29,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AdorufuGuiWindow implements IAdorufuGuiElement {
 
     private String title;
-    private int themeColour = 0xffffff;
-    private List<AdorufuGuiModuleButton> moduleElements = new ArrayList<>();
+    private float themeColourR = 255f;
+    private float themeColourG = 255f;
+    private float themeColourB = 255f;
+    private float themeColourA = 5f;
+    private List<IAdorufuGuiElement> moduleElements = new ArrayList<>();
     private int x;
     private int length;
     private int y;
     private int width;
 
-    public AdorufuGuiWindow(int x, int y, int length, int width, String title, List<AdorufuGuiModuleButton> moduleElements) {
+    public AdorufuGuiWindow(int x, int y, int length, int width, String title, List<IAdorufuGuiElement> moduleElements) {
         this.x = x;
         this.y = y;
         this.length = length;
@@ -44,11 +47,28 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         this.title = title;
         this.moduleElements = moduleElements;
     }
-    public AdorufuGuiWindow(int x, int y, int length, int width, int colour, String title, List<AdorufuGuiModuleButton> moduleElements) {
+    public AdorufuGuiWindow(int x, int y, int length, int width, int colour, String title, List<IAdorufuGuiElement> moduleElements) {
         this.x = x;
         this.y = y;
         this.title = title;
-        this.themeColour = colour;
+        this.length = length;
+        this.width = width;
+        themeColourA = (float) (colour >> 24 & 0xFF) / 255F;
+        themeColourR = (float) (colour >> 16 & 0xFF) / 255F;
+        themeColourG = (float) (colour >> 8 & 0xFF) / 255F;
+        themeColourB = (float) (colour & 0xFF) / 255F;
+        this.moduleElements = moduleElements;
+    }
+    public AdorufuGuiWindow(int x, int y, int length, int width, float colourR, float colourG, float colourB, float colourA, String title, List<IAdorufuGuiElement> moduleElements) {
+        this.x = x;
+        this.y = y;
+        this.length = length;
+        this.width = width;
+        this.title = title;
+        themeColourA = colourA;
+        themeColourR = colourR;
+        themeColourG = colourG;
+        themeColourB = colourB;
         this.moduleElements = moduleElements;
     }
 
@@ -70,11 +90,11 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         AdorufuMath.drawRect(this.x, this.y,
                 this.x + this.width,
                 this.y + 40,
-                this.themeColour);
-        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + this.width) / 2, this.y, 0xffffff, false);
+                themeColourR, themeColourG, themeColourB, themeColourA);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y, 0xffffff, false);
     }
     private void drawRestOfWindow() {
-        AdorufuMath.drawRect(this.x, (this.y - 40), this.y + this.length, (this.y - 40) + this.width, Integer.MIN_VALUE);
+        AdorufuMath.drawRect(this.x, (this.y + 40), this.y + this.length, (this.y - 40) + this.width, Integer.MIN_VALUE);
         AtomicInteger c = new AtomicInteger();
         this.moduleElements.forEach(button -> {
             button.setX(this.x);
