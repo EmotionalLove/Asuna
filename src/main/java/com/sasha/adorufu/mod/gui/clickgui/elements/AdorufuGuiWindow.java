@@ -97,7 +97,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         AtomicInteger c = new AtomicInteger();
         this.moduleElements.forEach(button -> {
             button.setX(this.x);
-            button.setY(((this.y + TITLEBAR_BOUND) + (15 * c.get())));
+            button.setY(((this.y + TITLEBAR_BOUND) + (button.getHeight() * c.get())));
             c.getAndIncrement();
             button.drawElement(x, y);
         });
@@ -166,6 +166,11 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     @Override
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public int getHeight() {
+        return length;
     }
 
 }

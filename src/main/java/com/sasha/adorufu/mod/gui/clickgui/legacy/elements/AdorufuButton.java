@@ -30,6 +30,7 @@ import net.minecraft.util.SoundCategory;
 import static com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI.getRegisteredWindows;
 
 
+@Deprecated
 public class AdorufuButton {
 
 	static Minecraft mc = Minecraft.getMinecraft();

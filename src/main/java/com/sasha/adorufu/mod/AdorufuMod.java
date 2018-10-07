@@ -44,6 +44,7 @@ import com.sasha.adorufu.mod.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.multitasker.TaskManager;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
 import com.sun.jna.Native;
 import net.minecraft.client.Minecraft;
@@ -97,6 +98,7 @@ public class AdorufuMod implements SimpleListener {
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
     public static AdorufuWindowsBatteryManager BATTERY_MANAGER_INTERFACE;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
+    public static TaskManager TASK_MANAGER = new TaskManager();
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
 
@@ -147,6 +149,7 @@ public class AdorufuMod implements SimpleListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        TASK_MANAGER.tick();
     }
 
     @EventHandler

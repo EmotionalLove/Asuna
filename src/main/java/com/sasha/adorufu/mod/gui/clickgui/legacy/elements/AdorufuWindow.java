@@ -34,6 +34,7 @@ import java.util.ArrayList;
  * The repo can be found HERE > https://github.com/LeafHacker/xdolf
  * The repo can also be found at that URL on the wayback machine.
  **/
+@Deprecated
 public class AdorufuWindow {
     private String title;
     private int x, y;

@@ -21,6 +21,7 @@ package com.sasha.adorufu.mod.gui.clickgui.legacy.elements;
 /**
  * Created by Sasha Stevens on 5/12/2017.
  */
+@Deprecated
 public enum WindowType {
     MODULE,
     OPTION

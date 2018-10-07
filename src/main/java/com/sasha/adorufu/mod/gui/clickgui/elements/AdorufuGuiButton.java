@@ -28,7 +28,7 @@ import com.sasha.adorufu.mod.misc.AdorufuMath;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
+public class AdorufuGuiButton implements IAdorufuGuiElement {
 
     private String title;
     private float highlightColourR = 255f;
@@ -41,7 +41,7 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
     private int height;
     private IToggler buttonAction;
 
-    public AdorufuGuiModuleButton(String title, int x, int y, int width, int height, IToggler buttonAction) {
+    public AdorufuGuiButton(String title, int x, int y, int width, int height, IToggler buttonAction) {
         this.title = title;
         this.x = x;
         this.y = y;
@@ -108,7 +108,7 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
                     if (buttonAction.getMod().hasOptions()) {
                         List<IAdorufuGuiElement> listelem = new ArrayList<>();
                         buttonAction.getMod().getModuleOptionsMap().forEach((name, bool) -> {
-                            listelem.add(new AdorufuGuiModuleButton(name, 0, 0, 100, 12,
+                            listelem.add(new AdorufuGuiButton(name, 0, 0, 100, 12,
                                     new OptionToggler(buttonAction.getMod(), name)));
                         });
                         new Thread(() -> {
@@ -116,7 +116,7 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
                                 AdorufuClickGUI.elementList.add(
                                         new AdorufuGuiWindow(this.x + (this.width + 10),
                                                 y, AdorufuClickGUI.calcListLength(listelem.size(), 12), 100,
-                                                188f, 252f, 255f, 255f,
+                                                86f, 0f, 80f, 255f,
                                                 buttonAction.getMod().getModuleName(),
                                                 listelem)
                                 );
@@ -149,5 +149,9 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
     @Override
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

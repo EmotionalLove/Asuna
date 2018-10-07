@@ -19,6 +19,10 @@
 package com.sasha.adorufu.mod.gui.clickgui.helper;
 
 import com.sasha.adorufu.mod.module.AdorufuModule;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
+
+import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 
 public class OptionToggler implements Runnable, IToggler {
 
@@ -32,6 +36,7 @@ public class OptionToggler implements Runnable, IToggler {
 
     @Override
     public void run() {
+        minecraft.world.playSound(minecraft.player.posX, minecraft.player.posY, minecraft.player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
         m.toggleOption(optionName);
     }
 

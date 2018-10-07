@@ -30,6 +30,7 @@ import net.minecraft.util.SoundCategory;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
+@Deprecated
 public class AdorufuOptionButton {
 
 	private AdorufuWindow window;
