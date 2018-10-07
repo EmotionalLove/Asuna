@@ -20,7 +20,12 @@ package com.sasha.adorufu.mod.gui.clickgui.elements;
 
 public interface IAdorufuGuiElement {
 
-    void drawElement();
+    /**
+     * Draws the element
+     * @param x The cursor's X position
+     * @param y The cursor's Y position
+     */
+    void drawElement(int x, int y);
     void onMouseEngage(int x, int y, int b);
     void onMouseRelease(int x, int y, int b);
     int getX();

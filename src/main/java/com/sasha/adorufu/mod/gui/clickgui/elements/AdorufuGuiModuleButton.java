@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.gui.clickgui.elements;
 public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
 
     @Override
-    public void drawElement() {
+    public void drawElement(int x, int y) {
 
     }
 

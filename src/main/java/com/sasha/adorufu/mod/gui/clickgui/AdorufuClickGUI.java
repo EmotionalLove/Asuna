@@ -34,7 +34,15 @@ public class AdorufuClickGUI extends GuiScreen {
 
     @Override
     public void drawScreen(int x, int y, float ticks) {
-        elementList.forEach(e -> e.drawElement());
+        elementList.forEach(e -> e.drawElement(x, y));
+    }
+    @Override
+    public void mouseClicked(int x, int y, int b) {
+        elementList.forEach(e -> e.onMouseEngage(x, y, b));
+    }
+    @Override
+    public void mouseReleased(int x, int y, int b) {
+        elementList.forEach(e -> e.onMouseRelease(x,y,b));
     }
 
     /**

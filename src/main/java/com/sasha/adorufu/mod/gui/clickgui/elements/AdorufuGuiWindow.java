@@ -28,6 +28,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AdorufuGuiWindow implements IAdorufuGuiElement {
 
+    public static final int TITLEBAR_BOUND = 20;
+
     private String title;
     private float themeColourR = 255f;
     private float themeColourG = 255f;
@@ -38,6 +40,10 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     private int length;
     private int y;
     private int width;
+
+    private boolean drag = false;
+    private int offsetCursorX;
+    private int offsetCursorY;
 
     public AdorufuGuiWindow(int x, int y, int length, int width, String title, List<IAdorufuGuiElement> moduleElements) {
         this.x = x;
@@ -77,7 +83,11 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     }
 
     @Override
-    public void drawElement() {
+    public void drawElement(int x, int y) {
+        if (drag) {
+            this.x = x - this.offsetCursorX;
+            this.y = y - this.offsetCursorY;
+        }
         GL11.glPushMatrix();
         GL11.glPushAttrib(8256);
         drawTitlebar();
@@ -89,12 +99,12 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     private void drawTitlebar() {
         AdorufuMath.drawRect(this.x, this.y,
                 this.x + this.width,
-                this.y + 20,
+                this.y + TITLEBAR_BOUND,
                 themeColourR, themeColourG, themeColourB, themeColourA);
-        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y - 10, 0xffffff, true);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y + 5, 0xffffff, true);
     }
     private void drawRestOfWindow() {
-        AdorufuMath.drawRect(this.x, (this.y + 20), this.x + this.width, (this.y + 20) + this.length, Integer.MIN_VALUE);
+        AdorufuMath.drawRect(this.x, (this.y + TITLEBAR_BOUND), this.x + this.width, (this.y + TITLEBAR_BOUND) + this.length, Integer.MIN_VALUE);
         AtomicInteger c = new AtomicInteger();
         this.moduleElements.forEach(button -> {
             button.setX(this.x);
@@ -105,12 +115,22 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
 
     @Override
     public void onMouseEngage(int x, int y, int b) {
-
+        if (b == 0) {
+            if ((x >= this.x && x <= (this.x + this.width))
+            &&
+            y >= this.y && y <= (this.y + TITLEBAR_BOUND)){
+                this.offsetCursorX = x - this.x;
+                this.offsetCursorY = y - this.y;
+                drag = true;
+            }
+        }
     }
 
     @Override
     public void onMouseRelease(int x, int y, int b) {
-
+        if (b == 0) {
+            drag = false;
+        }
     }
 
 
