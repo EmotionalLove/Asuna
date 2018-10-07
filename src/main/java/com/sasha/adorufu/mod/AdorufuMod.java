@@ -249,17 +249,6 @@ public class AdorufuMod implements SimpleListener {
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
-    @Deprecated // needs to be reworked - later
-    private void registerWindows() throws Exception {
-        registeredWindows.clear();
-        registeredWindows.add(new WindowChat());
-        registeredWindows.add(new WindowCombat());
-        registeredWindows.add(new WindowHUD());
-        registeredWindows.add(new WindowMisc());
-        registeredWindows.add(new WindowMovement());
-        registeredWindows.add(new WindowRender());
-    }
-
     private void registerModules() {
         Manager.Module.moduleRegistry.clear();
         Manager.Module.register(new ModuleXray());
