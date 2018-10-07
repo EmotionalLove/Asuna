@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod;
 
 import com.sasha.adorufu.mod.exception.AdorufuNoSuchElementInDataFileException;
 import com.sasha.adorufu.mod.friend.Friend;
+import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
@@ -440,7 +441,51 @@ public class AdorufuDataManager {
         }
     }
 
-    public synchronized int[] getSavedGuiPos(AdorufuWindow window){
+    public synchronized void saveGuiElementPos(AdorufuGuiWindow element) throws IOException {
+        logMsg(true, "Saving \"" + element.getTitle() +"\"'s current GUI position...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                AdorufuMod.logErr(true, "Data file doesn't exist smh");
+                f.createNewFile();
+            }
+            YMLParser parser = new YMLParser(f);
+            parser.set("Adorufu.newclickgui." + element.getTitle().toLowerCase() + ".x", element.getX());
+            parser.set("Adorufu.newclickgui." + element.getTitle().toLowerCase() + ".y", element.getY());
+            parser.save();
+        }
+        finally {
+            threadLock.unlock();
+        }
+    }
+    public synchronized int[] loadGuiElementPos(String elementTitle) throws IOException {
+        logMsg(true, "Loading \"" + elementTitle +"\"'s saved GUI position...");
+        threadLock.lock();
+        logWarn(true, "Thread locking engaged!");
+        try {
+            File f = new File(dataFileName);
+            if (!f.exists()) {
+                AdorufuMod.logErr(true, "Data file doesn't exist smh");
+                f.createNewFile();
+                return new int[]{100,100};
+            }
+            YMLParser parser = new YMLParser(f);
+            int[] coords = new int[2];
+            coords[0] = parser.getInt("Adorufu.newclickgui." + elementTitle.toLowerCase() + ".x"
+                    , 100);
+            coords [1] = parser.getInt("Adorufu.newclickgui." + elementTitle.toLowerCase() + ".y"
+                    , 100);
+            return coords;
+        }
+        finally {
+            threadLock.unlock();
+        }
+    }
+
+    @Deprecated
+    public synchronized int[] getLegacySavedGuiPos(AdorufuWindow window){
         logMsg(true, "Loading \"" + window.getTitle()+"\"'s saved GUI position...");
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");
@@ -465,7 +510,8 @@ public class AdorufuDataManager {
             logWarn(true, "Thread locking disengaged!");
         }
     }
-    public synchronized void saveGuiPos(AdorufuWindow window) throws IOException{
+    @Deprecated
+    public synchronized void saveLegacyGuiPos(AdorufuWindow window) throws IOException{
         logMsg(true, "Saving \"" + window.getTitle()+"\"'s GUI position...");
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");

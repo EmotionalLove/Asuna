@@ -52,7 +52,7 @@ public class AdorufuClickGUI extends GuiScreen {
                     break;
                 case MODULE:
                     try {
-                        int[] lol = AdorufuMod.DATA_MANAGER.getSavedGuiPos(w);
+                        int[] lol = AdorufuMod.DATA_MANAGER.getLegacySavedGuiPos(w);
                         w.dragX = lol[0];
                         w.dragY = lol[1];
                     } catch (Exception e) {
@@ -68,7 +68,7 @@ public class AdorufuClickGUI extends GuiScreen {
         registeredWindows.forEach(w -> {
             AdorufuMod.scheduler.schedule(() -> {
                 try {
-                    AdorufuMod.DATA_MANAGER.saveGuiPos(w);
+                    AdorufuMod.DATA_MANAGER.saveLegacyGuiPos(w);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

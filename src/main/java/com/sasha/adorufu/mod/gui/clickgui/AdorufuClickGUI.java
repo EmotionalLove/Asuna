@@ -24,9 +24,9 @@ import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
-import com.sasha.adorufu.mod.module.AdorufuModule;
 import net.minecraft.client.gui.GuiScreen;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -63,48 +63,67 @@ public class AdorufuClickGUI extends GuiScreen {
                         .forEach(e -> {
                             misc_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
-                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "Misc", misc_elements));
+                int[] coords = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Misc");
+                elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(),15), 100, 79f, 79f, 79f, 255f,  "Misc", misc_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.GUI)
                         .forEach(e -> {
                             gui_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
-                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                int[] coords$0 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("HUD");
+                elementList.add(new AdorufuGuiWindow(coords$0[0], coords$0[1], calcListLength(gui_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "HUD", gui_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.COMBAT)
                         .forEach(e -> {
                             combat_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
-                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                int[] coords$1 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Combat");
+                elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "Combat", combat_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.CHAT)
                         .forEach(e -> {
                             chat_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
-                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                int[] coords$2 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Chat");
+                elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "Chat", chat_elements));
-
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.RENDER)
                         .forEach(e -> {
                             render_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
-                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                int[] coords$3 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Render");
+                elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "Render", render_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.MOVEMENT)
                         .forEach(e -> {
                             movement_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
-                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                int[] coords$4 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Movement");
+                elementList.add(new AdorufuGuiWindow(coords$4[0], coords$4[1], calcListLength(movement_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "Movement", movement_elements));
-            }
-            finally {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
                 lock.unlock();
             }
         }, 0, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void onGuiClosed() {
+        elementList.forEach(f -> {
+            if (f instanceof AdorufuGuiWindow) {
+                try {
+                    AdorufuMod.DATA_MANAGER.saveGuiElementPos((AdorufuGuiWindow) f);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -143,8 +162,8 @@ public class AdorufuClickGUI extends GuiScreen {
      * @param i the amount of buttons that the window will have
      * @return the length value
      */
-    public static int calcListLength(int i) {
-        return 0; //todo
+    public static int calcListLength(int i, int heightPerButton) {
+        return i * heightPerButton;
     }
 
     public static boolean hasFocus(AdorufuGuiWindow element) {
@@ -170,17 +189,4 @@ public class AdorufuClickGUI extends GuiScreen {
         }
     }
 
-}
-class ModuleToggler implements Runnable {
-
-    private AdorufuModule m;
-
-    public ModuleToggler(AdorufuModule m) {
-        this.m = m;
-    }
-
-    @Override
-    public void run() {
-        m.toggle();
-    }
 }

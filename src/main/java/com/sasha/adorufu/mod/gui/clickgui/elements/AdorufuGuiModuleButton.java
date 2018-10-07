@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.gui.clickgui.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.gui.clickgui.ModuleToggler;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 
 public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
@@ -32,9 +33,9 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
     private int y;
     private int width;
     private int height;
-    private Runnable buttonAction;
+    private ModuleToggler buttonAction;
 
-    public AdorufuGuiModuleButton(String title, int x, int y, int width, int height, Runnable buttonAction) {
+    public AdorufuGuiModuleButton(String title, int x, int y, int width, int height, ModuleToggler buttonAction) {
         this.title = title;
         this.x = x;
         this.y = y;
@@ -50,6 +51,10 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
                 &&
                 y >= this.y && y <= (this.y + this.height)) {
             drawHighlight();
+            return;
+        }
+        if (buttonAction.isToggled()) {
+            drawEnabled();
         }
     }
 
@@ -58,6 +63,12 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
                 this.x + this.width,
                 this.y + this.height,
                 highlightColourR, highlightColourG, highlightColourB, highlightColourA);
+    }
+    private void drawEnabled() {
+        AdorufuMath.drawRect(this.x, this.y,
+                this.x + this.width,
+                this.y + this.height,
+                145f, 255f, 158f, 50f);
     }
 
     @Override

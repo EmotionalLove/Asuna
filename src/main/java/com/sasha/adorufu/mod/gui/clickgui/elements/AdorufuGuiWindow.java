@@ -78,7 +78,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         this.moduleElements = moduleElements;
     }
 
-    private String getTitle() {
+    public String getTitle() {
         return this.title;
     }
 
