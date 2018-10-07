@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.module.modules;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
+import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.adorufu.mod.module.PostToggleExec;
 import com.sasha.adorufu.mod.module.AdorufuCategory;

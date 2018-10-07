@@ -325,7 +325,6 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleBookForger());
         Manager.Module.register(new ModuleAutoWalk());
         Manager.Module.register(new ModuleBoatFly());
-        Manager.Module.register(new ModuleNewClickGUI());
         //Manager.Module.register(new ModuleChunkCheck());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
