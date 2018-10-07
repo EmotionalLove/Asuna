@@ -18,17 +18,18 @@
 
 package com.sasha.adorufu.mod.gui.clickgui;
 
+import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiModuleButton;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
 import com.sasha.adorufu.mod.misc.Manager;
+import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
-import com.sasha.adorufu.mod.module.modules.ModuleAFKFish;
-import com.sasha.adorufu.mod.module.modules.ModuleKillaura;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -38,7 +39,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
     public AdorufuClickGUI() {
         elementList.clear();
-        ArrayList<IAdorufuGuiElement> buttons = new ArrayList<>();
+        /*ArrayList<IAdorufuGuiElement> buttons = new ArrayList<>();
         ArrayList<IAdorufuGuiElement> fbuttons = new ArrayList<>();
         buttons.add(new AdorufuGuiModuleButton("GayAura", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleKillaura.class))));
         buttons.add(new AdorufuGuiModuleButton("Fishing", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
@@ -46,40 +47,64 @@ public class AdorufuClickGUI extends GuiScreen {
         fbuttons.add(new AdorufuGuiModuleButton("Meme", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
         elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "Future Client", buttons));
         elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "KAMI Client", fbuttons));
-        /*
-        ArrayList<IAdorufuGuiElement> misc_elements = new ArrayList<>();
-        ArrayList<IAdorufuGuiElement> gui_elements = new ArrayList<>();
-        ArrayList<IAdorufuGuiElement> combat_elements = new ArrayList<>();
-        ArrayList<IAdorufuGuiElement> chat_elements = new ArrayList<>();
-        ArrayList<IAdorufuGuiElement> render_elements = new ArrayList<>();
-        ArrayList<IAdorufuGuiElement> movement_elements = new ArrayList<>();
-        for (AdorufuModule module : Manager.Module.moduleRegistry) {
-            switch (module.getModuleCategory()) {
-                case RENDER:
-                    render_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
-                    break;
-                case MOVEMENT:
-                    movement_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
-                    break;
-                case CHAT:
-                    chat_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
-                    break;
-                case COMBAT:
-                    combat_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
-                    break;
-                case GUI:
-                    gui_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
-                    break;
-                case MISC:
-                    misc_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+        */
+        // as you can tell IM FUCKING RETARDED
+        AdorufuMod.scheduler.schedule(() -> {
+            lock.lock();
+            try {
+                ArrayList<IAdorufuGuiElement> misc_elements = new ArrayList<>();
+                ArrayList<IAdorufuGuiElement> gui_elements = new ArrayList<>();
+                ArrayList<IAdorufuGuiElement> combat_elements = new ArrayList<>();
+                ArrayList<IAdorufuGuiElement> chat_elements = new ArrayList<>();
+                ArrayList<IAdorufuGuiElement> render_elements = new ArrayList<>();
+                ArrayList<IAdorufuGuiElement> movement_elements = new ArrayList<>();
+                Manager.Module.moduleRegistry.stream()
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MISC)
+                        .forEach(e -> {
+                            misc_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                        });
+                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "Misc", misc_elements));
+                Manager.Module.moduleRegistry.stream()
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.GUI)
+                        .forEach(e -> {
+                            gui_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                        });
+                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                        , "HUD", gui_elements));
+                Manager.Module.moduleRegistry.stream()
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.COMBAT)
+                        .forEach(e -> {
+                            combat_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                        });
+                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                        , "Combat", combat_elements));
+                Manager.Module.moduleRegistry.stream()
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.CHAT)
+                        .forEach(e -> {
+                            chat_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                        });
+                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                        , "Chat", chat_elements));
+
+                Manager.Module.moduleRegistry.stream()
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.RENDER)
+                        .forEach(e -> {
+                            render_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                        });
+                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                        , "Render", render_elements));
+                Manager.Module.moduleRegistry.stream()
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MOVEMENT)
+                        .forEach(e -> {
+                            movement_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                        });
+                elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f
+                        , "Movement", movement_elements));
             }
-            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 181f, 150f, 255f,  "Misc", misc_elements));
-            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 91f, 99f, 255f,  "Chat", chat_elements));
-            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 204f, 136f, 0f, 255f,  "Render", render_elements));
-            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 175f, 0f, 0f, 255f,  "Combat", combat_elements));
-            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 119f, 0f, 103f, 255f,  "Movement", movement_elements));
-            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "HUD", gui_elements));
-        }*/
+            finally {
+                lock.unlock();
+            }
+        }, 0, TimeUnit.SECONDS);
     }
 
     @Override
