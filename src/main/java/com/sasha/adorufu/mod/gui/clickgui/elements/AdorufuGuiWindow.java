@@ -94,6 +94,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         drawRestOfWindow();
         GL11.glPopMatrix();
         GL11.glPopAttrib();
+        this.moduleElements.forEach(e -> e.drawElement(x,y));
     }
 
     private void drawTitlebar() {

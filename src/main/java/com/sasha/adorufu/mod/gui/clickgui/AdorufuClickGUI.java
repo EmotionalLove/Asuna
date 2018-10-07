@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu.mod.gui.clickgui;
 
+import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiModuleButton;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
 import net.minecraft.client.gui.GuiScreen;
@@ -29,7 +30,9 @@ public class AdorufuClickGUI extends GuiScreen {
     private List<IAdorufuGuiElement> elementList = new ArrayList<>();
 
     public AdorufuClickGUI() {
-        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 35f, 91f, 255f,  "Test", new ArrayList<>()));
+        ArrayList<IAdorufuGuiElement> elements = new ArrayList<>();
+        elements.add(new AdorufuGuiModuleButton("Button", 0, 0, 60, 20, () -> System.exit(0)));
+        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 35f, 91f, 255f,  "Test", elements));
     }
 
     @Override

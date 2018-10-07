@@ -18,11 +18,33 @@
 
 package com.sasha.adorufu.mod.gui.clickgui.elements;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+
 public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
+
+    private String title;
+    private float highlightColourR = 255f;
+    private float highlightColourG = 255f;
+    private float highlightColourB = 255f;
+    private float highlightColourA = 10f/255f;
+    private int x;
+    private int y;
+    private int width;
+    private int length;
+    private Runnable buttonAction;
+
+    public AdorufuGuiModuleButton(String title, int x, int y, int width, int length, Runnable buttonAction) {
+        this.title = title;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.length = length;
+        this.buttonAction = buttonAction;
+    }
 
     @Override
     public void drawElement(int x, int y) {
-
+        AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y + 5, 0xffffff, true);
     }
 
     @Override
