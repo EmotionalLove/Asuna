@@ -94,7 +94,13 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         drawRestOfWindow();
         GL11.glPopMatrix();
         GL11.glPopAttrib();
-        this.moduleElements.forEach(e -> e.drawElement(x,y));
+        AtomicInteger c = new AtomicInteger();
+        this.moduleElements.forEach(button -> {
+            button.setX(this.x);
+            button.setY(((this.y + TITLEBAR_BOUND) + (15 * c.get())));
+            c.getAndIncrement();
+            button.drawElement(x, y);
+        });
     }
 
     private void drawTitlebar() {
@@ -106,12 +112,6 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     }
     private void drawRestOfWindow() {
         AdorufuMath.drawRect(this.x, (this.y + TITLEBAR_BOUND), this.x + this.width, (this.y + TITLEBAR_BOUND) + this.length, Integer.MIN_VALUE);
-        AtomicInteger c = new AtomicInteger();
-        this.moduleElements.forEach(button -> {
-            button.setX(this.x);
-            button.setY(this.y + (15 * c.get()));
-            c.getAndIncrement();
-        });
     }
 
     @Override

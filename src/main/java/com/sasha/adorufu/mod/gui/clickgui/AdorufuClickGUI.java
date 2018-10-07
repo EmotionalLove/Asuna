@@ -31,7 +31,7 @@ public class AdorufuClickGUI extends GuiScreen {
 
     public AdorufuClickGUI() {
         ArrayList<IAdorufuGuiElement> elements = new ArrayList<>();
-        elements.add(new AdorufuGuiModuleButton("Button", 0, 0, 60, 20, () -> System.exit(0)));
+        elements.add(new AdorufuGuiModuleButton("Button", 0, 0, 100, 20, () -> System.exit(0)));
         elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 35f, 91f, 255f,  "Test", elements));
     }
 
