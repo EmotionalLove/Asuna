@@ -26,8 +26,8 @@ public interface IAdorufuGuiElement {
      * @param y The cursor's Y position
      */
     void drawElement(int x, int y);
-    void onMouseEngage(int x, int y, int b);
-    void onMouseRelease(int x, int y, int b);
+    boolean onMouseEngage(int x, int y, int b);
+    boolean onMouseRelease(int x, int y, int b);
     int getX();
     int getY();
     void setX(int x);

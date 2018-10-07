@@ -115,7 +115,12 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     }
 
     @Override
-    public void onMouseEngage(int x, int y, int b) {
+    public boolean onMouseEngage(int x, int y, int b) {
+        for (IAdorufuGuiElement moduleElement : this.moduleElements) {
+            if (moduleElement.onMouseEngage(x,y,b)) {
+                return true;
+            }
+        }
         if (b == 0) {
             if ((x >= this.x && x <= (this.x + this.width))
             &&
@@ -123,15 +128,23 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
                 this.offsetCursorX = x - this.x;
                 this.offsetCursorY = y - this.y;
                 drag = true;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void onMouseRelease(int x, int y, int b) {
+    public boolean onMouseRelease(int x, int y, int b) {
+        for (IAdorufuGuiElement moduleElement : this.moduleElements) {
+            if (moduleElement.onMouseRelease(x,y,b)) {
+                return true;
+            }
+        }
         if (b == 0) {
             drag = false;
         }
+        return false;
     }
 
 

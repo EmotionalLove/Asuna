@@ -21,31 +21,96 @@ package com.sasha.adorufu.mod.gui.clickgui;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiModuleButton;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
+import com.sasha.adorufu.mod.misc.Manager;
+import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.module.modules.ModuleAFKFish;
+import com.sasha.adorufu.mod.module.modules.ModuleKillaura;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AdorufuClickGUI extends GuiScreen {
-    private List<IAdorufuGuiElement> elementList = new ArrayList<>();
+    private static Lock lock = new ReentrantLock();
+    private static List<IAdorufuGuiElement> elementList = new ArrayList<>();
 
     public AdorufuClickGUI() {
-        ArrayList<IAdorufuGuiElement> elements = new ArrayList<>();
-        elements.add(new AdorufuGuiModuleButton("Button", 0, 0, 100, 20, () -> System.exit(0)));
-        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 35f, 91f, 255f,  "Test", elements));
+        elementList.clear();
+        ArrayList<IAdorufuGuiElement> buttons = new ArrayList<>();
+        ArrayList<IAdorufuGuiElement> fbuttons = new ArrayList<>();
+        buttons.add(new AdorufuGuiModuleButton("GayAura", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleKillaura.class))));
+        buttons.add(new AdorufuGuiModuleButton("Fishing", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
+        fbuttons.add(new AdorufuGuiModuleButton("Hax", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
+        fbuttons.add(new AdorufuGuiModuleButton("Meme", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
+        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "Future Client", buttons));
+        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "KAMI Client", fbuttons));
+        /*
+        ArrayList<IAdorufuGuiElement> misc_elements = new ArrayList<>();
+        ArrayList<IAdorufuGuiElement> gui_elements = new ArrayList<>();
+        ArrayList<IAdorufuGuiElement> combat_elements = new ArrayList<>();
+        ArrayList<IAdorufuGuiElement> chat_elements = new ArrayList<>();
+        ArrayList<IAdorufuGuiElement> render_elements = new ArrayList<>();
+        ArrayList<IAdorufuGuiElement> movement_elements = new ArrayList<>();
+        for (AdorufuModule module : Manager.Module.moduleRegistry) {
+            switch (module.getModuleCategory()) {
+                case RENDER:
+                    render_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+                    break;
+                case MOVEMENT:
+                    movement_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+                    break;
+                case CHAT:
+                    chat_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+                    break;
+                case COMBAT:
+                    combat_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+                    break;
+                case GUI:
+                    gui_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+                    break;
+                case MISC:
+                    misc_elements.add(new AdorufuGuiModuleButton(module.getModuleName(), 0, 0, 100, 20, new ModuleToggler(module)));
+            }
+            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 181f, 150f, 255f,  "Misc", misc_elements));
+            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 0f, 91f, 99f, 255f,  "Chat", chat_elements));
+            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 204f, 136f, 0f, 255f,  "Render", render_elements));
+            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 175f, 0f, 0f, 255f,  "Combat", combat_elements));
+            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 119f, 0f, 103f, 255f,  "Movement", movement_elements));
+            elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "HUD", gui_elements));
+        }*/
     }
 
     @Override
     public void drawScreen(int x, int y, float ticks) {
-        elementList.forEach(e -> e.drawElement(x, y));
+        lock.lock();
+        try {
+            elementList.forEach(e -> e.drawElement(x, y));
+        }
+        finally {
+            lock.unlock();
+        }
     }
     @Override
     public void mouseClicked(int x, int y, int b) {
-        elementList.forEach(e -> e.onMouseEngage(x, y, b));
+        lock.lock();
+        try {
+            elementList.stream().filter(e -> e.onMouseEngage(x, y, b)).findFirst();
+        }
+        finally {
+            lock.unlock();
+        }
     }
     @Override
     public void mouseReleased(int x, int y, int b) {
-        elementList.forEach(e -> e.onMouseRelease(x,y,b));
+        lock.lock();
+        try {
+            elementList.stream().filter(e -> e.onMouseRelease(x, y, b)).findFirst();
+        }
+        finally {
+            lock.unlock();
+        }
     }
 
     /**
@@ -57,4 +122,40 @@ public class AdorufuClickGUI extends GuiScreen {
         return 0; //todo
     }
 
+    public static boolean hasFocus(AdorufuGuiWindow element) {
+        lock.lock();
+        try {
+            if (!elementList.contains(element)) return false;
+            return elementList.indexOf(element) == 0;
+        }
+        finally {
+            lock.unlock();
+        }
+    }
+
+    public static void requestFocus(AdorufuGuiWindow element) {
+        lock.lock();
+        try {
+            if (elementList.indexOf(element) == 0) return;
+            elementList.remove(element);
+            elementList.add(0, element);
+        }
+        finally {
+            lock.unlock();
+        }
+    }
+
+}
+class ModuleToggler implements Runnable {
+
+    private AdorufuModule m;
+
+    public ModuleToggler(AdorufuModule m) {
+        this.m = m;
+    }
+
+    @Override
+    public void run() {
+        m.toggle();
+    }
 }

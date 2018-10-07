@@ -61,13 +61,28 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
     }
 
     @Override
-    public void onMouseEngage(int x, int y, int b) {
-
+    public boolean onMouseEngage(int x, int y, int b) {
+        if (b == 0) {
+            if ((x >= this.x && x <= (this.x + this.width))
+                    &&
+                    y >= this.y && y <= (this.y + this.height)) {
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
-    public void onMouseRelease(int x, int y, int b) {
-
+    public boolean onMouseRelease(int x, int y, int b) {
+        if (b == 0) {
+            if ((x >= this.x && x <= (this.x + this.width))
+                    &&
+                    y >= this.y && y <= (this.y + this.height)) {
+                this.buttonAction.run();
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
