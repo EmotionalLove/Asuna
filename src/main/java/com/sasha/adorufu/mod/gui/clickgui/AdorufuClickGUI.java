@@ -64,7 +64,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             misc_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
                 int[] coords = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Misc");
-                elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(),15), 100, 79f, 79f, 79f, 255f,  "Misc", misc_elements));
+                elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(),15), 100, 0f, 181f, 150f, 255f,  "Misc", misc_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.GUI)
                         .forEach(e -> {
@@ -79,7 +79,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             combat_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
                 int[] coords$1 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Combat");
-                elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(),15), 100, 79f, 79f, 79f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(),15), 100, 175f, 0f, 0f, 255f
                         , "Combat", combat_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.CHAT)
@@ -87,7 +87,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             chat_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
                 int[] coords$2 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Chat");
-                elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(),15), 100, 79f, 79f, 79f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(),15), 100, 0f, 91f, 99f, 255f
                         , "Chat", chat_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.RENDER)
@@ -95,7 +95,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             render_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
                 int[] coords$3 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Render");
-                elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(),15), 100, 79f, 79f, 79f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(),15), 100, 204f, 136f, 0f, 255f
                         , "Render", render_elements));
                 Manager.Module.moduleRegistry.stream()
                         .filter(e -> e.getModuleCategory() == AdorufuCategory.MOVEMENT)
@@ -103,7 +103,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             movement_elements.add(new AdorufuGuiModuleButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
                 int[] coords$4 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Movement");
-                elementList.add(new AdorufuGuiWindow(coords$4[0], coords$4[1], calcListLength(movement_elements.size(),15), 100, 79f, 79f, 79f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$4[0], coords$4[1], calcListLength(movement_elements.size(),15), 100, 119f, 0f, 103f, 255f
                         , "Movement", movement_elements));
             } catch (IOException e) {
                 e.printStackTrace();
