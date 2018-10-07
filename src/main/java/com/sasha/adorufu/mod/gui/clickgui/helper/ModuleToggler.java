@@ -16,11 +16,11 @@
  *
  */
 
-package com.sasha.adorufu.mod.gui.clickgui;
+package com.sasha.adorufu.mod.gui.clickgui.helper;
 
 import com.sasha.adorufu.mod.module.AdorufuModule;
 
-public class ModuleToggler implements Runnable {
+public class ModuleToggler implements Runnable, IToggler {
 
     private AdorufuModule m;
 
@@ -33,7 +33,11 @@ public class ModuleToggler implements Runnable {
         m.toggle();
     }
 
-    public boolean isToggled() {
+    public boolean isTrue() {
         return m.isEnabled();
+    }
+
+    public AdorufuModule getMod() {
+        return m;
     }
 }

@@ -22,6 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiModuleButton;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
+import com.sasha.adorufu.mod.gui.clickgui.helper.ModuleToggler;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import net.minecraft.client.gui.GuiScreen;
@@ -34,20 +35,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class AdorufuClickGUI extends GuiScreen {
-    private static Lock lock = new ReentrantLock();
-    private static List<IAdorufuGuiElement> elementList = new ArrayList<>();
+    public static Lock lock = new ReentrantLock();
+    public static List<IAdorufuGuiElement> elementList = new ArrayList<>();
 
     public AdorufuClickGUI() {
         elementList.clear();
-        /*ArrayList<IAdorufuGuiElement> buttons = new ArrayList<>();
-        ArrayList<IAdorufuGuiElement> fbuttons = new ArrayList<>();
-        buttons.add(new AdorufuGuiModuleButton("GayAura", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleKillaura.class))));
-        buttons.add(new AdorufuGuiModuleButton("Fishing", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
-        fbuttons.add(new AdorufuGuiModuleButton("Hax", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
-        fbuttons.add(new AdorufuGuiModuleButton("Meme", 0, 0, 100, 15, new ModuleToggler(Manager.Module.getModule(ModuleAFKFish.class))));
-        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "Future Client", buttons));
-        elementList.add(new AdorufuGuiWindow(100, 100, 60, 100, 79f, 79f, 79f, 255f,  "KAMI Client", fbuttons));
-        */
         // as you can tell IM FUCKING RETARDED
         AdorufuMod.scheduler.schedule(() -> {
             lock.lock();
@@ -166,6 +158,7 @@ public class AdorufuClickGUI extends GuiScreen {
         return i * heightPerButton;
     }
 
+    //todo
     public static boolean hasFocus(AdorufuGuiWindow element) {
         lock.lock();
         try {
@@ -176,7 +169,7 @@ public class AdorufuClickGUI extends GuiScreen {
             lock.unlock();
         }
     }
-
+    //todo
     public static void requestFocus(AdorufuGuiWindow element) {
         lock.lock();
         try {

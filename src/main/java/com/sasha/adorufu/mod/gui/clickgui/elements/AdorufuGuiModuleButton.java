@@ -19,8 +19,14 @@
 package com.sasha.adorufu.mod.gui.clickgui.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.ModuleToggler;
+import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
+import com.sasha.adorufu.mod.gui.clickgui.helper.IToggler;
+import com.sasha.adorufu.mod.gui.clickgui.helper.ModuleToggler;
+import com.sasha.adorufu.mod.gui.clickgui.helper.OptionToggler;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
 
@@ -33,9 +39,9 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
     private int y;
     private int width;
     private int height;
-    private ModuleToggler buttonAction;
+    private IToggler buttonAction;
 
-    public AdorufuGuiModuleButton(String title, int x, int y, int width, int height, ModuleToggler buttonAction) {
+    public AdorufuGuiModuleButton(String title, int x, int y, int width, int height, IToggler buttonAction) {
         this.title = title;
         this.x = x;
         this.y = y;
@@ -53,7 +59,7 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
             drawHighlight();
             return;
         }
-        if (buttonAction.isToggled()) {
+        if (buttonAction.isTrue()) {
             drawEnabled();
         }
     }
@@ -64,6 +70,7 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
                 this.y + this.height,
                 highlightColourR, highlightColourG, highlightColourB, highlightColourA);
     }
+
     private void drawEnabled() {
         AdorufuMath.drawRect(this.x, this.y,
                 this.x + this.width,
@@ -91,6 +98,34 @@ public class AdorufuGuiModuleButton implements IAdorufuGuiElement {
                     y >= this.y && y <= (this.y + this.height)) {
                 this.buttonAction.run();
                 return false;
+            }
+        }
+        if (b == 1) {
+            if ((x >= this.x && x <= (this.x + this.width))
+                    &&
+                    y >= this.y && y <= (this.y + this.height)) {
+                if (buttonAction instanceof ModuleToggler) {
+                    if (buttonAction.getMod().hasOptions()) {
+                        List<IAdorufuGuiElement> listelem = new ArrayList<>();
+                        buttonAction.getMod().getModuleOptionsMap().forEach((name, bool) -> {
+                            listelem.add(new AdorufuGuiModuleButton(name, 0, 0, 100, 12,
+                                    new OptionToggler(buttonAction.getMod(), name)));
+                        });
+                        new Thread(() -> {
+                            try {
+                                AdorufuClickGUI.elementList.add(
+                                        new AdorufuGuiWindow(this.x + (this.width + 10),
+                                                y, AdorufuClickGUI.calcListLength(listelem.size(), 12), 100,
+                                                188f, 252f, 255f, 255f,
+                                                buttonAction.getMod().getModuleName(),
+                                                listelem)
+                                );
+                            }finally {
+                                AdorufuClickGUI.lock.unlock();
+                            }
+                        }).start();
+                    }
+                }
             }
         }
         return false;
