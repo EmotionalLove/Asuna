@@ -88,7 +88,12 @@ public class ModuleClientIgnore extends AdorufuModule implements SimpleListener 
                 String[] msgs = msg.split(" ");
                 for (String s : filterList) {
                     for (String msg1 : msgs) {
-                        if (msg1.equalsIgnoreCase(s)) {
+                        msg1 = msg1.replace(".", "");
+                        msg1 = msg1.replace(",", "");
+                        msg1 = msg1.replace("\"", "");
+                        msg1 = msg1.replace("'", "");
+                        if (msg1.toLowerCase().startsWith(s.toLowerCase()) ||
+                        msg1.toLowerCase().endsWith(s.toLowerCase())) {
                             e.setCancelled(true);
                             return;
                         }
