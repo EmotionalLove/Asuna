@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class ModuleClientIgnore extends AdorufuModule implements SimpleListener {
     public static List<String> ignorelist = new ArrayList<>();
     public static List<String> filterList = new ArrayList<>();
+    private static List<String> dms = new ArrayList<>();
 
     public ModuleClientIgnore() {
         super("ClientIgnore", AdorufuCategory.CHAT, false, true);
@@ -74,6 +75,12 @@ public class ModuleClientIgnore extends AdorufuModule implements SimpleListener 
                 for (String s : ignorelist) {
                     if (msg.toLowerCase().startsWith("<" + s.toLowerCase() + ">")) {
                         e.setCancelled(true);
+                    }
+                    if (msg.matches(s + " whispers: .*$")) {
+                        e.setCancelled(true);
+                        if (!dms.contains(s)) {
+                            AdorufuMod.minecraft.player.sendChatMessage("/msg " + s + " [Adorufu] Sorry, your message could not be delivered to " + AdorufuMod.minecraft.player.getName() + ", because they have you ignored.");
+                        }
                     }
                 }
             }
