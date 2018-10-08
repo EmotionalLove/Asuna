@@ -114,6 +114,9 @@ public abstract class MixinNetworkManager {
             {
                 ClientPacketRecieveEvent event = new ClientPacketRecieveEvent(p_channelRead0_2_);
                 AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+                if (event.isCancelled()) {
+                    return;
+                }
                 ((Packet<INetHandler>)event.getRecievedPacket()).processPacket(this.packetListener);
             }
             catch (ThreadQuickExitException ignored)
