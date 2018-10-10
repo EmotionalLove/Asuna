@@ -80,6 +80,7 @@ public class ModuleClientIgnore extends AdorufuModule implements SimpleListener 
                         e.setCancelled(true);
                         if (!dms.contains(s)) {
                             AdorufuMod.minecraft.player.sendChatMessage("/msg " + s + " [Adorufu] Sorry, your message could not be delivered to " + AdorufuMod.minecraft.player.getName() + ", because they have you ignored.");
+                            dms.add(s);
                         }
                     }
                 }
