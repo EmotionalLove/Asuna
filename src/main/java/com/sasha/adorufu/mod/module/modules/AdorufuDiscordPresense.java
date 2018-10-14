@@ -35,15 +35,14 @@ public class AdorufuDiscordPresense {
 
     public static void setupPresense() {
         discordRpc = DiscordRPC.INSTANCE;
-        String applicationId = "478587669308375043";
+        String applicationId = "500896211977502720";
         DiscordEventHandlers handlers = new DiscordEventHandlers();
         handlers.ready = discordUser -> AdorufuMod.logMsg(true, "Connected to Discord Rich Presense API");
         discordRpc.Discord_Initialize(applicationId, handlers, true, null);
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.startTimestamp = System.currentTimeMillis() / 1000L; // epoch getValue
         presence.details = details;
-        presence.largeImageKey = "xdolfcover";
-        presence.smallImageKey = "xdolfsmol_2";
+        presence.largeImageKey = "adorufu";
         presence.state = state;
         discordRpc.Discord_UpdatePresence(presence);
         // in a worker thread
