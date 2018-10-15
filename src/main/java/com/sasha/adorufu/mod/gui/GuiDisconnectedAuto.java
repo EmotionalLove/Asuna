@@ -19,12 +19,12 @@
 package com.sasha.adorufu.mod.gui;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.multitasker.Task;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 import java.io.IOException;
 
@@ -78,12 +78,9 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
                 }
             }
             if (this.serverData != null) {
-                AdorufuMod.TASK_MANAGER.queueTask(new Task(() -> {
-                    AdorufuMod.logMsg(true, "AutoReconnecting...");
-                    AdorufuMod.minecraft.addScheduledTask(() -> {
-                        net.minecraftforge.fml.client.FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);
-                    });
-                }), false);
+                AdorufuMod.minecraft.addScheduledTask(() -> {
+                    FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);
+                });
             }
         });
         reconnectFuture.start();

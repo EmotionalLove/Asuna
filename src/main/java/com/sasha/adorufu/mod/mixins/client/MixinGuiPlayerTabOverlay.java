@@ -80,7 +80,7 @@ public abstract class MixinGuiPlayerTabOverlay {
 
         if (Manager.Module.getModule(ModuleNameProtect.class).isEnabled()) {
             for (NetworkPlayerInfo networkPlayerInfo : list) {
-                if (networkPlayerInfo.getDisplayName().getUnformattedText().equalsIgnoreCase(AdorufuMod.minecraft.player.getName())) {
+                if (networkPlayerInfo.getGameProfile().getName().equalsIgnoreCase(AdorufuMod.minecraft.player.getName())) {
                     list.remove(networkPlayerInfo);
                     break;
                 }
@@ -88,12 +88,12 @@ public abstract class MixinGuiPlayerTabOverlay {
         }
 
         for (NetworkPlayerInfo networkPlayerInfo : list) {
-            if (ModuleClientIgnore.ignorelist.contains(networkPlayerInfo.getDisplayName().getUnformattedText())) {
-                networkPlayerInfo.setDisplayName(new TextComponentString("\2478" + networkPlayerInfo.getDisplayName()));
+            if (ModuleClientIgnore.ignorelist.contains(networkPlayerInfo.getGameProfile().getName())) {
+                networkPlayerInfo.setDisplayName(new TextComponentString("\2478" + networkPlayerInfo.getGameProfile().getName()));
                 continue;
             }
-            if (AdorufuMod.FRIEND_MANAGER.getFriendListString().contains(networkPlayerInfo.getDisplayName().getUnformattedText())) {
-                networkPlayerInfo.setDisplayName(new TextComponentString("\247b" + networkPlayerInfo.getDisplayName()));
+            if (AdorufuMod.FRIEND_MANAGER.getFriendListString().contains(networkPlayerInfo.getGameProfile().getName())) {
+                networkPlayerInfo.setDisplayName(new TextComponentString("\247b" + networkPlayerInfo.getGameProfile().getName()));
             }
         }
 

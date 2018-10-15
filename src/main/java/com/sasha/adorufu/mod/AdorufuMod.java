@@ -197,7 +197,6 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
-        TASK_MANAGER.tick();
     }
 
     public void reload(boolean async) {
@@ -313,6 +312,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleAutoWalk());
         Manager.Module.register(new ModuleBoatFly());
         Manager.Module.register(new ModuleAutoReconnect());
+        Manager.Module.register(new ModuleNameProtect());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
 
