@@ -27,6 +27,7 @@
     "MixinItemBow",
     "MixinGuiScreenBook",
     "MixinGuiRecipeBook",
-    "MixinGui"
+    "MixinGui",
+    "MixinGuiConnecting"
   ]
 }

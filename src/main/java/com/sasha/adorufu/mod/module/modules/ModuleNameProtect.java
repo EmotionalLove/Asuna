@@ -19,17 +19,19 @@
 package com.sasha.adorufu.mod.module.modules;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
-import net.minecraft.client.multiplayer.ServerData;
+import com.sasha.adorufu.mod.module.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import net.minecraft.network.play.server.SPacketChat;
+import net.minecraft.util.text.TextComponentString;
 
-public class ModuleAutoReconnect extends AdorufuModule {
-
-    public static long delay = 5000L;
-    public static ServerData serverData = null;
-
-    public ModuleAutoReconnect() {
-        super("AutoReconnect", AdorufuCategory.MISC, false);
+@ModuleInfo(description = "Hides your name on-screen")
+public class ModuleNameProtect extends AdorufuModule implements SimpleListener {
+    public ModuleNameProtect() {
+        super("NameRedact", AdorufuCategory.RENDER, false);
     }
 
     @Override
@@ -44,7 +46,15 @@ public class ModuleAutoReconnect extends AdorufuModule {
 
     @Override
     public void onTick() {
-        if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
-        serverData = AdorufuMod.minecraft.getCurrentServerData();
+
+    }
+    @SimpleEventHandler
+    public void onChatRx(ClientPacketRecieveEvent e) {
+        if (e.getRecievedPacket() instanceof SPacketChat) {
+            SPacketChat chat = (SPacketChat) e.getRecievedPacket();
+            if (!chat.getChatComponent().getUnformattedComponentText().contains(AdorufuMod.minecraft.player.getName())) return;
+            String str = chat.chatComponent.getFormattedText().replace(AdorufuMod.minecraft.player.getName(), "[redacted]");
+            chat.chatComponent = new TextComponentString(str);
+        }
     }
 }

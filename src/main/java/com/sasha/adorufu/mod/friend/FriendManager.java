@@ -85,6 +85,13 @@ public class FriendManager {
     public ArrayList<Friend> getFriendList() {
         return friendList;
     }
+    public ArrayList<String> getFriendListString() {
+        ArrayList<String> friendStrs = new ArrayList<>();
+        for (Friend friend : friendList) {
+            friendStrs.add(friend.getFriendName());
+        }
+        return friendStrs;
+    }
 
 
 

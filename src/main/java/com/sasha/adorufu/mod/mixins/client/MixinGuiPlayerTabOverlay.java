@@ -20,7 +20,10 @@ package com.sasha.adorufu.mod.mixins.client;
 
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
+import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
+import com.sasha.adorufu.mod.module.modules.ModuleClientIgnore;
+import com.sasha.adorufu.mod.module.modules.ModuleNameProtect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
@@ -33,6 +36,7 @@ import net.minecraft.scoreboard.IScoreCriteria;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import org.spongepowered.asm.mixin.Final;
@@ -70,9 +74,28 @@ public abstract class MixinGuiPlayerTabOverlay {
     {
         boolean exTab = Manager.Module.getModule("ExtendedTablist").isEnabled();
         NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
-        List<NetworkPlayerInfo> list = ENTRY_ORDERING.<NetworkPlayerInfo>sortedCopy(nethandlerplayclient.getPlayerInfoMap());
+        List<NetworkPlayerInfo> list = ENTRY_ORDERING.sortedCopy(nethandlerplayclient.getPlayerInfoMap());
         int i = 0;
         int j = 0;
+
+        if (Manager.Module.getModule(ModuleNameProtect.class).isEnabled()) {
+            for (NetworkPlayerInfo networkPlayerInfo : list) {
+                if (networkPlayerInfo.getDisplayName().getUnformattedText().equalsIgnoreCase(AdorufuMod.minecraft.player.getName())) {
+                    list.remove(networkPlayerInfo);
+                    break;
+                }
+            }
+        }
+
+        for (NetworkPlayerInfo networkPlayerInfo : list) {
+            if (ModuleClientIgnore.ignorelist.contains(networkPlayerInfo.getDisplayName().getUnformattedText())) {
+                networkPlayerInfo.setDisplayName(new TextComponentString("\2478" + networkPlayerInfo.getDisplayName()));
+                continue;
+            }
+            if (AdorufuMod.FRIEND_MANAGER.getFriendListString().contains(networkPlayerInfo.getDisplayName().getUnformattedText())) {
+                networkPlayerInfo.setDisplayName(new TextComponentString("\247b" + networkPlayerInfo.getDisplayName()));
+            }
+        }
 
         for (NetworkPlayerInfo networkplayerinfo : list)
         {

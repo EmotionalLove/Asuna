@@ -19,40 +19,38 @@
 package com.sasha.adorufu.mod.gui;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.modules.ModuleAutoReconnect;
+import com.sasha.multitasker.Task;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.client.FMLClientHandler;
 
 import java.io.IOException;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 public class GuiDisconnectedAuto extends GuiDisconnected {
 
     private long milliseconds;
     private ServerData serverData = null;
 
-    private ScheduledFuture<?> reconnectFuture;
+    private Thread reconnectFuture;
 
     public GuiDisconnectedAuto(GuiScreen screen, String reasonLocalizationKey, ITextComponent chatComp, long ms) {
         super(screen, reasonLocalizationKey, chatComp);
         this.milliseconds = ms;
     }
+
     public GuiDisconnectedAuto(GuiScreen screen, String reasonLocalizationKey, ITextComponent chatComp, long ms, ServerData serverData) {
         super(screen, reasonLocalizationKey, chatComp);
         this.milliseconds = ms;
         this.serverData = serverData;
     }
+
     /**
      * Fired when a key is typed (except F11 which toggles full screen). This is the equivalent of
      * KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
      */
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
-    {
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
     }
 
@@ -60,8 +58,7 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
      * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
      * window resizes, the buttonList is cleared beforehand.
      */
-    public void initGui()
-    {
+    public void initGui() {
         super.initGui();
         GuiButton guiButton = new GuiButton(999,
                 this.width / 2 - 100,
@@ -71,18 +68,33 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
             guiButton.enabled = false;
         }
         this.buttonList.add(guiButton);
-        reconnectFuture = AdorufuMod.scheduler.schedule(() -> {
-            if (AdorufuMod.minecraft.currentScreen instanceof GuiDisconnectedAuto) FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);
+        reconnectFuture = new Thread(() -> {
+            while (milliseconds > 0L) {
+                milliseconds--;
+                try {
+                    Thread.sleep(1L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                , ModuleAutoReconnect.delay, TimeUnit.MILLISECONDS);
+            }
+            if (this.serverData != null) {
+                AdorufuMod.TASK_MANAGER.queueTask(new Task(() -> {
+                    AdorufuMod.logMsg(true, "AutoReconnecting...");
+                    AdorufuMod.minecraft.addScheduledTask(() -> {
+                        net.minecraftforge.fml.client.FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);
+                    });
+                }), false);
+            }
+        });
+        reconnectFuture.start();
     }
 
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void actionPerformed(GuiButton button) throws IOException
-    {
+    protected void actionPerformed(GuiButton button) throws IOException {
         super.actionPerformed(button);
+        reconnectFuture.interrupt();
         if (button.id == 999) {
             if (serverData == null) {
                 return;
@@ -94,8 +106,10 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
     /**
      * Draws the screen and all the components in it.
      */
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
+        this.drawCenteredString(AdorufuMod.minecraft.fontRenderer, (float)milliseconds / 1000 + "s", this.width / 2 - 100,
+                Math.min(this.height / 2 + this.textHeight / 2 + this.fontRenderer.FONT_HEIGHT,
+                        this.height - 30) + 70, 0xffffff);
     }
 }
