@@ -68,22 +68,6 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
             guiButton.enabled = false;
         }
         this.buttonList.add(guiButton);
-        reconnectFuture = new Thread(() -> {
-            while (milliseconds > 0L) {
-                milliseconds--;
-                try {
-                    Thread.sleep(1L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (this.serverData != null) {
-                AdorufuMod.minecraft.addScheduledTask(() -> {
-                    FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);
-                });
-            }
-        });
-        reconnectFuture.start();
     }
 
     /**
@@ -91,7 +75,6 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
      */
     protected void actionPerformed(GuiButton button) throws IOException {
         super.actionPerformed(button);
-        reconnectFuture.interrupt();
         if (button.id == 999) {
             if (serverData == null) {
                 return;
@@ -104,9 +87,11 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
      * Draws the screen and all the components in it.
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        milliseconds-=30;
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(AdorufuMod.minecraft.fontRenderer, (float)milliseconds / 1000 + "s", this.width / 2 - 100,
+        this.drawCenteredString(AdorufuMod.minecraft.fontRenderer, (float)milliseconds / 1000 + "s", this.width / 2,
                 Math.min(this.height / 2 + this.textHeight / 2 + this.fontRenderer.FONT_HEIGHT,
                         this.height - 30) + 70, 0xffffff);
+        if (milliseconds <= 0L) FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);
     }
 }

@@ -50,6 +50,7 @@ public class ModuleNameProtect extends AdorufuModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onChatRx(ClientPacketRecieveEvent e) {
+        if (!this.isEnabled()) return;
         if (e.getRecievedPacket() instanceof SPacketChat) {
             SPacketChat chat = (SPacketChat) e.getRecievedPacket();
             if (!chat.getChatComponent().getUnformattedComponentText().contains(AdorufuMod.minecraft.player.getName())) return;
