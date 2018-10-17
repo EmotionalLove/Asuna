@@ -243,6 +243,7 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(FilterlistCommand.class);
         COMMAND_PROCESSOR.register(UpdateCommand.class);
         COMMAND_PROCESSOR.register(PluginsCommand.class);
+        COMMAND_PROCESSOR.register(AutoReconnectCommand.class);
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
