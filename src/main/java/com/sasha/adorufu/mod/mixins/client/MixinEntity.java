@@ -21,12 +21,14 @@ package com.sasha.adorufu.mod.mixins.client;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientEntityCollideEvent;
 import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
+import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,27 +41,53 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Entity.class, priority = 999)
 public abstract class MixinEntity {
-    @Shadow public abstract void setEntityBoundingBox(AxisAlignedBB bb);
+    @Shadow
+    public abstract void setEntityBoundingBox(AxisAlignedBB bb);
 
-    @Shadow public abstract AxisAlignedBB getEntityBoundingBox();
+    @Shadow
+    public abstract AxisAlignedBB getEntityBoundingBox();
 
-    @Shadow public abstract void resetPositionToBB();
+    @Shadow
+    public abstract void resetPositionToBB();
 
-    @Shadow public abstract String getName();
+    @Shadow
+    public abstract String getName();
 
-    @Shadow public double motionX;
+    @Shadow
+    public double motionX;
 
-    @Shadow public double motionY;
+    @Shadow
+    public double motionY;
 
-    @Shadow public double motionZ;
+    @Shadow
+    public double motionZ;
+
+    @Shadow
+    public boolean onGround;
+
+    @Shadow
+    public abstract boolean isSneaking();
+
+    @Shadow
+    public Entity ridingEntity;
+
+    @Shadow
+    public int entityId;
+
+    @Shadow
+    public World world;
+
+    @Shadow
+    public float stepHeight;
 
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
-        if (Manager.Module.getModule("Freecam").isEnabled()) {
-            this.setEntityBoundingBox(this.getEntityBoundingBox().offset(x, y, z));
-            this.resetPositionToBB();
-        }
+        EntityMoveEvent event = new EntityMoveEvent(this.world, this.entityId, type, x, y, z);
+        AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()) return;
+        x = event.getX();y = event.getY();z = event.getZ();
     }
+
     @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
     public void isInsideOfMaterial(Material materialIn, CallbackInfoReturnable<Boolean> info) {
         if (Manager.Module.getModule("Freecam").isEnabled()) {
@@ -67,6 +95,7 @@ public abstract class MixinEntity {
             info.cancel();
         }
     }
+
     @Inject(method = "applyEntityCollision", at = @At("HEAD"), cancellable = true)
     public void applyEntityCollision(Entity entityIn, CallbackInfo info) {
         ClientEntityCollideEvent event = new ClientEntityCollideEvent(entityIn);
@@ -75,9 +104,10 @@ public abstract class MixinEntity {
             info.cancel();
         }
     }
+
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
     protected void pushOutOfBlocks(double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
-        ClientPushOutOfBlocksEvent event = new ClientPushOutOfBlocksEvent(x,y,z);
+        ClientPushOutOfBlocksEvent event = new ClientPushOutOfBlocksEvent(x, y, z);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) {
             info.setReturnValue(false);
@@ -91,9 +121,8 @@ public abstract class MixinEntity {
      */
     @SideOnly(Side.CLIENT)
     @Overwrite
-    public void setVelocity(double x, double y, double z)
-    {
-        PlayerKnockbackEvent event = new PlayerKnockbackEvent(x,y,z);
+    public void setVelocity(double x, double y, double z) {
+        PlayerKnockbackEvent event = new PlayerKnockbackEvent(x, y, z);
         // i would use if (this instanceof EntityPlayerSP but mixins dont allow this soooooo //
         if (this.getName().equals(AdorufuMod.minecraft.player.getName())) { // dont suppress knockback on other entities.
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);

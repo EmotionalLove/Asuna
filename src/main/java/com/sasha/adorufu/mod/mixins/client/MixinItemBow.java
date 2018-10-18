@@ -38,7 +38,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class MixinItemBow {
 
     @Inject(method = "onPlayerStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemBow;getArrowVelocity(I)F"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    private void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft, CallbackInfo info, EntityPlayer entityplayer, boolean flag, ItemStack itemstack, int i) {
+    private void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft, CallbackInfo info,
+                                      EntityPlayer entityplayer, boolean flag, ItemStack itemstack, int i) {
         if (Manager.Module.getModule(ModulePowerBow.class).isEnabled()) {
             i *= 2;
         }

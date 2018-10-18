@@ -22,6 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
 import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
+import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
@@ -75,6 +76,16 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
         if (minecraft.world == null) this.toggle();
         AdorufuMod.minecraft.player.noClip = true;
     }
+
+    @SimpleEventHandler
+    public void onMove(EntityMoveEvent e) {
+        if (this.isEnabled()) {
+            e.getEntity().setEntityBoundingBox(e.getEntity().getEntityBoundingBox()
+                    .offset(e.getX(), e.getY(), e.getZ()));
+            e.getEntity().resetPositionToBB();
+        }
+    }
+
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e){
         if (this.isEnabled()) {
