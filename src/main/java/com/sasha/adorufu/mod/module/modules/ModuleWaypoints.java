@@ -64,7 +64,7 @@ public class ModuleWaypoints extends AdorufuModule {
             GL11.glTranslated(-AdorufuMod.minecraft.getRenderManager().renderPosX, -AdorufuMod.minecraft.getRenderManager().renderPosY, -AdorufuMod.minecraft.getRenderManager().renderPosZ);
 
             // set start position
-            Vec3d start = getClientLookVec().addVector(0, AdorufuMod.minecraft.player.getEyeHeight(), 0).addVector(AdorufuMod.minecraft.getRenderManager().renderPosX, AdorufuMod.minecraft.getRenderManager().renderPosY, AdorufuMod.minecraft.getRenderManager().renderPosZ);
+            Vec3d start = getClientLookVec().add(0, AdorufuMod.minecraft.player.getEyeHeight(), 0).add(AdorufuMod.minecraft.getRenderManager().renderPosX, AdorufuMod.minecraft.getRenderManager().renderPosY, AdorufuMod.minecraft.getRenderManager().renderPosZ);
 
             GL11.glBegin(GL11.GL_LINES);
             for (Waypoint waypoint : AdorufuMod.WAYPOINT_MANAGER.getWaypoints()) {

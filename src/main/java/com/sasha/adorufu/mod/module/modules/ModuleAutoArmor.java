@@ -159,19 +159,19 @@ public class ModuleAutoArmor extends AdorufuModule {
     public boolean isBetter(ItemStack old, ItemStack neew, ArmorType mode) {
         MineralMaterial oldMineral = null;
         MineralMaterial newMineral = null;
-        if (old.getItem().getUnlocalizedName().toLowerCase().contains("leather")) oldMineral = MineralMaterial.LEATHER;
-        if (old.getItem().getUnlocalizedName().toLowerCase().contains("chain")) oldMineral = MineralMaterial.CHAIN;
-        if (old.getItem().getUnlocalizedName().toLowerCase().contains("iron")) oldMineral = MineralMaterial.IRON;
-        if (old.getItem().getUnlocalizedName().toLowerCase().contains("gold")) oldMineral = MineralMaterial.GOLD;
-        if (old.getItem().getUnlocalizedName().toLowerCase().contains("diamond")) oldMineral = MineralMaterial.DIAMOND;
+        if (old.getItem().getTranslationKey().toLowerCase().contains("leather")) oldMineral = MineralMaterial.LEATHER;
+        if (old.getItem().getTranslationKey().toLowerCase().contains("chain")) oldMineral = MineralMaterial.CHAIN;
+        if (old.getItem().getTranslationKey().toLowerCase().contains("iron")) oldMineral = MineralMaterial.IRON;
+        if (old.getItem().getTranslationKey().toLowerCase().contains("gold")) oldMineral = MineralMaterial.GOLD;
+        if (old.getItem().getTranslationKey().toLowerCase().contains("diamond")) oldMineral = MineralMaterial.DIAMOND;
         if (oldMineral == null) {
             return false; // invalid
         }
-        if (neew.getItem().getUnlocalizedName().toLowerCase().contains("leather")) newMineral = MineralMaterial.LEATHER;
-        if (neew.getItem().getUnlocalizedName().toLowerCase().contains("chain")) newMineral = MineralMaterial.CHAIN;
-        if (neew.getItem().getUnlocalizedName().toLowerCase().contains("iron")) newMineral = MineralMaterial.IRON;
-        if (neew.getItem().getUnlocalizedName().toLowerCase().contains("gold")) newMineral = MineralMaterial.GOLD;
-        if (neew.getItem().getUnlocalizedName().toLowerCase().contains("diamond")) newMineral = MineralMaterial.DIAMOND;
+        if (neew.getItem().getTranslationKey().toLowerCase().contains("leather")) newMineral = MineralMaterial.LEATHER;
+        if (neew.getItem().getTranslationKey().toLowerCase().contains("chain")) newMineral = MineralMaterial.CHAIN;
+        if (neew.getItem().getTranslationKey().toLowerCase().contains("iron")) newMineral = MineralMaterial.IRON;
+        if (neew.getItem().getTranslationKey().toLowerCase().contains("gold")) newMineral = MineralMaterial.GOLD;
+        if (neew.getItem().getTranslationKey().toLowerCase().contains("diamond")) newMineral = MineralMaterial.DIAMOND;
         if (newMineral == null) {
             return false; //invalid
         }

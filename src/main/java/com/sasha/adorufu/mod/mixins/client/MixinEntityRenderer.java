@@ -273,7 +273,7 @@ public abstract class MixinEntityRenderer {
         for (int i = 0; i < 256; ++i) this.lightmapColors[i] = -16777216 | -20 << 16 | -20 << 8 | -20;
         this.lightmapTexture.updateDynamicTexture();
         this.lightmapUpdateNeeded = false;
-        this.mc.mcProfiler.endSection();
+        this.mc.profiler.endSection();
         info.cancel();
     }
 }

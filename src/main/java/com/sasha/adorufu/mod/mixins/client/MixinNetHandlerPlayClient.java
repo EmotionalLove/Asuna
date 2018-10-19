@@ -48,12 +48,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = NetHandlerPlayClient.class, priority = 999)
 public class MixinNetHandlerPlayClient {
-
     @Shadow
-    private WorldClient clientWorldController;
-
-    @Shadow
-    private Minecraft gameController;
+    private Minecraft client;
 
     @Shadow
     @Final
@@ -61,7 +57,7 @@ public class MixinNetHandlerPlayClient {
 
     @Inject(method = "handleChunkData",
             at = @At(value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/client/multiplayer/WorldClient;getChunkFromChunkCoords(II)Lnet/minecraft/world/chunk/Chunk;"),
+                    target = "Lnet/minecraft/client/multiplayer/WorldClient;getChunk(II)Lnet/minecraft/world/chunk/Chunk;"),
             locals = LocalCapture.CAPTURE_FAILHARD)
     public void handleChunkData(SPacketChunkData packetIn, CallbackInfo info, /*local*/ Chunk chunk) {
         ServerLoadChunkEvent event = new ServerLoadChunkEvent(chunk, packetIn, chunk.x, chunk.z);
@@ -87,9 +83,9 @@ public class MixinNetHandlerPlayClient {
         PlayerKnockbackEvent event = new PlayerKnockbackEvent(packetIn.getMotionX(), packetIn.getMotionY(), packetIn.getMotionZ());
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) info.cancel();
-        this.gameController.player.motionX += event.getMotionX();
-        this.gameController.player.motionY += event.getMotionY();
-        this.gameController.player.motionZ += event.getMotionZ();
+        this.client.player.motionX += event.getMotionX();
+        this.client.player.motionY += event.getMotionY();
+        this.client.player.motionZ += event.getMotionZ();
         info.cancel();
     }
 
@@ -99,23 +95,23 @@ public class MixinNetHandlerPlayClient {
      */
     @Overwrite
     public void onDisconnect(ITextComponent reason) {
-        this.gameController.loadWorld((WorldClient) null);
+        this.client.loadWorld((WorldClient) null);
 
         if (this.guiScreenServer != null) {
             if (this.guiScreenServer instanceof GuiScreenRealmsProxy) {
-                this.gameController.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy) this.guiScreenServer).getProxy(), "disconnect.lost", reason)).getProxy());
+                this.client.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy) this.guiScreenServer).getProxy(), "disconnect.lost", reason)).getProxy());
             } else {
                 if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                    this.gameController.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+                    this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
                 } else {
-                    this.gameController.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
+                    this.client.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
                 }
             }
         } else {
             if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                this.gameController.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+                this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
             } else {
-                this.gameController.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
+                this.client.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
             }
         }
     }

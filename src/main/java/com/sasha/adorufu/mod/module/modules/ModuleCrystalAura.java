@@ -67,7 +67,7 @@ public class ModuleCrystalAura extends AdorufuModule {
                 boolean hasCrystals = false; // make sure the player even has crystal in their hotbar.
                 for (int s = 36; s <= 44; s++) {
                     ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
-                    AdorufuMod.logMsg(stack.getUnlocalizedName());
+                    AdorufuMod.logMsg(stack.getTranslationKey());
                     if (stack.getItem() == Items.END_CRYSTAL) {
                         AdorufuMod.minecraft.player.inventory.currentItem = s;
                         AdorufuMod.logMsg("ender crystal @ " + s);

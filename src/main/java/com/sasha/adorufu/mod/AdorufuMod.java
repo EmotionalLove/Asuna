@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu.mod;
 
+import baritone.Baritone;
 import com.sasha.adorufu.api.AdorufuPlugin;
 import com.sasha.adorufu.api.AdorufuPluginLoader;
 import com.sasha.adorufu.api.adapter.MinecraftMappingUpdater;
@@ -197,6 +198,7 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
+        Baritone.INSTANCE.init();
     }
 
     public void reload(boolean async) {
@@ -244,6 +246,7 @@ public class AdorufuMod implements SimpleListener {
         COMMAND_PROCESSOR.register(UpdateCommand.class);
         COMMAND_PROCESSOR.register(PluginsCommand.class);
         COMMAND_PROCESSOR.register(AutoReconnectCommand.class);
+        COMMAND_PROCESSOR.register(PathCommand.class);
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 

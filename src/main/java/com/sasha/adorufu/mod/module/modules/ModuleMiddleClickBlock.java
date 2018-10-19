@@ -52,7 +52,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
     }
     @SimpleEventHandler
     public void onMiddleClick(ClientMouseClickEvent.Middle e) {
-        if (AdorufuMod.minecraft.world.getBlockState(AdorufuMod.minecraft.objectMouseOver.getBlockPos()).getBlock().blockMaterial == Material.AIR) {
+        if (AdorufuMod.minecraft.world.getBlockState(AdorufuMod.minecraft.objectMouseOver.getBlockPos()).getBlock().material == Material.AIR) {
             return;
         }
         BlockPos en = AdorufuMod.minecraft.objectMouseOver.getBlockPos();
