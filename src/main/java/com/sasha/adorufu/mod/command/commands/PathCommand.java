@@ -42,6 +42,7 @@ public class PathCommand extends SimpleCommand {
             return;
         }
         if (this.getArguments()[0].equalsIgnoreCase("go")) {
+            BaritoneAPI.getSettings().allowSprint.value = true;
             BaritoneAPI.getPathingBehavior().path();
             AdorufuMod.logMsg(false, "The pathfinder is now active");
             return;
