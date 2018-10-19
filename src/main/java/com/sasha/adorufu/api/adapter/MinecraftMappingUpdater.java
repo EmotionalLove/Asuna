@@ -53,7 +53,7 @@ public class MinecraftMappingUpdater {
                 file.delete();
             }
             File file = new File("mc_mappings" + File.separator + "mappings_archive.zip");
-            FileUtils.copyURLToFile(new URL("http://export.mcpbot.bspk.rs/mcp_snapshot/20171003-1.12/mcp_snapshot-20171003-1.12.zip"), file);
+            FileUtils.copyURLToFile(new URL("http://export.mcpbot.bspk.rs/mcp_snapshot/20180731-1.12/mcp_snapshot-20180731-1.12.zip"), file);
             unzip(file, dir);
             file.delete(); // delete the zip after unzipping it.
         }catch (IOException e) {
