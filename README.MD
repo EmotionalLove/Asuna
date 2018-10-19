@@ -32,6 +32,10 @@ Adorufu would not be possible without help...
 
 [086](https://github.com/zeroeightysix/) - taught me how to use mixin
 
+[leijurv and Brady](https://github.com/cabaletta/baritone) - For the baritone pathfinder
+
+[0x22](https://github.com/0-x-2-2) - For forcing me to fix certain things in my code :kissing_smiling_eyes:
+
 ### Workspace setup tutorial
 
 Coming soon....
