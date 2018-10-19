@@ -38,9 +38,11 @@ public class MixinLoaderForge implements IFMLLoadingPlugin {
      */
     public MixinLoaderForge() {
         String mixinConfig = "mixins.adorufu.json";
+        String baritoneConfig = "mixins.baritone.json";
         String envObf = "searge";
         MixinBootstrap.init();
         Mixins.addConfiguration(mixinConfig);
+        Mixins.addConfiguration(baritoneConfig);
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext(envObf);
     }
 
