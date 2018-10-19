@@ -26,6 +26,12 @@ Adorufu:
 
 If you have any other questions, you can ask for help in our discord server
 
+### Thank yous
+
+Adorufu would not be possible without help...
+
+[086](https://github.com/zeroeightysix/) - taught me how to use mixin
+
 ### Workspace setup tutorial
 
 Coming soon....

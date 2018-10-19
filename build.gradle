@@ -151,6 +151,7 @@ shadowJar {
         include(dependency('org.yaml:snakeyaml'))
         include(dependency('org.reflections:reflections'))
         include(dependency('club.minnced:java-discord-rpc'))
+        include(dependency('com.github.cabaletta:baritone'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
