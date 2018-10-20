@@ -167,7 +167,7 @@ jar {
                 "tweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
                 "TweakOrder": 0,
                 'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.sasha.adorufu.mod.mixins.MixinLoaderForge',
+                'FMLCorePlugin': 'com.sasha.adorufu.mod.mixins.AdorufuMixinLoader',
                 'ForceLoadAsMod': 'true',
                 'FMLAT': 'adorufu_at.cfg'
         )

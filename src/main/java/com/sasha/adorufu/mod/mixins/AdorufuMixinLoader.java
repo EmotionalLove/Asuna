@@ -29,20 +29,20 @@ import java.util.Map;
 /**
  * Created by Sasha on 06/08/2018 at 1:34 PM
  **/
-@IFMLLoadingPlugin.Name(value = "MixinLoaderForge")
-public class MixinLoaderForge implements IFMLLoadingPlugin {
+@IFMLLoadingPlugin.Name(value = "AdorufuMixinLoader")
+public class AdorufuMixinLoader implements IFMLLoadingPlugin {
     protected static boolean isObfuscatedEnvironment;
 
     /**
      * I found out the hard way that you cannot make calls to AdorufuMod in this constructor... Don't do it.
      */
-    public MixinLoaderForge() {
+    public AdorufuMixinLoader() {
         String mixinConfig = "mixins.adorufu.json";
         String baritoneConfig = "mixins.baritone.json";
         String envObf = "searge";
-        Mixins.addConfigurations(/*baritoneConfig, */mixinConfig); //plz work
-        MixinBootstrap.init();
+        Mixins.addConfigurations(baritoneConfig, mixinConfig); //plz work
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext(envObf);
+        MixinBootstrap.init();
     }
 
     @Override
