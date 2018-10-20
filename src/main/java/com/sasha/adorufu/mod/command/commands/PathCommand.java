@@ -81,6 +81,7 @@ public class PathCommand extends SimpleCommand {
                 int x = Integer.parseInt(this.getArguments()[1]);
                 int z = Integer.parseInt(this.getArguments()[2]);
                 BaritoneAPI.getPathingBehavior().setGoal(new GoalXZ(x, z));
+                AdorufuMod.logMsg(false, "Location goal set to " + x + " " + z);
             }
             catch (Exception e) {
                 AdorufuMod.logErr(false, "Coordinates must be integers!");
@@ -90,13 +91,12 @@ public class PathCommand extends SimpleCommand {
         }
         // -path mine <blockname> <quantity>
         if (this.getArguments()[0].equalsIgnoreCase("mine")) {
-            if (this.getArguments().length != 3) {
-                AdorufuMod.logErr(false, "Invalid Args. Expected \"-path mine <block> <amt>\"");
+            if (this.getArguments().length != 2) {
+                AdorufuMod.logErr(false, "Invalid Args. Expected \"-path mine <block>\"");
                 return;
             }
             try {
-                int quantity = Integer.parseInt(this.getArguments()[1]);
-                //BaritoneAPI.getMineBehavior().mine(quantity, (String)this.getArguments()[2]);
+                BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ignored) {
                 AdorufuMod.logErr(false, "invalid args");
             }
