@@ -35,20 +35,25 @@ import java.awt.*;
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder")
 public class PathCommand extends SimpleCommand {
 
+    private static boolean set = false;
+
     public PathCommand() {
         super("path");
-        BaritoneAPI.getSettings().chatDebug.value = false;
-        BaritoneAPI.getSettings().allowSprint.value = true;
-        BaritoneAPI.getSettings().antiCheatCompatibility.value = true;
-        BaritoneAPI.getSettings().walkWhileBreaking.value = false;
-        BaritoneAPI.getSettings().freeLook.value = false;
-        BaritoneAPI.getSettings().colorCurrentPath.value = Color.MAGENTA;
-        BaritoneAPI.getSettings().colorNextPath.value = Color.BLUE;
-        BaritoneAPI.getSettings().colorBestPathSoFar.value = Color.YELLOW;
     }
 
     @Override
     public void onCommand() {
+        if (!set) {
+            BaritoneAPI.getSettings().chatDebug.value = false;
+            BaritoneAPI.getSettings().allowSprint.value = true;
+            BaritoneAPI.getSettings().antiCheatCompatibility.value = true;
+            BaritoneAPI.getSettings().walkWhileBreaking.value = false;
+            BaritoneAPI.getSettings().freeLook.value = false;
+            BaritoneAPI.getSettings().colorCurrentPath.value = Color.MAGENTA;
+            BaritoneAPI.getSettings().colorNextPath.value = Color.BLUE;
+            BaritoneAPI.getSettings().colorBestPathSoFar.value = Color.YELLOW;
+            set = true;
+        }
         if (this.getArguments() == null || this.getArguments().length == 0) {
             AdorufuMod.logErr(false, "Invalid arguments.");
             return;
