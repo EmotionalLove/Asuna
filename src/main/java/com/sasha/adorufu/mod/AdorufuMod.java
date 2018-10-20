@@ -192,14 +192,14 @@ public class AdorufuMod implements SimpleListener {
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
         FONT_MANAGER = new FontManager();
-        FONT_MANAGER.loadFonts(); // I would load this on a seperate thread if I could, because it takes forEVER to exectute.
+        FONT_MANAGER.loadFonts(); // I would load this on a separate thread if I could, because it takes forEVER to execute.
         if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
     }
 
-    public void reload(boolean async) {
+    private void reload(boolean async) {
         Thread thread = new Thread(() -> {
             try {
                 Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
@@ -380,7 +380,7 @@ class ForgeEvent {
 
     @SubscribeEvent
     public void onMoveUpdate(InputUpdateEvent e) {
-        ClientInputUpdateEvent ciup = new ClientInputUpdateEvent(e.getMovementInput());
-        AdorufuMod.EVENT_MANAGER.invokeEvent(ciup);
+        ClientInputUpdateEvent updateEvent = new ClientInputUpdateEvent(e.getMovementInput());
+        AdorufuMod.EVENT_MANAGER.invokeEvent(updateEvent);
     }
 }
