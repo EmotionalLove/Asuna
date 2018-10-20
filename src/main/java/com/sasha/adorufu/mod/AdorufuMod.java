@@ -315,7 +315,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleBoatFly());
         Manager.Module.register(new ModuleAutoReconnect());
         Manager.Module.register(new ModuleNameProtect());
-        Manager.Module.register(new ModuleSafeWalk());
+        //Manager.Module.register(new ModuleSafeWalk()); todo temporarily disabled
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
 

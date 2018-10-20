@@ -97,6 +97,7 @@ public class PathCommand extends SimpleCommand {
             }
         }
     }
+    // todo armour and feather falling/enchants?????
     public static void tick() {
         if (AdorufuMod.minecraft.world == null) return;
         int fall = 3;
