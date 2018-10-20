@@ -96,14 +96,20 @@ public abstract class MixinMinecraft {
     @Shadow
     public long debugCrashKeyPressTime;
 
-    @Shadow public RayTraceResult objectMouseOver;
+    @Shadow
+    public RayTraceResult objectMouseOver;
 
-    @Shadow public boolean inGameHasFocus;
+    @Shadow
+    public boolean inGameHasFocus;
 
-    @Shadow public WorldClient world;
+    @Shadow
+    public WorldClient world;
+
+    @Shadow
+    public int leftClickCounter;
 
     @Inject(method = "rightClickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;swingArm(Lnet/minecraft/util/EnumHand;)V"))
-    public void rightClickMouse(CallbackInfo info){
+    public void rightClickMouse(CallbackInfo info) {
         PlayerBlockPlaceEvent event = new PlayerBlockPlaceEvent(AdorufuMod.minecraft.player.itemStackMainHand);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
     }
@@ -114,89 +120,89 @@ public abstract class MixinMinecraft {
      */
     @Overwrite
     public void runTickKeyboard() throws IOException {
-        {
-            while (Keyboard.next()) {
-                int i = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
+        while (Keyboard.next()) {
+            int i = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
 
-                if (this.debugCrashKeyPressTime > 0L) {
-                    if (getSystemTime() - this.debugCrashKeyPressTime >= 6000L) {
-                        throw new ReportedException(new CrashReport("Manually triggered debug crash", new Throwable()));
-                    }
-
-                    if (!Keyboard.isKeyDown(46) || !Keyboard.isKeyDown(61)) {
-                        this.debugCrashKeyPressTime = -1L;
-                    }
-                } else if (Keyboard.isKeyDown(46) && Keyboard.isKeyDown(61)) {
-                    this.actionKeyF3 = true;
-                    this.debugCrashKeyPressTime = getSystemTime();
+            if (this.debugCrashKeyPressTime > 0L) {
+                if (getSystemTime() - this.debugCrashKeyPressTime >= 6000L) {
+                    throw new ReportedException(new CrashReport("Manually triggered debug crash", new Throwable()));
                 }
 
-                this.dispatchKeypresses();
-
-                if (this.currentScreen != null) {
-                    this.currentScreen.handleKeyboardInput();
+                if (!Keyboard.isKeyDown(46) || !Keyboard.isKeyDown(61)) {
+                    this.debugCrashKeyPressTime = -1L;
                 }
-
-                boolean flag = Keyboard.getEventKeyState();
-
-                if (flag) {
-                    if (i == 62 && this.entityRenderer != null) {
-                        this.entityRenderer.switchUseShader();
-                    }
-
-                    boolean flag1 = false;
-
-                    if (this.currentScreen == null) {
-                        if (i == 1) {
-                            this.displayInGameMenu();
-                        }
-
-                        flag1 = Keyboard.isKeyDown(61) && this.processKeyF3(i);
-                        this.actionKeyF3 |= flag1;
-
-                        if (i == 59) {
-                            this.gameSettings.hideGUI = !this.gameSettings.hideGUI;
-                        }
-                    }
-
-                    if (flag1) {
-                        KeyBinding.setKeyBindState(i, false);
-                    } else {
-                        KeyBinding.setKeyBindState(i, true);
-                        KeyBinding.onTick(i);
-                    }
-
-                    if (this.gameSettings.showDebugProfilerChart) {
-                        if (i == 11) {
-                            this.updateDebugProfilerName(0);
-                        }
-
-                        for (int j = 0; j < 9; ++j) {
-                            if (i == 2 + j) {
-                                this.updateDebugProfilerName(j + 1);
-                            }
-                        }
-                    }
-                } else {
-                    KeyBinding.setKeyBindState(i, false);
-                    Manager.Module.moduleRegistry.stream().filter(m -> m.getKeyBind()==i).forEach(AdorufuModule::toggle);
-
-                    if (i == 61) {
-                        if (this.actionKeyF3) {
-                            this.actionKeyF3 = false;
-                        } else {
-                            this.gameSettings.showDebugInfo = !this.gameSettings.showDebugInfo;
-                            this.gameSettings.showDebugProfilerChart = this.gameSettings.showDebugInfo && GuiScreen.isShiftKeyDown();
-                            this.gameSettings.showLagometer = this.gameSettings.showDebugInfo && GuiScreen.isAltKeyDown();
-                        }
-                    }
-                }
-                net.minecraftforge.fml.common.FMLCommonHandler.instance().fireKeyInput();
+            } else if (Keyboard.isKeyDown(46) && Keyboard.isKeyDown(61)) {
+                this.actionKeyF3 = true;
+                this.debugCrashKeyPressTime = getSystemTime();
             }
 
-            this.processKeyBinds();
+            this.dispatchKeypresses();
+
+            if (this.currentScreen != null) {
+                this.currentScreen.handleKeyboardInput();
+            }
+
+            boolean flag = Keyboard.getEventKeyState();
+
+            if (flag) {
+                if (i == 62 && this.entityRenderer != null) {
+                    this.entityRenderer.switchUseShader();
+                }
+
+                boolean flag1 = false;
+
+                if (this.currentScreen == null) {
+                    if (i == 1) {
+                        this.displayInGameMenu();
+                    }
+
+                    flag1 = Keyboard.isKeyDown(61) && this.processKeyF3(i);
+                    this.actionKeyF3 |= flag1;
+
+                    if (i == 59) {
+                        this.gameSettings.hideGUI = !this.gameSettings.hideGUI;
+                    }
+                }
+
+                if (flag1) {
+                    KeyBinding.setKeyBindState(i, false);
+                } else {
+                    KeyBinding.setKeyBindState(i, true);
+                    KeyBinding.onTick(i);
+                }
+
+                if (this.gameSettings.showDebugProfilerChart) {
+                    if (i == 11) {
+                        this.updateDebugProfilerName(0);
+                    }
+
+                    for (int j = 0; j < 9; ++j) {
+                        if (i == 2 + j) {
+                            this.updateDebugProfilerName(j + 1);
+                        }
+                    }
+                }
+            } else {
+                KeyBinding.setKeyBindState(i, false);
+                Manager.Module.moduleRegistry.stream().filter(m -> m.getKeyBind() == i).forEach(AdorufuModule::toggle);
+
+                if (i == 61) {
+                    if (this.actionKeyF3) {
+                        this.actionKeyF3 = false;
+                    } else {
+                        this.gameSettings.showDebugInfo = !this.gameSettings.showDebugInfo;
+                        this.gameSettings.showDebugProfilerChart = this.gameSettings.showDebugInfo && GuiScreen.isShiftKeyDown();
+                        this.gameSettings.showLagometer = this.gameSettings.showDebugInfo && GuiScreen.isAltKeyDown();
+                    }
+                }
+            }
+            net.minecraftforge.fml.common.FMLCommonHandler.instance().fireKeyInput();
         }
+
+        this.processKeyBinds();
+        System.out.println(this.leftClickCounter);
     }
+
     @Inject(method = "middleClickMouse", at = @At("HEAD"), cancellable = true)
     public void middleClickMouse(CallbackInfo iinfo) {
         ClientMouseClickEvent.Middle event = new ClientMouseClickEvent.Middle();
@@ -210,16 +216,19 @@ public abstract class MixinMinecraft {
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) iinfo.cancel();
     }
+
     @Inject(method = "getAmbientMusicType", at = @At("RETURN"), cancellable = true)
     public void getAmbientMusicType(CallbackInfoReturnable<MusicTicker.MusicType> info) {
         ClientGetMusicTypeEvent event = new ClientGetMusicTypeEvent(info.getReturnValue());
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         info.setReturnValue(event.getMusicType());
     }
+
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;create(Lorg/lwjgl/opengl/PixelFormat;)V"))
     public void createDisplay(CallbackInfo info) {
         Display.setTitle("Minecraft 1.12.2 with " + AdorufuMod.NAME + " " + AdorufuMod.VERSION);
     }
+
     @Inject(method = "displayGuiScreen", at = @At("HEAD"), cancellable = true)
     public void displayGuiScreen(GuiScreen screenIn, CallbackInfo info) {
         ClientScreenChangedEvent event = new ClientScreenChangedEvent(screenIn);
@@ -229,6 +238,7 @@ public abstract class MixinMinecraft {
         }
         screenIn = event.getScreen();
     }
+
     /**
      * @author Sasha Stevens
      * @reason CPUControl
@@ -243,6 +253,7 @@ public abstract class MixinMinecraft {
         }
         return (this.gameSettings.limitFramerate);
     }
+
     @Inject(method = "shutdownMinecraftApplet", at = @At("HEAD"), cancellable = true)
     public void shutdownMinecraftApplet(CallbackInfo info) {
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onDisable);

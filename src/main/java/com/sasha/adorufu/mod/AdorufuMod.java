@@ -131,7 +131,7 @@ public class AdorufuMod implements SimpleListener {
         }
         try {
             if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-                BATTERY_MANAGER_INTERFACE = Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
+                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
                 AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
                 BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
                 logMsg(true, batteryStatus.getBatteryLifePercent());
