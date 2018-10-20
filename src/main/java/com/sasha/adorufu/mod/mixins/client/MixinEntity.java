@@ -152,7 +152,8 @@ public abstract class MixinEntity {
             )
     )
     private boolean isSneaking(Entity self) {
-        if (self instanceof EntityPlayerSP) { // dont make other entities safewalk cuz they cant
+        if (self instanceof EntityPlayerSP) { // dont make other players(?) safewalk cuz they cant
+            // im not sure if entityPlayermp counts as a player movertype
             return self.isSneaking() || Manager.Module.getModule(ModuleSafeWalk.class).isEnabled();
         }
         else {
