@@ -200,7 +200,7 @@ public abstract class MixinMinecraft {
         }
 
         this.processKeyBinds();
-        System.out.println(this.leftClickCounter);
+        System.out.println(this.leftClickCounter); // THIS IS A TEST
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"), cancellable = true)
