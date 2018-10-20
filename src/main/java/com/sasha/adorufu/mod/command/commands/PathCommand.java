@@ -96,7 +96,7 @@ public class PathCommand extends SimpleCommand {
                 return;
             }
             try {
-                BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
+                //BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ignored) {
                 AdorufuMod.logErr(false, "invalid args");
             }
