@@ -21,8 +21,12 @@ package com.sasha.adorufu.mod.command.commands;
 import baritone.api.BaritoneAPI;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.Manager;
+import com.sasha.adorufu.mod.module.modules.ModuleJesus;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
+
+import java.awt.*;
 
 /**
  * This class is designed to cooperate with the Baritone API to
@@ -33,6 +37,14 @@ public class PathCommand extends SimpleCommand {
 
     public PathCommand() {
         super("path");
+        BaritoneAPI.getSettings().chatDebug.value = false;
+        BaritoneAPI.getSettings().allowSprint.value = true;
+        BaritoneAPI.getSettings().antiCheatCompatibility.value = true;
+        BaritoneAPI.getSettings().walkWhileBreaking.value = false;
+        BaritoneAPI.getSettings().freeLook.value = false;
+        BaritoneAPI.getSettings().colorCurrentPath.value = Color.MAGENTA;
+        BaritoneAPI.getSettings().colorNextPath.value = Color.BLUE;
+        BaritoneAPI.getSettings().colorBestPathSoFar.value = Color.YELLOW;
     }
 
     @Override
@@ -42,10 +54,12 @@ public class PathCommand extends SimpleCommand {
             return;
         }
         if (this.getArguments()[0].equalsIgnoreCase("go")) {
-            BaritoneAPI.getSettings().allowSprint.value = true;
             BaritoneAPI.getPathingBehavior().path();
             AdorufuMod.logMsg(false, "The pathfinder is now active");
             return;
+        }
+        if (this.getArguments()[0].equalsIgnoreCase("debug")) {
+            BaritoneAPI.getSettings().chatDebug.value = true;
         }
         if (this.getArguments()[0].equalsIgnoreCase("stop")) {
             BaritoneAPI.getPathingBehavior().cancel();
@@ -82,5 +96,12 @@ public class PathCommand extends SimpleCommand {
                 AdorufuMod.logErr(false, "invalid args");
             }
         }
+    }
+    public static void tick() {
+        if (AdorufuMod.minecraft.world == null) return;
+        int fall = 3;
+        fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
+        BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
+        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(ModuleJesus.class).isEnabled();
     }
 }

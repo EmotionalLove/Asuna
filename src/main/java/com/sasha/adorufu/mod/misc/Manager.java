@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.misc;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.command.commands.PathCommand;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
@@ -150,6 +151,7 @@ public class Manager {
                     AdorufuMod.logMsg("\247c" + sw.toString().replace("\r\n", "\n"));
                 }
             });
+            PathCommand.tick();
             AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));
         }
 
