@@ -106,7 +106,7 @@ public class ModuleCrystalAura extends AdorufuModule {
                             if (e.isEntityAlive()) {
                                 float yaw = AdorufuMod.minecraft.player.rotationYaw;
                                 float pitch = AdorufuMod.minecraft.player.rotationPitch;
-                                float yawh = AdorufuMod.minecraft.player.rotationYawHead;
+                                float yawHead = AdorufuMod.minecraft.player.rotationYawHead;
                                 boolean wasSprinting = AdorufuMod.minecraft.player.isSprinting();
                                 rotateTowardsEntity(e);
                                 AdorufuMod.minecraft.player.setSprinting(false);
@@ -114,7 +114,7 @@ public class ModuleCrystalAura extends AdorufuModule {
                                 AdorufuMod.minecraft.player.swingArm(EnumHand.MAIN_HAND);
                                 AdorufuMod.minecraft.player.rotationYaw = yaw;
                                 AdorufuMod.minecraft.player.rotationPitch = pitch;
-                                AdorufuMod.minecraft.player.rotationYawHead = yawh;
+                                AdorufuMod.minecraft.player.rotationYawHead = yawHead;
                                 if (wasSprinting) {
                                     AdorufuMod.minecraft.player.setSprinting(true);
                                 }

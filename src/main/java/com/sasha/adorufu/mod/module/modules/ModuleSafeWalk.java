@@ -50,10 +50,8 @@ public class ModuleSafeWalk extends AdorufuModule implements SimpleListener {
     @SimpleEventHandler
     public void onMove(EntityMoveEvent e) {
         if (!this.isEnabled()) return;
-        double d2 = e.getX();
-        double d4 = e.getZ();
         if ((e.getMoverType() == MoverType.SELF || e.getMoverType() == MoverType.PLAYER) && e.getEntity().onGround && e.getEntity() instanceof EntityPlayer) {
-            for (double d5 = 0.05D; e.getX() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(e.getX(), (double) (-e.getEntity().stepHeight), 0.0D)).isEmpty(); d2 = e.getX()) {
+            for (; e.getX() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(e.getX(), (double) (-e.getEntity().stepHeight), 0.0D)).isEmpty(); ) {
                 if (e.getX() < 0.05D && e.getX() >= -0.05D) {
                     e.setX(0.0D);
                 } else if (e.getX() > 0.0D) {
@@ -62,23 +60,12 @@ public class ModuleSafeWalk extends AdorufuModule implements SimpleListener {
                     e.setX(e.getX() + 0.05d);
                 }
             }
-            for (; e.getZ() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(0.0D, (double)(-e.getEntity().stepHeight), e.getZ())).isEmpty(); d4 = e.getZ())
+            for (; e.getZ() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(0.0D, (double)(-e.getEntity().stepHeight), e.getZ())).isEmpty(); )
             {
-                if (e.getZ() < 0.05D && e.getZ() >= -0.05D)
-                {
-                    e.setZ(0.0D);
-                }
-                else if (e.getZ() > 0.0D)
-                {
-                    e.setZ(0.05D);
-                }
-                else
-                {
-                    e.setZ(0.05D);
-                }
+                clampZ(e);
             }
 
-            for (; e.getX() != 0.0D && e.getZ() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(e.getX(), (double)(-e.getEntity().stepHeight),e.getZ())).isEmpty(); d4 = e.getZ())
+            for (; e.getX() != 0.0D && e.getZ() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(e.getX(), (double)(-e.getEntity().stepHeight),e.getZ())).isEmpty(); )
             {
                 if (e.getX() < 0.05D && e.getX() >= -0.05D)
                 {
@@ -93,21 +80,23 @@ public class ModuleSafeWalk extends AdorufuModule implements SimpleListener {
                     e.setX(0.05D);
                 }
 
-                d2 = e.getX();
-
-                if (e.getZ() < 0.05D && e.getZ() >= -0.05D)
-                {
-                    e.setZ(0.0D);
-                }
-                else if (e.getZ() > 0.0D)
-                {
-                    e.setZ(0.05D);
-                }
-                else
-                {
-                    e.setZ(0.05D);
-                }
+                clampZ(e);
             }
+        }
+    }
+
+    private void clampZ(EntityMoveEvent e) {
+        if (e.getZ() < 0.05D && e.getZ() >= -0.05D)
+        {
+            e.setZ(0.0D);
+        }
+        else if (e.getZ() > 0.0D)
+        {
+            e.setZ(0.05D);
+        }
+        else
+        {
+            e.setZ(0.05D);
         }
     }
 }

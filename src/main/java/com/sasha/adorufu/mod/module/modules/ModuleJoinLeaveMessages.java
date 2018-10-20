@@ -36,7 +36,7 @@ import java.util.*;
 public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleListener {
 
     private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
-    public static boolean defaultloaded = false;
+    public static boolean defaultLoaded = false;
     public static List<String> joinMessages = new ArrayList<>();
     public static List<String> leaveMessages = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
         if (AdorufuMod.minecraft.currentScreen != null) return;
         AdorufuMod.logMsg("\2477" + name + " left.");
         if (this.getOption("Greeter")) {
-            if (defaultloaded) {
+            if (defaultLoaded) {
                 AdorufuMod.logErr(false, "You haven't defined any greeter messages in the AdorufuData.yml file," +
                         " located in your .minecraft folder. You should go there and add some!");
                 AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name. You can also use \"[server]\" as a placeholder for the current server's IP address");
@@ -117,7 +117,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
         if (AdorufuMod.minecraft.currentScreen != null) return;
         AdorufuMod.logMsg("\2477" + name + " joined.");
         if (this.getOption("Greeter")) {
-            if (defaultloaded) {
+            if (defaultLoaded) {
                 AdorufuMod.logErr(false, "You haven't defined any greeter messages in the AdorufuData.yml file," +
                         " located in your .minecraft folder. You should go there and add some!");
                 AdorufuMod.logMsg("psst, tip: when writing your greeter messages, use \"[player]\" as a placeholder for the player's name. You can also use \"[server]\" as a placeholder for the current server's IP address");

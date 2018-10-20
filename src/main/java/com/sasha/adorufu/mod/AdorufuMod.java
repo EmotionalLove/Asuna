@@ -131,7 +131,7 @@ public class AdorufuMod implements SimpleListener {
         }
         try {
             if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
+                BATTERY_MANAGER_INTERFACE = Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
                 AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
                 BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
                 logMsg(true, batteryStatus.getBatteryLifePercent());
@@ -202,18 +202,14 @@ public class AdorufuMod implements SimpleListener {
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
         FONT_MANAGER = new FontManager();
-        FONT_MANAGER.loadFonts(); // I would load this on a seperate thread if I could, because it takes forEVER to exectute.
+        FONT_MANAGER.loadFonts(); // I would load this on a separate thread if I could, because it takes forEVER to execute.
         if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
     }
 
-    /**
-     * reload adoruuf
-     * @param async if u want it to be async
-     */
-    public void reload(boolean async) {
+    private void reload(boolean async) {
         Thread thread = new Thread(() -> {
             try {
                 Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
@@ -394,7 +390,7 @@ class ForgeEvent {
 
     @SubscribeEvent
     public void onMoveUpdate(InputUpdateEvent e) {
-        ClientInputUpdateEvent ciup = new ClientInputUpdateEvent(e.getMovementInput());
-        AdorufuMod.EVENT_MANAGER.invokeEvent(ciup);
+        ClientInputUpdateEvent updateEvent = new ClientInputUpdateEvent(e.getMovementInput());
+        AdorufuMod.EVENT_MANAGER.invokeEvent(updateEvent);
     }
 }

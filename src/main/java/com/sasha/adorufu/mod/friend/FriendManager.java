@@ -53,7 +53,7 @@ public class FriendManager {
             }
         }, 0, TimeUnit.NANOSECONDS);
     }
-    public boolean removeFriend(String friendName) {
+    public void removeFriend(String friendName) {
         Friend f1 = null;
         for (Friend f : friendList) {
             if (f.getFriendName().equals(friendName)) {
@@ -68,9 +68,7 @@ public class FriendManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return true;
         }
-        return false;
     }
 
     public boolean isFriended(String friendName) {

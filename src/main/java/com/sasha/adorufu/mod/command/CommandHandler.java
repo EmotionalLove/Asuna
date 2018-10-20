@@ -32,6 +32,6 @@ public class CommandHandler implements SimpleListener {
     @SimpleEventHandler
     public void onAdorufuCommand(AdorufuCommandEvent e) {
         if (e.getMsg().startsWith(COMMAND_PROCESSOR.getCommandPrefix()))
-        COMMAND_PROCESSOR.processCommand(e.getMsg());
+            COMMAND_PROCESSOR.processCommand(e.getMsg());
     }
 }

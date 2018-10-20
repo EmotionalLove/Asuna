@@ -40,10 +40,8 @@ public class ModuleClientIgnore extends AdorufuModule implements SimpleListener 
     public ModuleClientIgnore() {
         super("ClientIgnore", AdorufuCategory.CHAT, false, true);
         this.addOption("Players", true);
-        /*
-         * "Words" setting will choose not to display messages that contain certain words.
-         * Useful for muting group harassment or inappropriate language.
-         */
+        // "Words" setting will choose not to display messages that contain certain words.
+        // Useful for muting group harassment or inappropriate language.
         this.addOption("Words", false);
         AdorufuMod.scheduler.schedule(() -> ignorelist = AdorufuMod.DATA_MANAGER.loadIgnorelist(), 0, TimeUnit.MILLISECONDS);
         AdorufuMod.scheduler.schedule(() -> filterList = AdorufuMod.DATA_MANAGER.loadFilterList(), 0, TimeUnit.MILLISECONDS);

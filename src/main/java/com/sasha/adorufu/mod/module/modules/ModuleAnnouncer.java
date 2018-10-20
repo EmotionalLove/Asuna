@@ -41,7 +41,7 @@ import java.util.Random;
 public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
 
     static boolean swap = false;
-    public static int counter = 0;
+    private static int counter = 0;
 
     private LinkedHashMap<String, Integer> blocksBrokenMap = new LinkedHashMap<>();
     private LinkedHashMap<String, Integer> blocksPlacedMap = new LinkedHashMap<>();
