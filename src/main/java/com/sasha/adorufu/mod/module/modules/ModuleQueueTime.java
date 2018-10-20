@@ -38,7 +38,7 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     private static long estTime = 10000;
     private static int lastQueuePos = -1;
     private static int sameCount = 1;
-    ArrayList<Long> avgs = new ArrayList<>();
+    private ArrayList<Long> avgs = new ArrayList<>();
 
     public ModuleQueueTime() {
         super("QueueTime", AdorufuCategory.CHAT, false);
