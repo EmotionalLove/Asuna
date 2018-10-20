@@ -24,6 +24,7 @@ import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import net.minecraft.network.play.client.CPacketKeepAlive;
 
 /**
  * Created by Sasha at 11:00 AM on 8/28/2018
@@ -51,7 +52,8 @@ public class ModuleBlink extends AdorufuModule implements SimpleListener {
 
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e) {
-        if (this.isEnabled()) e.setCancelled(true);
+        if (this.isEnabled() && !(e.getSendPacket() instanceof CPacketKeepAlive))
+            e.setCancelled(true);
     }
 
 }
