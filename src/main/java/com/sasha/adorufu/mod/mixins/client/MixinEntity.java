@@ -24,6 +24,7 @@ import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.misc.Manager;
+import com.sasha.adorufu.mod.module.modules.ModuleSafeWalk;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -36,6 +37,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -133,5 +135,17 @@ public abstract class MixinEntity {
         this.motionX = event.getMotionX();
         this.motionY = event.getMotionY();
         this.motionZ = event.getMotionZ();
+    }
+    @Redirect(
+            method = "move",
+            at = @At(
+                    value = "INVOKE",
+                    target = "net/minecraft/entity/Entity.isSneaking()Z",
+                    ordinal = 0
+            )
+    )
+    private boolean isSneaking(Entity self) {
+        // Return true if SafeWalk is enabled
+        return self.isSneaking() || Manager.Module.getModule(ModuleSafeWalk.class).isEnabled();
     }
 }

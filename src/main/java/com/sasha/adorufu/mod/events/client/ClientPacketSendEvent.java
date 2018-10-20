@@ -32,8 +32,8 @@ public class ClientPacketSendEvent extends SimpleCancellableEvent {
         this.sendPacket= sendPacket;
     }
 
-    public Packet<?> getSendPacket() {
-        return sendPacket;
+    public <T extends Packet<?>> T getSendPacket() {
+        return (T) sendPacket;
     }
 
     public void setSendPacket(Packet<?> sendPacket) {

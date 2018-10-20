@@ -32,8 +32,8 @@ public class ClientPacketRecieveEvent extends SimpleCancellableEvent {
         this.recievedPacket = recievedPacket;
     }
 
-    public Packet<?> getRecievedPacket() {
-        return recievedPacket;
+    public <T extends Packet<?>> T getRecievedPacket() {
+        return (T) recievedPacket;
     }
 
     public void setRecievedPacket(Packet<?> recievedPacket) {

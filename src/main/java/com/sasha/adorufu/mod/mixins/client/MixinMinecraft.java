@@ -200,7 +200,6 @@ public abstract class MixinMinecraft {
         }
 
         this.processKeyBinds();
-        System.out.println(this.leftClickCounter); // THIS IS A TEST
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"), cancellable = true)
@@ -245,6 +244,7 @@ public abstract class MixinMinecraft {
      */
     @Overwrite
     public int getLimitFramerate() {
+        System.out.println(this.leftClickCounter); // THIS IS A TEST
         if (this.world == null && this.currentScreen != null) {
             return 30;
         }
