@@ -18,17 +18,10 @@
 
 package com.sasha.adorufu.mod.module.modules;
 
-import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.EntityPlayer;
 
-import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
-
-public class ModuleSafeWalk extends AdorufuModule implements SimpleListener {
+public class ModuleSafeWalk extends AdorufuModule {
     public ModuleSafeWalk() {
         super("SafeWalk", AdorufuCategory.MOVEMENT, false);
     }
@@ -46,57 +39,5 @@ public class ModuleSafeWalk extends AdorufuModule implements SimpleListener {
     @Override
     public void onTick() {
 
-    }
-    @SimpleEventHandler
-    public void onMove(EntityMoveEvent e) {
-        if (!this.isEnabled()) return;
-        if ((e.getMoverType() == MoverType.SELF || e.getMoverType() == MoverType.PLAYER) && e.getEntity().onGround && e.getEntity() instanceof EntityPlayer) {
-            for (; e.getX() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(e.getX(), (double) (-e.getEntity().stepHeight), 0.0D)).isEmpty(); ) {
-                if (e.getX() < 0.05D && e.getX() >= -0.05D) {
-                    e.setX(0.0D);
-                } else if (e.getX() > 0.0D) {
-                    e.setX(e.getX() - 0.05d);
-                } else {
-                    e.setX(e.getX() + 0.05d);
-                }
-            }
-            for (; e.getZ() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(0.0D, (double)(-e.getEntity().stepHeight), e.getZ())).isEmpty(); )
-            {
-                clampZ(e);
-            }
-
-            for (; e.getX() != 0.0D && e.getZ() != 0.0D && minecraft.world.getCollisionBoxes(e.getEntity(), e.getEntity().getEntityBoundingBox().offset(e.getX(), (double)(-e.getEntity().stepHeight),e.getZ())).isEmpty(); )
-            {
-                if (e.getX() < 0.05D && e.getX() >= -0.05D)
-                {
-                    e.setX(0.0D);
-                }
-                else if (e.getX() > 0.0D)
-                {
-                    e.setX(0.05D);
-                }
-                else
-                {
-                    e.setX(0.05D);
-                }
-
-                clampZ(e);
-            }
-        }
-    }
-
-    private void clampZ(EntityMoveEvent e) {
-        if (e.getZ() < 0.05D && e.getZ() >= -0.05D)
-        {
-            e.setZ(0.0D);
-        }
-        else if (e.getZ() > 0.0D)
-        {
-            e.setZ(0.05D);
-        }
-        else
-        {
-            e.setZ(0.05D);
-        }
     }
 }
