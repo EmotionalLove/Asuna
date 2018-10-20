@@ -37,7 +37,7 @@ public class AdorufuDiscordPresense {
         discordRpc = DiscordRPC.INSTANCE;
         String applicationId = "500896211977502720";
         DiscordEventHandlers handlers = new DiscordEventHandlers();
-        handlers.ready = discordUser -> AdorufuMod.logMsg(true, "Connected to Discord Rich Presense API");
+        handlers.ready = discordUser -> AdorufuMod.logMsg(true, "Connected to Discord Rich Presence API");
         discordRpc.Discord_Initialize(applicationId, handlers, true, null);
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.startTimestamp = System.currentTimeMillis() / 1000L; // epoch getValue
