@@ -26,6 +26,7 @@ import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.modules.ModuleSafeWalk;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -136,6 +137,12 @@ public abstract class MixinEntity {
         this.motionY = event.getMotionY();
         this.motionZ = event.getMotionZ();
     }
+
+    /**
+     * Makes safewalk work (thanks brady)
+     * @param self ze entity
+     * @return
+     */
     @Redirect(
             method = "move",
             at = @At(
@@ -145,7 +152,11 @@ public abstract class MixinEntity {
             )
     )
     private boolean isSneaking(Entity self) {
-        // Return true if SafeWalk is enabled
-        return self.isSneaking() || Manager.Module.getModule(ModuleSafeWalk.class).isEnabled();
+        if (self instanceof EntityPlayerSP) { // dont make other entities safewalk cuz they cant
+            return self.isSneaking() || Manager.Module.getModule(ModuleSafeWalk.class).isEnabled();
+        }
+        else {
+            return self.isSneaking();
+        }
     }
 }
