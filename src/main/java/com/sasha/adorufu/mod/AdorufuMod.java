@@ -79,7 +79,7 @@ public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.5";
+    public static final String VERSION = "1.5.1";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
@@ -359,7 +359,7 @@ public class AdorufuMod implements SimpleListener {
     public static void logMsg(boolean consoleOnly, String logMsg) {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu\2478] \2477" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \2478] \2477" + logMsg));
     }
 
     /**
@@ -375,7 +375,7 @@ public class AdorufuMod implements SimpleListener {
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu \247cERROR\2478] \247c" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247cERROR\2478] \247c" + logMsg));
     }
 
     /**
@@ -384,7 +384,7 @@ public class AdorufuMod implements SimpleListener {
     public static void logWarn(boolean consoleOnly, String logMsg) {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu \247eWARNING\2478] \247e" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
     }
 
     @SimpleEventHandler

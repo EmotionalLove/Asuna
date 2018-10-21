@@ -33,6 +33,9 @@ import java.lang.reflect.Method;
 /**
  * This class is designed to cooperate with the Baritone API to
  * do things. It's pretty cool.
+ *
+ * NOTICE: IF YOU SEE ERRORS IN HERE, ITS NORMAL AND ITS FINE.. IT COMPILES ANYWAYS
+ * http://someonelove.me/content/iG9R3fFAZJ8_nicememe.nbQzBRHAZYpRiUm3B5X.png
  */
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
 , syntax = {"location <x> <z>", "mine <block>", "stop", "debug"})
@@ -73,6 +76,29 @@ public class PathCommand extends SimpleCommand {
             BaritoneAPI.getMineBehavior().cancel();
             AdorufuMod.logMsg(false, "The pathfinder has stopped");
             return;
+        }
+        // -path parkour <on/off>
+        if (this.getArguments()[0].equalsIgnoreCase("parkour")) {
+            if (this.getArguments().length != 2) {
+                AdorufuMod.logErr(false, "Invalid Args. Expected \"-path parkour <on/off>\"");
+                return;
+            }
+            if (this.getArguments()[1].toLowerCase().matches("off|false|disable|no")) {
+                BaritoneAPI.getSettings().allowParkour.value = false;
+                BaritoneAPI.getSettings().allowParkourPlace.value = false;
+                AdorufuMod.logMsg(false, "Parkour disabled");
+                return;
+            }
+            else if (this.getArguments()[1].toLowerCase().matches("on|true|enable|yes")) {
+                BaritoneAPI.getSettings().allowParkour.value = true;
+                BaritoneAPI.getSettings().allowParkourPlace.value = true;
+                AdorufuMod.logMsg(false, "Parkour enabled");
+                return;
+            }
+            else {
+                AdorufuMod.logMsg(false, "Unknown setting");
+            }
+
         }
         // -path location <x> <z>
         if (this.getArguments()[0].equalsIgnoreCase("location")) {
