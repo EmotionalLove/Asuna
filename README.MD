@@ -36,9 +36,19 @@ Adorufu would not be possible without help...
 
 [0x22](https://github.com/0-x-2-2) - For forcing me to fix certain things in my code :kissing_smiling_eyes:
 
+[wine](https://github.com/wine) - For fixing my lazy coding
+
 ### Workspace setup tutorial
 
-Coming soon....
+So, like, basically you have two options for working on Adorufu. You can make an Adorufu plugin or write into the client itself, it depends on what you're trying to do.
+
+If you want to fix something in Adorufu's code or add a feature into Adorufu to be distributed in the official releases, you'll want to **Fork and Clone**.
+
+If you want to add a feature into Adorufu and distribute it among your friends (or publicly), you'll want to **create a plugin**
+
+**Creating a plugin** is explained [here](http://sashadev.me/EmotionalLove/AdorufuExamplePlugin), but it doesn't go in depth very far, you'll have to refer to the example code to get a grasp on what to do.
+
+**Forking and cloning** is simple. Just create a fork of this repo, and then clone it, either through IntelliJ (I highly recommend this over eclipse), or through command line (`git clone http://github.com/YourUsername/Adorufu_Client`). Once you do that, simply do `./gradlew setupDecompWorkspace` (unix) or `gradlew.bat setupDecompWorkspace` (windows), and after that finishes, do `./gradlew genIntellijRuns` (unix) or `gradlew.bat genIntellijRuns` if you're using IntelliJ. To build the jarfiles, do `./gradlew build` (unix) or `gradlew.bat build` (windows). Built jars are located in `projectroot/build/libs/`. From there you can create pull requests or do whatever.
 
 ### Official Discord
 https://discord.gg/W2skUdj
