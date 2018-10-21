@@ -79,7 +79,7 @@ public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.4.2";
+    public static final String VERSION = "1.5";
 
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
@@ -346,26 +346,41 @@ public class AdorufuMod implements SimpleListener {
 
     }
 
+    /**
+     * Set a key to be pressed
+     */
     public static void setPressed(KeyBinding key, boolean pressed) {
         KeyBinding.setKeyBindState(key.getKeyCode(), pressed);
     }
 
+    /**
+     * Log a regular message
+     */
     public static void logMsg(boolean consoleOnly, String logMsg) {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu\2478] \2477" + logMsg));
     }
 
+    /**
+     * Log message without the Adorufu branding to chat
+     */
     public static void logMsg(String logMsg) {
         minecraft.player.sendMessage(new TextComponentString("\2477" + logMsg));
     }
 
+    /**
+     * Log an error
+     */
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474Adorufu \247cERROR\2478] \247c" + logMsg));
     }
 
+    /**
+     * Log a warning
+     */
     public static void logWarn(boolean consoleOnly, String logMsg) {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;

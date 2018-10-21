@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
+import baritone.api.behavior.IMineBehavior;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
@@ -27,12 +28,14 @@ import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import java.awt.*;
+import java.lang.reflect.Method;
 
 /**
  * This class is designed to cooperate with the Baritone API to
  * do things. It's pretty cool.
  */
-@SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder")
+@SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
+, syntax = {"location <x> <z>", "mine <block>", "stop", "debug"})
 public class PathCommand extends SimpleCommand {
 
     private static boolean set = false;
@@ -59,7 +62,6 @@ public class PathCommand extends SimpleCommand {
             return;
         }
         if (this.getArguments()[0].equalsIgnoreCase("go")) {
-            BaritoneAPI.getPathingBehavior().path();
             AdorufuMod.logMsg(false, "The pathfinder is now active");
             return;
         }
@@ -68,10 +70,11 @@ public class PathCommand extends SimpleCommand {
         }
         if (this.getArguments()[0].equalsIgnoreCase("stop")) {
             BaritoneAPI.getPathingBehavior().cancel();
+            BaritoneAPI.getMineBehavior().cancel();
             AdorufuMod.logMsg(false, "The pathfinder has stopped");
             return;
         }
-        // -path location <x> <y> <z>
+        // -path location <x> <z>
         if (this.getArguments()[0].equalsIgnoreCase("location")) {
             if (this.getArguments().length != 3) {
                 AdorufuMod.logErr(false, "Invalid Args. Expected \"-path location <x> <z>\"");
@@ -81,9 +84,9 @@ public class PathCommand extends SimpleCommand {
                 int x = Integer.parseInt(this.getArguments()[1]);
                 int z = Integer.parseInt(this.getArguments()[2]);
                 BaritoneAPI.getPathingBehavior().setGoal(new GoalXZ(x, z));
-                AdorufuMod.logMsg(false, "Location goal set to " + x + " " + z);
-            }
-            catch (Exception e) {
+                AdorufuMod.logMsg(false, "Going to " + x + " " + z);
+                BaritoneAPI.getPathingBehavior().path();
+            } catch (Exception e) {
                 AdorufuMod.logErr(false, "Coordinates must be integers!");
                 return;
             }
@@ -96,12 +99,20 @@ public class PathCommand extends SimpleCommand {
                 return;
             }
             try {
-                BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NullPointerException ignored) {
-                AdorufuMod.logErr(false, "invalid args");
+                IMineBehavior iMineBehavior = BaritoneAPI.getMineBehavior();
+                for (Method declaredMethod : BaritoneAPI.getMineBehavior().getClass().getMethods()) {
+                    if (declaredMethod.getName().equals("mine") && declaredMethod.getParameters()[0].getType().getName().contains("String")) {
+                        declaredMethod.invoke(iMineBehavior, (Object) new String[]{this.getArguments()[1]});
+                        AdorufuMod.logMsg(false, "Mining " + this.getArguments()[1].replace("_", " "));
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
+
     // todo armour and feather falling/enchants?????
     public static void tick() {
         if (AdorufuMod.minecraft.world == null) return;
