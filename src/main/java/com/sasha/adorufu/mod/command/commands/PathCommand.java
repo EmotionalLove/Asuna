@@ -20,13 +20,15 @@ package com.sasha.adorufu.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
 import baritone.api.behavior.IFollowBehavior;
-import baritone.api.behavior.IMineBehavior;
+import baritone.api.event.events.*;
+import baritone.api.event.listener.IGameEventListener;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.modules.ModuleJesus;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -38,8 +40,8 @@ import java.lang.reflect.Method;
  * do things. It's pretty cool.
  */
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
-, syntax = {"location <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>"})
-public class PathCommand extends SimpleCommand {
+        , syntax = {"location <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>"})
+public class PathCommand extends SimpleCommand implements IGameEventListener {
 
     private static boolean set = false;
 
@@ -83,8 +85,8 @@ public class PathCommand extends SimpleCommand {
                                 }
                             }
                             return;
-                        }catch (Exception e) {
-                            AdorufuMod.logErr(false ,"An error occurred");
+                        } catch (Exception e) {
+                            AdorufuMod.logErr(false, "An error occurred");
                         }
                         return;
                     }
@@ -113,14 +115,12 @@ public class PathCommand extends SimpleCommand {
                 BaritoneAPI.getSettings().allowParkourPlace.value = false;
                 AdorufuMod.logMsg(false, "Parkour disabled");
                 return;
-            }
-            else if (this.getArguments()[1].toLowerCase().matches("on|true|enable|yes")) {
+            } else if (this.getArguments()[1].toLowerCase().matches("on|true|enable|yes")) {
                 BaritoneAPI.getSettings().allowParkour.value = true;
                 BaritoneAPI.getSettings().allowParkourPlace.value = true;
                 AdorufuMod.logMsg(false, "Parkour enabled");
                 return;
-            }
-            else {
+            } else {
                 AdorufuMod.logMsg(false, "Unknown setting");
             }
             return;
@@ -143,21 +143,30 @@ public class PathCommand extends SimpleCommand {
             }
             return;
         }
-        // -path mine <blockname> <quantity>
+        // -paht mine this
+        // -path mine <blockname>
         if (this.getArguments()[0].equalsIgnoreCase("mine")) {
             if (this.getArguments().length != 2) {
                 AdorufuMod.logErr(false, "Invalid Args. Expected \"-path mine <block>\"");
                 return;
             }
             try {
-                IMineBehavior iMineBehavior = BaritoneAPI.getMineBehavior();
+                if (this.getArguments()[1].equalsIgnoreCase("this")) {
+                    BaritoneAPI.getMineBehavior().mine(
+                            Block.getBlockFromItem(AdorufuMod.minecraft.player.getHeldItemMainhand().getItem()));
+                }
+                if (Block.getBlockFromName(this.getArguments()[1]) == null) {
+                    AdorufuMod.logErr(false, "Invalid block name");
+                }
+                BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
+                /*
                 for (Method declaredMethod : BaritoneAPI.getMineBehavior().getClass().getMethods()) {
                     if (declaredMethod.getName().equals("mine") && declaredMethod.getParameters()[0].getType().getName().contains("String")) {
                         declaredMethod.invoke(iMineBehavior, (Object) new String[]{this.getArguments()[1]});
                         AdorufuMod.logMsg(false, "Mining " + this.getArguments()[1].replace("_", " "));
                         break;
                     }
-                }
+                }*/
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -173,5 +182,70 @@ public class PathCommand extends SimpleCommand {
         fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
         BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
         BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(ModuleJesus.class).isEnabled();
+    }
+
+    @Override
+    public void onTick(TickEvent tickEvent) {
+
+    }
+
+    @Override
+    public void onPlayerUpdate(PlayerUpdateEvent playerUpdateEvent) {
+
+    }
+
+    @Override
+    public void onProcessKeyBinds() {
+
+    }
+
+    @Override
+    public void onSendChatMessage(ChatEvent chatEvent) {
+
+    }
+
+    @Override
+    public void onChunkEvent(ChunkEvent chunkEvent) {
+
+    }
+
+    @Override
+    public void onRenderPass(RenderEvent renderEvent) {
+
+    }
+
+    @Override
+    public void onWorldEvent(WorldEvent worldEvent) {
+
+    }
+
+    @Override
+    public void onSendPacket(PacketEvent packetEvent) {
+
+    }
+
+    @Override
+    public void onReceivePacket(PacketEvent packetEvent) {
+
+    }
+
+    @Override
+    public void onPlayerRotationMove(RotationMoveEvent rotationMoveEvent) {
+
+    }
+
+    @Override
+    public void onBlockInteract(BlockInteractEvent blockInteractEvent) {
+
+    }
+
+    @Override
+    public void onPlayerDeath() {
+
+    }
+
+    @Override
+    public void onPathEvent(PathEvent pathEvent) {
+
     }
 }

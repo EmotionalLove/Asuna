@@ -360,7 +360,7 @@ public class AdorufuMod implements SimpleListener {
     public static void logMsg(boolean consoleOnly, String logMsg) {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \2478] \2477" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + "\2478] \2477" + logMsg));
     }
 
     /**
