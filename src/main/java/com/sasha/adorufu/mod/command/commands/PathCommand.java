@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
+import baritone.api.behavior.IFollowBehavior;
 import baritone.api.behavior.IMineBehavior;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
@@ -26,6 +27,8 @@ import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.modules.ModuleJesus;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.awt.*;
 import java.lang.reflect.Method;
@@ -33,12 +36,9 @@ import java.lang.reflect.Method;
 /**
  * This class is designed to cooperate with the Baritone API to
  * do things. It's pretty cool.
- *
- * NOTICE: IF YOU SEE ERRORS IN HERE, ITS NORMAL AND ITS FINE.. IT COMPILES ANYWAYS
- * http://someonelove.me/content/iG9R3fFAZJ8_nicememe.nbQzBRHAZYpRiUm3B5X.png
  */
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
-, syntax = {"location <x> <z>", "mine <block>", "stop", "debug"})
+, syntax = {"location <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>"})
 public class PathCommand extends SimpleCommand {
 
     private static boolean set = false;
@@ -64,16 +64,41 @@ public class PathCommand extends SimpleCommand {
             AdorufuMod.logErr(false, "Invalid arguments.");
             return;
         }
-        if (this.getArguments()[0].equalsIgnoreCase("go")) {
-            AdorufuMod.logMsg(false, "The pathfinder is now active");
-            return;
+        // -path follow <name>
+        if (this.getArguments()[0].equalsIgnoreCase("follow")) {
+            if (this.getArguments().length != 2) {
+                AdorufuMod.logErr(false, "Not enough args!");
+                return;
+            }
+            for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
+                if (entity instanceof EntityPlayerMP) {
+                    if (entity.getName().equalsIgnoreCase(this.getArguments()[1])) {
+                        try {
+                            IFollowBehavior iFollowBehavior = BaritoneAPI.getFollowBehavior();
+                            for (Method declaredMethod : BaritoneAPI.getFollowBehavior().getClass().getMethods()) {
+                                if (declaredMethod.getName().equals("follow") && declaredMethod.getParameters()[0].getType().getName().contains("Entity")) {
+                                    declaredMethod.invoke(iFollowBehavior, (Object) new String[]{this.getArguments()[1]});
+                                    AdorufuMod.logMsg(false, "Following " + this.getArguments()[1]);
+                                    break;
+                                }
+                            }
+                            return;
+                        }catch (Exception e) {
+                            AdorufuMod.logErr(false ,"An error occurred");
+                        }
+                        return;
+                    }
+                }
+            }
         }
         if (this.getArguments()[0].equalsIgnoreCase("debug")) {
             BaritoneAPI.getSettings().chatDebug.value = true;
+            return;
         }
         if (this.getArguments()[0].equalsIgnoreCase("stop")) {
             BaritoneAPI.getPathingBehavior().cancel();
             BaritoneAPI.getMineBehavior().cancel();
+            BaritoneAPI.getFollowBehavior().cancel();
             AdorufuMod.logMsg(false, "The pathfinder has stopped");
             return;
         }
@@ -98,7 +123,7 @@ public class PathCommand extends SimpleCommand {
             else {
                 AdorufuMod.logMsg(false, "Unknown setting");
             }
-
+            return;
         }
         // -path location <x> <z>
         if (this.getArguments()[0].equalsIgnoreCase("location")) {
@@ -133,10 +158,12 @@ public class PathCommand extends SimpleCommand {
                         break;
                     }
                 }
+                return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        AdorufuMod.logErr(false, "Unknown parametre. Try -help command path");
     }
 
     // todo armour and feather falling/enchants?????
