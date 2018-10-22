@@ -19,7 +19,6 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
-import baritone.api.behavior.IFollowBehavior;
 import baritone.api.event.events.*;
 import baritone.api.event.listener.IGameEventListener;
 import baritone.api.pathing.goals.GoalXZ;
@@ -29,11 +28,11 @@ import com.sasha.adorufu.mod.module.modules.ModuleJesus;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 
 import java.awt.*;
-import java.lang.reflect.Method;
 
 /**
  * This class is designed to cooperate with the Baritone API to
@@ -69,29 +68,25 @@ public class PathCommand extends SimpleCommand implements IGameEventListener {
         // -path follow <name>
         if (this.getArguments()[0].equalsIgnoreCase("follow")) {
             if (this.getArguments().length != 2) {
-                AdorufuMod.logErr(false, "Not enough args!");
+                AdorufuMod.logErr(false, "Not enough args");
+                return;
+            }
+            if (this.getArguments()[0].equalsIgnoreCase(AdorufuMod.minecraft.player.getName())) {
+                AdorufuMod.logErr(false, "You can't follow yourself");
                 return;
             }
             for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
-                if (entity instanceof EntityPlayerMP) {
+                if (entity instanceof EntityPlayer) {
                     if (entity.getName().equalsIgnoreCase(this.getArguments()[1])) {
-                        try {
-                            IFollowBehavior iFollowBehavior = BaritoneAPI.getFollowBehavior();
-                            for (Method declaredMethod : BaritoneAPI.getFollowBehavior().getClass().getMethods()) {
-                                if (declaredMethod.getName().equals("follow") && declaredMethod.getParameters()[0].getType().getName().contains("Entity")) {
-                                    declaredMethod.invoke(iFollowBehavior, (Object) new String[]{this.getArguments()[1]});
-                                    AdorufuMod.logMsg(false, "Following " + this.getArguments()[1]);
-                                    break;
-                                }
-                            }
-                            return;
-                        } catch (Exception e) {
-                            AdorufuMod.logErr(false, "An error occurred");
-                        }
+                        BaritoneAPI.getFollowBehavior().follow(entity);
+                        AdorufuMod.logMsg("Following " + entity.getName());
                         return;
                     }
+
                 }
             }
+            AdorufuMod.logErr(false, "That player isn't near you.");
+            return;
         }
         if (this.getArguments()[0].equalsIgnoreCase("debug")) {
             BaritoneAPI.getSettings().chatDebug.value = true;
@@ -152,21 +147,19 @@ public class PathCommand extends SimpleCommand implements IGameEventListener {
             }
             try {
                 if (this.getArguments()[1].equalsIgnoreCase("this")) {
-                    BaritoneAPI.getMineBehavior().mine(
-                            Block.getBlockFromItem(AdorufuMod.minecraft.player.getHeldItemMainhand().getItem()));
+                    Block block = Block.getBlockFromItem(AdorufuMod.minecraft.player.getHeldItemMainhand().getItem());
+                    if (block.material == Material.AIR) {
+                        AdorufuMod.logErr(false, "You aren't holding anything!");
+                        return;
+                    }
+                    BaritoneAPI.getMineBehavior().mine(block);
+                    AdorufuMod.logErr(false, "Mining " + block.getLocalizedName());
+                    return;
                 }
                 if (Block.getBlockFromName(this.getArguments()[1]) == null) {
                     AdorufuMod.logErr(false, "Invalid block name");
                 }
                 BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
-                /*
-                for (Method declaredMethod : BaritoneAPI.getMineBehavior().getClass().getMethods()) {
-                    if (declaredMethod.getName().equals("mine") && declaredMethod.getParameters()[0].getType().getName().contains("String")) {
-                        declaredMethod.invoke(iMineBehavior, (Object) new String[]{this.getArguments()[1]});
-                        AdorufuMod.logMsg(false, "Mining " + this.getArguments()[1].replace("_", " "));
-                        break;
-                    }
-                }*/
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
