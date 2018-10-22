@@ -19,8 +19,8 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
-import baritone.api.event.events.*;
-import baritone.api.event.listener.IGameEventListener;
+import baritone.api.pathing.goals.Goal;
+import baritone.api.pathing.goals.GoalRunAway;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
@@ -30,8 +30,11 @@ import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 
 /**
@@ -39,10 +42,15 @@ import java.awt.*;
  * do things. It's pretty cool.
  */
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
-        , syntax = {"location <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>"})
-public class PathCommand extends SimpleCommand implements IGameEventListener {
+        , syntax = {"to <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>", "follow <player>", "avoid <true/false>"})
+public class PathCommand extends SimpleCommand {
 
     private static boolean set = false;
+    /**
+     * Whether to avoid hostile mobs if they come into dangerous range.
+     */
+    private static boolean avoid = false;
+    private static Goal rememberGoal;
 
     public PathCommand() {
         super("path");
@@ -120,16 +128,36 @@ public class PathCommand extends SimpleCommand implements IGameEventListener {
             }
             return;
         }
+        if (this.getArguments()[0].equalsIgnoreCase("avoid")) {
+            if (this.getArguments().length != 2) {
+                AdorufuMod.logErr(false, "Invalid Args. Expected \"-path avoid <on/off>\"");
+                return;
+            }
+            if (this.getArguments()[1].toLowerCase().matches("off|false|disable|no")) {
+                avoid = false;
+                AdorufuMod.logMsg(false, "Avoid disabled");
+                return;
+            } else if (this.getArguments()[1].toLowerCase().matches("on|true|enable|yes")) {
+                avoid = true;
+                AdorufuMod.logMsg(false, "Avoid enabled");
+                return;
+            } else {
+                AdorufuMod.logMsg(false, "Unknown setting");
+            }
+            return;
+        }
         // -path location <x> <z>
-        if (this.getArguments()[0].equalsIgnoreCase("location")) {
+        if (this.getArguments()[0].toLowerCase().matches("location|to|go")) {
             if (this.getArguments().length != 3) {
-                AdorufuMod.logErr(false, "Invalid Args. Expected \"-path location <x> <z>\"");
+                AdorufuMod.logErr(false, "Invalid Args. Expected \"-path &s <x> <z>\"".replace("&s", this.getArguments()[0].toLowerCase()));
                 return;
             }
             try {
                 int x = Integer.parseInt(this.getArguments()[1]);
                 int z = Integer.parseInt(this.getArguments()[2]);
-                BaritoneAPI.getPathingBehavior().setGoal(new GoalXZ(x, z));
+                Goal goal = new GoalXZ(x, z);
+                rememberGoal = goal;
+                BaritoneAPI.getPathingBehavior().setGoal(goal);
                 AdorufuMod.logMsg(false, "Going to " + x + " " + z);
                 BaritoneAPI.getPathingBehavior().path();
             } catch (Exception e) {
@@ -158,8 +186,11 @@ public class PathCommand extends SimpleCommand implements IGameEventListener {
                 }
                 if (Block.getBlockFromName(this.getArguments()[1]) == null) {
                     AdorufuMod.logErr(false, "Invalid block name");
+                    return;
                 }
+                BaritoneAPI.getMineBehavior().cancel();
                 BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
+                AdorufuMod.logMsg(false, "Mining " + this.getArguments()[0].replace("_", " "));
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -175,70 +206,21 @@ public class PathCommand extends SimpleCommand implements IGameEventListener {
         fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
         BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
         BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(ModuleJesus.class).isEnabled();
+        if (avoid) {
+            BlockPos pos = isHostileEntityClose();
+            if (BaritoneAPI.getPathingBehavior().isPathing() && rememberGoal != null && pos != null) {
+                BaritoneAPI.getPathingBehavior().cancel();
+                BaritoneAPI.getPathingBehavior().setGoal(new GoalRunAway(50, pos));
+            }
+        }
     }
-
-    @Override
-    public void onTick(TickEvent tickEvent) {
-
-    }
-
-    @Override
-    public void onPlayerUpdate(PlayerUpdateEvent playerUpdateEvent) {
-
-    }
-
-    @Override
-    public void onProcessKeyBinds() {
-
-    }
-
-    @Override
-    public void onSendChatMessage(ChatEvent chatEvent) {
-
-    }
-
-    @Override
-    public void onChunkEvent(ChunkEvent chunkEvent) {
-
-    }
-
-    @Override
-    public void onRenderPass(RenderEvent renderEvent) {
-
-    }
-
-    @Override
-    public void onWorldEvent(WorldEvent worldEvent) {
-
-    }
-
-    @Override
-    public void onSendPacket(PacketEvent packetEvent) {
-
-    }
-
-    @Override
-    public void onReceivePacket(PacketEvent packetEvent) {
-
-    }
-
-    @Override
-    public void onPlayerRotationMove(RotationMoveEvent rotationMoveEvent) {
-
-    }
-
-    @Override
-    public void onBlockInteract(BlockInteractEvent blockInteractEvent) {
-
-    }
-
-    @Override
-    public void onPlayerDeath() {
-
-    }
-
-    @Override
-    public void onPathEvent(PathEvent pathEvent) {
-
+    @Nullable
+    private static BlockPos isHostileEntityClose() {
+        for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
+            if (entity instanceof EntityMob && entity.getDistance(AdorufuMod.minecraft.player) <= 6f) {
+                return entity.getPosition();
+            }
+        }
+        return null;
     }
 }
