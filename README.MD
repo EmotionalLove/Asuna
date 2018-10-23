@@ -10,7 +10,7 @@ Download the latest release of `Adorufu.jar` from [here](https://github.com/Emot
 
 If you'd like to reposition the HUD elements (like the tps counter), you can open `.minecraft/AdorufuData.yml` in WordPad or TextEdit, and edit the bit that reads like the following:
 
-```
+```yaml
 Adorufu:
   gui:
     hud:
