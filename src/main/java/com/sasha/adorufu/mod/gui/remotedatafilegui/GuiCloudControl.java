@@ -137,11 +137,6 @@ public class GuiCloudControl extends GuiScreen {
         //drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
         drawCenteredString(this.fontRenderer, "\247" + message, width / 2, height - 40, 0xffffff);
         //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
-        try{
-        }catch(Exception err)
-        {
-            err.printStackTrace();
-        }
         super.drawScreen(x, y, f);
     }
 }
