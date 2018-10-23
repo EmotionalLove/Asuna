@@ -25,10 +25,12 @@ import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
 import com.sasha.adorufu.mod.gui.clickgui.helper.ModuleToggler;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
+import com.sasha.adorufu.mod.module.AdorufuModule;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -51,14 +53,14 @@ public class AdorufuClickGUI extends GuiScreen {
                 ArrayList<IAdorufuGuiElement> render_elements = new ArrayList<>();
                 ArrayList<IAdorufuGuiElement> movement_elements = new ArrayList<>();
                 Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MISC)
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MISC).sorted(Comparator.comparing(AdorufuModule::getModuleName))
                         .forEach(e -> {
                             misc_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
                 int[] coords = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Misc");
                 elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(),15), 100, 0f, 181f, 150f, 255f,  "Misc", misc_elements));
                 Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.GUI)
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.GUI).sorted(Comparator.comparing(AdorufuModule::getModuleName))
                         .forEach(e -> {
                             gui_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
@@ -66,7 +68,7 @@ public class AdorufuClickGUI extends GuiScreen {
                 elementList.add(new AdorufuGuiWindow(coords$0[0], coords$0[1], calcListLength(gui_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "HUD", gui_elements));
                 Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.COMBAT)
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.COMBAT).sorted(Comparator.comparing(AdorufuModule::getModuleName))
                         .forEach(e -> {
                             combat_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
@@ -74,7 +76,7 @@ public class AdorufuClickGUI extends GuiScreen {
                 elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(),15), 100, 175f, 0f, 0f, 255f
                         , "Combat", combat_elements));
                 Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.CHAT)
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.CHAT).sorted(Comparator.comparing(AdorufuModule::getModuleName))
                         .forEach(e -> {
                             chat_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
@@ -82,7 +84,7 @@ public class AdorufuClickGUI extends GuiScreen {
                 elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(),15), 100, 0f, 91f, 99f, 255f
                         , "Chat", chat_elements));
                 Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.RENDER)
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.RENDER).sorted(Comparator.comparing(AdorufuModule::getModuleName))
                         .forEach(e -> {
                             render_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
@@ -90,7 +92,7 @@ public class AdorufuClickGUI extends GuiScreen {
                 elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(),15), 100, 204f, 136f, 0f, 255f
                         , "Render", render_elements));
                 Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MOVEMENT)
+                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MOVEMENT).sorted(Comparator.comparing(AdorufuModule::getModuleName))
                         .forEach(e -> {
                             movement_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
                         });
