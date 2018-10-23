@@ -26,6 +26,7 @@ import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.module.modules.ModuleJesus;
+import com.sasha.adorufu.mod.waypoint.Waypoint;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
@@ -122,6 +123,23 @@ public class PathCommand extends SimpleCommand {
             BaritoneAPI.getMineBehavior().cancel();
             BaritoneAPI.getFollowBehavior().cancel();
             AdorufuMod.logMsg(false, "The pathfinder has stopped");
+            return;
+        }
+        if (this.getArguments()[0].equalsIgnoreCase("waypoint")) {
+            if (this.getArguments().length != 2) {
+                AdorufuMod.logErr(false, "Invalid args");
+                return;
+            }
+            for (Waypoint waypoint : AdorufuMod.WAYPOINT_MANAGER.getWaypoints()) {
+                if (waypoint.getName().equalsIgnoreCase(this.getArguments()[1])) {
+                    BaritoneAPI.getPathingBehavior().cancel();
+                    BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(waypoint.getCoords()[0], waypoint.getCoords()[1], waypoint.getCoords()[2]));
+                    BaritoneAPI.getPathingBehavior().path();
+                    AdorufuMod.logMsg(false, "Going to " + waypoint.getName());
+                    break;
+                }
+            }
+            AdorufuMod.logErr(false, "That waypoint couldn't be found.");
             return;
         }
         // -path parkour <on/off>
