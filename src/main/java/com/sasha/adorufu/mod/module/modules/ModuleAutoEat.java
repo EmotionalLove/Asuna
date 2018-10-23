@@ -32,8 +32,8 @@ public class ModuleAutoEat extends AdorufuModule {
 
     public ModuleAutoEat() {
         super("AutoEat", AdorufuCategory.MISC, false, true, true);
-        this.addOption("priority gapple", false);
-        this.addOption("conserve gapple", true);
+        this.addOption("priority gapple", false); // eat gapples first, if available
+        this.addOption("conserve gapple", true); // eat other food first, then gapples
     }
 
     @Override
