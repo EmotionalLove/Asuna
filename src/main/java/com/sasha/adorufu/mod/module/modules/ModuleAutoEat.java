@@ -49,6 +49,7 @@ public class ModuleAutoEat extends AdorufuModule {
     @Override
     public void onTick() {
         if (!this.isEnabled()) return;
+        this.setSuffix(this.getModuleOptionsMap());
         if (AdorufuMod.minecraft.player.getFoodStats().getFoodLevel() <= 8) {
             // we need to eat
             for (int s = 0; s <= 8; s++) {
