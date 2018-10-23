@@ -31,10 +31,8 @@ public class ModuleElytraFlight extends AdorufuModule {
 
     @Override
     public void onTick() {
-        if (this.isEnabled()) {
-            if (AdorufuMod.minecraft.player.isElytraFlying()) {
-                AdorufuMod.minecraft.player.capabilities.isFlying = true;
-            }
+        if (this.isEnabled() && AdorufuMod.minecraft.player.isElytraFlying()) {
+            AdorufuMod.minecraft.player.capabilities.isFlying = true;
         }
     }
     @Override

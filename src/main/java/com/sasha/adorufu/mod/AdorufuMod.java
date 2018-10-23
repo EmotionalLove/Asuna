@@ -176,7 +176,7 @@ public class AdorufuMod implements SimpleListener {
                 ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
-                Manager.Module.loadBindsAndStates();
+                loadBindsAndStates();
                 ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
                 ModuleJoinLeaveMessages.joinMessages = greets.get(0);
                 ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
