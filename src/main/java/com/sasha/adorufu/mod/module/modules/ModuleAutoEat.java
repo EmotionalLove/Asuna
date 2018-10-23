@@ -50,7 +50,7 @@ public class ModuleAutoEat extends AdorufuModule {
         if (!this.isEnabled()) return;
         if (AdorufuMod.minecraft.player.getFoodStats().getFoodLevel() <= 8) {
             // we need to eat
-            for (int s = 36; s <= 44; s++) {
+            for (int s = 0; s <= 8; s++) {
                 if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
                     // we can eat this item
                     if (this.getOption("conserve gapple")) {
@@ -58,7 +58,7 @@ public class ModuleAutoEat extends AdorufuModule {
                             continue;
                         }
                     }
-                    if (this.getOption("priority gapple") && !checked) {
+                    else if (this.getOption("priority gapple") && !checked) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
                             continue;
                         }
