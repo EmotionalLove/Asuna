@@ -28,11 +28,14 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(description = "Display tracers to enabled waypoints.")
 public class ModuleWaypoints extends AdorufuModule {
+
+    public static int i = 0;
+
+
     public ModuleWaypoints() {
         super("Waypoints", AdorufuCategory.RENDER, false);
     }
 
-    public static int i = 0;
 
     @Override
     public void onEnable() {
@@ -48,6 +51,7 @@ public class ModuleWaypoints extends AdorufuModule {
     public void onTick() {
 
     }
+
     @Override
     public void onRender() {
         if (this.isEnabled()) {
@@ -92,9 +96,10 @@ public class ModuleWaypoints extends AdorufuModule {
             GL11.glDisable(GL11.GL_LINE_SMOOTH);
         }
     }
+
     private static Vec3d getClientLookVec() {
-        double f = Math.cos(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float)Math.PI);
-        double f1 = Math.sin(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float)Math.PI);
+        double f = Math.cos(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float) Math.PI);
+        double f1 = Math.sin(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float) Math.PI);
         double f2 = -Math.cos(-AdorufuMod.minecraft.player.rotationPitch * 0.017453292F);
         double f3 = Math.sin(-AdorufuMod.minecraft.player.rotationPitch * 0.017453292F);
         return new Vec3d(f1 * f2, f3, f * f2);

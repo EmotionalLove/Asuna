@@ -34,8 +34,8 @@ public class WaypointSearch {
 	private WaypointWindow window;
 	private String initText;
 	private int x, y;
-	boolean overButton;
-	boolean selected;
+	protected boolean overButton;
+	private boolean selected;
 	private String text;
 
 	WaypointSearch(WaypointWindow window, String initText, int x, int y) {

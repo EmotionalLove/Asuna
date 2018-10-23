@@ -98,7 +98,7 @@ public class ModuleAutoIgnore extends AdorufuModule implements SimpleListener {
             }
         }
     }
-    static String stripColours(String txt) {
+    protected static String stripColours(String txt) {
         return txt.replaceAll("\247" + ".", "");
     }
     private static void handleIgnoring() {
