@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
 import baritone.api.pathing.goals.Goal;
+import baritone.api.pathing.goals.GoalBlock;
 import baritone.api.pathing.goals.GoalRunAway;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
@@ -29,6 +30,7 @@ import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,13 +38,14 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is designed to cooperate with the Baritone API to
  * do things. It's pretty cool.
  */
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
-        , syntax = {"to <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>", "follow <player>", "avoid <true/false>"})
+        , syntax = {"to <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>", "follow <player>", "avoid <true/false>", "top"})
 public class PathCommand extends SimpleCommand {
 
     private static boolean set = false;
@@ -99,6 +102,20 @@ public class PathCommand extends SimpleCommand {
         if (this.getArguments()[0].equalsIgnoreCase("debug")) {
             BaritoneAPI.getSettings().chatDebug.value = true;
             return;
+        }
+        // go to the highest point where u currently are
+        if (this.getArguments()[0].equalsIgnoreCase("top")) {
+            int x = AdorufuMod.minecraft.player.getPosition().getX();
+            int z = AdorufuMod.minecraft.player.getPosition().getZ();
+            for (int y = 256; y > 4; y--) {
+                IBlockState bs = AdorufuMod.minecraft.world.getBlockState(new BlockPos(x, y, z));
+                if (bs.getMaterial() != Material.AIR && bs.isFullBlock()) {
+                    BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(x, y + 1 ,z));
+                    BaritoneAPI.getPathingBehavior().path();
+                    AdorufuMod.logMsg(false, "Moving to higher ground");
+                    break;
+                }
+            }
         }
         if (this.getArguments()[0].equalsIgnoreCase("stop")) {
             BaritoneAPI.getPathingBehavior().cancel();
@@ -208,12 +225,24 @@ public class PathCommand extends SimpleCommand {
         BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(ModuleJesus.class).isEnabled();
         if (avoid) {
             BlockPos pos = isHostileEntityClose();
-            if (BaritoneAPI.getPathingBehavior().isPathing() && rememberGoal != null && pos != null) {
+            if (BaritoneAPI.getPathingBehavior().isPathing() && (!(BaritoneAPI.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
                 BaritoneAPI.getPathingBehavior().cancel();
                 BaritoneAPI.getPathingBehavior().setGoal(new GoalRunAway(50, pos));
+                BaritoneAPI.getPathingBehavior().path();
+                AdorufuMod.scheduler.schedule(() -> {
+                    BaritoneAPI.getPathingBehavior().cancel();
+                    BaritoneAPI.getPathingBehavior().setGoal(rememberGoal);
+                    BaritoneAPI.getPathingBehavior().path();
+                    rememberGoal = null;
+                }, 20L, TimeUnit.SECONDS);
             }
         }
     }
+
+    /**
+     * Check if a hostile entity is within 6 blocks of us
+     * @return the entity's blockpos, if one is present.
+     */
     @Nullable
     private static BlockPos isHostileEntityClose() {
         for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
