@@ -44,7 +44,7 @@ public class UpdateCommand extends SimpleCommand {
             return;
         }
         try {
-            Desktop.getDesktop().browse(new URI("http://sashadev.me/EmotionalLove/Adorufu/tree/master/releases/"));
+            Desktop.getDesktop().browse(new URI("https://github.com/EmotionalLove/Adorufu_Client/releases/"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
