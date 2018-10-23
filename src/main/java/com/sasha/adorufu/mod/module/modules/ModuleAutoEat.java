@@ -28,6 +28,7 @@ public class ModuleAutoEat extends AdorufuModule {
 
     private static boolean eating = false;
     private static boolean checked = false;
+    private static int prevSlot = 0;
 
     public ModuleAutoEat() {
         super("AutoEat", AdorufuCategory.MISC, false, true, true);
@@ -65,6 +66,7 @@ public class ModuleAutoEat extends AdorufuModule {
                     }
                     eating = true;
                     checked = false;
+                    prevSlot = AdorufuMod.minecraft.player.inventory.currentItem;
                     AdorufuMod.minecraft.player.inventory.currentItem = s;
                     AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindUseItem, true);
                     return;
@@ -77,6 +79,7 @@ public class ModuleAutoEat extends AdorufuModule {
         }
         if (eating) {
             AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindUseItem, false);
+            AdorufuMod.minecraft.player.inventory.currentItem = prevSlot;
             eating = false;
         }
     }
