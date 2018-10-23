@@ -46,7 +46,16 @@ import java.util.concurrent.TimeUnit;
  * do things. It's pretty cool.
  */
 @SimpleCommandInfo(description = "Push instructions to the Baritone pathfinder"
-        , syntax = {"to <x> <z>", "mine <block>", "stop", "debug", "parkour <true/false>", "follow <player>", "avoid <true/false>", "top"})
+        , syntax = {
+        "to <x> <z>",
+        "mine <block>",
+        "mine this",
+        "stop",
+        "debug",
+        "parkour <true/false>",
+        "follow <player>",
+        "avoid <true/false>",
+        "top"})
 public class PathCommand extends SimpleCommand {
 
     private static boolean set = false;
