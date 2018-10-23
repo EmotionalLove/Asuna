@@ -43,12 +43,9 @@ public abstract class AdorufuMath {
         }
         else { // hello witchcraft my old friend
             AtomicInteger l = new AtomicInteger(1);
-            collection_Adorufu.forEach(potion -> {
-                if (potion.getPotion().hasStatusIcon() && potion.doesShowParticles()) {
-                    if (potion.getPotion().isBeneficial()) {
-                    } else {
-                        l.addAndGet(26);
-                    }
+            collection_Adorufu.stream().filter(potion -> potion.getPotion().hasStatusIcon() && potion.doesShowParticles()).forEach(potion -> {
+                if (!potion.getPotion().isBeneficial()) {
+                    l.addAndGet(26);
                 }
             });
             return (l.get() + 3) + 18;
