@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.simplecmdsys.SimpleCommandInfo;
 import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
+import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -43,14 +43,19 @@ public class BindCommand extends SimpleCommand {
             AdorufuMod.logErr(false, "Arguments required! Try \"-help command bind\"");
             return;
         }
-        if (AdorufuMath.determineKeyCode(this.getArguments()[1]) == null){
+        boolean none = false;
+        if (this.getArguments()[1].equalsIgnoreCase("none")) {
+            none = true;
+        }
+        if (!none && Keyboard.getKeyIndex(this.getArguments()[1]) == Keyboard.KEY_NONE){
             AdorufuMod.logErr(false, "That's not a valid key!");
             return;
         }
         AtomicBoolean found = new AtomicBoolean(false);
+        final boolean finalNone = none;
         Manager.Module.moduleRegistry.forEach(mod -> {
             if (mod.getModuleName().equalsIgnoreCase(this.getArguments()[0])){
-                mod.setKeyBind(AdorufuMath.determineKeyCode(this.getArguments()[1]));
+                mod.setKeyBind(finalNone ? 0 : Keyboard.getKeyIndex(this.getArguments()[1]));
                 AdorufuMod.logMsg(false, "Changed " + mod.getModuleName() + "'s keybind!");
                 AdorufuMod.scheduler.schedule(() -> {
                     try {
@@ -60,7 +65,6 @@ public class BindCommand extends SimpleCommand {
                     }
                 }, 0, TimeUnit.NANOSECONDS);
                 found.set(true);
-                return;
             }
         });
         if (!found.get()) {

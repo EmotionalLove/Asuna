@@ -21,7 +21,6 @@ package com.sasha.adorufu.mod.misc;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.hud.Direction;
 import net.minecraft.potion.PotionEffect;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.math.BigDecimal;
@@ -147,103 +146,6 @@ public abstract class AdorufuMath {
         BigDecimal bd = new BigDecimal(value + "");
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
-    }
-
-    public static Integer determineKeyCode(String letter) {
-        if (letter.equals("a")) {
-            return 30;
-        }
-        if (letter.equals("b")) {
-            return 48;
-        }
-        if (letter.equals("c")) {
-            return 46;
-        }
-        if (letter.equals("d")) {
-            return 32;
-        }
-        if (letter.equals("e")) {
-            return 18;
-        }
-        if (letter.equals("f")) {
-            return Keyboard.KEY_F;
-        }
-        if (letter.equals("g")) {
-            return 34;
-        }
-        if (letter.equals("h")) {
-            return 35;
-        }
-        if (letter.equals("i")) {
-            return 23;
-        }
-        if (letter.equals("j")) {
-            return 36;
-        }
-        if (letter.equals("k")) {
-            return 37;
-        }
-        if (letter.equals("l")) {
-            return 38;
-        }
-        if (letter.equals("m")) {
-            return 50;
-        }
-        if (letter.equals("n")) {
-            return 49;
-        }
-        if (letter.equals("o")) {
-            return 24;
-        }
-        if (letter.equals("p")) {
-            return 25;
-        }
-        if (letter.equals("q")) {
-            return 16;
-        }
-        if (letter.equals("r")) {
-            return 19;
-        }
-        if (letter.equals("s")) {
-            return 31;
-        }
-        if (letter.equals("t")) {
-            return 20;
-        }
-        if (letter.equals("u")) {
-            return 22;
-        }
-        if (letter.equals("v")) {
-            return 47;
-        }
-        if (letter.equals("w")) {
-            return 17;
-        }
-        if (letter.equals("x")) {
-            return 45;
-        }
-        if (letter.equals("y")) {
-            return 21;
-        }
-        if (letter.equals("z")) {
-            return 44;
-        }
-        if (letter.equals("rshift")) {
-            return Keyboard.KEY_RSHIFT;
-        }
-        if (letter.equals("lshift")) {
-            return Keyboard.KEY_LSHIFT;
-        }
-        if (letter.equals("lctrl")) {
-            return Keyboard.KEY_LCONTROL;
-        }
-        if (letter.equals("`") || letter.equals("~")) {
-            return Keyboard.KEY_GRAVE;
-        }
-        if (letter.equals("none")) {
-            return 0;
-        }
-        return null;
     }
 
     public static void drawBetterBorderedRect(int x, float y, int x1, float y1, float size, int borderC, int insideC) {
