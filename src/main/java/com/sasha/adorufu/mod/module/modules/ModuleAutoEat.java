@@ -18,12 +18,21 @@
 
 package com.sasha.adorufu.mod.module.modules;
 
+import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
 
 public class ModuleAutoEat extends AdorufuModule {
+
+    private static boolean eating = false;
+    private static boolean checked = false;
+
     public ModuleAutoEat() {
-        super("AutoEat", AdorufuCategory.MISC, false);
+        super("AutoEat", AdorufuCategory.MISC, false, true, true);
+        this.addOption("priority gapple", false);
+        this.addOption("conserve gapple", true);
     }
 
     @Override
@@ -39,6 +48,36 @@ public class ModuleAutoEat extends AdorufuModule {
     @Override
     public void onTick() {
         if (!this.isEnabled()) return;
-
+        if (AdorufuMod.minecraft.player.getFoodStats().getFoodLevel() <= 8) {
+            // we need to eat
+            for (int s = 36; s <= 44; s++) {
+                if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
+                    // we can eat this item
+                    if (this.getOption("conserve gapple")) {
+                        if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
+                            continue;
+                        }
+                    }
+                    if (this.getOption("priority gapple") && !checked) {
+                        if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
+                            continue;
+                        }
+                    }
+                    eating = true;
+                    checked = false;
+                    AdorufuMod.minecraft.player.inventory.currentItem = s;
+                    AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindUseItem, true);
+                    return;
+                }
+            }
+            if (this.getOption("priority gapple")) {
+                checked = true;
+            }
+            return;
+        }
+        if (eating) {
+            AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindUseItem, false);
+            eating = false;
+        }
     }
 }
