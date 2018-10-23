@@ -52,7 +52,7 @@ public class HelpCommand extends SimpleCommand {
             }
             return;
         }
-        if (this.getArguments()[0].toLowerCase().equals("command")){
+        if (this.getArguments()[0].equalsIgnoreCase("command")){
             for (HashMap.Entry<Class<? extends SimpleCommand>, Object> simpleEntry : COMMAND_PROCESSOR.getCommandRegistry().entrySet()) {
                 SimpleCommand simpleCommand = (SimpleCommand) simpleEntry.getValue();
                 if (simpleCommand.getCommandName().equalsIgnoreCase(this.getArguments()[1])){
@@ -62,9 +62,9 @@ public class HelpCommand extends SimpleCommand {
             }
             return;
         }
-        if (this.getArguments()[0].toLowerCase().equalsIgnoreCase("module")){
+        if (this.getArguments()[0].equalsIgnoreCase("module")){
             for (AdorufuModule module : moduleRegistry) {
-                if (module.getModuleName().toLowerCase().equalsIgnoreCase(this.getArguments()[1])){
+                if (module.getModuleName().equalsIgnoreCase(this.getArguments()[1])){
                     logMsg(module.getDescription(module.getClass()));
                 }
             }

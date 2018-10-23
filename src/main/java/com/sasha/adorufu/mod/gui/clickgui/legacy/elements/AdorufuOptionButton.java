@@ -54,7 +54,7 @@ public class AdorufuOptionButton {
 		float var4 = 0.5f;
 		AtomicBoolean isTrue = new AtomicBoolean(false);
 		Manager.Module.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
-			if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
+			if ((mod.getModuleName() + " Options").equalsIgnoreCase(this.window.getTitle())) {
 				if (mod.getOption(this.toToggle)) isTrue.set(true);
 				return;
 			}
@@ -86,7 +86,7 @@ public class AdorufuOptionButton {
 			AdorufuClickGUI.focusWindow(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
 			Manager.Module.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
-                if ((mod.getModuleName() + " Options").toLowerCase().equalsIgnoreCase(this.window.getTitle())) {
+                if ((mod.getModuleName() + " Options").equalsIgnoreCase(this.window.getTitle())) {
                 	if (mod.useModeSelection()){
                 		mod.toggleOptionMode(this.toToggle);
 					}

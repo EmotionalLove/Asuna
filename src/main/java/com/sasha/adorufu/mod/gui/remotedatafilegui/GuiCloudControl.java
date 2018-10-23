@@ -30,6 +30,8 @@ import org.lwjgl.input.Keyboard;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 
+import static com.sasha.adorufu.mod.gui.remotedatafilegui.GuiCloudLogin.message;
+
 /**
  * Created by Sasha at 7:22 PM on 8/25/2018
  */
@@ -53,7 +55,7 @@ public class GuiCloudControl extends GuiScreen {
 
     public void initGui()
     {
-        GuiCloudLogin.message = "fYou can save or retrieve your datafile from the server.";
+        message = "fYou can save or retrieve your datafile from the server.";
         this.retrieveButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Retrieve Data File");
         this.saveButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Save Data File");
         this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Log off");
@@ -89,12 +91,12 @@ public class GuiCloudControl extends GuiScreen {
             case 1:
                 RetrieveDataFileRequestPacket pck = new RetrieveDataFileRequestPacket(AdorufuDataClient.processor, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId);
                 pck.dispatchPck();
-                GuiCloudLogin.message = "bRetrieving the data file...";
+                message = "bRetrieving the data file...";
                 break;
             case 2:
                 RequestSaveDataFilePacket ssdfp = new RequestSaveDataFilePacket(AdorufuDataClient.processor, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId);
                 ssdfp.dispatchPck();
-                GuiCloudLogin.message = "bSaving the data file...";
+                message = "bSaving the data file...";
                 break;
             case 3:
                 mc.displayGuiScreen(parent);
@@ -133,7 +135,7 @@ public class GuiCloudControl extends GuiScreen {
         drawDefaultBackground();
         //drawString(this.fontRenderer, "Username", width / 2 - 100, 63 - 25, 0xA0A0A0);
         //drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
-        drawCenteredString(this.fontRenderer, "\247" + GuiCloudLogin.message, width / 2, height - 40, 0xffffff);
+        drawCenteredString(this.fontRenderer, "\247" + message, width / 2, height - 40, 0xffffff);
         //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
         try{
         }catch(Exception err)

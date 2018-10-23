@@ -88,7 +88,9 @@ public abstract class MixinEntity {
         EntityMoveEvent event = new EntityMoveEvent(this.world, this.entityId, type, x, y, z);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         if (event.isCancelled()) return;
-        x = event.getX();y = event.getY();z = event.getZ();
+        x = event.getX();
+        y = event.getY();
+        z = event.getZ();
     }
 
     @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
@@ -140,6 +142,7 @@ public abstract class MixinEntity {
 
     /**
      * Makes safewalk work (thanks brady)
+     *
      * @param self ze entity
      * @return
      */
@@ -155,8 +158,7 @@ public abstract class MixinEntity {
         if (self instanceof EntityPlayerSP) { // dont make other players(?) safewalk cuz they cant
             // im not sure if entityPlayermp counts as a player movertype
             return self.isSneaking() || Manager.Module.getModule(ModuleSafeWalk.class).isEnabled();
-        }
-        else {
+        } else {
             return self.isSneaking();
         }
     }

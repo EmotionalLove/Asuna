@@ -73,7 +73,7 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject element : renderableRegistry) {
             for (AdorufuModule moduleElement : Manager.Module.moduleRegistry) {
-                if (element.getName().toLowerCase().equals(moduleElement.getModuleName().toLowerCase())){
+                if (element.getName().equalsIgnoreCase(moduleElement.getModuleName())){
                     if (moduleElement.isEnabled() && moduleElement.isRenderable()){
                         ScreenCornerPos thePos=element.getPos();
                         if (element.getPos() == null){

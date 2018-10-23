@@ -125,7 +125,7 @@ public class Manager {
 
         public static AdorufuModule getModule(String key) {
             for (AdorufuModule m : moduleRegistry) {
-                if (m.getModuleName().toLowerCase().equals(key.toLowerCase())) return m;
+                if (m.getModuleName().equalsIgnoreCase(key)) return m;
             }
             return null;
         }

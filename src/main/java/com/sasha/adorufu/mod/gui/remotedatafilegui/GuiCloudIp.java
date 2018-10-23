@@ -109,7 +109,7 @@ public class GuiCloudIp extends GuiScreen {
                 RemoteDataManager.ip = ipBox.getText();
                 RemoteDataManager.port = Integer.parseInt(this.portbox.getText());
                 GuiCloudLogin.previouslyConnected = false;
-                GuiCloudLogin.message = "aIP set!";
+                message = "aIP set!";
                 break;
             case 2:
                 mc.displayGuiScreen(parent);

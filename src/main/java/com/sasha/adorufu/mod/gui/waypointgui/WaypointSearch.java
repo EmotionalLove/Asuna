@@ -150,6 +150,7 @@ public class WaypointSearch {
 		}
 	}
 
+	@Deprecated
 	private boolean isAnyWindowDragging() {
 		for (WaypointWindow w : WaypointGUI.windowList) {
 			if (w.dragging) {
