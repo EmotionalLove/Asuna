@@ -97,13 +97,10 @@ public class PathCommand extends SimpleCommand {
                 return;
             }
             for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
-                if (entity instanceof EntityPlayer) {
-                    if (entity.getName().equalsIgnoreCase(this.getArguments()[1])) {
-                        BaritoneAPI.getFollowBehavior().follow(entity);
-                        AdorufuMod.logMsg("Following " + entity.getName());
-                        return;
-                    }
-
+                if (entity instanceof EntityPlayer && entity.getName().equalsIgnoreCase(this.getArguments()[1])) {
+                    BaritoneAPI.getFollowBehavior().follow(entity);
+                    AdorufuMod.logMsg("Following " + entity.getName());
+                    return;
                 }
             }
             AdorufuMod.logErr(false, "That player isn't near you.");
@@ -120,7 +117,7 @@ public class PathCommand extends SimpleCommand {
             for (int y = 256; y > 4; y--) {
                 IBlockState bs = AdorufuMod.minecraft.world.getBlockState(new BlockPos(x, y, z));
                 if (bs.getMaterial() != Material.AIR && bs.isFullBlock()) {
-                    BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(x, y + 1 ,z));
+                    BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(x, y + 1, z));
                     BaritoneAPI.getPathingBehavior().path();
                     AdorufuMod.logMsg(false, "Moving to higher ground");
                     break;
@@ -268,6 +265,7 @@ public class PathCommand extends SimpleCommand {
 
     /**
      * Check if a hostile entity is within 6 blocks of us
+     *
      * @return the entity's blockpos, if one is present.
      */
     @Nullable

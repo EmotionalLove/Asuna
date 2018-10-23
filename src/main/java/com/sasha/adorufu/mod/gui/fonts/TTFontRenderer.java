@@ -24,7 +24,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -233,7 +232,7 @@ public class TTFontRenderer extends FontRenderer
 		if(!wasBlend)
 			glDisable(GL_BLEND);
 		glPopMatrix();
-		GL11.glColor4f(1, 1, 1, 1);
+		glColor4f(1, 1, 1, 1);
 		
 		return (int)(x + getStringWidth(text));
 	}
