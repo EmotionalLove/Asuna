@@ -28,6 +28,7 @@
     "MixinGuiScreenBook",
     "MixinGuiRecipeBook",
     "MixinGui",
-    "MixinGuiConnecting"
+    "MixinGuiConnecting",
+    "MixinEntityLlama"
   ]
 }
