@@ -68,7 +68,7 @@ public class RenderableBatteryLife extends RenderableObject {
         if (!isSupported || AdorufuMod.BATTERY_MANAGER_INTERFACE == null) {
             return "\2478Battery status is unavailable on this machine...";
         }
-        AdorufuMod.BATTERY_MANAGER_INTERFACE.getSystemPowerStatus(AdorufuMod.BATTERY_MANAGER);
+        AdorufuMod.BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(AdorufuMod.BATTERY_MANAGER);
         if (lastPercent != AdorufuMod.BATTERY_MANAGER.BatteryLifePercent) {
             lastPercent = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;
             AdorufuBatteryLevelChangedEvent event = new AdorufuBatteryLevelChangedEvent(old, lastPercent, AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte)1);

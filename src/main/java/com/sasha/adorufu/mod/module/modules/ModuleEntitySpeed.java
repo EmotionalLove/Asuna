@@ -24,6 +24,7 @@ import com.sasha.adorufu.mod.module.AdorufuModule;
 import com.sasha.adorufu.mod.module.ModuleInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.util.MovementInput;
 
 @ModuleInfo(description = "Speedhack for ridable animals")
@@ -61,6 +62,10 @@ public class ModuleEntitySpeed extends AdorufuModule {
         }
     }
     private static void speedEntity(Entity entity) {
+        if (entity instanceof EntityLlama) {
+            entity.rotationYaw = AdorufuMod.minecraft.player.rotationYaw;
+            ((EntityLlama) entity).rotationYawHead = AdorufuMod.minecraft.player.rotationYawHead;
+        }
         MovementInput movementInput = AdorufuMod.minecraft.player.movementInput;
         double forward = movementInput.moveForward;
         double strafe = movementInput.moveStrafe;

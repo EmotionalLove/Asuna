@@ -89,5 +89,5 @@ public interface AdorufuWindowsBatteryManager extends StdCallLibrary {
     /**
      * Fill the structure.
      */
-    public int getSystemPowerStatus(SYSTEM_POWER_STATUS result);
+    public int GetSystemPowerStatus(SYSTEM_POWER_STATUS result);
 }

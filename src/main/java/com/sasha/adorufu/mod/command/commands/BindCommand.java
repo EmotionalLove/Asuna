@@ -47,6 +47,7 @@ public class BindCommand extends SimpleCommand {
         if (this.getArguments()[1].equalsIgnoreCase("none")) {
             none = true;
         }
+        this.getArguments()[1] = this.getArguments()[1].toUpperCase();
         if (!none && Keyboard.getKeyIndex(this.getArguments()[1]) == Keyboard.KEY_NONE){
             AdorufuMod.logErr(false, "That's not a valid key!");
             return;
