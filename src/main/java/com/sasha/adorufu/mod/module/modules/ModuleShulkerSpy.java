@@ -44,6 +44,9 @@ public class ModuleShulkerSpy extends AdorufuModule {
 
     }
 
+    /**
+     * todo made a gui overlay thingy that shows the items in the grid
+     */
     @Override
     public void onTick() {
         if (!this.isEnabled()) return;
