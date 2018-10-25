@@ -20,13 +20,15 @@ package com.sasha.adorufu.mod.misc;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.hud.Direction;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import org.lwjgl.opengl.GL11;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.lwjgl.opengl.GL11.glBegin;
 
@@ -36,32 +38,22 @@ import static org.lwjgl.opengl.GL11.glBegin;
 public abstract class AdorufuMath {
 
     public static int calculateFutureSyndromeFix() {
-        int returnint = 0;
-        Collection<PotionEffect> collection_Adorufu = AdorufuMod.minecraft.player.getActivePotionEffects();
-        if (collection_Adorufu.isEmpty() || AdorufuMath.areAllPotionsAmbient(collection_Adorufu)) {
-            return returnint;
-        }
-        else { // hello witchcraft my old friend
-            AtomicInteger l = new AtomicInteger(1);
-            collection_Adorufu.stream().filter(potion -> potion.getPotion().hasStatusIcon() && potion.doesShowParticles()).forEach(potion -> {
-                if (!potion.getPotion().isBeneficial()) {
-                    l.addAndGet(26);
-                }
-            });
-            return (l.get() + 3) + 18;
-        }
+        Collection<PotionEffect> potionEffects = AdorufuMod.minecraft.player.getActivePotionEffects();
+        // thanks brady <3 love you
+        List<Potion> potionList = potionEffects.stream()
+                .filter(PotionEffect::doesShowParticles)
+                .map(PotionEffect::getPotion)
+                .filter(Potion::hasStatusIcon)
+                .collect(Collectors.toList());
+        return potionList.stream().anyMatch(p -> !p.isBadEffect()) ? 48 : potionList.stream().anyMatch(Potion::isBadEffect) ? 24 : 0;
     }
 
     public static boolean areAllPotionsAmbient(Collection<PotionEffect> collection) {
-        for (PotionEffect effect : collection) {
-            if (effect.getIsAmbient() && !effect.doesShowParticles()) {
-                continue; // continues if potion is ambient, time to check the next one.
-            }
-            return false; // returns false when a potion ISN'T ambien
-        }
-        return true; // returns true if the loop finishes without tripping the return false
+        return collection.stream().anyMatch(p -> p.getIsAmbient() && !p.doesShowParticles());
     }
 
+    @Deprecated // todo needs rewrite because this actually sucks
+    // i wrote it like a year ago lmao
     private static Direction getDirection(double rot) {
         if (0 <= rot && rot < 22.5) {
             return Direction.negX;
@@ -184,7 +176,7 @@ public abstract class AdorufuMath {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(2848);
 
-        GL11.glColor4f(r/255f, g/255f, b/255f, a/255f);
+        GL11.glColor4f(r / 255f, g / 255f, b / 255f, a / 255f);
         glBegin(GL11.GL_QUADS);
         GL11.glVertex2d(paramXEnd, paramYStart);
         GL11.glVertex2d(paramXStart, paramYStart);
@@ -222,15 +214,16 @@ public abstract class AdorufuMath {
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
         GL11.glPopMatrix();
     }
-    public static class ScreenPos {
-        public final int x;
-        public final int y;
-        public final boolean isVisible;
 
-        public ScreenPos(double x, double y, boolean isVisible) {
-            this.x = (int)x;
-            this.y = (int)y;
-            this.isVisible = isVisible;
-        }
+public static class ScreenPos {
+    public final int x;
+    public final int y;
+    public final boolean isVisible;
+
+    public ScreenPos(double x, double y, boolean isVisible) {
+        this.x = (int) x;
+        this.y = (int) y;
+        this.isVisible = isVisible;
     }
+}
 }
