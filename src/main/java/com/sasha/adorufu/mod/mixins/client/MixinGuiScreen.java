@@ -19,9 +19,12 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.List;
 
 /**
  * Created by Sasha at 12:59 PM on 9/2/2018
@@ -30,5 +33,8 @@ import org.spongepowered.asm.mixin.Shadow;
 public class MixinGuiScreen {
 
 
+    @Shadow public int height;
+    @Shadow public int width;
+    @Shadow protected List<GuiButton> buttonList;
     @Shadow public Minecraft mc;
 }
