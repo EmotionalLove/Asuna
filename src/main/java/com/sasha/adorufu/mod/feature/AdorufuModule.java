@@ -24,8 +24,6 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.exception.AdorufuModuleOptionNotFoundException;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.misc.ModuleState;
-import com.sasha.simplesettings.SettingFlag;
-import com.sasha.simplesettings.annotation.SerialiseSuper;
 import com.sasha.simplesettings.annotation.Transiant;
 
 import java.io.IOException;
@@ -40,8 +38,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Fun fact: Xdolf 3.x's Event system was absolutely horrible, it was easier to just _not use it_...
  **/
 @Deprecated
-@SerialiseSuper
-public abstract class AdorufuModule implements SettingFlag {
+//@SerialiseSuper
+public abstract class AdorufuModule {
 
     @Transiant private String moduleName;
     @Transiant private String moduleNameColoured;

@@ -18,5 +18,5 @@
 
 package com.sasha.adorufu.mod.feature;
 
-public class Feature {
+public class AdorufuFeature {
 }
