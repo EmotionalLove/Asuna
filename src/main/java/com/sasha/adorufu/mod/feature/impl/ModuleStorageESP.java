@@ -19,10 +19,11 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.misc.AdorufuRender;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.block.BlockChest;
 import net.minecraft.tileentity.*;
 
