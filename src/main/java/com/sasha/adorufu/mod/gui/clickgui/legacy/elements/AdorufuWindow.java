@@ -22,8 +22,8 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.AdorufuCategory;
-import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;

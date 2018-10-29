@@ -23,8 +23,8 @@ import com.sasha.adorufu.mod.command.commands.PathCommand;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
-import com.sasha.adorufu.mod.module.AdorufuModule;
-import com.sasha.adorufu.mod.module.ManualListener;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ManualListener;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -71,7 +71,7 @@ public class Manager {
             try {
                 DATA_MANAGER.saveModuleStates(true);
             } catch (IOException e1) {
-                AdorufuMod.logErr(false, "Couldn't save module state. " + e1.getMessage());
+                AdorufuMod.logErr(false, "Couldn't save feature state. " + e1.getMessage());
                 e1.printStackTrace();
             }
             if (e.getToggleState() == ModuleState.ENABLE) {
@@ -143,7 +143,7 @@ public class Manager {
                 try {
                     mod.onTick();
                 } catch (Exception e) {
-                    AdorufuMod.logErr(false, "A severe uncaught exception occurred inside of a module onTick() function");
+                    AdorufuMod.logErr(false, "A severe uncaught exception occurred inside of a feature onTick() function");
                     mod.forceState(ModuleState.DISABLE, false, true);
                     StringWriter sw = new StringWriter();
                     PrintWriter w = new PrintWriter(sw);

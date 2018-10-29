@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.gui.clickgui.legacy.windows;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
 
-import static com.sasha.adorufu.mod.module.AdorufuCategory.CHAT;
+import static com.sasha.adorufu.mod.feature.AdorufuCategory.CHAT;
 
 public class WindowChat extends AdorufuWindow {
 	

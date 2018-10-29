@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.modules.ModuleXray;
+import com.sasha.adorufu.mod.feature.impl.ModuleXray;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;

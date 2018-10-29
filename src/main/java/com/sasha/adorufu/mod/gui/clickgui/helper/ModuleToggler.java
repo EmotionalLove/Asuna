@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mod.gui.clickgui.helper;
 
-import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 

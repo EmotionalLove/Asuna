@@ -23,7 +23,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 
 import java.io.IOException;
 

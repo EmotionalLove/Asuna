@@ -26,8 +26,8 @@ import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.PlayerIdentity;
 import com.sasha.adorufu.mod.misc.YMLParser;
-import com.sasha.adorufu.mod.module.AdorufuModule;
-import com.sasha.adorufu.mod.module.modules.ModuleJoinLeaveMessages;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.impl.ModuleJoinLeaveMessages;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import net.minecraft.block.Block;
 
@@ -560,7 +560,7 @@ public class AdorufuDataManager {
     }
 
     public synchronized int getSavedKeybind(AdorufuModule module){
-        logMsg(true, "Getting module keybinde...");
+        logMsg(true, "Getting feature keybinde...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
         logWarn(true, "Thread locking engaged!");
         try {
@@ -570,19 +570,19 @@ public class AdorufuDataManager {
                 return 0;
             }
             YMLParser parser = new YMLParser(file);
-            if (!parser.exists("Adorufu.modules."+module.getModuleName().toLowerCase()+".bind")){
-                parser.set("Adorufu.modules."+module.getModuleName()+".bind", 0);
+            if (!parser.exists("Adorufu.impl."+module.getModuleName().toLowerCase()+".bind")){
+                parser.set("Adorufu.impl."+module.getModuleName()+".bind", 0);
                 parser.save();
                 return 0;
             }
-            return parser.getInt("Adorufu.modules."+module.getModuleName().toLowerCase()+".bind", 0);
+            return parser.getInt("Adorufu.impl."+module.getModuleName().toLowerCase()+".bind", 0);
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");
         }
     }
     public synchronized void saveModuleBind(AdorufuModule module) throws IOException {
-        logMsg(true, "Saving module keybinde...");
+        logMsg(true, "Saving feature keybinde...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
         logWarn(true, "Thread locking engaged!");
         try {
@@ -592,7 +592,7 @@ public class AdorufuDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            parser.set("Adorufu.modules."+module.getModuleName().toLowerCase()+".bind", module.getKeyBind());
+            parser.set("Adorufu.impl."+module.getModuleName().toLowerCase()+".bind", module.getKeyBind());
             parser.save();
         } finally {
             threadLock.unlock();
@@ -601,7 +601,7 @@ public class AdorufuDataManager {
     }
 
     public synchronized void saveModuleStates(boolean fileExists) throws IOException {
-        logMsg(true, "Updating module savestates...");
+        logMsg(true, "Updating feature savestates...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
         logWarn(true, "Thread locking engaged!");
         try {
@@ -610,7 +610,7 @@ public class AdorufuDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            moduleRegistry.forEach(mod -> parser.set("Adorufu.modules." + mod.getModuleName().toLowerCase()+".state", fileExists && mod.isEnabled()));
+            moduleRegistry.forEach(mod -> parser.set("Adorufu.impl." + mod.getModuleName().toLowerCase()+".state", fileExists && mod.isEnabled()));
             parser.save();
         } finally {
             threadLock.unlock();
@@ -618,7 +618,7 @@ public class AdorufuDataManager {
         }
     }
     public synchronized void saveModuleOption(String modName, String optionName, boolean state) throws IOException {
-        logMsg(true, "Updating module option setting...");
+        logMsg(true, "Updating feature option setting...");
         threadLock.lock(); // Don't allow other threads to modify this file until this operation is done.
         logWarn(true, "Thread locking engaged!");
         try {
@@ -627,7 +627,7 @@ public class AdorufuDataManager {
                 file.createNewFile();
             }
             YMLParser parser = new YMLParser(file);
-            parser.set("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), state);
+            parser.set("Adorufu.impl." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), state);
             parser.save();
         } finally {
             threadLock.unlock();
@@ -635,7 +635,7 @@ public class AdorufuDataManager {
         }
     }
     public synchronized boolean getSavedModuleState(String modName) throws IOException {
-        logMsg(true, "Getting module \"" + modName + "\"'s previously saved state...");
+        logMsg(true, "Getting feature \"" + modName + "\"'s previously saved state...");
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");
         try {
@@ -646,14 +646,14 @@ public class AdorufuDataManager {
                 return false;
             }
             YMLParser parser = new YMLParser(file);
-            return parser.getBoolean("Adorufu.modules." + modName.toLowerCase() + ".state", false);
+            return parser.getBoolean("Adorufu.impl." + modName.toLowerCase() + ".state", false);
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");
         }
     }
     public synchronized boolean getSavedModuleOption(String modName, String optionName, boolean def) {
-        logMsg(true, "Getting module \"" + modName + "\"'s previously saved options...");
+        logMsg(true, "Getting feature \"" + modName + "\"'s previously saved options...");
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");
         try {
@@ -663,12 +663,12 @@ public class AdorufuDataManager {
                 return def;
             }
             YMLParser parser = new YMLParser(file);
-            if (!parser.exists("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def)) {
-                parser.set("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def);
+            if (!parser.exists("Adorufu.impl." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def)) {
+                parser.set("Adorufu.impl." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def);
                 parser.save();
                 return def;
             }
-            return parser.getBoolean("Adorufu.modules." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def);
+            return parser.getBoolean("Adorufu.impl." + modName.toLowerCase() + ".option_" + optionName.toLowerCase(), def);
         } finally {
             threadLock.unlock();
             logWarn(true, "Thread locking disengaged!");

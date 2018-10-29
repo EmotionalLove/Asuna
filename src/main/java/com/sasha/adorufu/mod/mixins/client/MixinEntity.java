@@ -24,7 +24,7 @@ import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.modules.ModuleSafeWalk;
+import com.sasha.adorufu.mod.feature.impl.ModuleSafeWalk;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;

@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.mixins.client;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.AdorufuBookNBTBuilder;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.modules.ModuleBookForger;
+import com.sasha.adorufu.mod.feature.impl.ModuleBookForger;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

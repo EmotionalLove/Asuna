@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mod.gui.clickgui.helper;
 
-import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 
 public interface IToggler {
     boolean isTrue();

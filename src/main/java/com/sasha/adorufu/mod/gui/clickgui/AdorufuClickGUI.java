@@ -24,8 +24,8 @@ import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
 import com.sasha.adorufu.mod.gui.clickgui.helper.ModuleToggler;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.AdorufuCategory;
-import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;

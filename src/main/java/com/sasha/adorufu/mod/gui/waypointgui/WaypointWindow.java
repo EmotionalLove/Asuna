@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod.gui.waypointgui;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
-import com.sasha.adorufu.mod.module.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;

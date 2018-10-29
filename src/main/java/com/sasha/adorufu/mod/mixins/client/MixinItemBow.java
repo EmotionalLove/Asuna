@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.modules.ModulePowerBow;
+import com.sasha.adorufu.mod.feature.impl.ModulePowerBow;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;

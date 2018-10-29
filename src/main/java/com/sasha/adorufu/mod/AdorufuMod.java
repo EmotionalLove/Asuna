@@ -36,8 +36,8 @@ import com.sasha.adorufu.mod.gui.hud.renderableobjects.*;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.adorufu.mod.misc.TPS;
-import com.sasha.adorufu.mod.module.modules.*;
-import com.sasha.adorufu.mod.module.modules.hudelements.*;
+import com.sasha.adorufu.mod.feature.impl.*;
+import com.sasha.adorufu.mod.feature.impl.hudelements.*;
 import com.sasha.adorufu.mod.remote.RemoteDataManager;
 import com.sasha.adorufu.mod.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventHandler;
@@ -162,7 +162,7 @@ public class AdorufuMod implements SimpleListener {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
-        logMsg(true, "Registering commands, renderables and modules...");
+        logMsg(true, "Registering commands, renderables and impl...");
         scheduler.schedule(() -> {
             try {
                 COMMAND_PROCESSOR = new SimpleCommandProcessor("-");

@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.modules.ModuleCameraClip;
-import com.sasha.adorufu.mod.module.modules.ModuleNightVision;
-import com.sasha.adorufu.mod.module.modules.ModuleTracers;
-import com.sasha.adorufu.mod.module.modules.ModuleWaypoints;
+import com.sasha.adorufu.mod.feature.impl.ModuleCameraClip;
+import com.sasha.adorufu.mod.feature.impl.ModuleNightVision;
+import com.sasha.adorufu.mod.feature.impl.ModuleTracers;
+import com.sasha.adorufu.mod.feature.impl.ModuleWaypoints;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

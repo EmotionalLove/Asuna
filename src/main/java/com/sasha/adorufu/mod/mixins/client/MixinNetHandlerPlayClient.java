@@ -25,7 +25,7 @@ import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.module.modules.ModuleAutoReconnect;
+import com.sasha.adorufu.mod.feature.impl.ModuleAutoReconnect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.WorldClient;
