@@ -27,7 +27,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
  * Created by Sasha on 10/08/2018 at 8:55 AM
  **/
 @ModuleInfo(description = "Draws lines to nearby players.")
-public class ModuleTracers extends AdorufuModule {
+public class ModuleTracers extends AdorufuModule implements SettingFlag {
     public static int i;
     public ModuleTracers() {
         super("Tracers", AdorufuCategory.RENDER, false);

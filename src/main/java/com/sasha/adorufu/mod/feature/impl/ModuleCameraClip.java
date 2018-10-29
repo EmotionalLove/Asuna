@@ -21,9 +21,10 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.simplesettings.SettingFlag;
 
 @ModuleInfo(description = "Don't move the camera closer in 3rd person view")
-public class ModuleCameraClip extends AdorufuModule {
+public class ModuleCameraClip extends AdorufuModule implements SettingFlag {
     public ModuleCameraClip() {
         super("CameraClip", AdorufuCategory.RENDER, false);
     }

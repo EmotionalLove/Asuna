@@ -28,7 +28,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
  **/
 @ModuleInfo(description = "Renders the Adorufu watermark on the HUD")
 @ForcefulEnable
-public class ModuleWatermark extends AdorufuModule {
+public class ModuleWatermark extends AdorufuModule implements SettingFlag {
     public ModuleWatermark() {
         super("Watermark", AdorufuCategory.GUI, true);
     }

@@ -24,7 +24,7 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 
 @ModuleInfo(description = "Lock your yaw to a specified angle")
-public class ModuleYawLock extends AdorufuModule {
+public class ModuleYawLock extends AdorufuModule implements SettingFlag {
 
     public static int yawDegrees = 90;
 

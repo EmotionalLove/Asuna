@@ -26,6 +26,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.network.play.server.SPacketChat;
 import org.lwjgl.opengl.Display;
@@ -37,7 +38,7 @@ import java.awt.*;
  */
 
 @ModuleInfo(description = "Uses balloon notifications to notify you of events when the game is minimised")
-public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener {
+public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener, SettingFlag {
 
     public ModuleDesktopNotifications() {
         super("DesktopNotifications", AdorufuCategory.MISC, false, true);

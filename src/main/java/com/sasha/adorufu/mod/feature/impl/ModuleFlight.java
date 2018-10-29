@@ -27,7 +27,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
  * Created by Sasha on 12/08/2018 at 9:04 AM
  **/
 @ModuleInfo(description = "Allows you to fly. Only works on servers that don't have an anticheat.")
-public class ModuleFlight extends AdorufuModule {
+public class ModuleFlight extends AdorufuModule implements SettingFlag {
     public ModuleFlight() {
         super("Flight", AdorufuCategory.MOVEMENT, false);
     }

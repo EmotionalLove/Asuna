@@ -18,15 +18,16 @@
 
 package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.events.client.ClientEntityCollideEvent;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 
 @ModuleInfo(description = "Don't collide with other entities")
-public class ModuleNoPush extends AdorufuModule implements SimpleListener {
+public class ModuleNoPush extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleNoPush() {
         super("NoPush", AdorufuCategory.MOVEMENT, false);
     }

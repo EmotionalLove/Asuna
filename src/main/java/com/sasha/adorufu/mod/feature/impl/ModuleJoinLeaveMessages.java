@@ -25,6 +25,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 
 import java.util.*;
@@ -33,7 +34,7 @@ import java.util.*;
  * Created by Sasha at 7:07 PM on 8/30/2018
  */
 @ModuleInfo(description = "Show client-sided join/leave messages, or use greeter to announce them.")
-public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleListener {
+public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleListener, SettingFlag {
 
     private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
     public static boolean defaultLoaded = false;

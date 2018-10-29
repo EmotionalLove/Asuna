@@ -30,7 +30,7 @@ import net.minecraft.tileentity.*;
  * Created by Sasha on 09/08/2018 at 7:32 PM
  **/
 @ModuleInfo(description = "Draws an outline around storage containers")
-public class ModuleStorageESP extends AdorufuModule {
+public class ModuleStorageESP extends AdorufuModule implements SettingFlag {
     public ModuleStorageESP() {
         super("StorageESP", AdorufuCategory.RENDER, false);
     }

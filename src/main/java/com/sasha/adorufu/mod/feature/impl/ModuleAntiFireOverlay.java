@@ -24,9 +24,10 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 
 @ModuleInfo(description = "Hide the annoying 1st person fire overlay")
-public class ModuleAntiFireOverlay extends AdorufuModule implements SimpleListener {
+public class ModuleAntiFireOverlay extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleAntiFireOverlay() {
         super("AntiFireOverlay", AdorufuCategory.RENDER, false);
     }

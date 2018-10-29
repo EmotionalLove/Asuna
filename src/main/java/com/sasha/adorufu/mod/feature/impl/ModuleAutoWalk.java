@@ -32,7 +32,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Created by Sasha at 3:55 PM on 9/23/2018
  */
-public class ModuleAutoWalk extends AdorufuModule {
+public class ModuleAutoWalk extends AdorufuModule implements SettingFlag {
     private static int timer = 0;
     public ModuleAutoWalk() {
         super("AutoWalk", AdorufuCategory.MOVEMENT, false, true, true);

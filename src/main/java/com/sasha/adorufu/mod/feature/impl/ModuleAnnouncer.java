@@ -27,6 +27,7 @@ import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.PostToggleExec;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ import java.util.Random;
  **/
 @PostToggleExec
 @ModuleInfo(description = "Sends a message in chat every 15 seconds about what you're doing in the world.")
-public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
+public class ModuleAnnouncer extends AdorufuModule implements SimpleListener, SettingFlag {
 
     static boolean swap = false;
     private static int counter = 0;

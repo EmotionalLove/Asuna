@@ -24,13 +24,14 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.client.CPacketKeepAlive;
 
 /**
  * Created by Sasha at 11:00 AM on 8/28/2018
  */
 @ModuleInfo(description = "Suspend packets")
-public class ModuleBlink extends AdorufuModule implements SimpleListener {
+public class ModuleBlink extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleBlink() {
         super("Blink", AdorufuCategory.COMBAT, false);
     }

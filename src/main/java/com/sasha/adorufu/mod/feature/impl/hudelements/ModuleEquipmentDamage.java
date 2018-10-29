@@ -26,7 +26,7 @@ import com.sasha.adorufu.mod.feature.ModuleInfo;
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Renders your equipment's damage on the HUD")
-public class ModuleEquipmentDamage extends AdorufuModule {
+public class ModuleEquipmentDamage extends AdorufuModule implements SettingFlag {
     public ModuleEquipmentDamage() {
         super("EquipmentDamage", AdorufuCategory.GUI, true);
     }

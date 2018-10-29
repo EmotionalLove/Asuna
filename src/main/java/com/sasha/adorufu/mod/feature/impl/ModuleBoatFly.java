@@ -21,13 +21,14 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 
 /**
  * Created by Sasha at 3:48 PM on 9/24/2018
  */
-public class ModuleBoatFly extends AdorufuModule {
+public class ModuleBoatFly extends AdorufuModule implements SettingFlag {
     public ModuleBoatFly() {
         super("BoatFly", AdorufuCategory.MOVEMENT, false, true);
         this.addOption("yawlock", false);

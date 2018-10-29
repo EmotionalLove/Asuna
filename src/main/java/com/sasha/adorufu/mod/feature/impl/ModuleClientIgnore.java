@@ -19,12 +19,13 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.server.SPacketChat;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @ModuleInfo(description = "Ignore players on the client side.")
-public class ModuleClientIgnore extends AdorufuModule implements SimpleListener {
+public class ModuleClientIgnore extends AdorufuModule implements SimpleListener, SettingFlag {
     public static List<String> ignorelist = new ArrayList<>();
     public static List<String> filterList = new ArrayList<>();
     private static List<String> dms = new ArrayList<>();

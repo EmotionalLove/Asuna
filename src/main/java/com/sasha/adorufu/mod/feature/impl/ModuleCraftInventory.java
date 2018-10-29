@@ -24,13 +24,14 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.inventory.ContainerPlayer;
 
 /**
  * Created by Sasha at 12:44 PM on 9/2/2018
  */
 @ModuleInfo(description = "Use the crafting slots in your inventory as inventory spaces. Also makes illegal items usable on 2b2t.")
-public class ModuleCraftInventory extends AdorufuModule implements SimpleListener {
+public class ModuleCraftInventory extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleCraftInventory() {
         super("CraftInventory", AdorufuCategory.MOVEMENT, false, true, true);
         this.addOption("Normal", true);

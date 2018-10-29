@@ -28,7 +28,7 @@ import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityTameable;
 
 @ModuleInfo(description = "Show who tamed a tameable entity")
-public class ModuleWolfIdentity extends AdorufuModule {
+public class ModuleWolfIdentity extends AdorufuModule implements SettingFlag {
 
 
     public ModuleWolfIdentity() {

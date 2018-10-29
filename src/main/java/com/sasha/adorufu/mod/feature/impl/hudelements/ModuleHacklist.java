@@ -26,7 +26,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Renders the hack arraylist on the HUD")
-public class ModuleHacklist extends AdorufuModule {
+public class ModuleHacklist extends AdorufuModule implements SettingFlag {
     public ModuleHacklist() {
         super("Hacklist", AdorufuCategory.GUI, true);
     }

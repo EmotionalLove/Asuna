@@ -23,7 +23,7 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 
 @ModuleInfo(description = "Control pigs without carrots")
-public class ModulePigControl extends AdorufuModule {
+public class ModulePigControl extends AdorufuModule implements SettingFlag {
     public ModulePigControl() {
         super("PigControl", AdorufuCategory.MOVEMENT, false);
     }

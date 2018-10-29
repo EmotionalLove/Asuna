@@ -24,12 +24,13 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 
 /**
  * Created by Sasha at 7:59 PM on 9/2/2018
  */
 @ModuleInfo(description = "Reduce or completely ignore knockback")
-public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleListener {
+public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleKnockbackSuppress() {
         super("KnockbackSuppress", AdorufuCategory.COMBAT, false, true, true);
         this.addOption("Ignore", true);

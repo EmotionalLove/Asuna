@@ -24,10 +24,11 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.client.CPacketConfirmTeleport;
 
 @ModuleInfo(description = "Become invinsible after using a nether portal")
-public class ModulePortalGodMode extends AdorufuModule implements SimpleListener {
+public class ModulePortalGodMode extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModulePortalGodMode() {
         super("PortalGodMode", AdorufuCategory.MOVEMENT, false);
     }

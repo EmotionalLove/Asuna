@@ -19,16 +19,17 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.util.math.MathHelper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @ModuleInfo(description = "Press the spacebar to go faster")
-public class ModuleElytraBoost extends AdorufuModule {
+public class ModuleElytraBoost extends AdorufuModule implements SettingFlag {
 
     static float limit = 2.5f;
 

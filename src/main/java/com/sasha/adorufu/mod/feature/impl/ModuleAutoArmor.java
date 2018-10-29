@@ -38,7 +38,7 @@ import static net.minecraft.init.Items.*;
  * im like half asleep so liek i dont care if its a messs lol
  */
 @ModuleInfo(description = "automatically switches armour to better variants in your inventory")
-public class ModuleAutoArmor extends AdorufuModule {
+public class ModuleAutoArmor extends AdorufuModule implements SettingFlag {
     public ModuleAutoArmor() {
         super("AutoArmor", AdorufuCategory.COMBAT, false);
     }

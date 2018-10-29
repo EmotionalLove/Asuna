@@ -28,7 +28,7 @@ import com.sasha.adorufu.mod.feature.PostToggleExec;
  **/
 @PostToggleExec
 @ModuleInfo(description = "Lets you see in the dark.")
-public class ModuleNightVision extends AdorufuModule {
+public class ModuleNightVision extends AdorufuModule implements SettingFlag {
 
     public ModuleNightVision() {
         super("NightVision", AdorufuCategory.RENDER, false);

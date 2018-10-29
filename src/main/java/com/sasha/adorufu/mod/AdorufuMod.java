@@ -44,6 +44,7 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
+import com.sasha.simplesettings.SettingHandler;
 import com.sun.jna.Native;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -85,6 +86,7 @@ public class AdorufuMod implements SimpleListener {
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
+    public static SettingHandler SETTING_HANDLER = new SettingHandler("AdorufuSettingData");
     /**
      * desktop notifications
      */
@@ -207,6 +209,7 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
+        Manager.Module.moduleRegistry.forEach(mod -> SETTING_HANDLER.read(mod));
     }
 
     private void reload(boolean async) {

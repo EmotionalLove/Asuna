@@ -24,7 +24,7 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 
 @ModuleInfo(description = "See through the world kinda")
-public class ModuleWireframe extends AdorufuModule {
+public class ModuleWireframe extends AdorufuModule implements SettingFlag {
     public ModuleWireframe() {
         super("Wireframe", AdorufuCategory.RENDER, false);
     }

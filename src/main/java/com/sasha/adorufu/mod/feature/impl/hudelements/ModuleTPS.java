@@ -26,7 +26,7 @@ import com.sasha.adorufu.mod.feature.ModuleInfo;
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Renders the tickrate on the HUD")
-public class ModuleTPS extends AdorufuModule {
+public class ModuleTPS extends AdorufuModule implements SettingFlag {
     public ModuleTPS() {
         super("TPS", AdorufuCategory.GUI, true);
     }

@@ -31,7 +31,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
 @ModuleInfo(description = "View the contents of shulker boxes being held by other nearby players")
-public class ModuleShulkerSpy extends AdorufuModule {
+public class ModuleShulkerSpy extends AdorufuModule implements SettingFlag {
     public ModuleShulkerSpy() {
         super("ShulkerSpy", AdorufuCategory.RENDER, false);
     }

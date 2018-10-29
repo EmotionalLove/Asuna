@@ -35,7 +35,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
  * Created by Sasha on 08/08/2018 at 12:23 PM
  **/
 @ModuleInfo(description = "Automatically attacks nearby entities, excluding friended players.")
-public class ModuleKillaura extends AdorufuModule {
+public class ModuleKillaura extends AdorufuModule implements SettingFlag {
 
     public static double range = 5.0;
 

@@ -30,7 +30,7 @@ import com.sasha.adorufu.mod.feature.PostToggleExec;
  **/
 @PostToggleExec
 @ModuleInfo(description = "Displays the WaypointGUI")
-public class ModuleWaypointGUI extends AdorufuModule {
+public class ModuleWaypointGUI extends AdorufuModule implements SettingFlag {
     public ModuleWaypointGUI() {
         super("WaypointGUI", AdorufuCategory.GUI, false);
     }

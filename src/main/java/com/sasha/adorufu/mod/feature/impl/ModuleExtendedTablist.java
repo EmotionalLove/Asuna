@@ -23,7 +23,7 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 
 @ModuleInfo(description = "Allow the tablist to fit more players")
-public class ModuleExtendedTablist extends AdorufuModule {
+public class ModuleExtendedTablist extends AdorufuModule implements SettingFlag {
     public ModuleExtendedTablist() {
         super("ExtendedTablist", AdorufuCategory.RENDER, false);
     }

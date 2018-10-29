@@ -19,12 +19,13 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.simplesettings.SettingFlag;
 
 @ModuleInfo(description = "Fly like you're in creative with an elytra")
-public class ModuleElytraFlight extends AdorufuModule {
+public class ModuleElytraFlight extends AdorufuModule implements SettingFlag {
     public ModuleElytraFlight() {
         super("ElytraFlight", AdorufuCategory.MOVEMENT, false);
     }

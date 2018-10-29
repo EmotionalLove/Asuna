@@ -30,7 +30,7 @@ import com.sasha.eventsys.SimpleListener;
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Displays your computer's battery percent.")
-public class ModuleBatteryLife extends AdorufuModule implements SimpleListener {
+public class ModuleBatteryLife extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleBatteryLife() {
         super("BatteryLife", AdorufuCategory.GUI, true);
     }

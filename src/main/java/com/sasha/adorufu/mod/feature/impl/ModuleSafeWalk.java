@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 
-public class ModuleSafeWalk extends AdorufuModule {
+public class ModuleSafeWalk extends AdorufuModule implements SettingFlag {
     public ModuleSafeWalk() {
         super("SafeWalk", AdorufuCategory.MOVEMENT, false);
     }

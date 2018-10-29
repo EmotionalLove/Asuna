@@ -22,13 +22,14 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.util.MovementInput;
 
 @ModuleInfo(description = "Speedhack for ridable animals")
-public class ModuleEntitySpeed extends AdorufuModule {
+public class ModuleEntitySpeed extends AdorufuModule implements SettingFlag {
     public static double speed;
     public ModuleEntitySpeed() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT, false);

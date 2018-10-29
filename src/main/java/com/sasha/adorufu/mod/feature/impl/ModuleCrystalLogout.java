@@ -31,7 +31,7 @@ import org.lwjgl.input.Mouse;
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
 @ModuleInfo(description = "Automatically disconnect when a crystal is near you")
-public class ModuleCrystalLogout extends AdorufuModule {
+public class ModuleCrystalLogout extends AdorufuModule implements SettingFlag {
     public ModuleCrystalLogout() {
         super("CrystalLogout", AdorufuCategory.COMBAT, false);
     }

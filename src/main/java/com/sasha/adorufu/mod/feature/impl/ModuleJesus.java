@@ -18,14 +18,15 @@
 
 package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.adorufu.mod.feature.PostToggleExec;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.feature.PostToggleExec;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -41,7 +42,7 @@ import net.minecraft.util.math.BlockPos;
 //todo aac bypass
 @PostToggleExec
 @ModuleInfo(description = "Walk on water!")
-public class ModuleJesus extends AdorufuModule implements SimpleListener {
+public class ModuleJesus extends AdorufuModule implements SimpleListener, SettingFlag {
     private boolean waterjump = false;
     public static AxisAlignedBB WATER_JESUS_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
     public static ModuleJesus INSTANCE;

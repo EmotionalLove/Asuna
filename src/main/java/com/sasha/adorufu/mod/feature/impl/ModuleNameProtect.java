@@ -25,11 +25,12 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 
 @ModuleInfo(description = "Hides your name on-screen")
-public class ModuleNameProtect extends AdorufuModule implements SimpleListener {
+public class ModuleNameProtect extends AdorufuModule implements SimpleListener, SettingFlag {
     public ModuleNameProtect() {
         super("NameRedact", AdorufuCategory.RENDER, false);
     }

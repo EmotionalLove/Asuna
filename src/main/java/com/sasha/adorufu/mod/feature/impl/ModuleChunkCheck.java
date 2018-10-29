@@ -20,12 +20,13 @@ package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
-import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.*;
@@ -38,7 +39,7 @@ import java.util.List;
  * ok so this feature is way too harsh on the computer rn...
  */
 @ModuleInfo(description = "Highlights blocks that were added since the last time you were in that chunk")
-public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
+public class ModuleChunkCheck extends AdorufuModule implements SimpleListener, SettingFlag {
 
     protected static volatile ArrayList<ChunkCheckData> chunkDatas = new ArrayList<>();
     private static ArrayList<BlockPos> changedBlocks = new ArrayList<>();
