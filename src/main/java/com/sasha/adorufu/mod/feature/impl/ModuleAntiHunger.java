@@ -25,14 +25,13 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 /**
  * Created by Sasha on 10/08/2018 at 12:47 PM
  **/
 @ModuleInfo(description = "Makes your hunger last longer while sprinting/jumping/etc")
-public class ModuleAntiHunger extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleAntiHunger extends AdorufuModule implements SimpleListener {
     public ModuleAntiHunger() {
         super("AntiHunger", AdorufuCategory.MOVEMENT, false, true, true);
         this.addOption("ncp", true);

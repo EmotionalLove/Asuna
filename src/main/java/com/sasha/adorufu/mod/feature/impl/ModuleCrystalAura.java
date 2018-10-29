@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -42,7 +42,7 @@ import static com.sasha.adorufu.mod.feature.impl.ModuleKillaura.rotateTowardsEnt
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
 @ModuleInfo(description = "Automatically hit nearby crystals")
-public class ModuleCrystalAura extends AdorufuModule implements SettingFlag {
+public class ModuleCrystalAura extends AdorufuModule  {
     public ModuleCrystalAura() {
         super("CrystalAura", AdorufuCategory.COMBAT, false, true, true);
         this.addOption("aura", true);

@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -39,7 +39,7 @@ import static net.minecraft.init.Items.*;
  * im like half asleep so liek i dont care if its a messs lol
  */
 @ModuleInfo(description = "automatically switches armour to better variants in your inventory")
-public class ModuleAutoArmor extends AdorufuModule implements SettingFlag {
+public class ModuleAutoArmor extends AdorufuModule  {
     public ModuleAutoArmor() {
         super("AutoArmor", AdorufuCategory.COMBAT, false);
     }

@@ -25,14 +25,14 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.client.audio.MusicTicker;
 
 /**
  * Created by Sasha at 3:48 PM on 8/27/2018
  */
 @ModuleInfo(description = "Plays the creative mode exclusive music in other gamemodes.")
-public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListener {
     public ModuleMinecraftMusic() {
         super("MinecraftMusic", AdorufuCategory.MISC, false, true, true);
         this.addOption("Creative", true);

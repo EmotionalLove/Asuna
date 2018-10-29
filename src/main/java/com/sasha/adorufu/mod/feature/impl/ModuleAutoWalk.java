@@ -24,7 +24,6 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.gui.hud.Direction;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -33,7 +32,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Created by Sasha at 3:55 PM on 9/23/2018
  */
-public class ModuleAutoWalk extends AdorufuModule implements SettingFlag {
+public class ModuleAutoWalk extends AdorufuModule  {
     private static int timer = 0;
     public ModuleAutoWalk() {
         super("AutoWalk", AdorufuCategory.MOVEMENT, false, true, true);

@@ -21,11 +21,11 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 
-public class ModuleAutoEat extends AdorufuModule implements SettingFlag {
+public class ModuleAutoEat extends AdorufuModule  {
 
     private static boolean eating = false;
     private static boolean checked = false;

@@ -22,13 +22,13 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 
 /**
  * Created by Sasha on 12/08/2018 at 9:04 AM
  **/
 @ModuleInfo(description = "Allows you to fly. Only works on servers that don't have an anticheat.")
-public class ModuleFlight extends AdorufuModule implements SettingFlag {
+public class ModuleFlight extends AdorufuModule  {
     public ModuleFlight() {
         super("Flight", AdorufuCategory.MOVEMENT, false);
     }

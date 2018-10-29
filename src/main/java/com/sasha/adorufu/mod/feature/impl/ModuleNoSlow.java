@@ -25,13 +25,13 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
+
 
 /**
  * Created by Sasha on 11/08/2018 at 3:18 PM
  **/
 @ModuleInfo(description = "Don't slow down whilst eating.") //todo
-public class ModuleNoSlow extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
     public ModuleNoSlow() {
         super("NoSlow", AdorufuCategory.MOVEMENT, false, true, true);
         this.addOption("NCP", true);

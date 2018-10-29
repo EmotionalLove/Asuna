@@ -44,6 +44,7 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
+import com.sasha.simplesettings.SettingHandler;
 import com.sun.jna.Native;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -84,7 +85,9 @@ public class AdorufuMod implements SimpleListener {
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
-    public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
+    @Deprecated public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
+    public static SettingHandler SETTING_HANDLER = new SettingHandler("AdorufuSettingData");
+    public static List<Object> SETTING_CLASSES = new ArrayList<>();
     /**
      * desktop notifications
      */
@@ -176,7 +179,7 @@ public class AdorufuMod implements SimpleListener {
                 ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
-                loadBindsAndStates();
+                //loadBindsAndStates();
                 ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
                 ModuleJoinLeaveMessages.joinMessages = greets.get(0);
                 ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
@@ -207,6 +210,8 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
+        SETTING_CLASSES.forEach(x -> SETTING_HANDLER.read(x));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> SETTING_CLASSES.forEach(x -> SETTING_HANDLER.save(x))));
     }
 
     private void reload(boolean async) {
@@ -330,6 +335,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleAutoEat());
         Manager.Module.register(new ModuleShulkerSpy());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
+        Manager.Module.moduleRegistry.forEach(module -> SETTING_HANDLER.read(module));
     }
 
 
@@ -346,7 +352,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Renderable.register(new RenderableEquipmentDamage());
         Manager.Renderable.register(new RenderableBatteryLife());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
-
+        Manager.Renderable.renderableRegistry.forEach(renderableObject -> SETTING_HANDLER.read(renderableObject));
     }
 
     /**

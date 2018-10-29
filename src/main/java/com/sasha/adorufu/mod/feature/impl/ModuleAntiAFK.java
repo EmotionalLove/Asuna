@@ -22,10 +22,10 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 
 @ModuleInfo(description = "Don't get kicked for being AFK")
-public class ModuleAntiAFK extends AdorufuModule implements SettingFlag {
+public class ModuleAntiAFK extends AdorufuModule  {
     private int timer=0;
     public ModuleAntiAFK() {
         super("AntiAFK", AdorufuCategory.MISC, false);

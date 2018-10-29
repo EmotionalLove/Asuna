@@ -21,10 +21,10 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.client.multiplayer.ServerData;
 
-public class ModuleAutoReconnect extends AdorufuModule implements SettingFlag {
+public class ModuleAutoReconnect extends AdorufuModule  {
 
     public static long delay = 5000L;
     public static ServerData serverData = null;

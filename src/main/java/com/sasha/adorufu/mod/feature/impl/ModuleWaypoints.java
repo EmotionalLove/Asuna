@@ -23,12 +23,12 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(description = "Display tracers to enabled waypoints.")
-public class ModuleWaypoints extends AdorufuModule implements SettingFlag {
+public class ModuleWaypoints extends AdorufuModule  {
 
     public static int i = 0;
 

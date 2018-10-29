@@ -19,15 +19,20 @@
 package com.sasha.adorufu.mod.gui.hud;
 
 
+import com.sasha.simplesettings.annotation.SerialiseSuper;
+import com.sasha.simplesettings.annotation.Transiant;
+
 import javax.annotation.Nullable;
 
+@SerialiseSuper
 public class RenderableObject {
 
-    private String name;
-    private ScreenCornerPos pos = null;
-    private ScreenCornerPos defaultPos;
+    @Transiant private String name;
+    @Transiant private ScreenCornerPos pos = null;
+    @Transiant private ScreenCornerPos defaultPos;
+    private String stringPos;
 
-    private static int LT_x = 12;
+    @Transiant private static int LT_x = 12;
 
 
     public RenderableObject(String name, ScreenCornerPos defaultPos){
@@ -46,9 +51,11 @@ public class RenderableObject {
         this.defaultPos = defaultPos;
         if (pos == null){
             this.pos = this.defaultPos;
+            this.stringPos = getPosStr(this.pos);
             return;
         }
         this.pos = getPosEnum(pos);
+        this.stringPos = getPosStr(this.pos);
     }
 
     // just in case i need it, better to use the above one instead though :///
@@ -101,6 +108,7 @@ public class RenderableObject {
     }
 
     public ScreenCornerPos getPos() {
+        this.pos = getPosEnum(this.stringPos);
         return this.pos;
     }
 

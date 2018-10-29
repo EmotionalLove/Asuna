@@ -84,7 +84,7 @@ dependencies {
     compile files('libs/SimpleCommandSystem.jar')
     compile files('libs/jna-4.2.2.jar')
     compile files('libs/MultiTasker.jar')
-    compile 'com.github.EmotionalLove:SimpleSettingSystem:e4c41bc'
+    compile 'com.github.EmotionalLove:SimpleSettingSystem:4d2623c'
     compile 'com.github.cabaletta:baritone:v1.0.0-hotfix-2'
     compile group: 'cabaletta', name: 'baritone-api', version: '1.0.0'
     compile group: 'net.jodah', name: 'typetools', version: '0.5.0'
@@ -161,7 +161,7 @@ shadowJar {
         include(dependency('org.yaml:snakeyaml'))
         include(dependency('org.reflections:reflections'))
         include(dependency('club.minnced:java-discord-rpc'))
-        include(dependency('com.sasha:SimpleSettingSystem'))
+        include(dependency('com.github.EmotionalLove:SimpleSettingSystem'))
         include(dependency(group: 'cabaletta', name: 'baritone-api', version: '1.0.0'))
         //exclude(dependency('com.github.cabaletta:baritone'))
     }

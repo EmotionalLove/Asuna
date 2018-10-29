@@ -24,14 +24,14 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.PostToggleExec;
 import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
-import com.sasha.simplesettings.SettingFlag;
+
 
 /**
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
 @PostToggleExec
 @ModuleInfo(description = "Displays the Clickgui")
-public class ModuleClickGUI extends AdorufuModule implements SettingFlag {
+public class ModuleClickGUI extends AdorufuModule  {
     public ModuleClickGUI() {
         super("ClickGUI", AdorufuCategory.GUI, false);
     }

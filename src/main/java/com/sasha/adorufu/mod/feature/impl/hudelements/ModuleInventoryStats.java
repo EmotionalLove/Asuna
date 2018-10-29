@@ -21,13 +21,13 @@ package com.sasha.adorufu.mod.feature.impl.hudelements;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 
 /**
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Renders inventory statistics on the HUD")
-public class ModuleInventoryStats extends AdorufuModule implements SettingFlag {
+public class ModuleInventoryStats extends AdorufuModule  {
     public ModuleInventoryStats() {
         super("InventoryStats", AdorufuCategory.GUI, true);
     }

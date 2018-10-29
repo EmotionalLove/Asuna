@@ -45,6 +45,7 @@ public class Manager {
 
         public static void register(RenderableObject robj) {
             renderableRegistry.add(robj);
+            AdorufuMod.SETTING_CLASSES.add(robj);
         }
     }
 
@@ -95,6 +96,7 @@ public class Manager {
          */
         public static void register(AdorufuModule mod) {
             moduleRegistry.add(mod);
+            AdorufuMod.SETTING_CLASSES.add(mod);
             if (mod.getClass().getInterfaces().length != 0) {
                 if (mod.getClass().getInterfaces()[0] == SimpleListener.class) {
                     if (mod.getClass().getAnnotation(ManualListener.class) != null) {
@@ -107,6 +109,7 @@ public class Manager {
             mod.init();
         }
 
+        @Deprecated
         public static void loadBindsAndStates() {
             Module.moduleRegistry.forEach(mod -> {
                 try {

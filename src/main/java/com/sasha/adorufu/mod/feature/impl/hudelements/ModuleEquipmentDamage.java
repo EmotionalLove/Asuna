@@ -21,13 +21,12 @@ package com.sasha.adorufu.mod.feature.impl.hudelements;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 
 /**
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
 @ModuleInfo(description = "Renders your equipment's damage on the HUD")
-public class ModuleEquipmentDamage extends AdorufuModule implements SettingFlag {
+public class ModuleEquipmentDamage extends AdorufuModule  {
     public ModuleEquipmentDamage() {
         super("EquipmentDamage", AdorufuCategory.GUI, true);
     }

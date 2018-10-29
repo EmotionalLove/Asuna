@@ -22,7 +22,6 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -30,7 +29,7 @@ import net.minecraft.client.gui.GuiScreen;
  * Created by Sasha on 11/08/2018 at 6:32 PM
  **/
 @ModuleInfo(description = "Automatically respawn upon death")
-public class ModuleAutoRespawn extends AdorufuModule implements SettingFlag {
+public class ModuleAutoRespawn extends AdorufuModule  {
     public ModuleAutoRespawn() {
         super("AutoRespawn", AdorufuCategory.COMBAT, false);
     }

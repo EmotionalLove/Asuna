@@ -24,6 +24,8 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.exception.AdorufuModuleOptionNotFoundException;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.misc.ModuleState;
+import com.sasha.simplesettings.annotation.SerialiseSuper;
+import com.sasha.simplesettings.annotation.Transiant;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,20 +39,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Fun fact: Xdolf 3.x's Event system was absolutely horrible, it was easier to just _not use it_...
  **/
 @Deprecated
+@SerialiseSuper
 public abstract class AdorufuModule {
 
-    private String moduleName, moduleNameColoured;
-    private AdorufuCategory moduleCategory;
+    @Transiant private String moduleName;
+    @Transiant private String moduleNameColoured;
+    @Transiant private AdorufuCategory moduleCategory;
     private boolean isEnabled = false;
-    private String suffix = "";
-    private String colour;
+    @Transiant private String suffix = "";
+    @Transiant private String colour;
     private int keyBind;
-    private boolean isRenderable = false;
-    private boolean hasOptions = false;
-    private boolean optionMode = false;
-    private LinkedHashMap<String, Boolean> moduleOptions;
+    @Transiant private boolean isRenderable = false;
+    @Transiant private boolean hasOptions = false;
+    @Transiant private boolean optionMode = false;
+    @Transiant private LinkedHashMap<String, Boolean> moduleOptions;
 
-    public static ArrayList<AdorufuModule> displayList = new ArrayList<>(); // used for the hud
+    @Transiant public static ArrayList<AdorufuModule> displayList = new ArrayList<>(); // used for the hud
 
     public AdorufuModule(String moduleName, AdorufuCategory moduleCategory, boolean isRenderable){
         this.moduleName = moduleName;

@@ -21,10 +21,10 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 
 @ModuleInfo(description = "Allow the tablist to fit more players")
-public class ModuleExtendedTablist extends AdorufuModule implements SettingFlag {
+public class ModuleExtendedTablist extends AdorufuModule  {
     public ModuleExtendedTablist() {
         super("ExtendedTablist", AdorufuCategory.RENDER, false);
     }

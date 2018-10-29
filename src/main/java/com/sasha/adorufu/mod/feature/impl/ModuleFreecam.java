@@ -28,7 +28,6 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.client.CPacketInput;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.world.GameType;
@@ -39,7 +38,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
  * Created by Sasha on 12/08/2018 at 9:12 AM
  **/
 @ModuleInfo(description = "Client-sided spectator mode.") //todo fix the fact that you cant fly thru stuff
-public class ModuleFreecam extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleFreecam extends AdorufuModule implements SimpleListener {
 
     public static double oldX, oldY, oldZ, oldYaw, oldPitch;
     public static GameType oldGameType;

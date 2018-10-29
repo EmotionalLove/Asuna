@@ -22,13 +22,12 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
 
 /**
  * Created by Sasha at 3:23 PM on 9/16/2018
  * The server seems to verify who's signing the book, so this won't work on vanilla or ncp servers for the time being
  */
-public class ModuleBookForger extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleBookForger extends AdorufuModule implements SimpleListener {
 
     public static String author = "Adorufu_Client";
 

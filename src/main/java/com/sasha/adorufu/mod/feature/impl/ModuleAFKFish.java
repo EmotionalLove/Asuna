@@ -25,14 +25,14 @@ import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.network.play.server.SPacketSoundEffect;
 
 /**
  * Created by Sasha on 11/08/2018 at 6:27 PM
  **/
 @ModuleInfo(description = "Automated fishing, for when you're not at your computer.")
-public class ModuleAFKFish extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleAFKFish extends AdorufuModule implements SimpleListener {
     public ModuleAFKFish(){
         super("AFKFish", AdorufuCategory.MISC, false);
     }

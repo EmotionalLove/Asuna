@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.util.text.TextComponentString;
@@ -32,7 +32,7 @@ import org.lwjgl.input.Mouse;
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
 @ModuleInfo(description = "Automatically disconnect when a crystal is near you")
-public class ModuleCrystalLogout extends AdorufuModule implements SettingFlag {
+public class ModuleCrystalLogout extends AdorufuModule  {
     public ModuleCrystalLogout() {
         super("CrystalLogout", AdorufuCategory.COMBAT, false);
     }

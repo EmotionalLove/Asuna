@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
+
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -32,7 +32,7 @@ import net.minecraft.item.ItemStack;
  * Created by Sasha on 11/08/2018 at 8:27 PM
  **/
 @ModuleInfo(description = "Automatically moves a totem into your offhand if it's empty")
-public class ModuleAutoTotem extends AdorufuModule implements SettingFlag {
+public class ModuleAutoTotem extends AdorufuModule  {
     public ModuleAutoTotem() {
         super("AutoTotem", AdorufuCategory.COMBAT, false);
     }
