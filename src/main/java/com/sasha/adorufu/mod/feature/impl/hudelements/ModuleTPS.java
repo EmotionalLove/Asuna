@@ -16,30 +16,33 @@
  *
  */
 
-package com.sasha.adorufu.mod.events.adorufu;
+package com.sasha.adorufu.mod.feature.impl.hudelements;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.mod.misc.ModuleState;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 
 /**
- * Created by Sasha on 08/08/2018 at 9:18 AM
+ * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
-public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
-
-    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+@ModuleInfo(description = "Renders the tickrate on the HUD")
+public class ModuleTPS extends AdorufuModule {
+    public ModuleTPS() {
+        super("TPS", AdorufuCategory.GUI, true);
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
+    @Override
+    public void onEnable() {
+
     }
 
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick(){
+
     }
 }
-

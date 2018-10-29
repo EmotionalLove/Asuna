@@ -16,30 +16,38 @@
  *
  */
 
-package com.sasha.adorufu.mod.events.adorufu;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.mod.misc.ModuleState;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.feature.PostToggleExec;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 
 /**
- * Created by Sasha on 08/08/2018 at 9:18 AM
+ * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
-public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
-
-    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+@PostToggleExec
+@ModuleInfo(description = "Displays the Clickgui")
+public class ModuleClickGUI extends AdorufuModule {
+    public ModuleClickGUI() {
+        super("ClickGUI", AdorufuCategory.GUI, false);
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
+    @Override
+    public void onEnable(){
+        AdorufuMod.minecraft.displayGuiScreen(new AdorufuClickGUI());
+        this.toggle();
     }
 
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
     }
 }
-

@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.modules.ModuleXray;
+import com.sasha.adorufu.mod.feature.impl.ModuleXray;
 import com.sasha.simplecmdsys.SimpleCommand;
 import net.minecraft.block.Block;
 

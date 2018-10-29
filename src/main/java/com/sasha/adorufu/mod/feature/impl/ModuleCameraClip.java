@@ -16,30 +16,30 @@
  *
  */
 
-package com.sasha.adorufu.mod.events.adorufu;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.mod.misc.ModuleState;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 
-/**
- * Created by Sasha on 08/08/2018 at 9:18 AM
- **/
-public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
-
-    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+@ModuleInfo(description = "Don't move the camera closer in 3rd person view")
+public class ModuleCameraClip extends AdorufuModule {
+    public ModuleCameraClip() {
+        super("CameraClip", AdorufuCategory.RENDER, false);
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
+    @Override
+    public void onEnable() {
+
     }
 
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+
     }
 }
-

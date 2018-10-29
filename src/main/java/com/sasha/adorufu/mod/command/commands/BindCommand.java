@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
-@SimpleCommandInfo(description = "Set a module's keybind", syntax = {"<module> <key>", "<module> <'none'>"})
+@SimpleCommandInfo(description = "Set a feature's keybind", syntax = {"<feature> <key>", "<feature> <'none'>"})
 public class BindCommand extends SimpleCommand {
     public BindCommand() {
         super("bind");
@@ -69,7 +69,7 @@ public class BindCommand extends SimpleCommand {
             }
         });
         if (!found.get()) {
-            AdorufuMod.logErr(false, "Couldn't find the specified module.");
+            AdorufuMod.logErr(false, "Couldn't find the specified feature.");
         }
     }
 }

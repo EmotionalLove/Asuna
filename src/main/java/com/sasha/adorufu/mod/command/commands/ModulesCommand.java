@@ -28,7 +28,7 @@ import com.sasha.simplecmdsys.SimpleCommandInfo;
 @SimpleCommandInfo(description = "Used for debugging. To be removed", syntax = {""})
 public class ModulesCommand extends SimpleCommand {
     public ModulesCommand() {
-        super("modules");
+        super("impl");
     }
 
     public void onCommand(){

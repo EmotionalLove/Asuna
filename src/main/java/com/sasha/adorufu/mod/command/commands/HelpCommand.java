@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
@@ -30,7 +30,7 @@ import static com.sasha.adorufu.mod.misc.Manager.Module.moduleRegistry;
 /**
  * Created by Sasha on 10/08/2018 at 9:28 AM
  **/
-@SimpleCommandInfo(description = "Provide info about the other commands.", syntax = {"['command'/'module'] [module name]"})
+@SimpleCommandInfo(description = "Provide info about the other commands.", syntax = {"['command'/'feature'] [feature name]"})
 public class HelpCommand extends SimpleCommand {
     public HelpCommand() {
         super("help");
@@ -62,7 +62,7 @@ public class HelpCommand extends SimpleCommand {
             }
             return;
         }
-        if (this.getArguments()[0].equalsIgnoreCase("module")){
+        if (this.getArguments()[0].equalsIgnoreCase("feature")){
             for (AdorufuModule module : moduleRegistry) {
                 if (module.getModuleName().equalsIgnoreCase(this.getArguments()[1])){
                     logMsg(module.getDescription(module.getClass()));

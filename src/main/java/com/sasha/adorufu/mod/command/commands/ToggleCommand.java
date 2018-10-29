@@ -27,7 +27,7 @@ import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
-@SimpleCommandInfo(description = "Toggle a named module", syntax = {"<module>"})
+@SimpleCommandInfo(description = "Toggle a named feature", syntax = {"<feature>"})
 public class ToggleCommand extends SimpleCommand {
     public ToggleCommand() {
         super("toggle");
@@ -36,7 +36,7 @@ public class ToggleCommand extends SimpleCommand {
     @Override
     public void onCommand() {
         if (this.getArguments() == null){
-            AdorufuMod.logErr(false, "Arguments required! \"-toggle <module>\"");
+            AdorufuMod.logErr(false, "Arguments required! \"-toggle <feature>\"");
             return;
         }
         AtomicBoolean found = new AtomicBoolean(false);
@@ -49,7 +49,7 @@ public class ToggleCommand extends SimpleCommand {
             }
         });
         if (!found.get()) {
-            AdorufuMod.logErr(false, "Couldn't find the specified module.");
+            AdorufuMod.logErr(false, "Couldn't find the specified feature.");
         }
     }
 }

@@ -16,30 +16,35 @@
  *
  */
 
-package com.sasha.adorufu.mod.events.adorufu;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.mod.misc.ModuleState;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import net.minecraft.client.multiplayer.ServerData;
 
-/**
- * Created by Sasha on 08/08/2018 at 9:18 AM
- **/
-public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
+public class ModuleAutoReconnect extends AdorufuModule {
 
-    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+    public static long delay = 5000L;
+    public static ServerData serverData = null;
+
+    public ModuleAutoReconnect() {
+        super("AutoReconnect", AdorufuCategory.MISC, false);
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
+    @Override
+    public void onEnable() {
+
     }
 
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+        if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
+        serverData = AdorufuMod.minecraft.getCurrentServerData();
     }
 }
-

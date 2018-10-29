@@ -16,30 +16,31 @@
  *
  */
 
-package com.sasha.adorufu.mod.events.adorufu;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
-import com.sasha.adorufu.mod.misc.ModuleState;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 
-/**
- * Created by Sasha on 08/08/2018 at 9:18 AM
- **/
-public class AdorufuModuleTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
-    private ModuleState toggleState;
-
-    public AdorufuModuleTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+@ModuleInfo(description = "Fly like you're in creative with an elytra")
+public class ModuleElytraFlight extends AdorufuModule {
+    public ModuleElytraFlight() {
+        super("ElytraFlight", AdorufuCategory.MOVEMENT, false);
     }
 
-    public ModuleState getToggleState() {
-        return toggleState;
+    @Override
+    public void onTick() {
+        if (this.isEnabled() && AdorufuMod.minecraft.player.isElytraFlying()) {
+            AdorufuMod.minecraft.player.capabilities.isFlying = true;
+        }
     }
-
-    public AdorufuModule getToggledModule() {
-        return toggledModule;
+    @Override
+    public void onEnable() {
+        //
+    }
+    @Override
+    public void onDisable() {
+        AdorufuMod.minecraft.player.capabilities.isFlying = false;
     }
 }
-
