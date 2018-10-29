@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 

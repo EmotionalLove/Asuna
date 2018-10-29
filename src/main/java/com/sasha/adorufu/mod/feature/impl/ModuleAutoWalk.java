@@ -19,11 +19,12 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.gui.hud.Direction;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
