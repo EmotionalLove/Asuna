@@ -19,19 +19,18 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.gui.waypointgui.WaypointGUI;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.PostToggleExec;
-import com.sasha.adorufu.mod.gui.waypointgui.WaypointGUI;
-import com.sasha.simplesettings.SettingFlag;
 
 /**
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
 @PostToggleExec
 @ModuleInfo(description = "Displays the WaypointGUI")
-public class ModuleWaypointGUI extends AdorufuModule implements SettingFlag {
+public class ModuleWaypointGUI extends AdorufuModule {
     public ModuleWaypointGUI() {
         super("WaypointGUI", AdorufuCategory.GUI, false);
     }

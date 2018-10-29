@@ -19,13 +19,12 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 
 @ModuleInfo(description = "See through the world kinda")
-public class ModuleWireframe extends AdorufuModule implements SettingFlag {
+public class ModuleWireframe extends AdorufuModule {
     public ModuleWireframe() {
         super("Wireframe", AdorufuCategory.RENDER, false);
     }

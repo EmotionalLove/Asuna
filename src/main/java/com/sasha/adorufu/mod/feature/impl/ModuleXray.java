@@ -19,12 +19,11 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.misc.ModuleState;
-import com.sasha.simplesettings.SettingFlag;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.AdorufuModule;
 import net.minecraft.block.Block;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ import java.util.ArrayList;
  * Created by Sasha on 11/08/2018 at 11:39 AM
  **/
 @ModuleInfo(description = "Makes chosen blocks invisible so that you can find ores or other blocks.")
-public class ModuleXray extends AdorufuModule implements SettingFlag {
+public class ModuleXray extends AdorufuModule {
     public static ArrayList<Block> xrayBlocks = new ArrayList<>();
     private boolean wasNightVisionsOff = false;
 

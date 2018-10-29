@@ -29,8 +29,6 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
-import com.sasha.adorufu.mod.feature.impl.*;
-import com.sasha.adorufu.mod.feature.impl.hudelements.*;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
@@ -38,6 +36,8 @@ import com.sasha.adorufu.mod.gui.hud.renderableobjects.*;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.adorufu.mod.misc.TPS;
+import com.sasha.adorufu.mod.feature.impl.*;
+import com.sasha.adorufu.mod.feature.impl.hudelements.*;
 import com.sasha.adorufu.mod.remote.RemoteDataManager;
 import com.sasha.adorufu.mod.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventHandler;
@@ -207,7 +207,6 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
-        //Manager.Module.moduleRegistry.forEach(mod -> SETTING_HANDLER.read(mod));
     }
 
     private void reload(boolean async) {

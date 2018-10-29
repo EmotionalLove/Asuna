@@ -22,7 +22,6 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.ItemStackHelper;
@@ -32,7 +31,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
 @ModuleInfo(description = "View the contents of shulker boxes being held by other nearby players")
-public class ModuleShulkerSpy extends AdorufuModule implements SettingFlag {
+public class ModuleShulkerSpy extends AdorufuModule {
     public ModuleShulkerSpy() {
         super("ShulkerSpy", AdorufuCategory.RENDER, false);
     }

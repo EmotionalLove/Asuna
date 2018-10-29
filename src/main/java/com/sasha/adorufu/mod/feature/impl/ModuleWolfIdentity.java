@@ -19,17 +19,16 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.PlayerIdentity;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.adorufu.mod.misc.PlayerIdentity;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityTameable;
 
 @ModuleInfo(description = "Show who tamed a tameable entity")
-public class ModuleWolfIdentity extends AdorufuModule implements SettingFlag {
+public class ModuleWolfIdentity extends AdorufuModule {
 
 
     public ModuleWolfIdentity() {

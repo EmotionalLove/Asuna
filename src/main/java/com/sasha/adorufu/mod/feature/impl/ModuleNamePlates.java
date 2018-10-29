@@ -18,15 +18,14 @@
 
 package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 
 import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 
 @ModuleInfo(description = "Display an enchanced nametag above a player's head")
-public class ModuleNamePlates extends AdorufuModule implements SettingFlag {
+public class ModuleNamePlates extends AdorufuModule {
     public ModuleNamePlates() {
         super("NamePlates", AdorufuCategory.RENDER, false);
     }

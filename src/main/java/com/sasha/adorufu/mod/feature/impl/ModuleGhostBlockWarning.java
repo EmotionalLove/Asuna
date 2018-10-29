@@ -21,19 +21,18 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientItemSpawnEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockBreakEvent;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.simplesettings.SettingFlag;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @ModuleInfo(description = "Highlight blocks that might've not been mined on the server's side.")
-public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleListener, SettingFlag {
+public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleListener {
 
     /** dont ask why this variable is named this it was like this already HUSH PLS*/
     private static LinkedHashMap<Coordinate, Boolean> BlakeIsMyBoyfriendMap = new LinkedHashMap<>();

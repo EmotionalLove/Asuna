@@ -18,5 +18,5 @@
 
 package com.sasha.adorufu.mod.feature;
 
-public class AdorufuTogglableTickableFeature extends AdorufuTickableFeature {
+public class AdorufuTogglableTickableFeature {
 }

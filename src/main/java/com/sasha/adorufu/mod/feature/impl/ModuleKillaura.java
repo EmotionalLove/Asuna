@@ -19,10 +19,9 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,7 +35,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
  * Created by Sasha on 08/08/2018 at 12:23 PM
  **/
 @ModuleInfo(description = "Automatically attacks nearby entities, excluding friended players.")
-public class ModuleKillaura extends AdorufuModule implements SettingFlag {
+public class ModuleKillaura extends AdorufuModule {
 
     public static double range = 5.0;
 

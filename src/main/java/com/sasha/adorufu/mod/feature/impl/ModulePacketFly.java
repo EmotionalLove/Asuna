@@ -22,11 +22,10 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 @ModuleInfo(description = "NCP Flight bypass. Useful for 2b2t's nether roof.")
-public class ModulePacketFly extends AdorufuModule implements SettingFlag {
+public class ModulePacketFly extends AdorufuModule{
     public ModulePacketFly() {
         super("PacketFly", AdorufuCategory.MOVEMENT, false);
     }

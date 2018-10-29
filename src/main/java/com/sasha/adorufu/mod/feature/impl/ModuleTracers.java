@@ -18,17 +18,16 @@
 
 package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.misc.AdorufuRender;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.adorufu.mod.misc.AdorufuRender;
-import com.sasha.simplesettings.SettingFlag;
 
 /**
  * Created by Sasha on 10/08/2018 at 8:55 AM
  **/
 @ModuleInfo(description = "Draws lines to nearby players.")
-public class ModuleTracers extends AdorufuModule implements SettingFlag {
+public class ModuleTracers extends AdorufuModule {
     public static int i;
     public ModuleTracers() {
         super("Tracers", AdorufuCategory.RENDER, false);

@@ -19,11 +19,10 @@
 package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
+import com.sasha.adorufu.mod.feature.ModuleInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
-import com.sasha.adorufu.mod.misc.AdorufuRender;
-import com.sasha.simplesettings.SettingFlag;
 import net.minecraft.block.BlockChest;
 import net.minecraft.tileentity.*;
 
@@ -31,7 +30,7 @@ import net.minecraft.tileentity.*;
  * Created by Sasha on 09/08/2018 at 7:32 PM
  **/
 @ModuleInfo(description = "Draws an outline around storage containers")
-public class ModuleStorageESP extends AdorufuModule implements SettingFlag {
+public class ModuleStorageESP extends AdorufuModule {
     public ModuleStorageESP() {
         super("StorageESP", AdorufuCategory.RENDER, false);
     }

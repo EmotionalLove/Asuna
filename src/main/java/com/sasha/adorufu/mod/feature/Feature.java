@@ -16,31 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl;
+package com.sasha.adorufu.mod.feature;
 
-import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
-
-/**
- * Created by Sasha at 12:48 PM on 9/16/2018
- */
-public class ModulePowerBow extends AdorufuModule {
-    public ModulePowerBow() {
-        super("PowerBow", AdorufuCategory.COMBAT, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
-    }
+public class Feature {
 }
