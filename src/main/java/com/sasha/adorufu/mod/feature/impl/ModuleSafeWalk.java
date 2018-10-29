@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.simplesettings.SettingFlag;
 
 public class ModuleSafeWalk extends AdorufuModule implements SettingFlag {
     public ModuleSafeWalk() {

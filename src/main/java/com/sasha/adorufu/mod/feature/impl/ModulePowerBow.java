@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.simplesettings.SettingFlag;
 
 /**
  * Created by Sasha at 12:48 PM on 9/16/2018

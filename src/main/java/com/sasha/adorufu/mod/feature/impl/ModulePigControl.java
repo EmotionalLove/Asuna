@@ -21,6 +21,7 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.AdorufuModule;
 import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.simplesettings.SettingFlag;
 
 @ModuleInfo(description = "Control pigs without carrots")
 public class ModulePigControl extends AdorufuModule implements SettingFlag {
