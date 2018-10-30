@@ -30,12 +30,7 @@ import java.io.IOException;
 public class RenderableFramerate extends RenderableObject {
     public RenderableFramerate() {
         super("FPS", ScreenCornerPos.LEFTBOTTOM);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override

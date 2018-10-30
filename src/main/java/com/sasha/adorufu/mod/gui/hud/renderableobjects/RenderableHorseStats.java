@@ -34,12 +34,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 public class RenderableHorseStats extends RenderableObject {
     public RenderableHorseStats() {
         super("HorseStats", ScreenCornerPos.RIGHTTOP);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override

@@ -192,6 +192,7 @@ public class AdorufuMod implements SimpleListener {
                     }
                 });
                 TRAY_MANAGER = new AdorufuSystemTrayManager();
+                SETTING_CLASSES.forEach(x -> SETTING_HANDLER.read(x));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -210,7 +211,6 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
-        SETTING_CLASSES.forEach(x -> SETTING_HANDLER.read(x));
         Runtime.getRuntime().addShutdownHook(new Thread(() -> SETTING_CLASSES.forEach(x -> SETTING_HANDLER.save(x))));
     }
 

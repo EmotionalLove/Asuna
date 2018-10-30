@@ -30,12 +30,7 @@ public class RenderableEquipmentDamage extends RenderableObject {
 
     public RenderableEquipmentDamage() {
         super("EquipmentDamage", ScreenCornerPos.RIGHTTOP);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override

@@ -18,27 +18,20 @@
 
 package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
-import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.gui.ScaledResolution;
 
-import java.io.IOException;
-
-import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
+import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 
 public class RenderableCoordinates extends RenderableObject {
     public RenderableCoordinates() {
         super("Coordinates", ScreenCornerPos.LEFTBOTTOM);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override

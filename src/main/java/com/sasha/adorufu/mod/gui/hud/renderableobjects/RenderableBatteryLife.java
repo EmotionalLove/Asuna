@@ -25,8 +25,6 @@ import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 
-import java.io.IOException;
-
 public class RenderableBatteryLife extends RenderableObject {
 
     public boolean isSupported = false;
@@ -34,12 +32,6 @@ public class RenderableBatteryLife extends RenderableObject {
 
     public RenderableBatteryLife() {
         super("BatteryLife", ScreenCornerPos.LEFTBOTTOM);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
         if (AdorufuMod.BATTERY_MANAGER != null) {
             isSupported = true;
         }

@@ -38,6 +38,7 @@ public class RenderableObject {
     public RenderableObject(String name, ScreenCornerPos defaultPos){
         this.name = name;
         this.defaultPos = defaultPos;
+        this.stringPos = getPosStr(defaultPos);
     }
 
     /**
@@ -122,9 +123,11 @@ public class RenderableObject {
 
     public void setPos(String pos) {
         this.pos = getPosEnum(pos);
+        this.stringPos = getPosStr(this.pos);
     }
     public void setPos(ScreenCornerPos pos) {
         this.pos = pos;
+        this.stringPos = getPosStr(pos);
     }
 
     public static ScreenCornerPos getPosEnum(String pos) {

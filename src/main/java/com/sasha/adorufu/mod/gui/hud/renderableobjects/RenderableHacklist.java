@@ -32,12 +32,7 @@ import static com.sasha.adorufu.mod.gui.hud.AdorufuHUD.sWidth;
 public class RenderableHacklist extends RenderableObject {
     public RenderableHacklist() {
         super("Hacklist", ScreenCornerPos.RIGHTBOTTOM);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override

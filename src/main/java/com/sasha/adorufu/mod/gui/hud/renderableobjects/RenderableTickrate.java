@@ -30,12 +30,7 @@ import java.io.IOException;
 public class RenderableTickrate extends RenderableObject {
     public RenderableTickrate() {
         super("TPS", ScreenCornerPos.RIGHTTOP);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override

@@ -29,12 +29,7 @@ import java.io.IOException;
 public class RenderableWatermark extends RenderableObject {
     public RenderableWatermark() {
         super("Watermark", ScreenCornerPos.LEFTTOP);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+
     }
 
     @Override
