@@ -30,7 +30,7 @@ import net.minecraft.network.play.server.SPacketChat;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static com.sasha.adorufu.mod.feature.impl.deprecated.ModuleAutoIgnore.stripColours;
+import static com.sasha.adorufu.mod.feature.impl.deprecated.AutoIgnoreFeature.stripColours;
 
 @FeatureInfo(description = "Show the estimated time left in queue in chat")
 public class ModuleQueueTime extends AdorufuModule implements SimpleListener {

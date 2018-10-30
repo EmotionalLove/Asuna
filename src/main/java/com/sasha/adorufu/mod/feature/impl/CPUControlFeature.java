@@ -16,21 +16,20 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
-import net.minecraft.client.multiplayer.ServerData;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
-public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    public static long delay = 5000L;
-    public static ServerData serverData = null;
-
-    public AutoReconnectFeature() {
-        super("AutoReconnect", AdorufuCategory.MISC);
+/**
+ * Created by Sasha at 5:59 PM on 9/12/2018
+ */
+@FeatureInfo(description = "Limits the framerate to 5FPS when the game isn't in focus.")
+public class CPUControlFeature extends AbstractAdorufuTogglableFeature {
+    public CPUControlFeature() {
+        super("CPUControl", AdorufuCategory.MISC);
     }
 
     @Override
@@ -41,11 +40,5 @@ public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implem
     @Override
     public void onDisable() {
 
-    }
-
-    @Override
-    public void onTick() {
-        if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
-        serverData = AdorufuMod.minecraft.getCurrentServerData();
     }
 }

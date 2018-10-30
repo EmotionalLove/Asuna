@@ -31,12 +31,8 @@ public class AdorufuFeatureOption<T> {
         this.status = def;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(T status) {
         this.status = status;
-    }
-
-    public void toggleStatus() {
-        this.status = !status;
     }
 
     public T getStatus() {

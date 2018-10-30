@@ -16,17 +16,20 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-@FeatureInfo(description = "Don't move the camera closer in 3rd person view")
-public class CameraClipFeature extends AbstractAdorufuTogglableFeature {
-    public CameraClipFeature() {
-        super("CameraClip", AdorufuCategory.RENDER);
+@FeatureInfo(description = "Don't get kicked for being AFK")
+public class AntiAFKFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    private int timer = 0;
+    public AntiAFKFeature() {
+        super("AntiAFK", AdorufuCategory.MISC);
     }
 
     @Override
@@ -37,5 +40,14 @@ public class CameraClipFeature extends AbstractAdorufuTogglableFeature {
     @Override
     public void onDisable() {
 
+    }
+
+    @Override
+    public void onTick() {
+        timer++;
+        if (timer >= 20) {
+            AdorufuMod.minecraft.clickMouse();
+            timer = 0;
+        }
     }
 }

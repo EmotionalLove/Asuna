@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.CameraClipFeature;
+import com.sasha.adorufu.mod.feature.impl.CameraClipFeature;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNightVision;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleTracers;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleWaypoints;

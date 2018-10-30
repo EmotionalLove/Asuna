@@ -16,20 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import net.minecraft.network.play.client.CPacketKeepAlive;
 
 /**
- * Created by Sasha at 5:59 PM on 9/12/2018
+ * Created by Sasha at 11:00 AM on 8/28/2018
  */
-@FeatureInfo(description = "Limits the framerate to 5FPS when the game isn't in focus.")
-public class CPUControlFeature extends AbstractAdorufuTogglableFeature {
-    public CPUControlFeature() {
-        super("CPUControl", AdorufuCategory.MISC);
+@FeatureInfo(description = "Suspend packets")
+public class BlinkFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public BlinkFeature() {
+        super("Blink", AdorufuCategory.COMBAT);
     }
 
     @Override
@@ -41,4 +44,11 @@ public class CPUControlFeature extends AbstractAdorufuTogglableFeature {
     public void onDisable() {
 
     }
+
+    @SimpleEventHandler
+    public void onPacketTx(ClientPacketSendEvent e) {
+        if (this.isEnabled() && !(e.getSendPacket() instanceof CPacketKeepAlive))
+            e.setCancelled(true);
+    }
+
 }

@@ -16,38 +16,32 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
+/**
+ * Created by Sasha at 3:23 PM on 9/16/2018
+ * The server seems to verify who's signing the book, so this won't work on vanilla or ncp servers for the time being
+ */
+public class BookForgerFeature extends AbstractAdorufuTogglableFeature {
 
-@FeatureInfo(description = "Don't get kicked for being AFK")
-public class AntiAFKFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
-    private int timer = 0;
-    public AntiAFKFeature() {
-        super("AntiAFK", AdorufuCategory.MISC);
+    public static String author = "Adorufu_Client";
+
+    public BookForgerFeature() {
+        super("BookForger", AdorufuCategory.MISC);
     }
 
     @Override
     public void onEnable() {
-
+        AdorufuMod.logWarn(false, "The server seems to verify who's signing the book, " +
+                "so this won't work on even vanilla servers for the time being...");
     }
 
     @Override
     public void onDisable() {
 
-    }
-
-    @Override
-    public void onTick() {
-        timer++;
-        if (timer >= 20) {
-            AdorufuMod.minecraft.clickMouse();
-            timer = 0;
-        }
     }
 }

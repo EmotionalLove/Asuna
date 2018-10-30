@@ -16,32 +16,36 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import net.minecraft.client.multiplayer.ServerData;
 
-/**
- * Created by Sasha at 3:23 PM on 9/16/2018
- * The server seems to verify who's signing the book, so this won't work on vanilla or ncp servers for the time being
- */
-public class BookForgerFeature extends AbstractAdorufuTogglableFeature {
+public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    public static String author = "Adorufu_Client";
+    public static long delay = 5000L;
+    public static ServerData serverData = null;
 
-    public BookForgerFeature() {
-        super("BookForger", AdorufuCategory.MISC);
+    public AutoReconnectFeature() {
+        super("AutoReconnect", AdorufuCategory.MISC);
     }
 
     @Override
     public void onEnable() {
-        AdorufuMod.logWarn(false, "The server seems to verify who's signing the book, " +
-                "so this won't work on even vanilla servers for the time being...");
+
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    @Override
+    public void onTick() {
+        if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
+        serverData = AdorufuMod.minecraft.getCurrentServerData();
     }
 }

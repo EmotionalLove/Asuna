@@ -16,23 +16,20 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.mod.events.client.ClientRenderFireOverlayEvent;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import net.minecraft.network.play.client.CPacketKeepAlive;
 
-/**
- * Created by Sasha at 11:00 AM on 8/28/2018
- */
-@FeatureInfo(description = "Suspend packets")
-public class BlinkFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
-    public BlinkFeature() {
-        super("Blink", AdorufuCategory.COMBAT);
+
+@FeatureInfo(description = "Hide the annoying 1st person fire overlay")
+public class AntiFireOverlayFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public AntiFireOverlayFeature() {
+        super("AntiFireOverlay", AdorufuCategory.RENDER);
     }
 
     @Override
@@ -46,9 +43,7 @@ public class BlinkFeature extends AbstractAdorufuTogglableFeature implements Sim
     }
 
     @SimpleEventHandler
-    public void onPacketTx(ClientPacketSendEvent e) {
-        if (this.isEnabled() && !(e.getSendPacket() instanceof CPacketKeepAlive))
-            e.setCancelled(true);
+    public void onFireRender(ClientRenderFireOverlayEvent e) {
+        if (this.isEnabled()) e.setCancelled(true);
     }
-
 }

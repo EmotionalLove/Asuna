@@ -28,7 +28,7 @@ import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.impl.deprecated.CPUControlFeature;
+import com.sasha.adorufu.mod.feature.impl.CPUControlFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.gui.GuiScreen;

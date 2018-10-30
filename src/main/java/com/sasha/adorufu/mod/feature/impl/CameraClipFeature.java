@@ -16,20 +16,17 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.events.client.ClientRenderFireOverlayEvent;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 
 
-@FeatureInfo(description = "Hide the annoying 1st person fire overlay")
-public class AntiFireOverlayFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
-    public AntiFireOverlayFeature() {
-        super("AntiFireOverlay", AdorufuCategory.RENDER);
+@FeatureInfo(description = "Don't move the camera closer in 3rd person view")
+public class CameraClipFeature extends AbstractAdorufuTogglableFeature {
+    public CameraClipFeature() {
+        super("CameraClip", AdorufuCategory.RENDER);
     }
 
     @Override
@@ -40,10 +37,5 @@ public class AntiFireOverlayFeature extends AbstractAdorufuTogglableFeature impl
     @Override
     public void onDisable() {
 
-    }
-    
-    @SimpleEventHandler
-    public void onFireRender(ClientRenderFireOverlayEvent e) {
-        if (this.isEnabled()) e.setCancelled(true);
     }
 }

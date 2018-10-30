@@ -22,7 +22,7 @@ import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import static com.sasha.adorufu.mod.AdorufuMod.logMsg;
-import static com.sasha.adorufu.mod.feature.impl.deprecated.ClientIgnoreFeature.filterList;
+import static com.sasha.adorufu.mod.feature.impl.ClientIgnoreFeature.filterList;
 
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
