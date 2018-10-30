@@ -143,6 +143,7 @@ public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;renderHand(FI)V"))
     public void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
         Manager.Module.renderModules();
+        Manager.Feature.renderFeatures();
         GL11.glColor4f(0f, 0f, 0f, 0f);
     }
 

@@ -22,9 +22,13 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.command.commands.PathCommand;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
-import com.sasha.adorufu.mod.gui.hud.RenderableObject;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.annotation.ManualListener;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -32,6 +36,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.sasha.adorufu.mod.AdorufuMod.DATA_MANAGER;
 
@@ -39,6 +44,50 @@ import static com.sasha.adorufu.mod.AdorufuMod.DATA_MANAGER;
  * Created by Sasha at 9:09 AM on 9/17/2018
  */
 public class Manager {
+
+    public static class Feature implements SimpleListener {
+
+        public static List<IAdorufuFeature> featureRegistry = new ArrayList<>();
+
+        public static void registerFeature(IAdorufuFeature feature) {
+            featureRegistry.add(feature);
+            feature.onLoad();
+        }
+
+        /**
+         * Tick all Tickable features.
+         * If a feature is togglable, it will only tick if it's enabled.
+         */
+        public static void tickFeatures() {
+            featureRegistry
+                    .stream()
+                    .filter(feature -> feature instanceof IAdorufuTickableFeature)
+                    .forEach(tickableFeature -> {
+                        if (tickableFeature instanceof IAdorufuTogglableFeature
+                                &&
+                                ((IAdorufuTogglableFeature) tickableFeature).isEnabled()) {
+                            ((IAdorufuTickableFeature) tickableFeature).onTick();
+                            return;
+                        }
+                        ((IAdorufuTickableFeature) tickableFeature).onTick();
+                    });
+        }
+        public static void renderFeatures() {
+            featureRegistry
+                    .stream()
+                    .filter(feature -> feature instanceof IAdorufuRenderableFeature)
+                    .forEach(renderableFeature -> {
+                        if (renderableFeature instanceof IAdorufuTogglableFeature
+                        &&
+                        ((IAdorufuTogglableFeature) renderableFeature).isEnabled()) {
+                            ((IAdorufuRenderableFeature) renderableFeature).onRender();
+                            return;
+                        }
+                        ((IAdorufuRenderableFeature) renderableFeature).onRender();
+                    });
+        }
+
+    }
 
     public static class Renderable implements SimpleListener {
         public static ArrayList<RenderableObject> renderableRegistry = new ArrayList<>();

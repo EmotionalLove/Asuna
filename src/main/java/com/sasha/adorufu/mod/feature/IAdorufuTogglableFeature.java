@@ -22,5 +22,6 @@ public interface IAdorufuTogglableFeature extends IAdorufuFeature {
 
     void onEnable();
     void onDisable();
+    boolean isEnabled();
 
 }

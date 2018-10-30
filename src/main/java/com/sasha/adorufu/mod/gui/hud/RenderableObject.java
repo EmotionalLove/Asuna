@@ -24,6 +24,7 @@ import com.sasha.simplesettings.annotation.Transiant;
 
 import javax.annotation.Nullable;
 
+@Deprecated
 @SerialiseSuper
 public class RenderableObject {
 

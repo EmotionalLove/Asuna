@@ -35,6 +35,11 @@ public abstract class AbstractAdorufuTogglableFeature
         return keycode;
     }
 
+    @Override
+    public final boolean isEnabled() {
+        return this.enabled;
+    }
+
     public void toggleState() {
         this.enabled = !enabled;
     }
