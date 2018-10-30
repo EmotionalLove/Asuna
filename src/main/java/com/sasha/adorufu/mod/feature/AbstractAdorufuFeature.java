@@ -22,15 +22,17 @@ import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.simplesettings.annotation.SerialiseSuper;
 import com.sasha.simplesettings.annotation.Transiant;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @SerialiseSuper
 public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
 
-    @Transiant
-    private String name;
-    @Transiant
-    private AdorufuCategory category;
-    @Transiant
-    private AdorufuFeatureOption featureOption;
+    @Transiant private String name;
+    @Transiant private String suffix;
+    @Transiant private AdorufuCategory category;
+    @Transiant private AdorufuFeatureOption featureOption;
 
     public String getColouredName() {
         String colour = "\247";
@@ -55,6 +57,39 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
         }
         colour += name;
         return colour;
+    }
+
+    public void setSuffix(String s) {
+        this.suffix = " \2478[\2477" + s + "\2478]";
+    }
+
+    public void setSuffix(String[] s) {
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < s.length; i++) {
+            if (i == 0) {
+                b.append(s[i]);
+                continue;
+            }
+            b.append(", ").append(s[i]);
+        }
+        this.suffix = " \2478[\2477" + b.toString() + "\2478]";
+    }
+
+    public void setSuffix(LinkedHashMap<String, Boolean> boolMap) {
+        StringBuilder b = new StringBuilder();
+        AtomicInteger counter = new AtomicInteger();
+        boolMap.entrySet().stream().filter(Map.Entry::getValue).forEach(strBool -> {
+            if (counter.get() == 0) {
+                b.append(strBool.getKey());
+                counter.getAndIncrement();
+                return;
+            }
+            b.append(", ").append(strBool.getKey());
+        });
+        if (counter.get() == 0) {
+            b.append("\247cNone");
+        }
+        this.suffix = " \2478[\2477" + b.toString() + "\2478]";
     }
 
 }

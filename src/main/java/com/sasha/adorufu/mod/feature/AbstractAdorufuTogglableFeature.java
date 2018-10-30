@@ -38,7 +38,11 @@ public abstract class AbstractAdorufuTogglableFeature
     public void toggleState() {
         this.enabled = !enabled;
     }
-    public void setState(boolean state) {
+    public void setState(boolean state, boolean execute) {
         this.enabled = state;
+        if (execute) {
+            if (state) this.onEnable();
+            else this.onDisable();
+        }
     }
 }

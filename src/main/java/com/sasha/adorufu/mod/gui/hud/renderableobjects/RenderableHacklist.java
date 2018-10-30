@@ -20,10 +20,14 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.sasha.adorufu.mod.gui.hud.AdorufuHUD.sWidth;
 
@@ -37,12 +41,12 @@ public class RenderableHacklist extends RenderableObject {
     public void renderObjectLT(int yyy) {
         if (Manager.Module.getModule("Hacklist").isEnabled()) {
             int count = 0;
-            for (AdorufuModule module : AdorufuModule.displayList) {
-                if (module.isEnabled() && module.getSuffix().equals("")) {
+            for (AdorufuModule module : getValidList()) {
+                if (module.getSuffix().equals("")) {
                     AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), 4, (yyy) + (10 * count), 0xffffff);
                     count++;
                 }
-                else if (module.isEnabled()) {
+                else {
                     AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
                     count++;
                 }
@@ -59,7 +63,7 @@ public class RenderableHacklist extends RenderableObject {
     public void renderObjectRT(int yyy) {
         if (Manager.Module.getModule("Hacklist").isEnabled()) {
             int count = 0;
-            for (AdorufuModule module : AdorufuModule.displayList) {
+            for (AdorufuModule module : getValidList()) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
                     AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) + (10 * count), 0xffffff);
                     count++;
@@ -75,7 +79,7 @@ public class RenderableHacklist extends RenderableObject {
     public void renderObjectRB(int yyy) {
         if (Manager.Module.getModule("Hacklist").isEnabled()) {
             int count = 0;
-            for (AdorufuModule module : AdorufuModule.displayList) {
+            for (AdorufuModule module : getValidList()) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {
                     AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getModuleNameColoured(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getModuleName()) - 2, (yyy) - (10 * count), 0xffffff);
                     count++;
@@ -86,5 +90,11 @@ public class RenderableHacklist extends RenderableObject {
                 }
             }
         }
+    }
+    private List<AdorufuModule> getValidList() {
+        return Manager.Module.moduleRegistry
+                .stream()
+                .filter(mod -> mod.isEnabled() && mod.getModuleCategory() != AdorufuCategory.GUI)
+                .collect(Collectors.toList());
     }
 }

@@ -31,7 +31,6 @@ public class RenderableObject {
     @Transiant private ScreenCornerPos pos = null;
     @Transiant private ScreenCornerPos defaultPos;
     private String stringPos;
-
     @Transiant private static int LT_x = 12;
 
 
