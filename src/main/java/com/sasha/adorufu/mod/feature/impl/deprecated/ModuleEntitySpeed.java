@@ -21,14 +21,14 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.util.MovementInput;
 
-@ModuleInfo(description = "Speedhack for ridable animals")
+@FeatureInfo(description = "Speedhack for ridable animals")
 public class ModuleEntitySpeed extends AdorufuModule  {
     public static double speed;
     public ModuleEntitySpeed() {

@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.ItemStackHelper;
@@ -30,7 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
-@ModuleInfo(description = "View the contents of shulker boxes being held by other nearby players")
+@FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
 public class ModuleShulkerSpy extends AdorufuModule {
     public ModuleShulkerSpy() {
         super("ShulkerSpy", AdorufuCategory.RENDER, false);

@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -30,7 +30,7 @@ import net.minecraft.network.play.client.CPacketKeepAlive;
 /**
  * Created by Sasha at 11:00 AM on 8/28/2018
  */
-@ModuleInfo(description = "Suspend packets")
+@FeatureInfo(description = "Suspend packets")
 public class ModuleBlink extends AdorufuModule implements SimpleListener {
     public ModuleBlink() {
         super("Blink", AdorufuCategory.COMBAT, false);

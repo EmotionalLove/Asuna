@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.AdorufuRender;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.block.BlockChest;
@@ -29,7 +29,7 @@ import net.minecraft.tileentity.*;
 /**
  * Created by Sasha on 09/08/2018 at 7:32 PM
  **/
-@ModuleInfo(description = "Draws an outline around storage containers")
+@FeatureInfo(description = "Draws an outline around storage containers")
 public class ModuleStorageESP extends AdorufuModule {
     public ModuleStorageESP() {
         super("StorageESP", AdorufuCategory.RENDER, false);

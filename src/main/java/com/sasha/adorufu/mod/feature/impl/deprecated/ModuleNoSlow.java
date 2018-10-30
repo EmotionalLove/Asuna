@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -30,7 +30,7 @@ import com.sasha.eventsys.SimpleListener;
 /**
  * Created by Sasha on 11/08/2018 at 3:18 PM
  **/
-@ModuleInfo(description = "Don't slow down whilst eating.") //todo
+@FeatureInfo(description = "Don't slow down whilst eating.") //todo
 public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
     public ModuleNoSlow() {
         super("NoSlow", AdorufuCategory.MOVEMENT, false, true, true);

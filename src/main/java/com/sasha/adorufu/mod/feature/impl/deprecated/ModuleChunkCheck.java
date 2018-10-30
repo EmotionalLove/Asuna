@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -38,7 +38,7 @@ import java.util.List;
  * Created by Sasha at 8:10 PM on 9/22/2018
  * ok so this feature is way too harsh on the computer rn...
  */
-@ModuleInfo(description = "Highlights blocks that were added since the last time you were in that chunk")
+@FeatureInfo(description = "Highlights blocks that were added since the last time you were in that chunk")
 public class ModuleChunkCheck extends AdorufuModule implements SimpleListener {
 
     protected static volatile ArrayList<ChunkCheckData> chunkDatas = new ArrayList<>();

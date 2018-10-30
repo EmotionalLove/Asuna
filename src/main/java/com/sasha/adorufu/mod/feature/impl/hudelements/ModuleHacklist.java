@@ -20,12 +20,12 @@ package com.sasha.adorufu.mod.feature.impl.hudelements;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 /**
  * Created by Sasha on 08/08/2018 at 7:51 PM
  **/
-@ModuleInfo(description = "Renders the hack arraylist on the HUD")
+@FeatureInfo(description = "Renders the hack arraylist on the HUD")
 public class ModuleHacklist extends AdorufuModule {
     public ModuleHacklist() {
         super("Hacklist", AdorufuCategory.GUI, true);

@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -29,7 +29,7 @@ import com.sasha.eventsys.SimpleListener;
 /**
  * Created by Sasha at 7:59 PM on 9/2/2018
  */
-@ModuleInfo(description = "Reduce or completely ignore knockback")
+@FeatureInfo(description = "Reduce or completely ignore knockback")
 public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleListener {
     public ModuleKnockbackSuppress() {
         super("KnockbackSuppress", AdorufuCategory.COMBAT, false, true, true);

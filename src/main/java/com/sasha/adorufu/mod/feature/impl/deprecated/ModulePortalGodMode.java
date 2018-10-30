@@ -21,13 +21,13 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
 import net.minecraft.network.play.client.CPacketConfirmTeleport;
 
-@ModuleInfo(description = "Become invinsible after using a nether portal")
+@FeatureInfo(description = "Become invinsible after using a nether portal")
 public class ModulePortalGodMode extends AdorufuModule implements SimpleListener {
     public ModulePortalGodMode() {
         super("PortalGodMode", AdorufuCategory.MOVEMENT, false);

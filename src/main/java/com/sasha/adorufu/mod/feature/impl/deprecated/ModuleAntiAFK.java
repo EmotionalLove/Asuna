@@ -21,10 +21,10 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-@ModuleInfo(description = "Don't get kicked for being AFK")
+@FeatureInfo(description = "Don't get kicked for being AFK")
 public class ModuleAntiAFK extends AdorufuModule  {
     private int timer=0;
     public ModuleAntiAFK() {

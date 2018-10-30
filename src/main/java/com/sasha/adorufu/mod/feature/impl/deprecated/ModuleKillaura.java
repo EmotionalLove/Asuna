@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -34,7 +34,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 /**
  * Created by Sasha on 08/08/2018 at 12:23 PM
  **/
-@ModuleInfo(description = "Automatically attacks nearby entities, excluding friended players.")
+@FeatureInfo(description = "Automatically attacks nearby entities, excluding friended players.")
 public class ModuleKillaura extends AdorufuModule {
 
     public static double range = 5.0;

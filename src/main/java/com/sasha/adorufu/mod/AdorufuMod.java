@@ -210,6 +210,7 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
+        SETTING_CLASSES.forEach(setting -> SETTING_HANDLER.read(setting));
         Runtime.getRuntime().addShutdownHook(new Thread(() -> SETTING_CLASSES.forEach(x -> SETTING_HANDLER.save(x))));
     }
 
@@ -260,6 +261,13 @@ public class AdorufuMod implements SimpleListener {
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
+    private void registerFeatures() {
+        Manager.Feature.featureRegistry.clear();
+        Manager.Feature.registerFeature(new FlightFeature());
+        // todo api
+        SETTING_CLASSES.addAll(Manager.Feature.featureRegistry);
+    }
+
     private void registerModules() {
         Manager.Module.moduleRegistry.clear();
         Manager.Module.register(new ModuleXray());
@@ -287,7 +295,6 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleFreecam());
         Manager.Module.register(new ModuleCrystalAura());
         Manager.Module.register(new ModuleCrystalLogout());
-        Manager.Module.register(new ModuleFlight());
         Manager.Module.register(new ModuleJesus());
         Manager.Module.register(new ModuleClientIgnore());
         Manager.Module.register(new ModuleAutoIgnore());
@@ -332,7 +339,6 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleAutoEat());
         Manager.Module.register(new ModuleShulkerSpy());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
-        Manager.Module.moduleRegistry.forEach(module -> SETTING_HANDLER.read(module));
     }
 
 
@@ -349,7 +355,6 @@ public class AdorufuMod implements SimpleListener {
         Manager.Renderable.register(new RenderableEquipmentDamage());
         Manager.Renderable.register(new RenderableBatteryLife());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
-        Manager.Renderable.renderableRegistry.forEach(renderableObject -> SETTING_HANDLER.read(renderableObject));
     }
 
     /**

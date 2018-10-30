@@ -34,6 +34,16 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
     @Transiant private AdorufuCategory category;
     @Transiant private AdorufuFeatureOption featureOption;
 
+    public AbstractAdorufuFeature(String name, AdorufuCategory category) {
+        this.name = name;
+        this.category = category;
+    }
+    public AbstractAdorufuFeature(String name, AdorufuCategory category, AdorufuFeatureOption featureOption) {
+        this.name = name;
+        this.category = category;
+        this.featureOption = featureOption;
+    }
+
     public String getColouredName() {
         String colour = "\247";
         switch (category) {

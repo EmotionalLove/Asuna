@@ -23,14 +23,14 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 
-@ModuleInfo(description = "Middle click a block to add it to xray")
+@FeatureInfo(description = "Middle click a block to add it to xray")
 public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListener {
     public ModuleMiddleClickBlock() {
         super("MiddleClickBlock", AdorufuCategory.MISC, false);

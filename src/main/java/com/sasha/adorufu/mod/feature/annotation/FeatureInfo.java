@@ -28,6 +28,6 @@ import java.lang.annotation.Target;
  **/
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ModuleInfo {
+public @interface FeatureInfo {
     String description() default "No description provided.";
 }

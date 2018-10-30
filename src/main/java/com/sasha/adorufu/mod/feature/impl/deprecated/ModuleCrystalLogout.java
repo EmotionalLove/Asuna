@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -31,7 +31,7 @@ import org.lwjgl.input.Mouse;
 /**
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
-@ModuleInfo(description = "Automatically disconnect when a crystal is near you")
+@FeatureInfo(description = "Automatically disconnect when a crystal is near you")
 public class ModuleCrystalLogout extends AdorufuModule  {
     public ModuleCrystalLogout() {
         super("CrystalLogout", AdorufuCategory.COMBAT, false);

@@ -21,11 +21,11 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.events.playerclient.PlayerJumpEvent;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
-@ModuleInfo(description = "Jump slightly lower than vanilla height so that you don't hit your head")
+@FeatureInfo(description = "Jump slightly lower than vanilla height so that you don't hit your head")
 public class ModuleLowJump extends AdorufuModule implements SimpleListener {
     public ModuleLowJump() {
         super("LowJump", AdorufuCategory.MOVEMENT, false);

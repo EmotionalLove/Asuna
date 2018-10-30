@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu.mod.feature;
 
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.simplesettings.annotation.SerialiseSuper;
 
 @SerialiseSuper
@@ -26,6 +27,14 @@ public abstract class AbstractAdorufuTogglableFeature
 
     private boolean enabled;
     private int keycode;
+
+    public AbstractAdorufuTogglableFeature(String name, AdorufuCategory category) {
+        super(name, category);
+    }
+
+    public AbstractAdorufuTogglableFeature(String name, AdorufuCategory category, AdorufuFeatureOption featureOption) {
+        super(name, category, featureOption);
+    }
 
     public void setKeycode(int keycode) {
         this.keycode = keycode;

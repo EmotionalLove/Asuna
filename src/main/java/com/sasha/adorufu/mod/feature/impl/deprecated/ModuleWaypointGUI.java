@@ -22,14 +22,14 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.waypointgui.WaypointGUI;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 
 /**
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
 @PostToggleExec
-@ModuleInfo(description = "Displays the WaypointGUI")
+@FeatureInfo(description = "Displays the WaypointGUI")
 public class ModuleWaypointGUI extends AdorufuModule {
     public ModuleWaypointGUI() {
         super("WaypointGUI", AdorufuCategory.GUI, false);

@@ -24,14 +24,14 @@ import com.sasha.adorufu.mod.events.playerclient.PlayerBlockBreakEvent;
 import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-@ModuleInfo(description = "Highlight blocks that might've not been mined on the server's side.")
+@FeatureInfo(description = "Highlight blocks that might've not been mined on the server's side.")
 public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleListener {
 
     /** dont ask why this variable is named this it was like this already HUSH PLS*/

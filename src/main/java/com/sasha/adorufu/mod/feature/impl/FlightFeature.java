@@ -16,21 +16,21 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
+@FeatureInfo(description = "Allows you to fly. Only works on servers that don't have an anticheat.")
+public class FlightFeature
+        extends AbstractAdorufuTogglableFeature
+        implements IAdorufuTickableFeature {
 
-/**
- * Created by Sasha on 12/08/2018 at 9:04 AM
- **/
-@ModuleInfo(description = "Allows you to fly. Only works on servers that don't have an anticheat.")
-public class ModuleFlight extends AdorufuModule  {
-    public ModuleFlight() {
-        super("Flight", AdorufuCategory.MOVEMENT, false);
+    public FlightFeature() {
+        super("Flight", AdorufuCategory.MOVEMENT);
     }
 
     @Override
@@ -45,7 +45,6 @@ public class ModuleFlight extends AdorufuModule  {
 
     @Override
     public void onTick() {
-        if (!this.isEnabled()) return;
         AdorufuMod.minecraft.player.capabilities.isFlying = true;
     }
 }

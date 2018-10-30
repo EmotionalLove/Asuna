@@ -24,7 +24,7 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.exception.AdorufuModuleOptionNotFoundException;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.ForcefulEnable;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.misc.ModuleState;
@@ -171,7 +171,7 @@ public abstract class AdorufuModule {
     }
 
     public String getDescription(Class<?> clazz){
-        ModuleInfo d = clazz.getAnnotation(ModuleInfo.class);
+        FeatureInfo d = clazz.getAnnotation(FeatureInfo.class);
         if (d == null){
             return "No description provided.";
         }

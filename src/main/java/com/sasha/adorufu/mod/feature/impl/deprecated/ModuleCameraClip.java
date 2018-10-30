@@ -20,10 +20,10 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-@ModuleInfo(description = "Don't move the camera closer in 3rd person view")
+@FeatureInfo(description = "Don't move the camera closer in 3rd person view")
 public class ModuleCameraClip extends AdorufuModule  {
     public ModuleCameraClip() {
         super("CameraClip", AdorufuCategory.RENDER, false);

@@ -22,14 +22,14 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 
-@ModuleInfo(description = "Hides your name on-screen")
+@FeatureInfo(description = "Hides your name on-screen")
 public class ModuleNameProtect extends AdorufuModule implements SimpleListener {
     public ModuleNameProtect() {
         super("NameRedact", AdorufuCategory.RENDER, false);

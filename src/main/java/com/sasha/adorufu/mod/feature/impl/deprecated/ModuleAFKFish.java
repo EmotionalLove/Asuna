@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -31,7 +31,7 @@ import net.minecraft.network.play.server.SPacketSoundEffect;
 /**
  * Created by Sasha on 11/08/2018 at 6:27 PM
  **/
-@ModuleInfo(description = "Automated fishing, for when you're not at your computer.")
+@FeatureInfo(description = "Automated fishing, for when you're not at your computer.")
 public class ModuleAFKFish extends AdorufuModule implements SimpleListener {
     public ModuleAFKFish(){
         super("AFKFish", AdorufuCategory.MISC, false);

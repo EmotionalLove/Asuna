@@ -21,10 +21,10 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-@ModuleInfo(description = "Fly like you're in creative with an elytra")
+@FeatureInfo(description = "Fly like you're in creative with an elytra")
 public class ModuleElytraFlight extends AdorufuModule  {
     public ModuleElytraFlight() {
         super("ElytraFlight", AdorufuCategory.MOVEMENT, false);

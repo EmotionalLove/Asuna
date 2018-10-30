@@ -20,9 +20,9 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
-@ModuleInfo(description = "Control pigs without carrots")
+@FeatureInfo(description = "Control pigs without carrots")
 public class ModulePigControl extends AdorufuModule {
     public ModulePigControl() {
         super("PigControl", AdorufuCategory.MOVEMENT, false);

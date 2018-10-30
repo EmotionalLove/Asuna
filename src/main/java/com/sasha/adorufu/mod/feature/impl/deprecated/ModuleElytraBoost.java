@@ -21,14 +21,14 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 import net.minecraft.util.math.MathHelper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@ModuleInfo(description = "Press the spacebar to go faster")
+@FeatureInfo(description = "Press the spacebar to go faster")
 public class ModuleElytraBoost extends AdorufuModule  {
 
     static float limit = 2.5f;

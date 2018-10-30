@@ -22,7 +22,7 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
@@ -40,7 +40,7 @@ import net.minecraft.util.math.BlockPos;
  **/
 //todo aac bypass
 @PostToggleExec
-@ModuleInfo(description = "Walk on water!")
+@FeatureInfo(description = "Walk on water!")
 public class ModuleJesus extends AdorufuModule implements SimpleListener {
     private boolean waterjump = false;
     public static AxisAlignedBB WATER_JESUS_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);

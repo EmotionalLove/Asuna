@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -33,7 +33,7 @@ import java.util.*;
 /**
  * Created by Sasha at 7:07 PM on 8/30/2018
  */
-@ModuleInfo(description = "Show client-sided join/leave messages, or use greeter to announce them.")
+@FeatureInfo(description = "Show client-sided join/leave messages, or use greeter to announce them.")
 public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleListener {
 
     private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();

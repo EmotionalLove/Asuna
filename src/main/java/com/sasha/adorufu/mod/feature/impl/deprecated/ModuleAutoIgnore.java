@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -36,7 +36,7 @@ import java.util.HashMap;
 
 import static com.sasha.adorufu.mod.AdorufuMod.logWarn;
 
-@ModuleInfo(description = "Automatically ignore players that are spamming in chat.")
+@FeatureInfo(description = "Automatically ignore players that are spamming in chat.")
 public class ModuleAutoIgnore extends AdorufuModule implements SimpleListener {
 
     public static HashMap<String/* Player's name */, Integer/* VL */> spamViolationMap = new HashMap<>();

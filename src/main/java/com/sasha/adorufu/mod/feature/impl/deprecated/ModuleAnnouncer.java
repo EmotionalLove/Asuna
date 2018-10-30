@@ -23,7 +23,7 @@ import com.sasha.adorufu.mod.events.playerclient.PlayerBlockBreakEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -38,7 +38,7 @@ import java.util.Random;
  * Created by Sasha on 11/08/2018 at 4:31 PM
  **/
 @PostToggleExec
-@ModuleInfo(description = "Sends a message in chat every 15 seconds about what you're doing in the world.")
+@FeatureInfo(description = "Sends a message in chat every 15 seconds about what you're doing in the world.")
 public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
 
     static boolean swap = false;

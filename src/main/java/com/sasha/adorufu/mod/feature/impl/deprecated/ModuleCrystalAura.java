@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -41,7 +41,7 @@ import static com.sasha.adorufu.mod.feature.impl.deprecated.ModuleKillaura.rotat
 /**
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
-@ModuleInfo(description = "Automatically hit nearby crystals")
+@FeatureInfo(description = "Automatically hit nearby crystals")
 public class ModuleCrystalAura extends AdorufuModule  {
     public ModuleCrystalAura() {
         super("CrystalAura", AdorufuCategory.COMBAT, false, true, true);

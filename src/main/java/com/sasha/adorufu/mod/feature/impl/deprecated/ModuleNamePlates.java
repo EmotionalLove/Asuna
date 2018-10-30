@@ -18,13 +18,13 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
 import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 
-@ModuleInfo(description = "Display an enchanced nametag above a player's head")
+@FeatureInfo(description = "Display an enchanced nametag above a player's head")
 public class ModuleNamePlates extends AdorufuModule {
     public ModuleNamePlates() {
         super("NamePlates", AdorufuCategory.RENDER, false);

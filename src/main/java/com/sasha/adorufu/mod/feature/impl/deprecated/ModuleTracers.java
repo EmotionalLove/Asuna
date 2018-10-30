@@ -19,14 +19,14 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.misc.AdorufuRender;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
 /**
  * Created by Sasha on 10/08/2018 at 8:55 AM
  **/
-@ModuleInfo(description = "Draws lines to nearby players.")
+@FeatureInfo(description = "Draws lines to nearby players.")
 public class ModuleTracers extends AdorufuModule {
     public static int i;
     public ModuleTracers() {

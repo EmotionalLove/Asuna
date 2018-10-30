@@ -20,14 +20,14 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 
 /**
  * Created by Sasha on 11/08/2018 at 11:39 AM
  **/
 @PostToggleExec
-@ModuleInfo(description = "Lets you see in the dark.")
+@FeatureInfo(description = "Lets you see in the dark.")
 public class ModuleNightVision extends AdorufuModule {
 
     public ModuleNightVision() {

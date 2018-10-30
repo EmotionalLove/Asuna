@@ -19,11 +19,11 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
-@ModuleInfo(description = "Lock your yaw to a specified angle")
+@FeatureInfo(description = "Lock your yaw to a specified angle")
 public class ModuleYawLock extends AdorufuModule {
 
     public static int yawDegrees = 90;

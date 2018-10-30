@@ -23,7 +23,7 @@ import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -37,7 +37,7 @@ import java.awt.*;
  * Created by Sasha at 3:30 PM on 9/9/2018
  */
 
-@ModuleInfo(description = "Uses balloon notifications to notify you of events when the game is minimised")
+@FeatureInfo(description = "Uses balloon notifications to notify you of events when the game is minimised")
 public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener {
 
     public ModuleDesktopNotifications() {

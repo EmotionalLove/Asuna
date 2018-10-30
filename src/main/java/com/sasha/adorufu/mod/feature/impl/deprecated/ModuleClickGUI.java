@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
 
@@ -30,7 +30,7 @@ import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
 @PostToggleExec
-@ModuleInfo(description = "Displays the Clickgui")
+@FeatureInfo(description = "Displays the Clickgui")
 public class ModuleClickGUI extends AdorufuModule  {
     public ModuleClickGUI() {
         super("ClickGUI", AdorufuCategory.GUI, false);

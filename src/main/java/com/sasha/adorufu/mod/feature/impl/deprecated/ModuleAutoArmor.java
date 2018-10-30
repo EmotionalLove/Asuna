@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -38,7 +38,7 @@ import static net.minecraft.init.Items.*;
  * Created by Sasha at 11:03 AM on 8/28/2018
  * im like half asleep so liek i dont care if its a messs lol
  */
-@ModuleInfo(description = "automatically switches armour to better variants in your inventory")
+@FeatureInfo(description = "automatically switches armour to better variants in your inventory")
 public class ModuleAutoArmor extends AdorufuModule  {
     public ModuleAutoArmor() {
         super("AutoArmor", AdorufuCategory.COMBAT, false);

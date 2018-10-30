@@ -19,11 +19,11 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
-@ModuleInfo(description = "See through the world kinda")
+@FeatureInfo(description = "See through the world kinda")
 public class ModuleWireframe extends AdorufuModule {
     public ModuleWireframe() {
         super("Wireframe", AdorufuCategory.RENDER, false);

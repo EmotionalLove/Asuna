@@ -25,7 +25,7 @@ import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.client.CPacketInput;
@@ -37,7 +37,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 /**
  * Created by Sasha on 12/08/2018 at 9:12 AM
  **/
-@ModuleInfo(description = "Client-sided spectator mode.") //todo fix the fact that you cant fly thru stuff
+@FeatureInfo(description = "Client-sided spectator mode.") //todo fix the fact that you cant fly thru stuff
 public class ModuleFreecam extends AdorufuModule implements SimpleListener {
 
     public static double oldX, oldY, oldZ, oldYaw, oldPitch;

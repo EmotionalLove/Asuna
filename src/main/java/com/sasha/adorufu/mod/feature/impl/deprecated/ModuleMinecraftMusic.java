@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientGetMusicTypeEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -31,7 +31,7 @@ import net.minecraft.client.audio.MusicTicker;
 /**
  * Created by Sasha at 3:48 PM on 8/27/2018
  */
-@ModuleInfo(description = "Plays the creative mode exclusive music in other gamemodes.")
+@FeatureInfo(description = "Plays the creative mode exclusive music in other gamemodes.")
 public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListener {
     public ModuleMinecraftMusic() {
         super("MinecraftMusic", AdorufuCategory.MISC, false, true, true);

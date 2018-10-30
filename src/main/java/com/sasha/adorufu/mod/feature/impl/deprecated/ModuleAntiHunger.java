@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -30,7 +30,7 @@ import net.minecraft.network.play.client.CPacketPlayer;
 /**
  * Created by Sasha on 10/08/2018 at 12:47 PM
  **/
-@ModuleInfo(description = "Makes your hunger last longer while sprinting/jumping/etc")
+@FeatureInfo(description = "Makes your hunger last longer while sprinting/jumping/etc")
 public class ModuleAntiHunger extends AdorufuModule implements SimpleListener {
     public ModuleAntiHunger() {
         super("AntiHunger", AdorufuCategory.MOVEMENT, false, true, true);
