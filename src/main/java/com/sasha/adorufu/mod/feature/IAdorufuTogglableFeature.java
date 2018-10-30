@@ -23,5 +23,9 @@ public interface IAdorufuTogglableFeature extends IAdorufuFeature {
     void onEnable();
     void onDisable();
     boolean isEnabled();
+    void toggleState();
+    void setKeycode(int keycode);
+    int getKeycode();
+    void setState(boolean state, boolean execute);
 
 }

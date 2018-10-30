@@ -19,29 +19,46 @@
 package com.sasha.adorufu.mod.feature;
 
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
-import com.sasha.simplesettings.annotation.SerialiseSuper;
-import com.sasha.simplesettings.annotation.Transiant;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@SerialiseSuper
 public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
 
-    @Transiant private String name;
-    @Transiant private String suffix;
-    @Transiant private AdorufuCategory category;
-    @Transiant private AdorufuFeatureOption featureOption;
+    private String name;
+    private String suffix;
+    private AdorufuCategory category;
+    private List<AdorufuFeatureOption> featureOptions;
 
     public AbstractAdorufuFeature(String name, AdorufuCategory category) {
         this.name = name;
         this.category = category;
     }
-    public AbstractAdorufuFeature(String name, AdorufuCategory category, AdorufuFeatureOption featureOption) {
+
+    public AbstractAdorufuFeature(String name, AdorufuCategory category, AdorufuFeatureOption... featureOption) {
         this.name = name;
         this.category = category;
-        this.featureOption = featureOption;
+        this.featureOptions = Arrays.asList(featureOption);
+    }
+
+    public AdorufuCategory getCategory() {
+        return this.category;
+    }
+
+
+    public List<AdorufuFeatureOption> getOptions() {
+        return this.featureOptions;
+    }
+
+    public boolean hasOptions() {
+        return !this.featureOptions.isEmpty();
+    }
+
+    public String getFeatureName() {
+        return this.name;
     }
 
     public String getColouredName() {

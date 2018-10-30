@@ -36,10 +36,12 @@ public abstract class AbstractAdorufuTogglableFeature
         super(name, category, featureOption);
     }
 
+    @Override
     public void setKeycode(int keycode) {
         this.keycode = keycode;
     }
 
+    @Override
     public int getKeycode() {
         return keycode;
     }
@@ -49,9 +51,12 @@ public abstract class AbstractAdorufuTogglableFeature
         return this.enabled;
     }
 
+    @Override
     public void toggleState() {
         this.enabled = !enabled;
     }
+
+    @Override
     public void setState(boolean state, boolean execute) {
         this.enabled = state;
         if (execute) {

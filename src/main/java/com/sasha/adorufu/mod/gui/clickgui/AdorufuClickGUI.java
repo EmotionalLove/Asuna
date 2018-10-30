@@ -19,13 +19,14 @@
 package com.sasha.adorufu.mod.gui.clickgui;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiButton;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.elements.IAdorufuGuiElement;
-import com.sasha.adorufu.mod.gui.clickgui.helper.ModuleToggler;
+import com.sasha.adorufu.mod.gui.clickgui.helper.FeatureToggler;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
@@ -52,49 +53,55 @@ public class AdorufuClickGUI extends GuiScreen {
                 ArrayList<IAdorufuGuiElement> chat_elements = new ArrayList<>();
                 ArrayList<IAdorufuGuiElement> render_elements = new ArrayList<>();
                 ArrayList<IAdorufuGuiElement> movement_elements = new ArrayList<>();
-                Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MISC).sorted(Comparator.comparing(AdorufuModule::getModuleName))
+                Manager.Feature.featureRegistry.stream()
+                        .filter(e -> e instanceof IAdorufuTogglableFeature)
+                        .filter(e -> e.getCategory() == AdorufuCategory.MISC).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
                         .forEach(e -> {
-                            misc_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                            misc_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Misc");
                 elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(),15), 100, 0f, 181f, 150f, 255f,  "Misc", misc_elements));
-                Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.GUI).sorted(Comparator.comparing(AdorufuModule::getModuleName))
+                Manager.Feature.featureRegistry.stream()
+                        .filter(e -> e instanceof IAdorufuTogglableFeature)
+                        .filter(e -> e.getCategory() == AdorufuCategory.GUI).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
                         .forEach(e -> {
-                            gui_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                            gui_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$0 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("HUD");
                 elementList.add(new AdorufuGuiWindow(coords$0[0], coords$0[1], calcListLength(gui_elements.size(),15), 100, 79f, 79f, 79f, 255f
                         , "HUD", gui_elements));
-                Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.COMBAT).sorted(Comparator.comparing(AdorufuModule::getModuleName))
+                Manager.Feature.featureRegistry.stream()
+                        .filter(e -> e instanceof IAdorufuTogglableFeature)
+                        .filter(e -> e.getCategory() == AdorufuCategory.COMBAT).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
                         .forEach(e -> {
-                            combat_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                            combat_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$1 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Combat");
                 elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(),15), 100, 175f, 0f, 0f, 255f
                         , "Combat", combat_elements));
-                Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.CHAT).sorted(Comparator.comparing(AdorufuModule::getModuleName))
+                Manager.Feature.featureRegistry.stream()
+                        .filter(e -> e instanceof IAdorufuTogglableFeature)
+                        .filter(e -> e.getCategory() == AdorufuCategory.CHAT).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
                         .forEach(e -> {
-                            chat_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                            chat_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$2 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Chat");
                 elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(),15), 100, 0f, 91f, 99f, 255f
                         , "Chat", chat_elements));
-                Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.RENDER).sorted(Comparator.comparing(AdorufuModule::getModuleName))
+                Manager.Feature.featureRegistry.stream()
+                        .filter(e -> e instanceof IAdorufuTogglableFeature)
+                        .filter(e -> e.getCategory() == AdorufuCategory.RENDER).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
                         .forEach(e -> {
-                            render_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                            render_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$3 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Render");
                 elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(),15), 100, 204f, 136f, 0f, 255f
                         , "Render", render_elements));
-                Manager.Module.moduleRegistry.stream()
-                        .filter(e -> e.getModuleCategory() == AdorufuCategory.MOVEMENT).sorted(Comparator.comparing(AdorufuModule::getModuleName))
+                Manager.Feature.featureRegistry.stream()
+                        .filter(e -> e instanceof IAdorufuTogglableFeature)
+                        .filter(e -> e.getCategory() == AdorufuCategory.MOVEMENT).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
                         .forEach(e -> {
-                            movement_elements.add(new AdorufuGuiButton(e.getModuleName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new ModuleToggler(e)));
+                            movement_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$4 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Movement");
                 elementList.add(new AdorufuGuiWindow(coords$4[0], coords$4[1], calcListLength(movement_elements.size(),15), 100, 119f, 0f, 103f, 255f

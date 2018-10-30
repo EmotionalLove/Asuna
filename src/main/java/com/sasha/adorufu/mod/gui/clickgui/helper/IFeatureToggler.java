@@ -16,26 +16,10 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature;
+package com.sasha.adorufu.mod.gui.clickgui.helper;
 
-import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-
-public interface IAdorufuFeature {
-
-    default void onLoad() {
-        //
-    }
-    AdorufuCategory getCategory();
-    List<AdorufuFeatureOption> getOptions();
-    boolean hasOptions();
-    String getColouredName();
-    String getFeatureName();
-    void setSuffix(String s);
-    void setSuffix(String[] s);
-    void setSuffix(LinkedHashMap<String, Boolean> boolMap);
-
-
+public interface IFeatureToggler extends IToggler {
+    IAdorufuTogglableFeature getFeature();
 }
