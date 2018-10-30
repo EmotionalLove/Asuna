@@ -22,7 +22,7 @@ package com.sasha.adorufu.mod.gui.clickgui.legacy.elements;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;

@@ -23,8 +23,8 @@ import com.sasha.adorufu.mod.command.commands.PathCommand;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ManualListener;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.annotation.ManualListener;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 

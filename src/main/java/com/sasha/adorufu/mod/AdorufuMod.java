@@ -29,6 +29,7 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
+import com.sasha.adorufu.mod.feature.impl.deprecated.*;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
@@ -72,7 +73,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static com.sasha.adorufu.mod.misc.Manager.Module.loadBindsAndStates;
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true, clientSideOnly = true)
@@ -176,7 +176,6 @@ public class AdorufuMod implements SimpleListener {
                 EVENT_MANAGER.registerListener(new Manager.Module());
                 AdorufuHUD.setupHUD();
                 EVENT_MANAGER.registerListener(new AdorufuHUD());
-                ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
                 //loadBindsAndStates();
@@ -219,8 +218,6 @@ public class AdorufuMod implements SimpleListener {
             try {
                 Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
                 this.registerRenderables();
-                ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
-                loadBindsAndStates();
                 try {
                     ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
                 } catch (IOException e) {

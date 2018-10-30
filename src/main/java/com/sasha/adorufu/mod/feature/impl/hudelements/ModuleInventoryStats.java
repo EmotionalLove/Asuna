@@ -19,8 +19,8 @@
 package com.sasha.adorufu.mod.feature.impl.hudelements;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.ModuleInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.annotation.ModuleInfo;
 
 
 /**

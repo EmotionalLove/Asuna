@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.ModuleAutoReconnect;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleAutoReconnect;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;

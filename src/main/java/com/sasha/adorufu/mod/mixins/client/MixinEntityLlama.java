@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.ModuleEntitySpeed;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleEntitySpeed;
 import net.minecraft.entity.passive.EntityLlama;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

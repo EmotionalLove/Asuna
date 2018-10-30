@@ -19,8 +19,8 @@
 package com.sasha.adorufu.mod;
 
 import com.sasha.adorufu.mod.exception.AdorufuNoSuchElementInDataFileException;
-import com.sasha.adorufu.mod.feature.AdorufuModule;
-import com.sasha.adorufu.mod.feature.impl.ModuleJoinLeaveMessages;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJoinLeaveMessages;
 import com.sasha.adorufu.mod.friend.Friend;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;

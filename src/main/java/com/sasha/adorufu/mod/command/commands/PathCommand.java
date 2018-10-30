@@ -25,7 +25,7 @@ import baritone.api.pathing.goals.GoalRunAway;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.ModuleJesus;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJesus;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;

@@ -18,8 +18,8 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
+import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleXray;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.ModuleXray;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +32,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 /**
  * Created by Sasha on 11/08/2018 at 12:53 PM
@@ -47,7 +49,8 @@ public abstract class MixinBlock {
             info.setReturnValue(true);
         }
         if (!Manager.Module.moduleRegistry.isEmpty() && Manager.Module.moduleRegistry.get(0).isEnabled() ) {
-            info.setReturnValue(ModuleXray.xrayBlocks.contains(state.getBlock()));
+            List<Block> blockList = ModuleXray.getXrayBlockList();
+            info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
     @Inject(method = "isFullBlock", at = @At("HEAD") , cancellable = true)
@@ -62,13 +65,15 @@ public abstract class MixinBlock {
             info.setReturnValue(true);
         }
         if (Manager.Module.moduleRegistry.get(0).isEnabled() && !Manager.Module.moduleRegistry.isEmpty()) {
-            info.setReturnValue(ModuleXray.xrayBlocks.contains(state.getBlock()));
+            List<Block> blockList = ModuleXray.getXrayBlockList();
+            info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
     @Inject(method = "getRenderType", at = @At("HEAD") , cancellable = true)
     public void getRenderType(IBlockState state, CallbackInfoReturnable<EnumBlockRenderType> info) {
         if (Manager.Module.moduleRegistry.get(0).isEnabled() && !Manager.Module.moduleRegistry.isEmpty()) {
-            if (!state.getBlock().isNormalCube(state) && !ModuleXray.xrayBlocks.contains(state.getBlock())) {
+            List<Block> blockList = ModuleXray.getXrayBlockList();
+            if (!state.getBlock().isNormalCube(state) && !blockList.contains(state.getBlock())) {
                 info.setReturnValue(EnumBlockRenderType.INVISIBLE);
             }
         }
@@ -76,7 +81,8 @@ public abstract class MixinBlock {
     @Inject(method = "shouldSideBeRendered", at = @At("HEAD") , cancellable = true)
     public void shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info) {
         if (Manager.Module.moduleRegistry.get(0).isEnabled() ) {
-            info.setReturnValue(ModuleXray.xrayBlocks.contains(blockState.getBlock()));
+            List<Block> blockList = ModuleXray.getXrayBlockList();
+            info.setReturnValue(blockList.contains(blockState.getBlock()));
         }
     }
 }

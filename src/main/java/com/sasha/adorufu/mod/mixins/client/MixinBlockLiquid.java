@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
-import com.sasha.adorufu.mod.feature.impl.ModuleJesus;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJesus;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.sasha.adorufu.mod.feature.impl.ModuleJesus.WATER_JESUS_AABB;
+import static com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJesus.WATER_JESUS_AABB;
 import static net.minecraft.block.Block.NULL_AABB;
 
 @Mixin(value = BlockLiquid.class, priority = 999)
