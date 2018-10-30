@@ -22,6 +22,7 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.impl.FlightFeature;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.Manager;
@@ -31,15 +32,15 @@ import java.util.stream.Collectors;
 
 import static com.sasha.adorufu.mod.gui.hud.AdorufuHUD.sWidth;
 
-public class RenderableHacklist extends RenderableObject {
-    public RenderableHacklist() {
-        super("Hacklist", ScreenCornerPos.RIGHTBOTTOM);
+public class RenderableFeatureList extends RenderableObject {
+    public RenderableFeatureList() {
+        super("Featurelist", ScreenCornerPos.RIGHTBOTTOM);
 
     }
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (Manager.Module.getModule("Hacklist").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(/* todo */)) {
             int count = 0;
             for (AdorufuModule module : getValidList()) {
                 if (module.getSuffix().equals("")) {
@@ -55,7 +56,7 @@ public class RenderableHacklist extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (Manager.Module.getModule("Hacklist").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(/* todo */)) {
             // TODO
         }
     }

@@ -345,7 +345,7 @@ public class AdorufuMod implements SimpleListener {
     private void registerRenderables() {
         renderableRegistry.clear();
         Manager.Renderable.register(new RenderableWatermark());
-        Manager.Renderable.register(new RenderableHacklist());
+        Manager.Renderable.register(new RenderableFeatureList());
         Manager.Renderable.register(new RenderableCoordinates());
         Manager.Renderable.register(new RenderableSaturation());
         Manager.Renderable.register(new RenderableInventoryStats());

@@ -87,6 +87,21 @@ public class Manager {
                     });
         }
 
+        public static IAdorufuFeature findFeature(Class<? extends IAdorufuFeature> featureClass) {
+            for (IAdorufuFeature feature : featureRegistry) {
+                if(feature.getClass() == featureClass) return feature;
+            }
+            return null;
+        }
+
+        public static boolean isFeatureEnabled(Class<? extends IAdorufuTogglableFeature> featureClass) {
+            for (IAdorufuFeature feature : featureRegistry) {
+                if (!(feature instanceof IAdorufuTogglableFeature)) continue;
+                if (feature.getClass() == featureClass && ((IAdorufuTogglableFeature) feature).isEnabled()) return true;
+            }
+            return false;
+        }
+
     }
 
     public static class Renderable implements SimpleListener {
