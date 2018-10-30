@@ -20,8 +20,8 @@ package com.sasha.adorufu.mod.feature;
 
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface IAdorufuFeature {
 
@@ -30,12 +30,13 @@ public interface IAdorufuFeature {
     }
     AdorufuCategory getCategory();
     List<AdorufuFeatureOption> getOptions();
+    Map<String, Boolean> getOptionsMap();
     boolean hasOptions();
     String getColouredName();
     String getFeatureName();
     void setSuffix(String s);
     void setSuffix(String[] s);
-    void setSuffix(LinkedHashMap<String, Boolean> boolMap);
+    void setSuffix(Map<String, Boolean> boolMap);
 
 
 }

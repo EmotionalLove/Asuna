@@ -18,22 +18,26 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.mod.events.server.ServerPlayerInventoryCloseEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
-import net.minecraft.network.play.client.CPacketKeepAlive;
+import net.minecraft.inventory.ContainerPlayer;
 
 /**
- * Created by Sasha at 11:00 AM on 8/28/2018
+ * Created by Sasha at 12:44 PM on 9/2/2018
  */
-@FeatureInfo(description = "Suspend packets")
-public class ModuleBlink extends AdorufuModule implements SimpleListener {
-    public ModuleBlink() {
-        super("Blink", AdorufuCategory.COMBAT, false);
+@FeatureInfo(description = "Use the crafting slots in your inventory as inventory spaces. Also makes illegal items usable on 2b2t.")
+public class CraftInventoryFeature extends AbstractAdorufuTogglableFeature implements SimpleListener,
+        IAdorufuTickableFeature {
+    public CraftInventoryFeature() {
+        super("CraftInventory", AdorufuCategory.MOVEMENT,
+                new AdorufuFeatureOption<>("Normal", true),
+                new AdorufuFeatureOption<>("Illegals", false));
     }
 
     @Override
@@ -48,13 +52,18 @@ public class ModuleBlink extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-
+        this.setSuffix(this.getOptionsMap());
     }
+
 
     @SimpleEventHandler
-    public void onPacketTx(ClientPacketSendEvent e) {
-        if (this.isEnabled() && !(e.getSendPacket() instanceof CPacketKeepAlive))
+    public void onPckCloseInv(ServerPlayerInventoryCloseEvent e) {
+        if (!this.isEnabled()) return;
+        if (e.getContainer() instanceof ContainerPlayer) {
             e.setCancelled(true);
+        }
+        if (this.getOptionsMap().get("Illegals") && !e.isCancelled()) {
+            e.setCancelled(true);
+        }
     }
-
 }

@@ -62,7 +62,7 @@ public class RenderableFeatureList extends RenderableObject {
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (Manager.Module.getModule("Hacklist").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(/* todo */)) {
             int count = 0;
             for (AdorufuModule module : getValidList()) {
                 if (module.isEnabled() && module.getSuffix().equals("")) {

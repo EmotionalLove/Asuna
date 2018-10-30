@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleAutoReconnect;
+import com.sasha.adorufu.mod.feature.impl.deprecated.AutoReconnectFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
@@ -57,8 +57,8 @@ public class MixinNetHandlerLoginClient {
         }
         else
         {
-            if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                this.mc.displayGuiScreen(new GuiDisconnectedAuto(this.previousGuiScreen, "connect.failed", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+            if (Manager.Module.getModule(AutoReconnectFeature.class).isEnabled()) {
+                this.mc.displayGuiScreen(new GuiDisconnectedAuto(this.previousGuiScreen, "connect.failed", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
                 return;
             }
             this.mc.displayGuiScreen(new GuiDisconnected(this.previousGuiScreen, "connect.failed", reason));

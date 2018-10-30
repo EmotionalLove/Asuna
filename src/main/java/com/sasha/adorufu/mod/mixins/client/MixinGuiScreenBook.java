@@ -21,7 +21,7 @@ package com.sasha.adorufu.mod.mixins.client;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.AdorufuBookNBTBuilder;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleBookForger;
+import com.sasha.adorufu.mod.feature.impl.deprecated.BookForgerFeature;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -81,9 +81,9 @@ public class MixinGuiScreenBook extends MixinGuiScreen {
                     this.book.setTagInfo("pages", this.bookPages);
                 }
                 AdorufuBookNBTBuilder builder = new AdorufuBookNBTBuilder(this.book);
-                boolean flag = Manager.Module.getModule(ModuleBookForger.class).isEnabled();
-                builder.setAuthor(flag ? ModuleBookForger.author : this.editingPlayer.getName());
-                if (flag) AdorufuMod.logMsg(false, ModuleBookForger.author);
+                boolean flag = Manager.Module.getModule(BookForgerFeature.class).isEnabled();
+                builder.setAuthor(flag ? BookForgerFeature.author : this.editingPlayer.getName());
+                if (flag) AdorufuMod.logMsg(false, BookForgerFeature.author);
                 builder.setTitle(this.bookTitle);
                 builder.setSign(publish);
                 builder.push();

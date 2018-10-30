@@ -20,7 +20,7 @@ package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleAutoReconnect;
+import com.sasha.adorufu.mod.feature.impl.deprecated.AutoReconnectFeature;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -82,8 +82,8 @@ public class MixinGuiConnecting extends MixinGuiScreen {
                 }
 
                 MixinGuiConnecting.LOGGER.error("Couldn't connect to server", (Throwable) unknownhostexception);
-                if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"}), ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+                if (Manager.Module.getModule(AutoReconnectFeature.class).isEnabled()) {
+                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"}), AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
                 }
                 else {
                     MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"})));
@@ -101,8 +101,8 @@ public class MixinGuiConnecting extends MixinGuiScreen {
                     s = s.replaceAll(s1, "");
                 }
 
-                if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s}), ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+                if (Manager.Module.getModule(AutoReconnectFeature.class).isEnabled()) {
+                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s}), AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
                 }
                 else {
                     MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s})));

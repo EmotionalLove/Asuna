@@ -21,10 +21,10 @@ package com.sasha.adorufu.mod.feature;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
 
@@ -51,6 +51,18 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
 
     public List<AdorufuFeatureOption> getOptions() {
         return this.featureOptions;
+    }
+
+    //todo
+    public Map<String, Boolean> getOptionsMap() {
+        return this.featureOptions
+                .stream()
+                .filter(e -> e.getStatus() instanceof Boolean)
+                .collect(
+                        Collectors
+                                .toMap
+                                        (AdorufuFeatureOption::getIdentifer,
+                                                featureOption -> (boolean)featureOption.getStatus()));
     }
 
     public boolean hasOptions() {
@@ -102,7 +114,7 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
         this.suffix = " \2478[\2477" + b.toString() + "\2478]";
     }
 
-    public void setSuffix(LinkedHashMap<String, Boolean> boolMap) {
+    public void setSuffix(Map<String, Boolean> boolMap) {
         StringBuilder b = new StringBuilder();
         AtomicInteger counter = new AtomicInteger();
         boolMap.entrySet().stream().filter(Map.Entry::getValue).forEach(strBool -> {

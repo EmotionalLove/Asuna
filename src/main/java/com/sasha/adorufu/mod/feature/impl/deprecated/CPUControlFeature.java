@@ -18,16 +18,18 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-@FeatureInfo(description = "Automatically sprint when walking")
-public class ModuleAutoSprint extends AdorufuModule  {
-    public ModuleAutoSprint() {
-        super("AutoSprint", AdorufuCategory.MOVEMENT, false);
+/**
+ * Created by Sasha at 5:59 PM on 9/12/2018
+ */
+@FeatureInfo(description = "Limits the framerate to 5FPS when the game isn't in focus.")
+public class CPUControlFeature extends AbstractAdorufuTogglableFeature {
+    public CPUControlFeature() {
+        super("CPUControl", AdorufuCategory.MISC);
     }
 
     @Override
@@ -38,12 +40,5 @@ public class ModuleAutoSprint extends AdorufuModule  {
     @Override
     public void onDisable() {
 
-    }
-
-    @Override
-    public void onTick() {
-        if (!AdorufuMod.minecraft.player.isSprinting() && this.isEnabled()) {
-            AdorufuMod.minecraft.player.setSprinting(true);
-        }
     }
 }

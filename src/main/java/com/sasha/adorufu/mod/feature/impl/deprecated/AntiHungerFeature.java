@@ -20,9 +20,11 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -31,11 +33,12 @@ import net.minecraft.network.play.client.CPacketPlayer;
  * Created by Sasha on 10/08/2018 at 12:47 PM
  **/
 @FeatureInfo(description = "Makes your hunger last longer while sprinting/jumping/etc")
-public class ModuleAntiHunger extends AdorufuModule implements SimpleListener {
-    public ModuleAntiHunger() {
-        super("AntiHunger", AdorufuCategory.MOVEMENT, false, true, true);
-        this.addOption("ncp", true);
-        this.addOption("aac", false);
+public class AntiHungerFeature extends AbstractAdorufuTogglableFeature implements SimpleListener, IAdorufuTickableFeature {
+    public AntiHungerFeature() {
+        super("AntiHunger"
+                , AdorufuCategory.MOVEMENT
+                , new AdorufuFeatureOption<>("ncp", true)
+                , new AdorufuFeatureOption<>("aac", false));
     }
 
     @Override
@@ -50,20 +53,21 @@ public class ModuleAntiHunger extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-        this.setSuffix(this.getModuleOptionsMap());
-        if (this.isEnabled() && (!AdorufuMod.minecraft.gameSettings.keyBindAttack.isPressed() || !AdorufuMod.minecraft.gameSettings.keyBindAttack.isKeyDown())) {
-            if (this.getOption("aac")) {
+        this.setSuffix(this.getOptionsMap());
+        if (!AdorufuMod.minecraft.gameSettings.keyBindAttack.isPressed() || !AdorufuMod.minecraft.gameSettings.keyBindAttack.isKeyDown()) {
+            if (this.getOptionsMap().get("aac")) {
                 return;
             }
             AdorufuMod.minecraft.getConnection().sendPacket(new CPacketPlayer(false));
         }
     }
+
     @SimpleEventHandler
     public void packetSent(ClientPacketSendEvent e) {
-        if (!this.isEnabled()){
+        if (!this.isEnabled()) {
             return;
         }
-        if (AdorufuMod.minecraft.player.motionY > 0.1 && this.getOption("aac")) {
+        if (AdorufuMod.minecraft.player.motionY > 0.1 && this.getOptionsMap().get("aac")) {
             return;
         }
         if (e.getSendPacket() instanceof CPacketPlayer) {

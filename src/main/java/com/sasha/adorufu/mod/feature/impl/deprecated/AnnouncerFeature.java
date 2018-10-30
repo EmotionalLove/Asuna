@@ -21,13 +21,13 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockBreakEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockPlaceEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,7 +39,8 @@ import java.util.Random;
  **/
 @PostToggleExec
 @FeatureInfo(description = "Sends a message in chat every 15 seconds about what you're doing in the world.")
-public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
+public class AnnouncerFeature extends AbstractAdorufuTogglableFeature implements SimpleListener,
+        IAdorufuTickableFeature {
 
     static boolean swap = false;
     private static int counter = 0;
@@ -49,8 +50,8 @@ public class ModuleAnnouncer extends AdorufuModule implements SimpleListener {
 
 
 
-    public ModuleAnnouncer() {
-        super("Announcer", AdorufuCategory.CHAT, false);
+    public AnnouncerFeature() {
+        super("Announcer", AdorufuCategory.CHAT);
     }
 
     @Override

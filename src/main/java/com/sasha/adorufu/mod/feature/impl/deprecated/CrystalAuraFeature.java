@@ -19,10 +19,11 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -42,12 +43,12 @@ import static com.sasha.adorufu.mod.feature.impl.deprecated.ModuleKillaura.rotat
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
 @FeatureInfo(description = "Automatically hit nearby crystals")
-public class ModuleCrystalAura extends AdorufuModule  {
-    public ModuleCrystalAura() {
-        super("CrystalAura", AdorufuCategory.COMBAT, false, true, true);
-        this.addOption("aura", true);
-        this.addOption("auto", false); // will not hit crystals if a friended player is nearby, or if you're vulnerable to dying.
-        this.addOption("auto all", false); // will hit crystals no matter what
+public class CrystalAuraFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public CrystalAuraFeature() {
+        super("CrystalAura", AdorufuCategory.COMBAT,
+                new AdorufuFeatureOption<>("aura", true),
+                new AdorufuFeatureOption<>("auto", false),
+                new AdorufuFeatureOption<>("auto all", false));
     }
 
     @Override
@@ -63,8 +64,8 @@ public class ModuleCrystalAura extends AdorufuModule  {
     @Override
     public void onTick() {
         if (this.isEnabled()) {
-            this.setSuffix(this.getModuleOptionsMap());
-            if (this.getOption("auto")) { // use radius of 3
+            this.setSuffix(this.getOptionsMap());
+            if (this.getOptionsMap().get("auto")) { // use radius of 3
                 boolean hasCrystals = false; // make sure the player even has crystal in their hotbar.
                 for (int s = 36; s <= 44; s++) {
                     ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
@@ -97,7 +98,7 @@ public class ModuleCrystalAura extends AdorufuModule  {
             }
 
 
-            if (this.getOption("aura")) {
+            if (this.getOptionsMap().get("aura")) {
                 for (Entity e : AdorufuMod.minecraft.world.loadedEntityList) {
                     if (e instanceof EntityEnderCrystal) {
                         if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f) {

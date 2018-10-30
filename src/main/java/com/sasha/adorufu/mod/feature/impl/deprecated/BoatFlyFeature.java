@@ -19,20 +19,22 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 
 /**
  * Created by Sasha at 3:48 PM on 9/24/2018
  */
-public class ModuleBoatFly extends AdorufuModule  {
-    public ModuleBoatFly() {
-        super("BoatFly", AdorufuCategory.MOVEMENT, false, true);
-        this.addOption("yawlock", false);
-        this.addOption("gravity", true);
-        this.addOption("all entities", false);
+public class BoatFlyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public BoatFlyFeature() {
+        super("BoatFly", AdorufuCategory.MOVEMENT,
+                new AdorufuFeatureOption<>("yawlock", false),
+                new AdorufuFeatureOption<>("gravity", true),
+                new AdorufuFeatureOption<>("all entities", false));
     }
 
     @Override
@@ -47,19 +49,18 @@ public class ModuleBoatFly extends AdorufuModule  {
 
     @Override
     public void onTick() {
-        if (!this.isEnabled()) return;
-        this.setSuffix(this.getModuleOptionsMap());
+        this.setSuffix(this.getOptionsMap());
         if (AdorufuMod.minecraft.player.isRiding()) {
-            if (AdorufuMod.minecraft.player.getRidingEntity() instanceof EntityBoat || this.getOption("all entities")) {
+            if (AdorufuMod.minecraft.player.getRidingEntity() instanceof EntityBoat || this.getOptionsMap().get("all entities")) {
                 Entity e = AdorufuMod.minecraft.player.getRidingEntity();
                 if (e == null) return;
-                if (!this.getOption("gravity")) {
+                if (!this.getOptionsMap().get("gravity")) {
                     e.setNoGravity(true);
                 }
                 else {
                     e.setNoGravity(false);
                 }
-                if (this.getOption("yawlock")) e.rotationYaw = (AdorufuMod.minecraft.player.rotationYaw);
+                if (this.getOptionsMap().get("yawlock")) e.rotationYaw = (AdorufuMod.minecraft.player.rotationYaw);
                 // actual boatfly
                 if (AdorufuMod.minecraft.gameSettings.keyBindJump.isPressed()) {
                     e.motionY = 0.5f;

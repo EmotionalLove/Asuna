@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleCameraClip;
+import com.sasha.adorufu.mod.feature.impl.deprecated.CameraClipFeature;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNightVision;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleTracers;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleWaypoints;
@@ -215,7 +215,7 @@ public abstract class MixinEntityRenderer {
                     f5 = f5 * 0.1F;
                     RayTraceResult raytraceresult = this.mc.world.rayTraceBlocks(new Vec3d(d0 + (double)f3, d1 + (double)f4, d2 + (double)f5), new Vec3d(d0 - d4 + (double)f3 + (double)f5, d1 - d6 + (double)f4, d2 - d5 + (double)f5));
 
-                    if (raytraceresult != null && !Manager.Module.getModule(ModuleCameraClip.class).isEnabled())
+                    if (raytraceresult != null && !Manager.Module.getModule(CameraClipFeature.class).isEnabled())
                     {
                         double d7 = raytraceresult.hitVec.distanceTo(new Vec3d(d0, d1, d2));
 

@@ -18,18 +18,15 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-/**
- * Created by Sasha at 5:59 PM on 9/12/2018
- */
-@FeatureInfo(description = "Limits the framerate to 5FPS when the game isn't in focus.")
-public class ModuleCPUControl extends AdorufuModule  {
-    public ModuleCPUControl() {
-        super("CPUControl", AdorufuCategory.MISC, false);
+@FeatureInfo(description = "Don't move the camera closer in 3rd person view")
+public class CameraClipFeature extends AbstractAdorufuTogglableFeature {
+    public CameraClipFeature() {
+        super("CameraClip", AdorufuCategory.RENDER);
     }
 
     @Override
@@ -40,9 +37,5 @@ public class ModuleCPUControl extends AdorufuModule  {
     @Override
     public void onDisable() {
 
-    }
-
-    @Override
-    public void onTick() {
     }
 }

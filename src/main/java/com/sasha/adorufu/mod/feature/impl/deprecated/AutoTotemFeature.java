@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -32,9 +32,9 @@ import net.minecraft.item.ItemStack;
  * Created by Sasha on 11/08/2018 at 8:27 PM
  **/
 @FeatureInfo(description = "Automatically moves a totem into your offhand if it's empty")
-public class ModuleAutoTotem extends AdorufuModule  {
-    public ModuleAutoTotem() {
-        super("AutoTotem", AdorufuCategory.COMBAT, false);
+public class AutoTotemFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public AutoTotemFeature() {
+        super("AutoTotem", AdorufuCategory.COMBAT);
     }
 
     @Override

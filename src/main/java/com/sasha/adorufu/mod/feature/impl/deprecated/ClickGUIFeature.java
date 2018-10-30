@@ -19,36 +19,31 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
+import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
 
 
-@FeatureInfo(description = "Don't get kicked for being AFK")
-public class ModuleAntiAFK extends AdorufuModule  {
-    private int timer=0;
-    public ModuleAntiAFK() {
-        super("AntiAFK", AdorufuCategory.MISC, false);
+/**
+ * Created by Sasha on 11/08/2018 at 10:27 AM
+ **/
+@PostToggleExec
+@FeatureInfo(description = "Displays the Clickgui")
+public class ClickGUIFeature extends AbstractAdorufuTogglableFeature {
+    public ClickGUIFeature() {
+        super("ClickGUI", AdorufuCategory.NA);
     }
 
     @Override
-    public void onEnable() {
-
+    public void onEnable(){
+        AdorufuMod.minecraft.displayGuiScreen(new AdorufuClickGUI());
+        this.toggleState();
     }
 
     @Override
     public void onDisable() {
 
-    }
-
-    @Override
-    public void onTick() {
-        if (this.isEnabled()) {
-            timer++;
-            if (timer >= 20) {
-                AdorufuMod.minecraft.clickMouse();
-                timer = 0;
-            }
-        }
     }
 }

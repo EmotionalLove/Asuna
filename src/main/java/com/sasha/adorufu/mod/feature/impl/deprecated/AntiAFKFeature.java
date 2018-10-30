@@ -19,18 +19,17 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
-import net.minecraft.client.multiplayer.ServerData;
 
-public class ModuleAutoReconnect extends AdorufuModule  {
-
-    public static long delay = 5000L;
-    public static ServerData serverData = null;
-
-    public ModuleAutoReconnect() {
-        super("AutoReconnect", AdorufuCategory.MISC, false);
+@FeatureInfo(description = "Don't get kicked for being AFK")
+public class AntiAFKFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    private int timer = 0;
+    public AntiAFKFeature() {
+        super("AntiAFK", AdorufuCategory.MISC);
     }
 
     @Override
@@ -45,7 +44,10 @@ public class ModuleAutoReconnect extends AdorufuModule  {
 
     @Override
     public void onTick() {
-        if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
-        serverData = AdorufuMod.minecraft.getCurrentServerData();
+        timer++;
+        if (timer >= 20) {
+            AdorufuMod.minecraft.clickMouse();
+            timer = 0;
+        }
     }
 }

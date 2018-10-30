@@ -21,12 +21,13 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.network.play.server.SPacketChat;
 import org.lwjgl.opengl.Display;
@@ -38,12 +39,13 @@ import java.awt.*;
  */
 
 @FeatureInfo(description = "Uses balloon notifications to notify you of events when the game is minimised")
-public class ModuleDesktopNotifications extends AdorufuModule implements SimpleListener {
+public class DesktopNotificationsFeature extends AbstractAdorufuTogglableFeature implements SimpleListener,
+        IAdorufuTickableFeature {
 
-    public ModuleDesktopNotifications() {
-        super("DesktopNotifications", AdorufuCategory.MISC, false, true);
-        this.addOption("Chat mentions", true);
-        this.addOption("Server kick", false);
+    public DesktopNotificationsFeature() {
+        super("DesktopNotifications", AdorufuCategory.MISC,
+                new AdorufuFeatureOption<>("Chat mentions", true),
+                new AdorufuFeatureOption<>("Server kick", false));
     }
 
     @Override
@@ -56,19 +58,19 @@ public class ModuleDesktopNotifications extends AdorufuModule implements SimpleL
 
     @Override
     public void onTick() {
-        this.setSuffix(this.getModuleOptionsMap());
+        this.setSuffix(this.getOptionsMap());
     }
 
     @SimpleEventHandler
     public void onScreenChanged(ClientScreenChangedEvent e) {
         if (e.getScreen() instanceof GuiDisconnected) {
-            if (Display.isActive() || !this.getOption("Server kick")) return;
+            if (Display.isActive() || !this.getOptionsMap().get("Server kick")) return;
             AdorufuMod.TRAY_MANAGER.trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).message.getUnformattedText().replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
         }
     }
     @SimpleEventHandler
     public void onChatRx(ClientPacketRecieveEvent e) {
-        if (!this.isEnabled() || this.getOption("Chat mentions")) return;
+        if (!this.isEnabled() || this.getOptionsMap().get("Chat mentions")) return;
         if (e.getRecievedPacket() instanceof SPacketChat) {
             SPacketChat pck = (SPacketChat) e.getRecievedPacket();
             if (!Display.isActive() && pck.getChatComponent().getUnformattedText().contains(AdorufuMod.minecraft.player.getName())) {

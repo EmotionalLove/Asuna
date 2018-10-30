@@ -19,22 +19,23 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 
-public class ModuleAutoEat extends AdorufuModule  {
+public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
     private static boolean eating = false;
     private static boolean checked = false;
     private static int prevSlot = 0;
 
-    public ModuleAutoEat() {
-        super("AutoEat", AdorufuCategory.MISC, false, true, true);
-        this.addOption("priority gapple", false); // eat gapples first, if available
-        this.addOption("conserve gapple", true); // eat other food first, then gapples
+    public AutoEatFeature() {
+        super("AutoEat", AdorufuCategory.MISC,
+                new AdorufuFeatureOption<>("priority gapple", false),
+                new AdorufuFeatureOption<>("conserve  gapple", true));
     }
 
     @Override
@@ -49,19 +50,18 @@ public class ModuleAutoEat extends AdorufuModule  {
 
     @Override
     public void onTick() {
-        if (!this.isEnabled()) return;
-        this.setSuffix(this.getModuleOptionsMap());
+        this.setSuffix(this.getOptionsMap());
         if (AdorufuMod.minecraft.player.getFoodStats().getFoodLevel() <= 8) {
             // we need to eat
             for (int s = 0; s <= 8; s++) {
                 if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
                     // we can eat this item
-                    if (this.getOption("conserve gapple")) {
+                    if (this.getOptionsMap().get("conserve gapple")) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
                             continue;
                         }
                     }
-                    else if (this.getOption("priority gapple") && !checked) {
+                    else if (this.getOptionsMap().get("priority gapple") && !checked) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
                             continue;
                         }
@@ -74,7 +74,7 @@ public class ModuleAutoEat extends AdorufuModule  {
                     return;
                 }
             }
-            if (this.getOption("priority gapple")) {
+            if (this.getOptionsMap().get("priority gapple")) {
                 checked = true;
             }
             return;

@@ -19,19 +19,18 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.client.gui.GuiScreen;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import net.minecraft.client.multiplayer.ServerData;
 
-/**
- * Created by Sasha on 11/08/2018 at 6:32 PM
- **/
-@FeatureInfo(description = "Automatically respawn upon death")
-public class ModuleAutoRespawn extends AdorufuModule  {
-    public ModuleAutoRespawn() {
-        super("AutoRespawn", AdorufuCategory.COMBAT, false);
+public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
+    public static long delay = 5000L;
+    public static ServerData serverData = null;
+
+    public AutoReconnectFeature() {
+        super("AutoReconnect", AdorufuCategory.MISC);
     }
 
     @Override
@@ -46,11 +45,7 @@ public class ModuleAutoRespawn extends AdorufuModule  {
 
     @Override
     public void onTick() {
-        if(!this.isEnabled())
-            return;
-        if(AdorufuMod.minecraft.currentScreen instanceof GuiGameOver) {
-            AdorufuMod.minecraft.player.respawnPlayer();
-            AdorufuMod.minecraft.displayGuiScreen((GuiScreen)null);
-        }
+        if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
+        serverData = AdorufuMod.minecraft.getCurrentServerData();
     }
 }

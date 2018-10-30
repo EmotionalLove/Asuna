@@ -28,7 +28,7 @@ import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockPlaceEvent;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleCPUControl;
+import com.sasha.adorufu.mod.feature.impl.deprecated.CPUControlFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.gui.GuiScreen;
@@ -248,7 +248,7 @@ public abstract class MixinMinecraft {
         if (this.world == null && this.currentScreen != null) {
             return 30;
         }
-        if (!Display.isActive() && Manager.Module.getModule(ModuleCPUControl.class).isEnabled()) {
+        if (!Display.isActive() && Manager.Module.getModule(CPUControlFeature.class).isEnabled()) {
             return 1;
         }
         return (this.gameSettings.limitFramerate);

@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.util.text.TextComponentString;
@@ -32,9 +32,9 @@ import org.lwjgl.input.Mouse;
  * Created by Sasha on 12/08/2018 at 8:53 AM
  **/
 @FeatureInfo(description = "Automatically disconnect when a crystal is near you")
-public class ModuleCrystalLogout extends AdorufuModule  {
-    public ModuleCrystalLogout() {
-        super("CrystalLogout", AdorufuCategory.COMBAT, false);
+public class CrystalLogoutFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public CrystalLogoutFeature() {
+        super("CrystalLogout", AdorufuCategory.COMBAT);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class ModuleCrystalLogout extends AdorufuModule  {
                     //float attacktime = mc.player.getCooledAttackStrength(1);
                     if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f && !Mouse.isButtonDown(1)/* && mc.player.canEntityBeSeen(e)*/) {
                         if (e.isEntityAlive()) {
-                            AdorufuMod.minecraft.player.connection.getNetworkManager().closeChannel(new TextComponentString("\2476Disconnected by Ender Crystal"));
-                            this.toggle();
+                            AdorufuMod.minecraft.player.connection.getNetworkManager().closeChannel(new TextComponentString("\2476You were disconnected because you came into range with en End Crystal"));
+                            this.toggleState();
                             break;
                         }
                     }

@@ -32,7 +32,7 @@ public abstract class AbstractAdorufuTogglableFeature
         super(name, category);
     }
 
-    public AbstractAdorufuTogglableFeature(String name, AdorufuCategory category, AdorufuFeatureOption featureOption) {
+    public AbstractAdorufuTogglableFeature(String name, AdorufuCategory category, AdorufuFeatureOption... featureOption) {
         super(name, category, featureOption);
     }
 

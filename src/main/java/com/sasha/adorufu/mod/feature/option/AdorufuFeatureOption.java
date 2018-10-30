@@ -18,19 +18,15 @@
 
 package com.sasha.adorufu.mod.feature.option;
 
-import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.simplesettings.annotation.SerialiseSuper;
-import com.sasha.simplesettings.annotation.Transiant;
 
 @SerialiseSuper
-public class AdorufuFeatureOption {
+public class AdorufuFeatureOption<T> {
 
-    @Transiant private IAdorufuFeature feature;
     private String identifer;
-    private boolean status;
+    private T status;
 
-    public AdorufuFeatureOption(IAdorufuFeature feature, String identifer, boolean def) {
-        this.feature = feature;
+    public AdorufuFeatureOption(String identifer, T def) {
         this.identifer = identifer;
         this.status = def;
     }
@@ -43,15 +39,11 @@ public class AdorufuFeatureOption {
         this.status = !status;
     }
 
-    public boolean isTrue() {
+    public T getStatus() {
         return status;
     }
 
     public String getIdentifer() {
         return identifer;
-    }
-
-    public IAdorufuFeature getFeature() {
-        return feature;
     }
 }

@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleClientIgnore;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ClientIgnoreFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
@@ -39,20 +39,20 @@ public class FilterCommand extends SimpleCommand {
             AdorufuMod.logErr(false, "Too few or too many arguments. Try -help command ignore");
             return;
         }
-        if (!ModuleClientIgnore.filterList.contains(this.getArguments()[0])) {
-            ModuleClientIgnore.filterList.add(this.getArguments()[0]);
+        if (!ClientIgnoreFeature.filterList.contains(this.getArguments()[0])) {
+            ClientIgnoreFeature.filterList.add(this.getArguments()[0]);
             AdorufuMod.logMsg(false, "\"" + this.getArguments()[0] + "\" will now be filtered.");
             try {
-                AdorufuMod.DATA_MANAGER.saveFilterList(ModuleClientIgnore.filterList);
+                AdorufuMod.DATA_MANAGER.saveFilterList(ClientIgnoreFeature.filterList);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return;
         }
-        ModuleClientIgnore.filterList.remove(this.getArguments()[0]);
+        ClientIgnoreFeature.filterList.remove(this.getArguments()[0]);
         AdorufuMod.logMsg(false, "\"" + this.getArguments()[0] + "\" will no longer be filtered.");
         try {
-            AdorufuMod.DATA_MANAGER.saveFilterList(ModuleClientIgnore.filterList);
+            AdorufuMod.DATA_MANAGER.saveFilterList(ClientIgnoreFeature.filterList);
         } catch (IOException e) {
             e.printStackTrace();
         }

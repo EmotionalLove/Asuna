@@ -25,7 +25,7 @@ import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.events.server.ServerLoadChunkEvent;
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleAutoReconnect;
+import com.sasha.adorufu.mod.feature.impl.deprecated.AutoReconnectFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -101,15 +101,15 @@ public class MixinNetHandlerPlayClient {
             if (this.guiScreenServer instanceof GuiScreenRealmsProxy) {
                 this.client.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy) this.guiScreenServer).getProxy(), "disconnect.lost", reason)).getProxy());
             } else {
-                if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                    this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+                if (Manager.Module.getModule(AutoReconnectFeature.class).isEnabled()) {
+                    this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
                 } else {
                     this.client.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
                 }
             }
         } else {
-            if (Manager.Module.getModule(ModuleAutoReconnect.class).isEnabled()) {
-                this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, ModuleAutoReconnect.delay, ModuleAutoReconnect.serverData));
+            if (Manager.Module.getModule(AutoReconnectFeature.class).isEnabled()) {
+                this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
             } else {
                 this.client.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
             }

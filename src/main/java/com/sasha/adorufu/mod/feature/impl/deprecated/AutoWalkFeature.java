@@ -19,8 +19,10 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.adorufu.mod.gui.hud.Direction;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
@@ -32,12 +34,12 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Created by Sasha at 3:55 PM on 9/23/2018
  */
-public class ModuleAutoWalk extends AdorufuModule  {
+public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
     private static int timer = 0;
-    public ModuleAutoWalk() {
-        super("AutoWalk", AdorufuCategory.MOVEMENT, false, true, true);
-        this.addOption("Normal", true);
-        this.addOption("Pathfinder", false);
+    public AutoWalkFeature() {
+        super("AutoWalk", AdorufuCategory.MOVEMENT,
+                new AdorufuFeatureOption<>("Normal", true),
+                new AdorufuFeatureOption<>("Pathfinder", false));
     }
 
     @Override
@@ -52,10 +54,9 @@ public class ModuleAutoWalk extends AdorufuModule  {
 
     @Override
     public void onTick() {
-        if (!this.isEnabled()) return;
-        this.setSuffix(this.getModuleOptionsMap());
+        this.setSuffix(this.getOptionsMap());
         AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindForward, true);
-        if (this.getOption("pathfinder")) {
+        if (this.getOptionsMap().get("Pathfinder")) {
             timer++;
             if (timer >= 20) {
                 if (isObstacleThere()) {

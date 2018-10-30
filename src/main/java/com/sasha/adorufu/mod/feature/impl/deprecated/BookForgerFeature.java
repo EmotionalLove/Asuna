@@ -19,36 +19,29 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
-import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
-
 
 /**
- * Created by Sasha on 11/08/2018 at 10:27 AM
- **/
-@PostToggleExec
-@FeatureInfo(description = "Displays the Clickgui")
-public class ModuleClickGUI extends AdorufuModule  {
-    public ModuleClickGUI() {
-        super("ClickGUI", AdorufuCategory.GUI, false);
+ * Created by Sasha at 3:23 PM on 9/16/2018
+ * The server seems to verify who's signing the book, so this won't work on vanilla or ncp servers for the time being
+ */
+public class BookForgerFeature extends AbstractAdorufuTogglableFeature {
+
+    public static String author = "Adorufu_Client";
+
+    public BookForgerFeature() {
+        super("BookForger", AdorufuCategory.MISC);
     }
 
     @Override
-    public void onEnable(){
-        AdorufuMod.minecraft.displayGuiScreen(new AdorufuClickGUI());
-        this.toggle();
+    public void onEnable() {
+        AdorufuMod.logWarn(false, "The server seems to verify who's signing the book, " +
+                "so this won't work on even vanilla servers for the time being...");
     }
 
     @Override
     public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
 
     }
 }

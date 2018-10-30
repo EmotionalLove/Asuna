@@ -18,36 +18,32 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientRenderFireOverlayEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
-/**
- * Created by Sasha at 3:23 PM on 9/16/2018
- * The server seems to verify who's signing the book, so this won't work on vanilla or ncp servers for the time being
- */
-public class ModuleBookForger extends AdorufuModule implements SimpleListener {
 
-    public static String author = "Adorufu_Client";
-
-    public ModuleBookForger() {
-        super("BookForger", AdorufuCategory.MISC, false);
+@FeatureInfo(description = "Hide the annoying 1st person fire overlay")
+public class AntiFireOverlayFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public AntiFireOverlayFeature() {
+        super("AntiFireOverlay", AdorufuCategory.RENDER);
     }
 
     @Override
     public void onEnable() {
-        AdorufuMod.logWarn(false, "The server seems to verify who's signing the book, " +
-                "so this won't work on even vanilla servers for the time being...");
+
     }
 
     @Override
     public void onDisable() {
 
     }
-
-    @Override
-    public void onTick() {
-
+    
+    @SimpleEventHandler
+    public void onFireRender(ClientRenderFireOverlayEvent e) {
+        if (this.isEnabled()) e.setCancelled(true);
     }
 }

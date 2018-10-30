@@ -18,24 +18,21 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.events.server.ServerPlayerInventoryCloseEvent;
+import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
-import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.network.play.client.CPacketKeepAlive;
 
 /**
- * Created by Sasha at 12:44 PM on 9/2/2018
+ * Created by Sasha at 11:00 AM on 8/28/2018
  */
-@FeatureInfo(description = "Use the crafting slots in your inventory as inventory spaces. Also makes illegal items usable on 2b2t.")
-public class ModuleCraftInventory extends AdorufuModule implements SimpleListener {
-    public ModuleCraftInventory() {
-        super("CraftInventory", AdorufuCategory.MOVEMENT, false, true, true);
-        this.addOption("Normal", true);
-        this.addOption("Illegals", false);
+@FeatureInfo(description = "Suspend packets")
+public class BlinkFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public BlinkFeature() {
+        super("Blink", AdorufuCategory.COMBAT);
     }
 
     @Override
@@ -48,20 +45,10 @@ public class ModuleCraftInventory extends AdorufuModule implements SimpleListene
 
     }
 
-    @Override
-    public void onTick() {
-        this.setSuffix(this.getModuleOptionsMap());
-    }
-
-
     @SimpleEventHandler
-    public void onPckCloseInv(ServerPlayerInventoryCloseEvent e) {
-        if (!this.isEnabled()) return;
-        if (e.getContainer() instanceof ContainerPlayer) {
+    public void onPacketTx(ClientPacketSendEvent e) {
+        if (this.isEnabled() && !(e.getSendPacket() instanceof CPacketKeepAlive))
             e.setCancelled(true);
-        }
-        if (this.getOption("Illegals") && !e.isCancelled()) {
-            e.setCancelled(true);
-        }
     }
+
 }

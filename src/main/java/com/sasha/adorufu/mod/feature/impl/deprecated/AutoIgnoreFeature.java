@@ -20,13 +20,13 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 
@@ -37,15 +37,15 @@ import java.util.HashMap;
 import static com.sasha.adorufu.mod.AdorufuMod.logWarn;
 
 @FeatureInfo(description = "Automatically ignore players that are spamming in chat.")
-public class ModuleAutoIgnore extends AdorufuModule implements SimpleListener {
+public class AutoIgnoreFeature extends AbstractAdorufuTogglableFeature implements SimpleListener, IAdorufuTickableFeature {
 
     public static HashMap<String/* Player's name */, Integer/* VL */> spamViolationMap = new HashMap<>();
     private static String lastMessage = "";
     private static int clock = 0;
     private static ArrayList<String> removalList = new ArrayList<>();
 
-    public ModuleAutoIgnore() {
-        super("AutoIgnore", AdorufuCategory.CHAT, false);
+    public AutoIgnoreFeature() {
+        super("AutoIgnore", AdorufuCategory.CHAT);
     }
 
     @Override
@@ -104,10 +104,10 @@ public class ModuleAutoIgnore extends AdorufuModule implements SimpleListener {
     }
     private static void handleIgnoring() {
         for (HashMap.Entry<String, Integer> entry : spamViolationMap.entrySet()) {
-            if (entry.getValue() > 40 && !ModuleClientIgnore.ignorelist.contains(entry.getKey())) {
-                ModuleClientIgnore.ignorelist.add(entry.getKey());
+            if (entry.getValue() > 40 && !ClientIgnoreFeature.ignorelist.contains(entry.getKey())) {
+                ClientIgnoreFeature.ignorelist.add(entry.getKey());
                 try {
-                    AdorufuMod.DATA_MANAGER.saveIgnorelist(ModuleClientIgnore.ignorelist);
+                    AdorufuMod.DATA_MANAGER.saveIgnorelist(ClientIgnoreFeature.ignorelist);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

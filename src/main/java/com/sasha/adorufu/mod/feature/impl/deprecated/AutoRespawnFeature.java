@@ -18,18 +18,21 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.events.client.ClientRenderFireOverlayEvent;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
+import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.client.gui.GuiScreen;
 
-
-@FeatureInfo(description = "Hide the annoying 1st person fire overlay")
-public class ModuleAntiFireOverlay extends AdorufuModule implements SimpleListener {
-    public ModuleAntiFireOverlay() {
-        super("AntiFireOverlay", AdorufuCategory.RENDER, false);
+/**
+ * Created by Sasha on 11/08/2018 at 6:32 PM
+ **/
+@FeatureInfo(description = "Automatically respawn upon death")
+public class AutoRespawnFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public AutoRespawnFeature() {
+        super("AutoRespawn", AdorufuCategory.COMBAT);
     }
 
     @Override
@@ -44,10 +47,9 @@ public class ModuleAntiFireOverlay extends AdorufuModule implements SimpleListen
 
     @Override
     public void onTick() {
-
-    }
-    @SimpleEventHandler
-    public void onFireRender(ClientRenderFireOverlayEvent e) {
-        if (this.isEnabled()) e.setCancelled(true);
+        if(AdorufuMod.minecraft.currentScreen instanceof GuiGameOver) {
+            AdorufuMod.minecraft.player.respawnPlayer();
+            AdorufuMod.minecraft.displayGuiScreen((GuiScreen)null);
+        }
     }
 }

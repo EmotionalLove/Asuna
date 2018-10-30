@@ -22,7 +22,7 @@ import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleClientIgnore;
+import com.sasha.adorufu.mod.feature.impl.deprecated.ClientIgnoreFeature;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNameProtect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -88,7 +88,7 @@ public abstract class MixinGuiPlayerTabOverlay {
         }
 
         for (NetworkPlayerInfo networkPlayerInfo : list) {
-            if (ModuleClientIgnore.ignorelist.contains(networkPlayerInfo.getGameProfile().getName())) {
+            if (ClientIgnoreFeature.ignorelist.contains(networkPlayerInfo.getGameProfile().getName())) {
                 networkPlayerInfo.setDisplayName(new TextComponentString("\2478" + networkPlayerInfo.getGameProfile().getName()));
                 continue;
             }
