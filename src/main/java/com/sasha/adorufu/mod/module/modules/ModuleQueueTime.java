@@ -75,7 +75,6 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
             SPacketChat e = (SPacketChat) ev.getRecievedPacket();
             if (stripColours(e.getChatComponent().getUnformattedText()).startsWith("Position in queue: ")) {
                 int queuepos = Integer.parseInt(stripColours(e.chatComponent.getUnformattedText()).replace("Position in queue: ", ""));
-                //This runs when the module is initiated
                 if (lastQueuePos == -1) {
                     lastQueuePos = queuepos;
                     AdorufuMod.logMsg("Wait patiently for "+milestone+" spots in the queue to pass to ensure (semi)accurate measurement");
@@ -83,19 +82,14 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
                     preMeasurementMilestoneTime = System.nanoTime();
                     return;
                 }
-                //this should run recursively
                 if (queueMeasurementMilestone >= queuepos) {
                     AdorufuMod.logMsg("Queue measurement milestone reached. Re-Calculating...");
                     estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime)/milestone;
                     //Resetting...
                     preMeasurementMilestoneTime = System.nanoTime();
                     queueMeasurementMilestone = queuepos - milestone;
-
                     long estTimeWhole = estTimePerSpot * queuepos;
                     tu = convert(estTimeWhole);
-
-
-
                     return;
                 }
                 if(!tu.equals("")) {
