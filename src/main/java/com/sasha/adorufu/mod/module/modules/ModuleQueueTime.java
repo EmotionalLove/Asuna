@@ -27,7 +27,6 @@ import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
 import net.minecraft.network.play.server.SPacketChat;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.sasha.adorufu.mod.module.modules.ModuleAutoIgnore.stripColours;
@@ -40,7 +39,7 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
     private static long preMeasurementMilestoneTime = 0;
-    String convert(long nanoSeconds) {
+    private String convert(long nanoSeconds) {
         int hrs = (int) TimeUnit.NANOSECONDS.toHours(nanoSeconds) % 24;
         int min = (int) TimeUnit.NANOSECONDS.toMinutes(nanoSeconds) % 60;
         int sec = (int) TimeUnit.NANOSECONDS.toSeconds(nanoSeconds) % 60;
