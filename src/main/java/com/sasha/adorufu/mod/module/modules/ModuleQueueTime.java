@@ -83,20 +83,17 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
                 //this should run recursively
                 if (queueMeasurementMilestone >= queuepos) {
                     AdorufuMod.logMsg("Queue measurement milestone reached. Re-Calculating...");
-                    estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime)/milestone;
+                    estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime) / milestone;
                     //Resetting...
                     preMeasurementMilestoneTime = System.nanoTime();
                     queueMeasurementMilestone = queuepos - milestone;
 
                     long estTimeWhole = estTimePerSpot * queuepos;
                     tu = convert(estTimeWhole);
-                    AdorufuMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
-
-
-
                     return;
-                }
 
+                }
+                AdorufuMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
 
             }
         }
