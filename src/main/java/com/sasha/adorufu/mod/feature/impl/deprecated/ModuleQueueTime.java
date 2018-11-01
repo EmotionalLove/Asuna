@@ -29,13 +29,12 @@ import net.minecraft.network.play.server.SPacketChat;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.sasha.adorufu.mod.feature.impl.deprecated.AutoIgnoreFeature.stripColours;
+import static com.sasha.adorufu.mod.feature.impl.AutoIgnoreFeature.stripColours;
 
 @FeatureInfo(description = "Show the estimated time left in queue in chat")
 public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     public static int milestone = 5;
     public String tu = "Calculating...";
-    private static long estTimePerSpot = 10000;
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
     private static long preMeasurementMilestoneTime = 0;
@@ -58,6 +57,7 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onChatRecieved(ClientPacketRecieveEvent ev) {
         if (!this.isEnabled()) return;
@@ -76,7 +76,7 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
                 //this should run recursively
                 if (queueMeasurementMilestone >= queuepos) {
                     AdorufuMod.logMsg("Queue measurement milestone reached. Re-Calculating...");
-                    estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime) / milestone;
+                    long estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime) / milestone;
                     //Resetting...
                     preMeasurementMilestoneTime = System.nanoTime();
                     queueMeasurementMilestone = queuepos - milestone;
