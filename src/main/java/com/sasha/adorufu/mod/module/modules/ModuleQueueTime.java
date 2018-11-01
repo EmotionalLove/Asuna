@@ -34,7 +34,7 @@ import static com.sasha.adorufu.mod.module.modules.ModuleAutoIgnore.stripColours
 @ModuleInfo(description = "Show the estimated time left in queue in chat")
 public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     public static int milestone = 5;
-    public String tu="";
+    public String tu="Calculating...";
     private static long estTimePerSpot = 10000;
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
