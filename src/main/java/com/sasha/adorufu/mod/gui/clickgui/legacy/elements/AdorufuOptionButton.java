@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mod.gui.clickgui.legacy.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.AdorufuClickGUI;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -53,8 +53,8 @@ public class AdorufuOptionButton {
 		float var3 = 0f;
 		float var4 = 0.5f;
 		AtomicBoolean isTrue = new AtomicBoolean(false);
-		Manager.Module.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
-			if ((mod.getModuleName() + " Options").equalsIgnoreCase(this.window.getTitle())) {
+		Manager.Feature.featureRegistry.stream().filter(IAdorufuFeature::hasOptions).forEach(mod -> {
+			if ((mod.getFeatureName() + " Options").equalsIgnoreCase(this.window.getTitle())) {
 				if (mod.getOption(this.toToggle)) isTrue.set(true);
 				return;
 			}
@@ -85,13 +85,9 @@ public class AdorufuOptionButton {
 		if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && button == 0) {
 			AdorufuClickGUI.focusWindow(window);
 			Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player.posX, Minecraft.getMinecraft().player.posY, Minecraft.getMinecraft().player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
-			Manager.Module.moduleRegistry.stream().filter(AdorufuModule::hasOptions).forEach(mod -> {
-                if ((mod.getModuleName() + " Options").equalsIgnoreCase(this.window.getTitle())) {
-                	if (mod.useModeSelection()){
-                		mod.toggleOptionMode(this.toToggle);
-					}
-                    mod.toggleOption(this.toToggle);
-                    return;
+			Manager.Feature.featureRegistry.stream().filter(IAdorufuFeature::hasOptions).forEach(mod -> {
+                if ((mod.getFeatureName() + " Options").equalsIgnoreCase(this.window.getTitle())) {
+                	mod.setOption(this.toToggle, !mod.getOption(this.toToggle));
                 }
             });
 		} else if (x >= getX() + window.getDragX() && y >= getY() + window.getDragY() && x <= getX() + 96 + window.getDragX() && y <= getY() + 11 + window.getDragY() && button == 1) {
