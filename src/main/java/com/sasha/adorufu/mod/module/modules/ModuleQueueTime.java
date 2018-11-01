@@ -34,7 +34,7 @@ import static com.sasha.adorufu.mod.module.modules.ModuleAutoIgnore.stripColours
 @ModuleInfo(description = "Show the estimated time left in queue in chat")
 public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     public static int milestone = 5;
-    public String tu="";
+    public String tu="Calculating...";
     private static long estTimePerSpot = 10000;
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
@@ -83,20 +83,17 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
                 //this should run recursively
                 if (queueMeasurementMilestone >= queuepos) {
                     AdorufuMod.logMsg("Queue measurement milestone reached. Re-Calculating...");
-                    estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime)/milestone;
+                    estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime) / milestone;
                     //Resetting...
                     preMeasurementMilestoneTime = System.nanoTime();
                     queueMeasurementMilestone = queuepos - milestone;
 
                     long estTimeWhole = estTimePerSpot * queuepos;
                     tu = convert(estTimeWhole);
-                    AdorufuMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
-
-
-
                     return;
-                }
 
+                }
+                AdorufuMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
 
             }
         }
