@@ -27,18 +27,9 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders your saturation level on the HUD")
 public class SaturationRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public SaturationRenderableFeature() {
         super("Saturation", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
 }

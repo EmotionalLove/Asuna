@@ -31,18 +31,9 @@ import net.minecraft.client.gui.GuiScreen;
  **/
 @FeatureInfo(description = "Automatically respawn upon death")
 public class AutoRespawnFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     public AutoRespawnFeature() {
         super("AutoRespawn", AdorufuCategory.COMBAT);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override

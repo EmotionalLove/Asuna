@@ -31,18 +31,9 @@ import net.minecraft.network.play.client.CPacketKeepAlive;
  */
 @FeatureInfo(description = "Suspend packets")
 public class BlinkFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+
     public BlinkFeature() {
         super("Blink", AdorufuCategory.COMBAT);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @SimpleEventHandler

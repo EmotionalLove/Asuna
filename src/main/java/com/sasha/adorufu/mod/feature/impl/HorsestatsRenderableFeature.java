@@ -27,17 +27,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders horse statistics on the HUD")
 public class HorsestatsRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public HorsestatsRenderableFeature() {
         super("HorseStats", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

@@ -39,16 +39,6 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
         if (AdorufuMod.minecraft.player.getFoodStats().getFoodLevel() <= 8) {
@@ -60,8 +50,7 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
                             continue;
                         }
-                    }
-                    else if (this.getFormattableOptionsMap().get("priority gapple") && !checked) {
+                    } else if (this.getFormattableOptionsMap().get("priority gapple") && !checked) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
                             continue;
                         }

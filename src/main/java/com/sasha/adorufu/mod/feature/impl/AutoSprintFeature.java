@@ -27,18 +27,9 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 @FeatureInfo(description = "Automatically sprint when walking")
 public class AutoSprintFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     public AutoSprintFeature() {
         super("AutoSprint", AdorufuCategory.MOVEMENT);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override

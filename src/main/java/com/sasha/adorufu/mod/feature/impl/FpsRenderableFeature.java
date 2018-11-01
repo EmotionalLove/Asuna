@@ -27,17 +27,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders the framerate on the HUD")
 public class FpsRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public FpsRenderableFeature() {
         super("FPS", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

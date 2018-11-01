@@ -28,17 +28,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  */
 @FeatureInfo(description = "Limits the framerate to 5FPS when the game isn't in focus.")
 public class CPUControlFeature extends AbstractAdorufuTogglableFeature {
+
     public CPUControlFeature() {
         super("CPUControl", AdorufuCategory.MISC);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

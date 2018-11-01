@@ -39,15 +39,6 @@ public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implemen
     }
 
     @Override
-    public void onEnable() {
-        
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-    @Override
     public void onTick() {
         if (this.isEnabled()) {
             //this updates + displays flight speed

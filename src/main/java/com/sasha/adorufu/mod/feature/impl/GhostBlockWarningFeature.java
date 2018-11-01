@@ -44,15 +44,6 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-    @Override
     public void onRender(){
         if (!this.isEnabled()){
             return;

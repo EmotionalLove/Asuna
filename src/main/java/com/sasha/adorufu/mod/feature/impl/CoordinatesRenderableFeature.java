@@ -28,17 +28,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders the coordinates on the HUD")
 public class CoordinatesRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public CoordinatesRenderableFeature() {
         super("Coordinates", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

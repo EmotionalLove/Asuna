@@ -49,14 +49,6 @@ public class DesktopNotificationsFeature extends AbstractAdorufuTogglableFeature
     }
 
     @Override
-    public void onEnable() {
-    }
-
-    @Override
-    public void onDisable() {
-    }
-
-    @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
     }

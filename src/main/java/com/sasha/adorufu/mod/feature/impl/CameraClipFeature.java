@@ -25,17 +25,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 @FeatureInfo(description = "Don't move the camera closer in 3rd person view")
 public class CameraClipFeature extends AbstractAdorufuTogglableFeature {
+
     public CameraClipFeature() {
         super("CameraClip", AdorufuCategory.RENDER);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

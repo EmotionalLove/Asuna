@@ -27,18 +27,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders your equipment's damage on the HUD")
 public class EquipmentDamageRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public EquipmentDamageRenderableFeature() {
         super("EquipmentDamage", AdorufuCategory.GUI);
     }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
 }

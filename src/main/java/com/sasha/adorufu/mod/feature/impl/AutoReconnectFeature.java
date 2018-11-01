@@ -34,16 +34,6 @@ public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implem
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
     public void onTick() {
         if (AdorufuMod.minecraft.getCurrentServerData() == null) return;
         serverData = AdorufuMod.minecraft.getCurrentServerData();

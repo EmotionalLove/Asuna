@@ -50,9 +50,9 @@ public class FreecamFeature extends AbstractAdorufuTogglableFeature implements S
 
     @Override
     public void onEnable() {
-        oldX=AdorufuMod.minecraft.player.posX;
-        oldY=AdorufuMod.minecraft.player.posY;
-        oldZ=AdorufuMod.minecraft.player.posZ;
+        oldX = AdorufuMod.minecraft.player.posX;
+        oldY = AdorufuMod.minecraft.player.posY;
+        oldZ = AdorufuMod.minecraft.player.posZ;
         oldYaw = AdorufuMod.minecraft.player.rotationYaw;
         oldPitch = AdorufuMod.minecraft.player.rotationPitch;
         oldGameType = AdorufuMod.minecraft.playerController.currentGameType;
@@ -66,7 +66,7 @@ public class FreecamFeature extends AbstractAdorufuTogglableFeature implements S
         AdorufuMod.minecraft.player.motionX = 0.0;
         AdorufuMod.minecraft.player.motionY = 0.0;
         AdorufuMod.minecraft.player.motionZ = 0.0;
-        AdorufuMod.minecraft.player.setLocationAndAngles(oldX, oldY, oldZ, (float)oldYaw, (float)oldPitch);
+        AdorufuMod.minecraft.player.setLocationAndAngles(oldX, oldY, oldZ, (float) oldYaw, (float) oldPitch);
         AdorufuMod.minecraft.playerController.setGameType(oldGameType);
         AdorufuMod.minecraft.player.setGameType(oldGameType);
         AdorufuMod.minecraft.player.noClip = false;
@@ -88,22 +88,24 @@ public class FreecamFeature extends AbstractAdorufuTogglableFeature implements S
     }
 
     @SimpleEventHandler
-    public void onPacketRx(ClientPacketRecieveEvent e){
+    public void onPacketRx(ClientPacketRecieveEvent e) {
         if (this.isEnabled()) {
             if (e.getRecievedPacket() instanceof CPacketPlayer) {
                 this.toggleState();
             }
         }
     }
+
     @SimpleEventHandler
-    public void onPacketTx(ClientPacketSendEvent e){
-        if (this.isEnabled()){
+    public void onPacketTx(ClientPacketSendEvent e) {
+        if (this.isEnabled()) {
             if (minecraft.world == null) this.toggleState();
-            if(e.getSendPacket() instanceof CPacketPlayer || e.getSendPacket() instanceof CPacketInput) {
+            if (e.getSendPacket() instanceof CPacketPlayer || e.getSendPacket() instanceof CPacketInput) {
                 e.setCancelled(true);
             }
         }
     }
+
     @SimpleEventHandler
     public void onPushoutofblocks(ClientPushOutOfBlocksEvent e) {
         if (minecraft.world == null && this.isEnabled()) this.toggleState();

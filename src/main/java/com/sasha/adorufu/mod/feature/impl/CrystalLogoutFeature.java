@@ -33,18 +33,9 @@ import org.lwjgl.input.Mouse;
  **/
 @FeatureInfo(description = "Automatically disconnect when a crystal is near you")
 public class CrystalLogoutFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     public CrystalLogoutFeature() {
         super("CrystalLogout", AdorufuCategory.COMBAT);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override

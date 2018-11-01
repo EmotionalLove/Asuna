@@ -31,19 +31,11 @@ import net.minecraft.util.MovementInput;
 
 @FeatureInfo(description = "Speedhack for ridable animals")
 public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     @Setting public static double speed;
+
     public EntitySpeedFeature() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override

@@ -39,9 +39,4 @@ public class BookForgerFeature extends AbstractAdorufuTogglableFeature {
         AdorufuMod.logWarn(false, "The server seems to verify who's signing the book, " +
                 "so this won't work on even vanilla servers for the time being...");
     }
-
-    @Override
-    public void onDisable() {
-
-    }
 }

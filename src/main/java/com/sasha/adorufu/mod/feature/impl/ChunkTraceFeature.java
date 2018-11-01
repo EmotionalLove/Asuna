@@ -52,16 +52,6 @@ public class ChunkTraceFeature extends AbstractAdorufuTogglableFeature
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
     public void onTick() {
         LinkedHashMap<String, Boolean> suffixMap = new LinkedHashMap<>();
         suffixMap.put("Chunks", this.getFormattableOptionsMap().get("ChunkESP"));

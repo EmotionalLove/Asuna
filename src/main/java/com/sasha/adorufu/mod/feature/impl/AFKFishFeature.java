@@ -32,17 +32,9 @@ import net.minecraft.network.play.server.SPacketSoundEffect;
  **/
 @FeatureInfo(description = "Automated fishing, for when you're not at your computer.")
 public class AFKFishFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
-    public AFKFishFeature(){
+
+    public AFKFishFeature() {
         super("AFKFish", AdorufuCategory.MISC);
-    }
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @SimpleEventHandler
