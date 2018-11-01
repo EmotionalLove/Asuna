@@ -55,12 +55,13 @@ public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListene
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onMusicSelect(ClientGetMusicTypeEvent e) {
         if (!this.isEnabled()) return;
-        this.getModuleOptionsMap().forEach((option, bool)-> {
+        this.getModuleOptionsMap().forEach((option, bool) -> {
             if (bool) {
-                switch(option.toLowerCase()) {
+                switch (option.toLowerCase()) {
                     case "creative":
                         e.setMusicType(MusicTicker.MusicType.CREATIVE);
                         break;

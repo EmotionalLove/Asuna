@@ -50,6 +50,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onMiddleClick(ClientMouseClickEvent.Middle e) {
         if (AdorufuMod.minecraft.world.getBlockState(AdorufuMod.minecraft.objectMouseOver.getBlockPos()).getBlock().material == Material.AIR) {
@@ -67,6 +68,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
         refreshXray();
         AdorufuMod.logMsg(false, b.getLocalizedName() + " removed.");
     }
+
     private static void refreshXray() {
         if (Manager.Module.getModule("X-Ray").isEnabled()) {
             AdorufuMod.minecraft.renderGlobal.loadRenderers();

@@ -27,7 +27,7 @@ import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 @FeatureInfo(description = "Display tracers to enabled waypoints.")
-public class ModuleWaypoints extends AdorufuModule  {
+public class ModuleWaypoints extends AdorufuModule {
 
     public static int i = 0;
 

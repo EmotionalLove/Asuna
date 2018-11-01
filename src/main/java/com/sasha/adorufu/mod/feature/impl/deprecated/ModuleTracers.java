@@ -29,6 +29,7 @@ import com.sasha.adorufu.mod.misc.AdorufuRender;
 @FeatureInfo(description = "Draws lines to nearby players.")
 public class ModuleTracers extends AdorufuModule {
     public static int i;
+
     public ModuleTracers() {
         super("Tracers", AdorufuCategory.RENDER, false);
     }
@@ -39,11 +40,12 @@ public class ModuleTracers extends AdorufuModule {
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
         i = 0;
     }
+
     @Override
-    public void onRender(){
+    public void onRender() {
         if (this.isEnabled()) {
             i = AdorufuRender.tracers();
         }

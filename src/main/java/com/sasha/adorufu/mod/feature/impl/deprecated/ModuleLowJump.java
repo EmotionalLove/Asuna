@@ -45,6 +45,7 @@ public class ModuleLowJump extends AdorufuModule implements SimpleListener {
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onJump(PlayerJumpEvent e) {
         if (!this.isEnabled()) return;

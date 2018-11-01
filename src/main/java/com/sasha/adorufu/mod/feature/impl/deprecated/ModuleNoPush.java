@@ -45,6 +45,7 @@ public class ModuleNoPush extends AdorufuModule implements SimpleListener {
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onEntityCollide(ClientEntityCollideEvent e) {
         if (this.isEnabled()) {

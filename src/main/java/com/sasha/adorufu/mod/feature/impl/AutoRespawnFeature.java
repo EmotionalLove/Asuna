@@ -38,9 +38,9 @@ public class AutoRespawnFeature extends AbstractAdorufuTogglableFeature implemen
 
     @Override
     public void onTick() {
-        if(AdorufuMod.minecraft.currentScreen instanceof GuiGameOver) {
+        if (AdorufuMod.minecraft.currentScreen instanceof GuiGameOver) {
             AdorufuMod.minecraft.player.respawnPlayer();
-            AdorufuMod.minecraft.displayGuiScreen((GuiScreen)null);
+            AdorufuMod.minecraft.displayGuiScreen((GuiScreen) null);
         }
     }
 }

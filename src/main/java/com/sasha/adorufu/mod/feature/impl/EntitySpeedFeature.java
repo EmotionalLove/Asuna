@@ -32,7 +32,8 @@ import net.minecraft.util.MovementInput;
 @FeatureInfo(description = "Speedhack for ridable animals")
 public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    @Setting public static double speed;
+    @Setting
+    public static double speed;
 
     public EntitySpeedFeature() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT);
@@ -40,7 +41,7 @@ public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implemen
 
     @Override
     public void onTick() {
-        if(!this.isEnabled())
+        if (!this.isEnabled())
             return;
         this.setSuffix(speed + "");
         if (AdorufuMod.minecraft.player.ridingEntity != null) {
@@ -55,6 +56,7 @@ public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implemen
             }
         }
     }
+
     private static void speedEntity(Entity entity) {
         if (entity instanceof EntityLlama) {
             entity.rotationYaw = AdorufuMod.minecraft.player.rotationYaw;
@@ -67,8 +69,7 @@ public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implemen
         if ((forward == 0.0D) && (strafe == 0.0D)) {
             entity.motionX = 0.0D;
             entity.motionZ = 0.0D;
-        }
-        else {
+        } else {
             if (forward != 0.0D) {
                 if (strafe > 0.0D) {
                     yaw += (forward > 0.0D ? -45 : 45);

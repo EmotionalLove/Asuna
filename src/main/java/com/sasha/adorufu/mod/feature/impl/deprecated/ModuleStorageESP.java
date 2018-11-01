@@ -81,7 +81,7 @@ public class ModuleStorageESP extends AdorufuModule {
             }
         }
         //todo int x = AdorufuMod.minecraft.world.loadedTileEntityList.stream().filter(tile -> tile. )
-        this.setSuffix(i+"");
+        this.setSuffix(i + "");
     }
 
     @Override

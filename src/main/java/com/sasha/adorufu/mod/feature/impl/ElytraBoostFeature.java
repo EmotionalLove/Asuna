@@ -32,7 +32,8 @@ import java.math.RoundingMode;
 @FeatureInfo(description = "Press the spacebar to go faster")
 public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    @Setting static float limit = 2.5f;
+    @Setting
+    static float limit = 2.5f;
 
     public ElytraBoostFeature() {
         super("ElytraBoost", AdorufuCategory.MOVEMENT);
@@ -44,7 +45,7 @@ public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implemen
             //this updates + displays flight speed
             if (AdorufuMod.minecraft.player.isElytraFlying()) {
                 double speed = Math.abs(AdorufuMod.minecraft.player.motionX) + Math.abs(AdorufuMod.minecraft.player.motionZ);
-                this.setSuffix(round(speed,2) + "");
+                this.setSuffix(round(speed, 2) + "");
             } else {
                 this.setSuffix("N/A");
             }
@@ -53,12 +54,13 @@ public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implemen
             if (AdorufuMod.minecraft.player.isElytraFlying() && AdorufuMod.minecraft.gameSettings.keyBindJump.isKeyDown()) {
                 float f1 = AdorufuMod.minecraft.player.rotationYaw * 0.017453292F;
                 if ((Math.abs(AdorufuMod.minecraft.player.motionX) + Math.abs(AdorufuMod.minecraft.player.motionZ)) < limit) {
-                    AdorufuMod.minecraft.player.motionX -= (double)(MathHelper.sin(f1) * 0.15f);
-                    AdorufuMod.minecraft.player.motionZ += (double)(MathHelper.cos(f1) * 0.15f);
+                    AdorufuMod.minecraft.player.motionX -= (double) (MathHelper.sin(f1) * 0.15f);
+                    AdorufuMod.minecraft.player.motionZ += (double) (MathHelper.cos(f1) * 0.15f);
                 }
             }
         }
     }
+
     private static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 

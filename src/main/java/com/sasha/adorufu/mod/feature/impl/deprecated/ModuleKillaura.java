@@ -54,7 +54,7 @@ public class ModuleKillaura extends AdorufuModule {
     }
 
     @Override
-    public void onTick(){
+    public void onTick() {
         if (this.isEnabled()) {
             if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...
             if (minecraft.player.getCooledAttackStrength(1) < 1) return;
@@ -85,6 +85,7 @@ public class ModuleKillaura extends AdorufuModule {
             }
         }
     }
+
     public static void rotateTowardsEntity(Entity entity) {
         double x = entity.posX - minecraft.player.posX;
         double z = entity.posZ - minecraft.player.posZ;

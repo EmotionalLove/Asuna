@@ -42,7 +42,7 @@ public class AFKFishFeature extends AbstractAdorufuTogglableFeature implements S
         if (!this.isEnabled()) return;
         if (e.getRecievedPacket() instanceof SPacketSoundEffect) {
             SPacketSoundEffect pck = (SPacketSoundEffect) e.getRecievedPacket();
-            if(pck.getSound().getSoundName().toString().equalsIgnoreCase("minecraft:entity.bobber.splash")){
+            if (pck.getSound().getSoundName().toString().equalsIgnoreCase("minecraft:entity.bobber.splash")) {
                 new Thread(() -> {
                     AdorufuMod.minecraft.rightClickMouse();
                     try {

@@ -37,7 +37,8 @@ import java.util.stream.Collectors;
 @FeatureInfo(description = "Makes chosen blocks invisible so that you can find ores or other blocks.")
 public class ModuleXray extends AdorufuModule {
 
-    @Setting public static ArrayList<Integer> xRayBlocks = new ArrayList<>();
+    @Setting
+    public static ArrayList<Integer> xRayBlocks = new ArrayList<>();
 
     private boolean wasNightVisionsOff = false;
 

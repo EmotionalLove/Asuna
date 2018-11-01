@@ -36,7 +36,7 @@ public class ModuleWaypointGUI extends AdorufuModule {
     }
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         AdorufuMod.minecraft.displayGuiScreen(new WaypointGUI());
         this.toggle();
     }

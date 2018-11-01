@@ -36,8 +36,10 @@ import java.util.List;
 @FeatureInfo(description = "Ignore players on the client side.")
 public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature implements SimpleListener,
         IAdorufuTickableFeature {
-    @Setting public static List<String> ignorelist = new ArrayList<>();
-    @Setting public static List<String> filterList = new ArrayList<>();
+    @Setting
+    public static List<String> ignorelist = new ArrayList<>();
+    @Setting
+    public static List<String> filterList = new ArrayList<>();
     private static List<String> dms = new ArrayList<>();
 
     public ClientIgnoreFeature() {
@@ -78,7 +80,7 @@ public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature impleme
                         msg1 = msg1.replace("\"", "");
                         msg1 = msg1.replace("'", "");
                         if (msg1.toLowerCase().startsWith(s.toLowerCase()) ||
-                        msg1.toLowerCase().endsWith(s.toLowerCase())) {
+                                msg1.toLowerCase().endsWith(s.toLowerCase())) {
                             e.setCancelled(true);
                             return;
                         }
