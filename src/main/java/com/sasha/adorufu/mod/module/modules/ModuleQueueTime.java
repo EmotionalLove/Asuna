@@ -18,13 +18,13 @@
 
 package com.sasha.adorufu.mod.module.modules;
 
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
-import com.sasha.adorufu.mod.module.ModuleInfo;
 import com.sasha.adorufu.mod.module.AdorufuCategory;
 import com.sasha.adorufu.mod.module.AdorufuModule;
+import com.sasha.adorufu.mod.module.ModuleInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketChat;
 
 import java.util.concurrent.TimeUnit;
@@ -34,17 +34,12 @@ import static com.sasha.adorufu.mod.module.modules.ModuleAutoIgnore.stripColours
 @ModuleInfo(description = "Show the estimated time left in queue in chat")
 public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     public static int milestone = 5;
-    public String tu="Calculating...";
+    public String tu = "Calculating...";
     private static long estTimePerSpot = 10000;
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
     private static long preMeasurementMilestoneTime = 0;
-    private String convert(long nanoSeconds) {
-        int hrs = (int) TimeUnit.NANOSECONDS.toHours(nanoSeconds) % 24;
-        int min = (int) TimeUnit.NANOSECONDS.toMinutes(nanoSeconds) % 60;
-        int sec = (int) TimeUnit.NANOSECONDS.toSeconds(nanoSeconds) % 60;
-        return String.format("%02dh %02dm %02ds", hrs, min, sec);
-    }
+
 
     public ModuleQueueTime() {
         super("QueueTime", AdorufuCategory.CHAT, false);
@@ -69,13 +64,13 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
     public void onChatRecieved(ClientPacketRecieveEvent ev) {
         if (!this.isEnabled()) return;
         if (ev.getRecievedPacket() instanceof SPacketChat) {
-            SPacketChat e = (SPacketChat) ev.getRecievedPacket();
+            SPacketChat e = ev.getRecievedPacket();
             if (stripColours(e.getChatComponent().getUnformattedText()).startsWith("Position in queue: ")) {
                 int queuepos = Integer.parseInt(stripColours(e.chatComponent.getUnformattedText()).replace("Position in queue: ", ""));
                 //This runs when the module is initiated
                 if (lastQueuePos == -1) {
                     lastQueuePos = queuepos;
-                    AdorufuMod.logMsg("Wait patiently for "+milestone+" spots in the queue to pass to ensure (semi)accurate measurement.");
+                    AdorufuMod.logMsg("Wait patiently for " + milestone + " spots in the queue to pass to ensure (semi)accurate measurement.");
                     queueMeasurementMilestone = queuepos - milestone;
                     preMeasurementMilestoneTime = System.nanoTime();
                     return;
@@ -97,6 +92,13 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
 
             }
         }
+    }
+
+    private String convert(long nanoSeconds) {
+        int hrs = (int) TimeUnit.NANOSECONDS.toHours(nanoSeconds) % 24;
+        int min = (int) TimeUnit.NANOSECONDS.toMinutes(nanoSeconds) % 60;
+        int sec = (int) TimeUnit.NANOSECONDS.toSeconds(nanoSeconds) % 60;
+        return String.format("%02dh %02dm %02ds", hrs, min, sec);
     }
 }
 
