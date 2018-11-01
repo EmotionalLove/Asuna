@@ -19,28 +19,17 @@
 package com.sasha.adorufu.mod.misc;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.command.commands.PathCommand;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
-import com.sasha.adorufu.mod.feature.annotation.ManualListener;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
-import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import org.reflections.Reflections;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import static com.sasha.adorufu.mod.AdorufuMod.DATA_MANAGER;
 
 /**
  * Created by Sasha at 9:09 AM on 9/17/2018
@@ -113,123 +102,6 @@ public class Manager {
             renderableRegistry.add(robj);
             AdorufuMod.SETTING_CLASSES.add(robj);
         }
-    }
-
-    public static class Module implements SimpleListener {
-
-        public static ArrayList<AdorufuModule> moduleRegistry = new ArrayList<>();
-
-        @SimpleEventHandler
-        public void onPreToggle(AdorufuModuleTogglePreEvent e) {
-            if (e.getToggledModule().hasForcefulAnnotation(e.getToggledModule().getClass()) && e.getToggleState() == ModuleState.DISABLE) {
-                e.setCancelled(true);
-                return;
-            }
-            if (e.getToggleState() == ModuleState.ENABLE && !e.getToggledModule().isPostExec(e.getToggledModule().getClass())) {
-                e.getToggledModule().onEnable();
-                return;
-            }
-            if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) return;
-            e.getToggledModule().onDisable();
-        }
-
-        @SimpleEventHandler
-        public void onModPostToggle(AdorufuModuleTogglePostEvent e) {
-            try {
-                DATA_MANAGER.saveModuleStates(true);
-            } catch (IOException e1) {
-                AdorufuMod.logErr(false, "Couldn't save feature state. " + e1.getMessage());
-                e1.printStackTrace();
-            }
-            if (e.getToggleState() == ModuleState.ENABLE) {
-                if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onEnable();
-
-                if (!e.getToggledModule().isRenderable()) {
-                    AdorufuModule.displayList.add(e.getToggledModule());
-                    return;
-                }
-                return;
-            }
-            if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onDisable();
-            if (!e.getToggledModule().isRenderable()) {
-                AdorufuModule.displayList.remove(e.getToggledModule());
-                return;
-            }
-        }
-
-        /**
-         * This will automatically register listeners to the Event Manager if they implement SimpleListener
-         */
-        public static void register(AdorufuModule mod) {
-            moduleRegistry.add(mod);
-            AdorufuMod.SETTING_CLASSES.add(mod);
-            if (mod.getClass().getInterfaces().length != 0) {
-                if (mod.getClass().getInterfaces()[0] == SimpleListener.class) {
-                    if (mod.getClass().getAnnotation(ManualListener.class) != null) {
-                        return;
-                    }
-                    AdorufuMod.logMsg(true, mod.getModuleName() + " is listening for events.");
-                    AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
-                }
-            }
-            mod.init();
-        }
-
-        @Deprecated
-        public static void loadBindsAndStates() {
-            Module.moduleRegistry.forEach(mod -> {
-                try {
-                    if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
-                        mod.forceState(ModuleState.ENABLE, false, true);
-                    }
-                    if (mod.hasForcefulAnnotation(mod.getClass())) {
-                        mod.forceState(ModuleState.ENABLE, false, true);
-                    }
-                    mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-
-        public static AdorufuModule getModule(String key) {
-            for (AdorufuModule m : moduleRegistry) {
-                if (m.getModuleName().equalsIgnoreCase(key)) return m;
-            }
-            return null;
-        }
-
-        public static AdorufuModule getModule(Class<? extends AdorufuModule> clazz) {
-            for (AdorufuModule m : moduleRegistry) {
-                if (m.getClass() == clazz) return m;
-            }
-            return null;
-        }
-
-        public static void tickModules() {
-            long l = System.currentTimeMillis();
-            moduleRegistry.forEach(mod -> {
-                try {
-                    mod.onTick();
-                } catch (Exception e) {
-                    AdorufuMod.logErr(false, "A severe uncaught exception occurred inside of a feature onTick() function");
-                    mod.forceState(ModuleState.DISABLE, false, true);
-                    StringWriter sw = new StringWriter();
-                    PrintWriter w = new PrintWriter(sw);
-                    e.printStackTrace(w);
-                    AdorufuMod.logMsg("\247c" + sw.toString().replace("\r\n", "\n"));
-                }
-            });
-            PathCommand.tick();
-            AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));
-        }
-
-        public static void renderModules() {
-            long l = System.currentTimeMillis();
-            moduleRegistry.forEach(AdorufuModule::onRender);
-            AdorufuMod.PERFORMANCE_ANAL.recordNewRenderTime((int) (System.currentTimeMillis() - l));
-        }
-
     }
 
     public static Set<Class> getClassesInPackage(String pckge, Class sub) {
