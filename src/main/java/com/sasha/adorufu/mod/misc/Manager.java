@@ -46,10 +46,11 @@ public class Manager {
             feature.onLoad();
         }
 
-        public static Iterator<IAdorufuFeature> getTogglableFeatures() {
+        public static Iterator<IAdorufuTogglableFeature> getTogglableFeatures() {
             return featureRegistry
                     .stream()
-                    .filter(e->e instanceof IAdorufuTogglableFeature)
+                    .filter(IAdorufuTogglableFeature.class::isInstance)
+                    .map(IAdorufuTogglableFeature.class::cast)
                     .iterator();
         }
 
@@ -60,51 +61,51 @@ public class Manager {
         public static void tickFeatures() {
             featureRegistry
                     .stream()
-                    .filter(feature -> feature instanceof IAdorufuTickableFeature)
-                    .forEach(tickableFeature -> {
-                        if (tickableFeature instanceof IAdorufuTogglableFeature
-                                &&
-                                ((IAdorufuTogglableFeature) tickableFeature).isEnabled()) {
-                            ((IAdorufuTickableFeature) tickableFeature).onTick();
+                    .filter(IAdorufuTickableFeature.class::isInstance)
+                    .map(IAdorufuTickableFeature.class::cast)
+                    .forEach(feature -> {
+                        if (feature instanceof IAdorufuTogglableFeature) {
+                            if (((IAdorufuTogglableFeature) feature).isEnabled()) {
+                                feature.onTick();
+                            }
                             return;
                         }
-                        ((IAdorufuTickableFeature) tickableFeature).onTick();
+                        feature.onTick();
                     });
         }
+
         public static void renderFeatures() {
             featureRegistry
                     .stream()
-                    .filter(feature -> feature instanceof IAdorufuRenderableFeature)
-                    .forEach(renderableFeature -> {
-                        if (renderableFeature instanceof IAdorufuTogglableFeature
-                        &&
-                        ((IAdorufuTogglableFeature) renderableFeature).isEnabled()) {
-                            ((IAdorufuRenderableFeature) renderableFeature).onRender();
+                    .filter(IAdorufuRenderableFeature.class::isInstance)
+                    .map(IAdorufuRenderableFeature.class::cast)
+                    .forEach(feature -> {
+                        if (feature instanceof IAdorufuTogglableFeature) {
+                            if (((IAdorufuTogglableFeature) feature).isEnabled()) {
+                                feature.onRender();
+                            }
                             return;
                         }
-                        ((IAdorufuRenderableFeature) renderableFeature).onRender();
+                        feature.onRender();
                     });
         }
 
-        public static IAdorufuFeature findFeature(Class<? extends IAdorufuFeature> featureClass) {
-            for (IAdorufuFeature feature : featureRegistry) {
-                if(feature.getClass() == featureClass) return feature;
-            }
-            return null;
+        public static <T extends IAdorufuFeature> T findFeature(Class<T> featureClass) {
+            // noinspection unchecked
+            return (T) featureRegistry.stream()
+                    .filter(f -> f.getClass().equals(featureClass))
+                    .findFirst().orElse(null);
         }
 
-        public static boolean isFeatureEnabled(Class<? extends IAdorufuTogglableFeature> featureClass) {
-            for (IAdorufuFeature feature : featureRegistry) {
-                if (!(feature instanceof IAdorufuTogglableFeature)) continue;
-                if (feature.getClass() == featureClass && ((IAdorufuTogglableFeature) feature).isEnabled()) return true;
-            }
-            return false;
+        public static <T extends IAdorufuFeature> boolean isFeatureEnabled(Class<T> featureClass) {
+            IAdorufuFeature feature = findFeature(featureClass);
+            return feature instanceof IAdorufuTogglableFeature && ((IAdorufuTogglableFeature) feature).isEnabled();
         }
-
     }
 
     public static class Renderable implements SimpleListener {
-        public static ArrayList<RenderableObject> renderableRegistry = new ArrayList<>();
+
+        public static List<RenderableObject> renderableRegistry = new ArrayList<>();
 
         public static void register(RenderableObject robj) {
             renderableRegistry.add(robj);
@@ -116,5 +117,4 @@ public class Manager {
         Reflections reflections = new Reflections(pckge);
         return reflections.getSubTypesOf(sub);
     }
-
 }

@@ -18,14 +18,14 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -50,6 +50,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onMiddleClick(ClientMouseClickEvent.Middle e) {
         if (AdorufuMod.minecraft.world.getBlockState(AdorufuMod.minecraft.objectMouseOver.getBlockPos()).getBlock().material == Material.AIR) {
@@ -67,6 +68,7 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
         refreshXray();
         AdorufuMod.logMsg(false, b.getLocalizedName() + " removed.");
     }
+
     private static void refreshXray() {
         if (Manager.Module.getModule("X-Ray").isEnabled()) {
             AdorufuMod.minecraft.renderGlobal.loadRenderers();

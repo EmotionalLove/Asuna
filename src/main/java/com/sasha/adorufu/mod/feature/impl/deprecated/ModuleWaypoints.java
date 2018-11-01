@@ -20,15 +20,14 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
-
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 @FeatureInfo(description = "Display tracers to enabled waypoints.")
-public class ModuleWaypoints extends AdorufuModule  {
+public class ModuleWaypoints extends AdorufuModule {
 
     public static int i = 0;
 

@@ -20,14 +20,12 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
-import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-
-import java.io.IOException;
 
 import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 

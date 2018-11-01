@@ -35,22 +35,13 @@ import net.minecraft.network.play.client.CPacketPlayer;
  **/
 @FeatureInfo(description = "Makes your hunger last longer while sprinting/jumping/etc")
 public class AntiHungerFeature extends AbstractAdorufuTogglableFeature implements SimpleListener, IAdorufuTickableFeature {
+
     public AntiHungerFeature() {
         super("AntiHunger"
                 , AdorufuCategory.MOVEMENT,
                 new AdorufuFeatureOptionBehaviour(true)
                 , new AdorufuFeatureOption<>("ncp", true)
                 , new AdorufuFeatureOption<>("aac", false));
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override

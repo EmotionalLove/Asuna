@@ -27,6 +27,7 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 @FeatureInfo(description = "Fly like you're in creative with an elytra")
 public class ElytraFlightFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     public ElytraFlightFeature() {
         super("ElytraFlight", AdorufuCategory.MOVEMENT);
     }
@@ -37,10 +38,7 @@ public class ElytraFlightFeature extends AbstractAdorufuTogglableFeature impleme
             AdorufuMod.minecraft.player.capabilities.isFlying = true;
         }
     }
-    @Override
-    public void onEnable() {
-        //
-    }
+
     @Override
     public void onDisable() {
         AdorufuMod.minecraft.player.capabilities.isFlying = false;

@@ -19,10 +19,10 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.misc.PlayerIdentity;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.misc.PlayerIdentity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityTameable;

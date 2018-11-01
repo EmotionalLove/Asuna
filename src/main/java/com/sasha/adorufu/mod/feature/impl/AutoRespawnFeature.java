@@ -31,25 +31,16 @@ import net.minecraft.client.gui.GuiScreen;
  **/
 @FeatureInfo(description = "Automatically respawn upon death")
 public class AutoRespawnFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     public AutoRespawnFeature() {
         super("AutoRespawn", AdorufuCategory.COMBAT);
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
     public void onTick() {
-        if(AdorufuMod.minecraft.currentScreen instanceof GuiGameOver) {
+        if (AdorufuMod.minecraft.currentScreen instanceof GuiGameOver) {
             AdorufuMod.minecraft.player.respawnPlayer();
-            AdorufuMod.minecraft.displayGuiScreen((GuiScreen)null);
+            AdorufuMod.minecraft.displayGuiScreen((GuiScreen) null);
         }
     }
 }

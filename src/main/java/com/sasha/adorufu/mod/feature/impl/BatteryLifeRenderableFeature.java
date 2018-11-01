@@ -32,18 +32,9 @@ import com.sasha.eventsys.SimpleListener;
  **/
 @FeatureInfo(description = "Displays your computer's battery percent.")
 public class BatteryLifeRenderableFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+
     public BatteryLifeRenderableFeature() {
         super("BatteryLife", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @SimpleEventHandler

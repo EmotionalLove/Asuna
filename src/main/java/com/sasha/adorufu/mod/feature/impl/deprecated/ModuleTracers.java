@@ -18,10 +18,10 @@
 
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
-import com.sasha.adorufu.mod.misc.AdorufuRender;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
 
 /**
  * Created by Sasha on 10/08/2018 at 8:55 AM
@@ -29,6 +29,7 @@ import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 @FeatureInfo(description = "Draws lines to nearby players.")
 public class ModuleTracers extends AdorufuModule {
     public static int i;
+
     public ModuleTracers() {
         super("Tracers", AdorufuCategory.RENDER, false);
     }
@@ -39,11 +40,12 @@ public class ModuleTracers extends AdorufuModule {
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
         i = 0;
     }
+
     @Override
-    public void onRender(){
+    public void onRender() {
         if (this.isEnabled()) {
             i = AdorufuRender.tracers();
         }

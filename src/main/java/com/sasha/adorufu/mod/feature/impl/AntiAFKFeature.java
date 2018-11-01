@@ -24,22 +24,13 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
-
 @FeatureInfo(description = "Don't get kicked for being AFK")
 public class AntiAFKFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     private int timer = 0;
+
     public AntiAFKFeature() {
         super("AntiAFK", AdorufuCategory.MISC);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override

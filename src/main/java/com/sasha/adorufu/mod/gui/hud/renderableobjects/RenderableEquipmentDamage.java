@@ -24,8 +24,6 @@ import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 
-import java.io.IOException;
-
 public class RenderableEquipmentDamage extends RenderableObject {
 
     public RenderableEquipmentDamage() {

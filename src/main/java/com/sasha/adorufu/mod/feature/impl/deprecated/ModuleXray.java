@@ -20,8 +20,8 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.simplesettings.annotation.Setting;
@@ -37,7 +37,8 @@ import java.util.stream.Collectors;
 @FeatureInfo(description = "Makes chosen blocks invisible so that you can find ores or other blocks.")
 public class ModuleXray extends AdorufuModule {
 
-    @Setting public static ArrayList<Integer> xRayBlocks = new ArrayList<>();
+    @Setting
+    public static ArrayList<Integer> xRayBlocks = new ArrayList<>();
 
     private boolean wasNightVisionsOff = false;
 

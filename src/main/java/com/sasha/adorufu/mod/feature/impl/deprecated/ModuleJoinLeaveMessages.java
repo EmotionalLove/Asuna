@@ -21,11 +21,10 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 
 import java.util.*;
@@ -114,6 +113,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
             AdorufuMod.minecraft.player.sendChatMessage("> " + greet);
         }
     }
+
     private void playerJoin(String name) {
         if (AdorufuMod.minecraft.currentScreen != null) return;
         AdorufuMod.logMsg("\2477" + name + " joined.");

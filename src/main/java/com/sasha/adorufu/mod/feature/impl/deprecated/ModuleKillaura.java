@@ -19,8 +19,8 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -54,7 +54,7 @@ public class ModuleKillaura extends AdorufuModule {
     }
 
     @Override
-    public void onTick(){
+    public void onTick() {
         if (this.isEnabled()) {
             if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...
             if (minecraft.player.getCooledAttackStrength(1) < 1) return;
@@ -85,6 +85,7 @@ public class ModuleKillaura extends AdorufuModule {
             }
         }
     }
+
     public static void rotateTowardsEntity(Entity entity) {
         double x = entity.posX - minecraft.player.posX;
         double z = entity.posZ - minecraft.player.posZ;

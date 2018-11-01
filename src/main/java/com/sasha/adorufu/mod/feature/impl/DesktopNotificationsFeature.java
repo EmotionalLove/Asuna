@@ -49,14 +49,6 @@ public class DesktopNotificationsFeature extends AbstractAdorufuTogglableFeature
     }
 
     @Override
-    public void onEnable() {
-    }
-
-    @Override
-    public void onDisable() {
-    }
-
-    @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
     }
@@ -68,6 +60,7 @@ public class DesktopNotificationsFeature extends AbstractAdorufuTogglableFeature
             AdorufuMod.TRAY_MANAGER.trayIcon.displayMessage("Disconnected", ((GuiDisconnected) e.getScreen()).message.getUnformattedText().replaceAll("§.", ""), TrayIcon.MessageType.WARNING);
         }
     }
+
     @SimpleEventHandler
     public void onChatRx(ClientPacketRecieveEvent e) {
         if (!this.isEnabled() || this.getFormattableOptionsMap().get("Chat mentions")) return;

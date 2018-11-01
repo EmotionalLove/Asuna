@@ -20,8 +20,8 @@ package com.sasha.adorufu.mod.feature;
 
 public interface IAdorufuTogglableFeature extends IAdorufuFeature {
 
-    void onEnable();
-    void onDisable();
+    default void onEnable() {}
+    default void onDisable() {}
     boolean isEnabled();
     void toggleState();
     void setKeycode(int keycode);

@@ -59,7 +59,7 @@ public class AutoTotemFeature extends AbstractAdorufuTogglableFeature implements
                 i++;
             }
         }
-        this.setSuffix(i +"");
+        this.setSuffix(i + "");
         if (offhand.getItem() != Items.TOTEM_OF_UNDYING) {
             for (int x = 9; x <= 44; x++) {
                 ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(x);

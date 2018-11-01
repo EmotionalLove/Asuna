@@ -37,6 +37,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
     private static int timer = 0;
+
     public AutoWalkFeature() {
         super("AutoWalk", AdorufuCategory.MOVEMENT,
                 new AdorufuFeatureOption<>("Normal", true),
@@ -64,7 +65,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
                     if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw + 90)) {
                         boolean wasToggled = false;
                         if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
-                            ((IAdorufuTogglableFeature)Manager.Feature.findFeature(YawLockFeature.class)).toggleState();
+                            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
                             wasToggled = true;
                         }
                         float oldRot = AdorufuMod.minecraft.player.rotationYaw;
@@ -72,11 +73,10 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
                         WalkThread wt = new WalkThread("AutoWalker", oldRot, wasToggled);
                         wt.start();
                         timer = 0;
-                    }
-                    else if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw - 90)) {
+                    } else if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw - 90)) {
                         boolean wasToggled = false;
                         if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
-                            ((IAdorufuTogglableFeature)Manager.Feature.findFeature(YawLockFeature.class)).toggleState();
+                            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
                             wasToggled = true;
                         }
                         float oldRot = AdorufuMod.minecraft.player.rotationYaw;
@@ -84,8 +84,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
                         WalkThread wt = new WalkThread("AutoWalker", oldRot, wasToggled);
                         wt.start();
                         timer = 0;
-                    }
-                    else {
+                    } else {
                         AdorufuMod.logWarn(false, "Can't evade obstacle, manual input needed!");
                     }
                 }
@@ -100,6 +99,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
             }
         }
     }
+
     private static boolean isBlockBlockingInFront() {
         Direction dir = AdorufuMath.getCardinalDirection(AdorufuMod.minecraft.player.rotationYaw);
         if (dir == Direction.posX) {
@@ -120,6 +120,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         }
         return false;
     }
+
     private static boolean isHoleInFront() {
         Direction dir = AdorufuMath.getCardinalDirection(AdorufuMod.minecraft.player.rotationYaw);
         if (dir == Direction.posX) {
@@ -144,6 +145,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         }
         return false;
     }
+
     private static boolean isObstacleThere() {
         Direction dir = AdorufuMath.getCardinalDirection(AdorufuMod.minecraft.player.rotationYaw);
         if (dir == Direction.posX) {
@@ -168,6 +170,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         }
         return false;
     }
+
     private static boolean isObstacleThereManual(float yaw) {
         Direction dir = AdorufuMath.getCardinalDirection(yaw);
         if (dir == Direction.posX) {
@@ -193,6 +196,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         return false;
     }
 }
+
 class WalkThread implements Runnable {
     private Thread t;
     private String threadName;
@@ -201,7 +205,7 @@ class WalkThread implements Runnable {
 
     public WalkThread(String name, float oldYaw, boolean needsYaw) {
         threadName = name;
-        System.out.println("Creating " +  threadName);
+        System.out.println("Creating " + threadName);
         //this.args = args;
         this.oldYaw = oldYaw;
         this.needsYaw = needsYaw;
@@ -216,10 +220,11 @@ class WalkThread implements Runnable {
         }
         Minecraft.getMinecraft().player.rotationYaw = this.oldYaw;
         if (this.needsYaw) {
-            ((IAdorufuTogglableFeature)Manager.Feature.findFeature(YawLockFeature.class)).toggleState();
+            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
         }
     }
-    public void start () {
+
+    public void start() {
         //System.out.println("Starting " +  threadName);
         if (t == null) {
             t = new Thread(this, threadName);

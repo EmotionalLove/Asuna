@@ -21,11 +21,10 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientGetMusicTypeEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
 import net.minecraft.client.audio.MusicTicker;
 
 /**
@@ -56,12 +55,13 @@ public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListene
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onMusicSelect(ClientGetMusicTypeEvent e) {
         if (!this.isEnabled()) return;
-        this.getModuleOptionsMap().forEach((option, bool)-> {
+        this.getModuleOptionsMap().forEach((option, bool) -> {
             if (bool) {
-                switch(option.toLowerCase()) {
+                switch (option.toLowerCase()) {
                     case "creative":
                         e.setMusicType(MusicTicker.MusicType.CREATIVE);
                         break;

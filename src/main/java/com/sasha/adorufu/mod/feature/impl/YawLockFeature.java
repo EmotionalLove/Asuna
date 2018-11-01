@@ -28,7 +28,8 @@ import com.sasha.simplesettings.annotation.Setting;
 @FeatureInfo(description = "Lock your yaw to a specified angle")
 public class YawLockFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    @Setting public static int yawDegrees = 90;
+    @Setting
+    public static int yawDegrees = 90;
 
     public YawLockFeature() {
         super("YawLock", AdorufuCategory.MOVEMENT);

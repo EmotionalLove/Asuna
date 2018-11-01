@@ -30,21 +30,12 @@ import net.minecraft.entity.item.EntityBoat;
  * Created by Sasha at 3:48 PM on 9/24/2018
  */
 public class BoatFlyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
     public BoatFlyFeature() {
         super("BoatFly", AdorufuCategory.MOVEMENT,
                 new AdorufuFeatureOption<>("yawlock", false),
                 new AdorufuFeatureOption<>("gravity", true),
                 new AdorufuFeatureOption<>("all entities", false));
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override
@@ -56,11 +47,11 @@ public class BoatFlyFeature extends AbstractAdorufuTogglableFeature implements I
                 if (e == null) return;
                 if (!this.getFormattableOptionsMap().get("gravity")) {
                     e.setNoGravity(true);
-                }
-                else {
+                } else {
                     e.setNoGravity(false);
                 }
-                if (this.getFormattableOptionsMap().get("yawlock")) e.rotationYaw = (AdorufuMod.minecraft.player.rotationYaw);
+                if (this.getFormattableOptionsMap().get("yawlock"))
+                    e.rotationYaw = (AdorufuMod.minecraft.player.rotationYaw);
                 // actual boatfly
                 if (AdorufuMod.minecraft.gameSettings.keyBindJump.isPressed()) {
                     e.motionY = 0.5f;

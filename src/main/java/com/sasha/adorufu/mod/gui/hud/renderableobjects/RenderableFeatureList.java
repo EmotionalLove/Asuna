@@ -94,9 +94,8 @@ public class RenderableFeatureList extends RenderableObject {
     private List<IAdorufuTogglableFeature> getValidList() {
         List<IAdorufuTogglableFeature> activeFeatureList = new ArrayList<>();
         Manager.Feature.getTogglableFeatures().forEachRemaining(e -> {
-            IAdorufuTogglableFeature toggleableFeature = (IAdorufuTogglableFeature) e;
-            if (toggleableFeature.isEnabled()) {
-                activeFeatureList.add(toggleableFeature);
+            if (e.isEnabled()) {
+                activeFeatureList.add(e);
             }
         });
         return activeFeatureList;

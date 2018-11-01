@@ -28,17 +28,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders inventory statistics on the HUD")
 public class InventoryStatsRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public InventoryStatsRenderableFeature() {
         super("InventoryStats", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

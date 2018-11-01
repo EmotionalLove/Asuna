@@ -25,21 +25,11 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
-
 @FeatureInfo(description = "Hide the annoying 1st person fire overlay")
 public class AntiFireOverlayFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+
     public AntiFireOverlayFeature() {
         super("AntiFireOverlay", AdorufuCategory.RENDER);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @SimpleEventHandler

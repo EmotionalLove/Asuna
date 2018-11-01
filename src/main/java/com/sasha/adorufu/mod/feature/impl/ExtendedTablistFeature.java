@@ -25,17 +25,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 @FeatureInfo(description = "Allow the tablist to fit more players")
 public class ExtendedTablistFeature extends AbstractAdorufuTogglableFeature {
+
     public ExtendedTablistFeature() {
         super("ExtendedTablist", AdorufuCategory.RENDER);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

@@ -18,17 +18,15 @@
 
 package com.sasha.adorufu.mod.gui.hud;
 
-
-import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
+import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
-import com.sasha.adorufu.mod.misc.AdorufuMath;
-import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -38,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
-
 
 public class AdorufuHUD extends GuiScreen implements SimpleListener {
 
@@ -61,29 +58,30 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
     @SimpleEventHandler
-    public void onOverlayRender(ClientOverlayRenderEvent e){
+    public void onOverlayRender(ClientOverlayRenderEvent e) {
         renderScreen();
     }
+
     @SimpleEventHandler
-    public void onPostToggle(AdorufuModuleTogglePostEvent e){
+    public void onPostToggle(AdorufuModuleTogglePostEvent e) {
         if (e.getToggledModule().isRenderable()) {
             resetHUD();
         }
     }
 
     /* todo optimise this */
-    public static void setupHUD(){
+    public static void setupHUD() {
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject renderableElement : renderableRegistry) {
-            for (Iterator<IAdorufuFeature> it = Manager.Feature.getTogglableFeatures(); it.hasNext(); ) {
-                IAdorufuTogglableFeature moduleElement = (IAdorufuTogglableFeature) it.next();
-                if (renderableElement.getName().equalsIgnoreCase(moduleElement.getFeatureName())){
-                    if (moduleElement.isEnabled()){
-                        ScreenCornerPos thePos=renderableElement.getPos();
-                        if (renderableElement.getPos() == null){
-                            thePos=renderableElement.getDefaultPos();
+            for (Iterator<IAdorufuTogglableFeature> it = Manager.Feature.getTogglableFeatures(); it.hasNext(); ) {
+                IAdorufuTogglableFeature moduleElement = it.next();
+                if (renderableElement.getName().equalsIgnoreCase(moduleElement.getFeatureName())) {
+                    if (moduleElement.isEnabled()) {
+                        ScreenCornerPos thePos = renderableElement.getPos();
+                        if (renderableElement.getPos() == null) {
+                            thePos = renderableElement.getDefaultPos();
                         }
-                        switch(thePos){
+                        switch (thePos) {
                             case LEFTTOP:
                                 leftTop.add(renderableElement);
                                 break;
@@ -103,7 +101,6 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
             }
         }
     }
-
 
     public static void renderScreen() {
         sHeight = new ScaledResolution(AdorufuMod.minecraft).getScaledHeight();

@@ -27,18 +27,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders the hack arraylist on the HUD")
 public class FeaturelistRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public FeaturelistRenderableFeature() {
         super("Featurelist", AdorufuCategory.GUI);
     }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
 }

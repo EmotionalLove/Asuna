@@ -32,17 +32,9 @@ import net.minecraft.network.play.server.SPacketSoundEffect;
  **/
 @FeatureInfo(description = "Automated fishing, for when you're not at your computer.")
 public class AFKFishFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
-    public AFKFishFeature(){
+
+    public AFKFishFeature() {
         super("AFKFish", AdorufuCategory.MISC);
-    }
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @SimpleEventHandler
@@ -50,7 +42,7 @@ public class AFKFishFeature extends AbstractAdorufuTogglableFeature implements S
         if (!this.isEnabled()) return;
         if (e.getRecievedPacket() instanceof SPacketSoundEffect) {
             SPacketSoundEffect pck = (SPacketSoundEffect) e.getRecievedPacket();
-            if(pck.getSound().getSoundName().toString().equalsIgnoreCase("minecraft:entity.bobber.splash")){
+            if (pck.getSound().getSoundName().toString().equalsIgnoreCase("minecraft:entity.bobber.splash")) {
                 new Thread(() -> {
                     AdorufuMod.minecraft.rightClickMouse();
                     try {

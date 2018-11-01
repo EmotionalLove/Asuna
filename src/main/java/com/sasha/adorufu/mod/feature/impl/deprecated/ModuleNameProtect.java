@@ -21,11 +21,10 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 
@@ -49,12 +48,14 @@ public class ModuleNameProtect extends AdorufuModule implements SimpleListener {
     public void onTick() {
 
     }
+
     @SimpleEventHandler
     public void onChatRx(ClientPacketRecieveEvent e) {
         if (!this.isEnabled()) return;
         if (e.getRecievedPacket() instanceof SPacketChat) {
             SPacketChat chat = (SPacketChat) e.getRecievedPacket();
-            if (!chat.getChatComponent().getUnformattedComponentText().contains(AdorufuMod.minecraft.player.getName())) return;
+            if (!chat.getChatComponent().getUnformattedComponentText().contains(AdorufuMod.minecraft.player.getName()))
+                return;
             String str = chat.chatComponent.getFormattedText().replace(AdorufuMod.minecraft.player.getName(), "[redacted]");
             chat.chatComponent = new TextComponentString(str);
         }

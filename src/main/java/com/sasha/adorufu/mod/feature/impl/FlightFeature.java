@@ -34,11 +34,6 @@ public class FlightFeature
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
     public void onDisable() {
         AdorufuMod.minecraft.player.capabilities.isFlying = false;
     }

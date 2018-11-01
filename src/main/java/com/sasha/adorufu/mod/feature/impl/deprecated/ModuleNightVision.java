@@ -19,9 +19,9 @@
 package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
 /**
  * Created by Sasha on 11/08/2018 at 11:39 AM

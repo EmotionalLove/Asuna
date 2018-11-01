@@ -20,8 +20,8 @@ package com.sasha.adorufu.mod.feature.impl.deprecated;
 
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -51,6 +51,7 @@ public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleList
     public void onTick() {
         this.setSuffix(this.getModuleOptionsMap());
     }
+
     @SimpleEventHandler
     public void onPlayerKnockBack(PlayerKnockbackEvent e) {
         if (!this.isEnabled()) return;
@@ -58,8 +59,8 @@ public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleList
             e.setCancelled(true);
             return;
         }
-        e.setMotionX(e.getMotionX()/3);
-        e.setMotionY(e.getMotionY()/3);
-        e.setMotionZ(e.getMotionZ()/3);
+        e.setMotionX(e.getMotionX() / 3);
+        e.setMotionY(e.getMotionY() / 3);
+        e.setMotionZ(e.getMotionZ() / 3);
     }
 }

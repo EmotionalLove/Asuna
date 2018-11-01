@@ -27,17 +27,8 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders the tickrate on the HUD")
 public class TpsRenderableFeature extends AbstractAdorufuTogglableFeature {
+
     public TpsRenderableFeature() {
         super("TPS", AdorufuCategory.GUI);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

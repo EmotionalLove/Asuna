@@ -37,13 +37,8 @@ public class ClickGUIFeature extends AbstractAdorufuTogglableFeature {
     }
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         AdorufuMod.minecraft.displayGuiScreen(new AdorufuClickGUI());
         this.toggleState();
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

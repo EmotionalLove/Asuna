@@ -18,11 +18,11 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
-import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.feature.impl.CameraClipFeature;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNightVision;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleTracers;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleWaypoints;
+import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

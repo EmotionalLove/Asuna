@@ -28,6 +28,7 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
  **/
 @FeatureInfo(description = "Renders the Adorufu watermark on the HUD")
 public class WatermarkRenderableFeature extends AbstractAdorufuFeature {
+
     public WatermarkRenderableFeature() {
         super("Watermark", AdorufuCategory.GUI);
     }
