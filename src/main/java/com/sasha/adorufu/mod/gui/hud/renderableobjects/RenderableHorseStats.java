@@ -20,16 +20,15 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.HorsestatsRenderableFeature;
+import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
-import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.entity.passive.EntityHorse;
 
-import java.io.IOException;
-
-import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
+import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 
 public class RenderableHorseStats extends RenderableObject {
     public RenderableHorseStats() {
@@ -39,7 +38,7 @@ public class RenderableHorseStats extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (Manager.Module.getModule("HorseStats").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(HorsestatsRenderableFeature.class)) {
             String s = "\247" + "fHorse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
@@ -51,7 +50,7 @@ public class RenderableHorseStats extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (Manager.Module.getModule("HorseStats").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(HorsestatsRenderableFeature.class)) {
             String s = "\247" + "fHorse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
@@ -63,7 +62,7 @@ public class RenderableHorseStats extends RenderableObject {
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (Manager.Module.getModule("HorseStats").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(HorsestatsRenderableFeature.class)) {
             String s = "\247" + "fHorse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());
@@ -75,7 +74,7 @@ public class RenderableHorseStats extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (Manager.Module.getModule("HorseStats").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(HorsestatsRenderableFeature.class)) {
             String s = "\247" + "fHorse Stats: " + "\247" + "7Jump Height: " + "\247" + "f@JH" + "\247" + "7 Health: " + "\247" + "f@<3" + "\247" + "7 Max Speed: " + "\247" + "f@S";
             if (minecraft.player.isRidingHorse() && minecraft.player.getRidingEntity() instanceof EntityHorse) {
                 EntityHorse e = ((EntityHorse) minecraft.player.getRidingEntity());

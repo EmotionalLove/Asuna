@@ -41,6 +41,6 @@ public interface IAdorufuFeature {
     void setSuffix(String s);
     void setSuffix(String[] s);
     void setSuffix(Map<String, Boolean> boolMap);
-
+    String getSuffix();
 
 }

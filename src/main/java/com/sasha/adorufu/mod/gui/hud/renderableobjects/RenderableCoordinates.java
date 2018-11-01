@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.CoordinatesRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
@@ -36,7 +37,7 @@ public class RenderableCoordinates extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (Manager.Module.getModule("Coordinates").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(CoordinatesRenderableFeature.class)) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -50,7 +51,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectLB(int yyy) {
-        if (Manager.Module.getModule("Coordinates").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(CoordinatesRenderableFeature.class)) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -64,7 +65,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectRT(int yyy) {
-        if (Manager.Module.getModule("Coordinates").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(CoordinatesRenderableFeature.class)) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);
@@ -82,7 +83,7 @@ public class RenderableCoordinates extends RenderableObject {
     }
     @Override
     public void renderObjectRB(int yyy) {
-        if (Manager.Module.getModule("Coordinates").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(CoordinatesRenderableFeature.class)) {
             double xx = dround(minecraft.player.posX, 3);
             double y = dround(minecraft.player.posY, 3);
             double z = dround(minecraft.player.posZ, 3);

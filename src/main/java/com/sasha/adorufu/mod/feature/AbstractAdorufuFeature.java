@@ -88,6 +88,10 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
         }
     }
 
+    public String getSuffix() {
+        return this.suffix;
+    }
+
     public boolean getOption(String key) {
         for (AdorufuFeatureOption<Boolean> option : this.getOptions()) {
             if (option.getIdentifer().equalsIgnoreCase(key)) {

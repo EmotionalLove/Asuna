@@ -28,6 +28,7 @@ import com.sasha.eventsys.SimpleListener;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +44,13 @@ public class Manager {
         public static void registerFeature(IAdorufuFeature feature) {
             featureRegistry.add(feature);
             feature.onLoad();
+        }
+
+        public static Iterator<IAdorufuFeature> getTogglableFeatures() {
+            return featureRegistry
+                    .stream()
+                    .filter(e->e instanceof IAdorufuTogglableFeature)
+                    .iterator();
         }
 
         /**

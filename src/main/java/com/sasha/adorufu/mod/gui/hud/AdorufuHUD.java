@@ -19,6 +19,8 @@
 package com.sasha.adorufu.mod.gui.hud;
 
 
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -33,6 +35,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
@@ -71,26 +74,27 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     /* todo optimise this */
     public static void setupHUD(){
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
-        for (RenderableObject element : renderableRegistry) {
-            for (AdorufuModule moduleElement : Manager.Module.moduleRegistry) {
-                if (element.getName().equalsIgnoreCase(moduleElement.getModuleName())){
-                    if (moduleElement.isEnabled() && moduleElement.isRenderable()){
-                        ScreenCornerPos thePos=element.getPos();
-                        if (element.getPos() == null){
-                            thePos=element.getDefaultPos();
+        for (RenderableObject renderableElement : renderableRegistry) {
+            for (Iterator<IAdorufuFeature> it = Manager.Feature.getTogglableFeatures(); it.hasNext(); ) {
+                IAdorufuTogglableFeature moduleElement = (IAdorufuTogglableFeature) it.next();
+                if (renderableElement.getName().equalsIgnoreCase(moduleElement.getFeatureName())){
+                    if (moduleElement.isEnabled()){
+                        ScreenCornerPos thePos=renderableElement.getPos();
+                        if (renderableElement.getPos() == null){
+                            thePos=renderableElement.getDefaultPos();
                         }
                         switch(thePos){
                             case LEFTTOP:
-                                leftTop.add(element);
+                                leftTop.add(renderableElement);
                                 break;
                             case LEFTBOTTOM:
-                                leftBottom.add(element);
+                                leftBottom.add(renderableElement);
                                 break;
                             case RIGHTBOTTOM:
-                                rightBottom.add(element);
+                                rightBottom.add(renderableElement);
                                 break;
                             case RIGHTTOP:
-                                rightTop.add(element);
+                                rightTop.add(renderableElement);
                                 break;
                         }
                         break;
