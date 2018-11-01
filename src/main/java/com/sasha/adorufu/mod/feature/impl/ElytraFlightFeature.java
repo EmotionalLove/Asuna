@@ -16,37 +16,33 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
-@FeatureInfo(description = "Lock your yaw to a specified angle")
-public class ModuleYawLock extends AdorufuModule {
 
-    public static int yawDegrees = 90;
-
-    public ModuleYawLock() {
-        super("YawLock", AdorufuCategory.MOVEMENT, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
+@FeatureInfo(description = "Fly like you're in creative with an elytra")
+public class ElytraFlightFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public ElytraFlightFeature() {
+        super("ElytraFlight", AdorufuCategory.MOVEMENT);
     }
 
     @Override
     public void onTick() {
-        if (this.isEnabled()) {
-            AdorufuMod.minecraft.player.rotationYaw = yawDegrees;
-            this.setSuffix(yawDegrees + "\u00b0");
+        if (this.isEnabled() && AdorufuMod.minecraft.player.isElytraFlying()) {
+            AdorufuMod.minecraft.player.capabilities.isFlying = true;
         }
+    }
+    @Override
+    public void onEnable() {
+        //
+    }
+    @Override
+    public void onDisable() {
+        AdorufuMod.minecraft.player.capabilities.isFlying = false;
     }
 }

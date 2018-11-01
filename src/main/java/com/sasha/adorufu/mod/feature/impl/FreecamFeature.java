@@ -16,15 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
 import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -37,14 +38,14 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 /**
  * Created by Sasha on 12/08/2018 at 9:12 AM
  **/
-@FeatureInfo(description = "Client-sided spectator mode.") //todo fix the fact that you cant fly thru stuff
-public class ModuleFreecam extends AdorufuModule implements SimpleListener {
+@FeatureInfo(description = "Client-sided spectator mode.")
+public class FreecamFeature extends AbstractAdorufuTogglableFeature implements SimpleListener, IAdorufuTickableFeature {
 
     public static double oldX, oldY, oldZ, oldYaw, oldPitch;
     public static GameType oldGameType;
 
-    public ModuleFreecam() {
-        super("Freecam", AdorufuCategory.MOVEMENT, false);
+    public FreecamFeature() {
+        super("Freecam", AdorufuCategory.MOVEMENT);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-        if (minecraft.world == null) this.toggle();
+        if (minecraft.world == null) this.toggleState();
         AdorufuMod.minecraft.player.noClip = true;
     }
 
@@ -90,14 +91,14 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
     public void onPacketRx(ClientPacketRecieveEvent e){
         if (this.isEnabled()) {
             if (e.getRecievedPacket() instanceof CPacketPlayer) {
-                this.toggle();
+                this.toggleState();
             }
         }
     }
     @SimpleEventHandler
     public void onPacketTx(ClientPacketSendEvent e){
         if (this.isEnabled()){
-            if (minecraft.world == null) this.toggle();
+            if (minecraft.world == null) this.toggleState();
             if(e.getSendPacket() instanceof CPacketPlayer || e.getSendPacket() instanceof CPacketInput) {
                 e.setCancelled(true);
             }
@@ -105,7 +106,7 @@ public class ModuleFreecam extends AdorufuModule implements SimpleListener {
     }
     @SimpleEventHandler
     public void onPushoutofblocks(ClientPushOutOfBlocksEvent e) {
-        if (minecraft.world == null && this.isEnabled()) this.toggle();
+        if (minecraft.world == null && this.isEnabled()) this.toggleState();
         if (this.isEnabled()) e.setCancelled(true);
     }
 }

@@ -16,32 +16,26 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
 
-@FeatureInfo(description = "Fly like you're in creative with an elytra")
-public class ModuleElytraFlight extends AdorufuModule  {
-    public ModuleElytraFlight() {
-        super("ElytraFlight", AdorufuCategory.MOVEMENT, false);
+@FeatureInfo(description = "Allow the tablist to fit more players")
+public class ExtendedTablistFeature extends AbstractAdorufuTogglableFeature {
+    public ExtendedTablistFeature() {
+        super("ExtendedTablist", AdorufuCategory.RENDER);
     }
 
     @Override
-    public void onTick() {
-        if (this.isEnabled() && AdorufuMod.minecraft.player.isElytraFlying()) {
-            AdorufuMod.minecraft.player.capabilities.isFlying = true;
-        }
-    }
-    @Override
     public void onEnable() {
-        //
+
     }
+
     @Override
     public void onDisable() {
-        AdorufuMod.minecraft.player.capabilities.isFlying = false;
+
     }
 }

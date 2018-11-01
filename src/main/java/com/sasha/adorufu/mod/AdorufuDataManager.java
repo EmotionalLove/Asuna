@@ -16,8 +16,24 @@
  *
  */
 
+
 package com.sasha.adorufu.mod;
 
+import com.sasha.adorufu.mod.misc.PlayerIdentity;
+import com.sasha.adorufu.mod.waypoint.Waypoint;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static com.sasha.adorufu.mod.AdorufuMod.logMsg;
+import static com.sasha.adorufu.mod.AdorufuMod.logWarn;
+
+/*
 import com.sasha.adorufu.mod.exception.AdorufuNoSuchElementInDataFileException;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJoinLeaveMessages;
@@ -45,28 +61,34 @@ import static com.sasha.adorufu.mod.misc.Manager.Module.moduleRegistry;
 
 /**
  * Created by Sasha on 08/08/2018 at 12:47 PM
- **/
+ **//*
+
 // i love making simple tasks overly complex :3:3:3:3
 // maybe im just a complex kind of girl
 @Deprecated
+*/
 public class AdorufuDataManager {
+    /*
+}
     private final Lock threadLock = new ReentrantLock();
-    private final Lock waypointLock = new ReentrantLock();
-    private final Lock identityLock = new ReentrantLock();
+    */private final Lock waypointLock = new ReentrantLock();
+    private final Lock identityLock = new ReentrantLock();/*
     private final String dataFileName = "AdorufuData.yml";
 
-    public LinkedHashMap<String, PlayerIdentity> identityCacheMap = new LinkedHashMap<>();
+    */public LinkedHashMap<String, PlayerIdentity> identityCacheMap = new LinkedHashMap<>();/*
 
     AdorufuDataManager() {
     }
 
-    /**
-     * Used for saving a float,double,string,int,long... anything like that, really.
-     *
-     * @param path    the path in the config to save it to. (recommended is Adorufu.something)
-     * @param varName the name of the variable in the cfg file
-     * @param obj     the thing to save.
-     */
+    */
+/**
+ * Used for saving a float,double,string,int,long... anything like that, really.
+ *
+ * @param path    the path in the config to save it to. (recommended is Adorufu.something)
+ * @param varName the name of the variable in the cfg file
+ * @param obj     the thing to save.
+ *//*
+
     public synchronized void saveSomeGenericValue(String path, String varName, Object obj) throws IOException {
         threadLock.lock();
         try {
@@ -82,9 +104,12 @@ public class AdorufuDataManager {
         }
     }
 
+    */
+
     /**
      * You'll need to cast the final value to what you saved it as.
-     */
+     *//*
+
     public synchronized Object loadSomeGenericValue(String path, String varName, Object defaultVal) throws IOException {
         threadLock.lock();
         try {
@@ -103,7 +128,7 @@ public class AdorufuDataManager {
             threadLock.unlock();
         }
     }
-
+*/
     public synchronized void savePlayerIdentity(PlayerIdentity id, boolean delete) throws IOException {
         logMsg(true, "Saving identity " + id.getStringUuid() + "...");
         identityLock.lock();
@@ -242,7 +267,8 @@ public class AdorufuDataManager {
             logWarn(true, "Thread locking disengaged!");
         }
     }
-
+}
+/*
     public synchronized void saveIgnorelist(List<String> ignores) throws IOException {
         logMsg(true, "Saving ignorelist...");
         threadLock.lock();
@@ -735,13 +761,15 @@ public class AdorufuDataManager {
 
     // ------------------- plugin api ------------------------- //
 
-    /**
+    */
+/**
      * Used for saving a float,double,string,int,long... anything like that, really.
      *
      * @param path    the path in the config to save it to. (recommended is Adorufu.something)
      * @param varName the name of the variable in the cfg file
      * @param obj     the thing to save.
-     */
+     *//*
+
     public synchronized void savePluginData(String path, String varName, Object obj) throws IOException {
         threadLock.lock();
         try {
@@ -777,3 +805,4 @@ public class AdorufuDataManager {
     }
 
 }
+*/

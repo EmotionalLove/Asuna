@@ -31,14 +31,11 @@ import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.impl.AdorufuDiscordPresense;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleEntitySpeed;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJoinLeaveMessages;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.renderableobjects.*;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.adorufu.mod.misc.TPS;
 import com.sasha.adorufu.mod.remote.RemoteDataManager;
 import com.sasha.adorufu.mod.waypoint.WaypointManager;
@@ -120,20 +117,10 @@ public class AdorufuMod implements SimpleListener {
         MinecraftMappingUpdater.updateMappings();
         ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
         FRIEND_MANAGER = new FriendManager();
-        try {
-            if (DATA_MANAGER.getDRPEnabled()) {
-                AdorufuDiscordPresense.setupPresense();
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
-                }));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            AdorufuDiscordPresense.setupPresense();
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
-            }));
-        }
+        AdorufuDiscordPresense.setupPresense();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
+        }));
         try {
             if (Util.getOSType() == Util.EnumOS.WINDOWS) {
                 BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
@@ -175,16 +162,12 @@ public class AdorufuMod implements SimpleListener {
                 this.registerFeatures();
                 this.registerRenderables();
                 EVENT_MANAGER.registerListener(new CommandHandler());
-                EVENT_MANAGER.registerListener(new Manager.Module());
+                //EVENT_MANAGER.registerListener(new Manager.Feature());
                 AdorufuHUD.setupHUD();
                 EVENT_MANAGER.registerListener(new AdorufuHUD());
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
                 //loadBindsAndStates();
-                ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
-                ModuleJoinLeaveMessages.joinMessages = greets.get(0);
-                ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
-                ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
                 WAYPOINT_MANAGER = new WaypointManager();
                 DATA_MANAGER.loadPlayerIdentities();
                 DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
@@ -219,13 +202,8 @@ public class AdorufuMod implements SimpleListener {
     private void reload(boolean async) {
         Thread thread = new Thread(() -> {
             try {
-                Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
+                //Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
                 this.registerRenderables();
-                try {
-                    ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 AdorufuHUD.resetHUD();
                 AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
             } catch (Exception e) {
@@ -303,22 +281,22 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new AFKFishFeature());
         Manager.Module.register(new AutoRespawnFeature());
         Manager.Module.register(new ChunkTraceFeature());
-        Manager.Module.register(new ModuleFreecam());
+        Manager.Module.register(new FreecamFeature());
         Manager.Module.register(new CrystalAuraFeature());
         Manager.Module.register(new CrystalLogoutFeature());
-        Manager.Module.register(new ModuleJesus());
+        Manager.Module.register(new JesusFeature());
         Manager.Module.register(new ClientIgnoreFeature());
         Manager.Module.register(new AutoIgnoreFeature());
         Manager.Module.register(new AutoSprintFeature());
         Manager.Module.register(new CameraClipFeature());
-        Manager.Module.register(new ModuleElytraBoost());
-        Manager.Module.register(new ModuleElytraFlight());
-        Manager.Module.register(new ModuleEntitySpeed());
+        Manager.Module.register(new ElytraBoostFeature());
+        Manager.Module.register(new ElytraFlightFeature());
+        Manager.Module.register(new EntitySpeedFeature());
         Manager.Module.register(new ModuleLowJump());
         Manager.Module.register(new ModuleMiddleClickBlock());
-        Manager.Module.register(new ModuleExtendedTablist());
+        Manager.Module.register(new ExtendedTablistFeature());
         Manager.Module.register(new AntiAFKFeature());
-        Manager.Module.register(new ModuleYawLock());
+        Manager.Module.register(new YawLockFeature());
         Manager.Module.register(new ModuleQueueTime());
         Manager.Module.register(new ModuleNoPush());
         Manager.Module.register(new ModulePacketFly());
@@ -327,7 +305,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleWaypointGUI());
         Manager.Module.register(new ModuleWaypoints());
         Manager.Module.register(new ModuleWolfIdentity());
-        Manager.Module.register(new ModuleGhostBlockWarning());
+        Manager.Module.register(new GhostBlockWarningFeature());
         Manager.Module.register(new AntiFireOverlayFeature());
         Manager.Module.register(new ModuleMinecraftMusic());
         Manager.Module.register(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...

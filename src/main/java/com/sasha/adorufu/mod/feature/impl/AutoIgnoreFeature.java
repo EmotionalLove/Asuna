@@ -30,7 +30,6 @@ import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,7 +49,7 @@ public class AutoIgnoreFeature extends AbstractAdorufuTogglableFeature implement
 
     @Override
     public void onEnable() {
-        if (!Manager.Module.getModule("clientignore").isEnabled()) {
+        if (!Manager.Feature.isFeatureEnabled(ClientIgnoreFeature.class)) {
             logWarn(false, "You need to enable the ClientIgnore feature for" +
                     " ignored players to actually be ignored.");
         }
@@ -106,11 +105,6 @@ public class AutoIgnoreFeature extends AbstractAdorufuTogglableFeature implement
         for (HashMap.Entry<String, Integer> entry : spamViolationMap.entrySet()) {
             if (entry.getValue() > 40 && !ClientIgnoreFeature.ignorelist.contains(entry.getKey())) {
                 ClientIgnoreFeature.ignorelist.add(entry.getKey());
-                try {
-                    AdorufuMod.DATA_MANAGER.saveIgnorelist(ClientIgnoreFeature.ignorelist);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "1--------------------------------------------------"));
                 AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "4" + entry.getKey() + " " + "\247" + "6was automatically ignored."));
                 AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "1--------------------------------------------------"));

@@ -22,7 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleYawLock;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.adorufu.mod.gui.hud.Direction;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
@@ -63,8 +63,8 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
                 if (isObstacleThere()) {
                     if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw + 90)) {
                         boolean wasToggled = false;
-                        if (Manager.Module.getModule(ModuleYawLock.class).isEnabled()) {
-                            Manager.Module.getModule(ModuleYawLock.class).toggle();
+                        if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
+                            ((IAdorufuTogglableFeature)Manager.Feature.findFeature(YawLockFeature.class)).toggleState();
                             wasToggled = true;
                         }
                         float oldRot = AdorufuMod.minecraft.player.rotationYaw;
@@ -75,8 +75,8 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
                     }
                     else if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw - 90)) {
                         boolean wasToggled = false;
-                        if (Manager.Module.getModule(ModuleYawLock.class).isEnabled()) {
-                            Manager.Module.getModule(ModuleYawLock.class).toggle();
+                        if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
+                            ((IAdorufuTogglableFeature)Manager.Feature.findFeature(YawLockFeature.class)).toggleState();
                             wasToggled = true;
                         }
                         float oldRot = AdorufuMod.minecraft.player.rotationYaw;
@@ -216,7 +216,7 @@ class WalkThread implements Runnable {
         }
         Minecraft.getMinecraft().player.rotationYaw = this.oldYaw;
         if (this.needsYaw) {
-            Manager.Module.getModule(ModuleYawLock.class).toggle();
+            ((IAdorufuTogglableFeature)Manager.Feature.findFeature(YawLockFeature.class)).toggleState();
         }
     }
     public void start () {

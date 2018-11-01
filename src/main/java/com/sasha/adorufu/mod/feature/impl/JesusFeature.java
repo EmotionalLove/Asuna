@@ -16,16 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -38,15 +38,14 @@ import net.minecraft.util.math.BlockPos;
 /**
  * Created by Sasha on 12/08/2018 at 2:48 PM
  **/
-//todo aac bypass
-@PostToggleExec
 @FeatureInfo(description = "Walk on water!")
-public class ModuleJesus extends AdorufuModule implements SimpleListener {
+public class JesusFeature extends AbstractAdorufuTogglableFeature
+        implements SimpleListener, IAdorufuTickableFeature {
     private boolean waterjump = false;
     public static AxisAlignedBB WATER_JESUS_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
-    public static ModuleJesus INSTANCE;
-    public ModuleJesus() {
-        super("Jesus", AdorufuCategory.MOVEMENT, false);
+    public static JesusFeature INSTANCE;
+    public JesusFeature() {
+        super("Jesus", AdorufuCategory.MOVEMENT);
         INSTANCE = this;
     }
 

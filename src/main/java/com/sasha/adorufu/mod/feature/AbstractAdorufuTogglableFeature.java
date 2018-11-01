@@ -59,6 +59,11 @@ public abstract class AbstractAdorufuTogglableFeature
     @Override
     public void toggleState() {
         this.enabled = !enabled;
+        if (this.enabled) {
+            this.onEnable();
+            return;
+        }
+        this.onDisable();
     }
 
     @Override

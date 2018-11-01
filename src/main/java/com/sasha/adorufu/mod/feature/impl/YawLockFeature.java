@@ -16,17 +16,22 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.simplesettings.annotation.Setting;
 
+@FeatureInfo(description = "Lock your yaw to a specified angle")
+public class YawLockFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-@FeatureInfo(description = "Allow the tablist to fit more players")
-public class ModuleExtendedTablist extends AdorufuModule  {
-    public ModuleExtendedTablist() {
-        super("ExtendedTablist", AdorufuCategory.RENDER, false);
+    @Setting public static int yawDegrees = 90;
+
+    public YawLockFeature() {
+        super("YawLock", AdorufuCategory.MOVEMENT);
     }
 
     @Override
@@ -41,6 +46,9 @@ public class ModuleExtendedTablist extends AdorufuModule  {
 
     @Override
     public void onTick() {
-
+        if (this.isEnabled()) {
+            AdorufuMod.minecraft.player.rotationYaw = yawDegrees;
+            this.setSuffix(yawDegrees + "\u00b0");
+        }
     }
 }

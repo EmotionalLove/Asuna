@@ -18,8 +18,8 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
+import com.sasha.adorufu.mod.feature.impl.EntitySpeedFeature;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleEntitySpeed;
 import net.minecraft.entity.passive.EntityLlama;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +31,7 @@ public class MixinEntityLlama {
 
     @Inject(method = "canBeSteered", at = @At("HEAD"), cancellable = true)
     public void canBeSteered(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Manager.Module.getModule(ModuleEntitySpeed.class).isEnabled()) {
+        if (Manager.Module.getModule(EntitySpeedFeature.class).isEnabled()) {
             callbackInfoReturnable.setReturnValue(true);
             callbackInfoReturnable.cancel();
             // boom EZ PHI

@@ -16,7 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
@@ -30,11 +30,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @FeatureInfo(description = "Press the spacebar to go faster")
-public class ModuleElytraBoost extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
     @Setting static float limit = 2.5f;
 
-    public ModuleElytraBoost() {
+    public ElytraBoostFeature() {
         super("ElytraBoost", AdorufuCategory.MOVEMENT);
     }
 

@@ -16,23 +16,24 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-
+import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.util.MovementInput;
 
 @FeatureInfo(description = "Speedhack for ridable animals")
-public class ModuleEntitySpeed extends AdorufuModule  {
-    public static double speed;
-    public ModuleEntitySpeed() {
-        super("EntitySpeed", AdorufuCategory.MOVEMENT, false);
+public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    @Setting public static double speed;
+    public EntitySpeedFeature() {
+        super("EntitySpeed", AdorufuCategory.MOVEMENT);
     }
 
     @Override

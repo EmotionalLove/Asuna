@@ -27,24 +27,22 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.network.play.server.SPacketChat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @FeatureInfo(description = "Ignore players on the client side.")
 public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature implements SimpleListener,
         IAdorufuTickableFeature {
-    public static List<String> ignorelist = new ArrayList<>();
-    public static List<String> filterList = new ArrayList<>();
+    @Setting public static List<String> ignorelist = new ArrayList<>();
+    @Setting public static List<String> filterList = new ArrayList<>();
     private static List<String> dms = new ArrayList<>();
 
     public ClientIgnoreFeature() {
         super("ClientIgnore", AdorufuCategory.CHAT,
                 new AdorufuFeatureOption<>("Players", true));
-        AdorufuMod.scheduler.schedule(() -> ignorelist = AdorufuMod.DATA_MANAGER.loadIgnorelist(), 0, TimeUnit.MILLISECONDS);
-        AdorufuMod.scheduler.schedule(() -> filterList = AdorufuMod.DATA_MANAGER.loadFilterList(), 0, TimeUnit.MILLISECONDS);
     }
 
     @Override

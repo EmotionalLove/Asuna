@@ -24,8 +24,8 @@ import baritone.api.pathing.goals.GoalBlock;
 import baritone.api.pathing.goals.GoalRunAway;
 import baritone.api.pathing.goals.GoalXZ;
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.JesusFeature;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJesus;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
@@ -246,7 +246,7 @@ public class PathCommand extends SimpleCommand {
         int fall = 3;
         fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
         BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
-        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(ModuleJesus.class).isEnabled();
+        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(JesusFeature.class).isEnabled();
         if (avoid) {
             BlockPos pos = isHostileEntityClose();
             if (BaritoneAPI.getPathingBehavior().isPathing() && (!(BaritoneAPI.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {

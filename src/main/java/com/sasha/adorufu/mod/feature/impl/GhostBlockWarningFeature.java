@@ -16,15 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientItemSpawnEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockBreakEvent;
-import com.sasha.adorufu.mod.misc.AdorufuRender;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -32,13 +33,14 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @FeatureInfo(description = "Highlight blocks that might've not been mined on the server's side.")
-public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleListener {
+public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
+        implements SimpleListener, IAdorufuRenderableFeature {
 
     /** dont ask why this variable is named this it was like this already HUSH PLS*/
     private static LinkedHashMap<Coordinate, Boolean> BlakeIsMyBoyfriendMap = new LinkedHashMap<>();
 
-    public ModuleGhostBlockWarning() {
-        super("GhostBlockWarning", AdorufuCategory.RENDER, false);
+    public GhostBlockWarningFeature() {
+        super("GhostBlockWarning", AdorufuCategory.RENDER);
     }
 
     @Override
@@ -48,11 +50,6 @@ public class ModuleGhostBlockWarning extends AdorufuModule implements SimpleList
 
     @Override
     public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
 
     }
     @Override
