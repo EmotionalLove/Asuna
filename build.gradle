@@ -162,7 +162,8 @@ shadowJar {
         include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('com.github.EmotionalLove:SimpleSettingSystem'))
         include(dependency('cabaletta:baritone-api:1.0.0'))
-        //exclude(dependency('com.github.cabaletta:baritone'))
+        include(dependency('club.minnced:java-discord-rpc:2.0.1'))
+        include(dependency('club.minnced:discord-rpc-release:v3.3.0'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
