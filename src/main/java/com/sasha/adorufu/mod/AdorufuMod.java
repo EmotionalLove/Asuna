@@ -30,7 +30,8 @@ import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
-import com.sasha.adorufu.mod.feature.impl.AdorufuDiscordPresense;
+import com.sasha.adorufu.mod.feature.AdorufuDiscordPresense;
+import com.sasha.adorufu.mod.feature.impl.AFKFishFeature;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
@@ -241,12 +242,15 @@ public class AdorufuMod implements SimpleListener {
     }
 
     private void registerFeatures() {
+        AdorufuMod.logMsg(true, "Finding and initialising features...");
         Manager.Feature.featureRegistry.clear();
-        Manager.getClassesInPackage(AdorufuDiscordPresense.class.getPackage().getName(), IAdorufuFeature.class)
+        Manager.getClassesInPackage(AFKFishFeature.class.getPackage().getName())
                 .forEach(e -> {
+                    AdorufuMod.logMsg(true, "Found " + e.getSimpleName() + ".class");
                     try {
                         IAdorufuFeature feature = (IAdorufuFeature) e.getConstructor().newInstance();
                         Manager.Feature.featureRegistry.add(feature);
+                        AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                         e1.printStackTrace();
                         AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " +e.getSimpleName() + "!");

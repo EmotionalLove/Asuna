@@ -33,7 +33,7 @@ import net.minecraft.util.MovementInput;
 public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
     @Setting
-    public static double speed;
+    public static double speed = 2.0;
 
     public EntitySpeedFeature() {
         super("EntitySpeed", AdorufuCategory.MOVEMENT);

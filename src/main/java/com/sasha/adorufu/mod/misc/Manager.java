@@ -19,24 +19,30 @@
 package com.sasha.adorufu.mod.misc;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.IAdorufuFeature;
-import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
-import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
-import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
+import com.sasha.adorufu.mod.feature.*;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleListener;
 import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Sasha at 9:09 AM on 9/17/2018
  */
 public class Manager {
+
+    private static List<ClassLoader> classLoadersList = new LinkedList<ClassLoader>();
+    static {
+        classLoadersList.add(ClasspathHelper.contextClassLoader());
+        classLoadersList.add(ClasspathHelper.staticClassLoader());
+
+    }
 
     public static class Feature implements SimpleListener {
 
@@ -122,8 +128,11 @@ public class Manager {
         }
     }
 
-    public static Set<Class> getClassesInPackage(String pckge, Class sub) {
-        Reflections reflections = new Reflections(pckge);
-        return reflections.getSubTypesOf(sub);
+    public static Set<Class<?>> getClassesInPackage(String pckge) {
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .setScanners(new SubTypesScanner(false), new ResourcesScanner())
+                .setUrls(ClasspathHelper.forClassLoader(classLoadersList.toArray(new ClassLoader[0])))
+                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(pckge))));
+        return reflections.getSubTypesOf(Object.class);
     }
 }

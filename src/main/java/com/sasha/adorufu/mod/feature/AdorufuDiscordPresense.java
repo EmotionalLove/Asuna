@@ -16,7 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl;
+package com.sasha.adorufu.mod.feature;
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
