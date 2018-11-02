@@ -40,12 +40,11 @@ public class ToggleCommand extends SimpleCommand {
             return;
         }
         AtomicBoolean found = new AtomicBoolean(false);
-        Manager.Module.moduleRegistry.forEach(mod -> {
-            if (mod.getModuleName().equalsIgnoreCase(this.getArguments()[0])){
-                mod.toggle();
-                AdorufuMod.logMsg(false, "Toggled " + mod.getModuleName());
+        Manager.Feature.getTogglableFeatures().forEachRemaining(mod -> {
+            if (mod.getFeatureName().equalsIgnoreCase(this.getArguments()[0])){
+                mod.toggleState();
+                AdorufuMod.logMsg(false, "Toggled " + mod.getFeatureName());
                 found.set(true);
-                return;
             }
         });
         if (!found.get()) {

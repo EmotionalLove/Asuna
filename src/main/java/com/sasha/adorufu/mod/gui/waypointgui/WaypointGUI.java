@@ -19,7 +19,6 @@
 package com.sasha.adorufu.mod.gui.waypointgui;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -33,7 +32,7 @@ public class WaypointGUI extends GuiScreen {
 
 	public static ArrayList<WaypointSearch> searchBoxes = new ArrayList<>();
 
-	public static WaypointWindow ww = new WaypointWindow("Waypoint Manager", 100, 150, true, WindowType.MODULE);
+	public static WaypointWindow ww = new WaypointWindow("Waypoint Manager", 100, 150, true);
 	public static WaypointSearch tt = new WaypointSearch(windowList.get(0), "Search...", 102, 160);
 
 

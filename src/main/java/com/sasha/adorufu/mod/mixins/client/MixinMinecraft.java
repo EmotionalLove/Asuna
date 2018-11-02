@@ -26,7 +26,6 @@ import com.sasha.adorufu.mod.events.client.ClientGetMusicTypeEvent;
 import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
 import com.sasha.adorufu.mod.events.client.ClientScreenChangedEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerBlockPlaceEvent;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.feature.impl.CPUControlFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
@@ -184,7 +183,11 @@ public abstract class MixinMinecraft {
                 }
             } else {
                 KeyBinding.setKeyBindState(i, false);
-                Manager.Module.moduleRegistry.stream().filter(m -> m.getKeyBind() == i).forEach(AdorufuModule::toggle);
+                Manager.Feature.getTogglableFeatures().forEachRemaining(feature -> {
+                    if (feature.getKeycode() == i) {
+                        feature.toggleState();
+                    }
+                });
 
                 if (i == 61) {
                     if (this.actionKeyF3) {

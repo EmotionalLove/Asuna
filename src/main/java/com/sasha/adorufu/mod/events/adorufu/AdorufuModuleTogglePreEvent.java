@@ -18,7 +18,6 @@
 
 package com.sasha.adorufu.mod.events.adorufu;
 
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.eventsys.SimpleCancellableEvent;
 

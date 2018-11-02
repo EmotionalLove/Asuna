@@ -22,7 +22,6 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;

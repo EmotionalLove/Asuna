@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleListener;
 import org.reflections.Reflections;
@@ -88,6 +89,14 @@ public class Manager {
                         }
                         feature.onRender();
                     });
+        }
+
+        public static String getFeatureInfo(Class<? extends IAdorufuFeature> featureClass) {
+            if (featureClass.getAnnotation(FeatureInfo.class) == null) {
+                return "No information provided for this feature!";
+            }
+            FeatureInfo info = featureClass.getAnnotation(FeatureInfo.class);
+            return info.description();
         }
 
         public static <T extends IAdorufuFeature> T findFeature(Class<T> featureClass) {

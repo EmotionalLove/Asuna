@@ -246,7 +246,7 @@ public class PathCommand extends SimpleCommand {
         int fall = 3;
         fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
         BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
-        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Module.getModule(JesusFeature.class).isEnabled();
+        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Feature.isFeatureEnabled(JesusFeature.class);
         if (avoid) {
             BlockPos pos = isHostileEntityClose();
             if (BaritoneAPI.getPathingBehavior().isPathing() && (!(BaritoneAPI.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {

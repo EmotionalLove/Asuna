@@ -19,7 +19,9 @@
 
 package com.sasha.adorufu.mod;
 
+import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.misc.PlayerIdentity;
+import com.sasha.adorufu.mod.misc.YMLParser;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 
 import java.io.*;
@@ -70,12 +72,13 @@ import static com.sasha.adorufu.mod.misc.Manager.Module.moduleRegistry;
 public class AdorufuDataManager {
     /*
 }
-    private final Lock threadLock = new ReentrantLock();
-    */private final Lock waypointLock = new ReentrantLock();
+    */private final Lock threadLock = new ReentrantLock();
+    private final Lock waypointLock = new ReentrantLock();
     private final Lock identityLock = new ReentrantLock();/*
     private final String dataFileName = "AdorufuData.yml";
 
-    */public LinkedHashMap<String, PlayerIdentity> identityCacheMap = new LinkedHashMap<>();/*
+    */
+    public LinkedHashMap<String, PlayerIdentity> identityCacheMap = new LinkedHashMap<>();/*
 
     AdorufuDataManager() {
     }
@@ -267,223 +270,223 @@ public class AdorufuDataManager {
             logWarn(true, "Thread locking disengaged!");
         }
     }
-}
-/*
-    public synchronized void saveIgnorelist(List<String> ignores) throws IOException {
-        logMsg(true, "Saving ignorelist...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
-            }
-            YMLParser parser = new YMLParser(f);
-            parser.set("Adorufu.ignorelist", ignores);
-            parser.save();
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
-        }
-    }
 
-    public synchronized void saveFilterList(List<String> wordlist) throws IOException {
-        logMsg(true, "Saving filterlist...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
-            }
-            YMLParser parser = new YMLParser(f);
-            parser.set("Adorufu.wordfilter", wordlist);
-            parser.save();
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
-        }
-    }
-
-    public synchronized void saveGreeterMsgs(ArrayList<List<String>> greets) throws IOException {
-        logMsg(true, "Saving greeter messages...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
-            }
-            YMLParser parser = new YMLParser(f);
-            parser.set("Adorufu.greeter.join", greets.get(0));
-            parser.set("Adorufu.greeter.leave", greets.get(1));
-            parser.save();
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
-        }
-    }
-
-    public synchronized List<String> loadIgnorelist() throws IOException {
-        logMsg(true, "Getting ignorelist...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
-            }
-            YMLParser parser = new YMLParser(f);
-            return parser.getStringList("Adorufu.ignorelist");
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
-        }
-    }
-
-    public synchronized List<String> loadFilterList() throws IOException {
-        logMsg(true, "Getting worldfilter...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
-            }
-            YMLParser parser = new YMLParser(f);
-            return parser.getStringList("Adorufu.wordfilter");
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
-        }
-    }
-
-    public synchronized ArrayList<List<String>> loadGreets() throws IOException {
-        logMsg(true, "Getting greets...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
-                ArrayList<String> defaultJoin = new ArrayList<>();
-                ArrayList<String> defaultLeave = new ArrayList<>();
-                defaultJoin.add("Hi, [player]");
-                defaultLeave.add("Bye, [player]");
-                JoinLeaveMessagesFeature.defaultLoaded = true;
-                ArrayList<List<String>> defaults = new ArrayList<>();
-                defaults.add(defaultJoin);
-                defaults.add(defaultLeave);
+    /*
+        public synchronized void saveIgnorelist(List<String> ignores) throws IOException {
+            logMsg(true, "Saving ignorelist...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                }
+                YMLParser parser = new YMLParser(f);
+                parser.set("Adorufu.ignorelist", ignores);
+                parser.save();
+            } finally {
                 threadLock.unlock();
-                saveGreeterMsgs(defaults);
-                threadLock.lock();
+                logWarn(true, "Thread locking disengaged!");
             }
-            YMLParser parser = new YMLParser(f);
-            if (!parser.exists("Adorufu.greeter.join") && !parser.exists("Adorufu.greeter.leave")) {
-                ArrayList<String> defaultJoin = new ArrayList<>();
-                ArrayList<String> defaultLeave = new ArrayList<>();
-                defaultJoin.add("Hi, [player]");
-                defaultLeave.add("Bye, [player]");
-                JoinLeaveMessagesFeature.defaultLoaded = true;
-                ArrayList<List<String>> defaults = new ArrayList<>();
-                defaults.add(defaultJoin);
-                defaults.add(defaultLeave);
+        }
+
+        public synchronized void saveFilterList(List<String> wordlist) throws IOException {
+            logMsg(true, "Saving filterlist...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                }
+                YMLParser parser = new YMLParser(f);
+                parser.set("Adorufu.wordfilter", wordlist);
+                parser.save();
+            } finally {
                 threadLock.unlock();
-                saveGreeterMsgs(defaults);
-                threadLock.lock();
+                logWarn(true, "Thread locking disengaged!");
             }
-            List<String> joins = parser.getStringList("Adorufu.greeter.join");
-            List<String> leaves = parser.getStringList("Adorufu.greeter.leave");
-            ArrayList<List<String>> theReturn = new ArrayList<>();
-            theReturn.add(joins);
-            theReturn.add(leaves);
-            return theReturn;
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
         }
-    }
 
-    public synchronized boolean getDRPEnabled() throws IOException {
-        logMsg(true, "Checking to see if DRP should be enabled.");
-        threadLock.lock();
-        logWarn(true, "Thread locked.");
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                return true; // assuming true
+        public synchronized void saveGreeterMsgs(ArrayList<List<String>> greets) throws IOException {
+            logMsg(true, "Saving greeter messages...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                }
+                YMLParser parser = new YMLParser(f);
+                parser.set("Adorufu.greeter.join", greets.get(0));
+                parser.set("Adorufu.greeter.leave", greets.get(1));
+                parser.save();
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread locking disengaged!");
             }
-            YMLParser parser = new YMLParser(f);
-            if (!parser.exists("Adorufu.discordpresence.enabled")) {
-                parser.set("Adorufu.discordpresence.enabled", true);
-                return true;
-            }
-            return parser.getBoolean("Adorufu.discordpresence.enabled");
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread unlocked.");
         }
-    }
 
-    public synchronized void saveXrayBlocks(ArrayList<Block> blocks) throws IOException {
-        logMsg(true, "Saving Xray blocks...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        ArrayList<Integer> intBlocks = new ArrayList<>();
-        blocks.forEach(b -> intBlocks.add(Block.getIdFromBlock(b))); // In 3.x I used the Localised name, but the localised name changes when you change the game's language
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
-                f.createNewFile();
+        public synchronized List<String> loadIgnorelist() throws IOException {
+            logMsg(true, "Getting ignorelist...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                }
+                YMLParser parser = new YMLParser(f);
+                return parser.getStringList("Adorufu.ignorelist");
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread locking disengaged!");
             }
-            YMLParser parser = new YMLParser(f);
-            parser.set("Adorufu.xray.blocks", intBlocks);
-            parser.save();
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
         }
-    }
 
-    public synchronized ArrayList<Block> getXrayBlocks() throws IOException {
-        logMsg(true, "Saving Xray blocks...");
-        threadLock.lock();
-        logWarn(true, "Thread locking engaged!");
-        List<Integer> intBlocks = new ArrayList<>();
-        try {
-            File f = new File(dataFileName);
-            if (!f.exists()) {
-                AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?) Returning empty ArrayList...");
-                return new ArrayList<>();
+        public synchronized List<String> loadFilterList() throws IOException {
+            logMsg(true, "Getting worldfilter...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                }
+                YMLParser parser = new YMLParser(f);
+                return parser.getStringList("Adorufu.wordfilter");
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread locking disengaged!");
             }
-            YMLParser parser = new YMLParser(f);
-            if (!parser.exists("Adorufu.xray.blocks")) {
-                return new ArrayList<>();
-            }
-            ArrayList<Block> realBlocks = new ArrayList<>();
-            intBlocks = parser.getIntegerList("Adorufu.xray.blocks");
-            intBlocks.forEach(id -> realBlocks.add(Block.getBlockById(id)));
-            return realBlocks;
-        } finally {
-            threadLock.unlock();
-            logWarn(true, "Thread locking disengaged!");
         }
-    }
 
+        public synchronized ArrayList<List<String>> loadGreets() throws IOException {
+            logMsg(true, "Getting greets...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                    ArrayList<String> defaultJoin = new ArrayList<>();
+                    ArrayList<String> defaultLeave = new ArrayList<>();
+                    defaultJoin.add("Hi, [player]");
+                    defaultLeave.add("Bye, [player]");
+                    JoinLeaveMessagesFeature.defaultLoaded = true;
+                    ArrayList<List<String>> defaults = new ArrayList<>();
+                    defaults.add(defaultJoin);
+                    defaults.add(defaultLeave);
+                    threadLock.unlock();
+                    saveGreeterMsgs(defaults);
+                    threadLock.lock();
+                }
+                YMLParser parser = new YMLParser(f);
+                if (!parser.exists("Adorufu.greeter.join") && !parser.exists("Adorufu.greeter.leave")) {
+                    ArrayList<String> defaultJoin = new ArrayList<>();
+                    ArrayList<String> defaultLeave = new ArrayList<>();
+                    defaultJoin.add("Hi, [player]");
+                    defaultLeave.add("Bye, [player]");
+                    JoinLeaveMessagesFeature.defaultLoaded = true;
+                    ArrayList<List<String>> defaults = new ArrayList<>();
+                    defaults.add(defaultJoin);
+                    defaults.add(defaultLeave);
+                    threadLock.unlock();
+                    saveGreeterMsgs(defaults);
+                    threadLock.lock();
+                }
+                List<String> joins = parser.getStringList("Adorufu.greeter.join");
+                List<String> leaves = parser.getStringList("Adorufu.greeter.leave");
+                ArrayList<List<String>> theReturn = new ArrayList<>();
+                theReturn.add(joins);
+                theReturn.add(leaves);
+                return theReturn;
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread locking disengaged!");
+            }
+        }
+
+        public synchronized boolean getDRPEnabled() throws IOException {
+            logMsg(true, "Checking to see if DRP should be enabled.");
+            threadLock.lock();
+            logWarn(true, "Thread locked.");
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    return true; // assuming true
+                }
+                YMLParser parser = new YMLParser(f);
+                if (!parser.exists("Adorufu.discordpresence.enabled")) {
+                    parser.set("Adorufu.discordpresence.enabled", true);
+                    return true;
+                }
+                return parser.getBoolean("Adorufu.discordpresence.enabled");
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread unlocked.");
+            }
+        }
+
+        public synchronized void saveXrayBlocks(ArrayList<Block> blocks) throws IOException {
+            logMsg(true, "Saving Xray blocks...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            ArrayList<Integer> intBlocks = new ArrayList<>();
+            blocks.forEach(b -> intBlocks.add(Block.getIdFromBlock(b))); // In 3.x I used the Localised name, but the localised name changes when you change the game's language
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?)");
+                    f.createNewFile();
+                }
+                YMLParser parser = new YMLParser(f);
+                parser.set("Adorufu.xray.blocks", intBlocks);
+                parser.save();
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread locking disengaged!");
+            }
+        }
+
+        public synchronized ArrayList<Block> getXrayBlocks() throws IOException {
+            logMsg(true, "Saving Xray blocks...");
+            threadLock.lock();
+            logWarn(true, "Thread locking engaged!");
+            List<Integer> intBlocks = new ArrayList<>();
+            try {
+                File f = new File(dataFileName);
+                if (!f.exists()) {
+                    AdorufuMod.logErr(true, "Data file doesn't exist (maybe this is the client's getKey run?) Returning empty ArrayList...");
+                    return new ArrayList<>();
+                }
+                YMLParser parser = new YMLParser(f);
+                if (!parser.exists("Adorufu.xray.blocks")) {
+                    return new ArrayList<>();
+                }
+                ArrayList<Block> realBlocks = new ArrayList<>();
+                intBlocks = parser.getIntegerList("Adorufu.xray.blocks");
+                intBlocks.forEach(id -> realBlocks.add(Block.getBlockById(id)));
+                return realBlocks;
+            } finally {
+                threadLock.unlock();
+                logWarn(true, "Thread locking disengaged!");
+            }
+        }
+    */
     public synchronized void saveGuiElementPos(AdorufuGuiWindow element) throws IOException {
         logMsg(true, "Saving \"" + element.getTitle() + "\"'s current GUI position...");
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");
         try {
-            File f = new File(dataFileName);
+            File f = new File("AdorufuGui.yml");
             if (!f.exists()) {
                 AdorufuMod.logErr(true, "Data file doesn't exist smh");
                 f.createNewFile();
@@ -502,7 +505,7 @@ public class AdorufuDataManager {
         threadLock.lock();
         logWarn(true, "Thread locking engaged!");
         try {
-            File f = new File(dataFileName);
+            File f = new File("AdorufuGui.yml");
             if (!f.exists()) {
                 AdorufuMod.logErr(true, "Data file doesn't exist smh");
                 f.createNewFile();
@@ -519,7 +522,8 @@ public class AdorufuDataManager {
             threadLock.unlock();
         }
     }
-
+}
+/*
     @Deprecated
     public synchronized int[] getLegacySavedGuiPos(AdorufuWindow window) {
         logMsg(true, "Loading \"" + window.getTitle() + "\"'s saved GUI position...");

@@ -20,7 +20,6 @@ package com.sasha.adorufu.mod.gui.waypointgui;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.WindowType;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import net.minecraft.client.Minecraft;
@@ -39,7 +38,6 @@ public class WaypointWindow {
 	private int lastDragY;
 	private boolean isOpen;
 	private boolean isShown;
-	private WindowType type;
 	protected boolean dragging;
 
 	private boolean isEmpty = false;
@@ -52,13 +50,12 @@ public class WaypointWindow {
 		dragY = y - lastDragY;
 	}
 	
-	public WaypointWindow(String title, int x, int y, boolean isShown, WindowType type) {
+	public WaypointWindow(String title, int x, int y, boolean isShown) {
 		this.title = title;
 		this.x = x;
 		this.y = y;
 		this.isOpen = true;
 		this.isShown = isShown;
-		this.type = type;
 		WaypointGUI.windowList.add(this);
 		WaypointGUI.unFocusedWindows.add(this);
 	}
@@ -214,7 +211,4 @@ public class WaypointWindow {
 		return buttonList;
 	}
 
-	public WindowType getType() {
-		return type;
-	}
 }

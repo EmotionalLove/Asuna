@@ -19,39 +19,24 @@
 package com.sasha.adorufu.mod.friend;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.simplesettings.annotation.Setting;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Sasha on 08/08/2018 at 12:40 PM
  **/
 public class FriendManager {
 
-    private ArrayList<Friend> friendList;
+    @Setting private ArrayList<Friend> friendList;
 
     public FriendManager() {
-        AdorufuMod.scheduler.schedule(() -> {
-            try {
-                friendList= AdorufuMod.DATA_MANAGER.loadFriends();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }, 0, TimeUnit.NANOSECONDS);
-
+        AdorufuMod.SETTING_CLASSES.add(this);
     }
 
     public void addFriend(String friendName) {
         friendList.add(new Friend(friendName));
-        AdorufuMod.scheduler.schedule(() -> {
-            try {
-                AdorufuMod.DATA_MANAGER.saveFriends(friendList);
-            } catch (IOException ee){
-                ee.printStackTrace();
-                AdorufuMod.logErr(false, "Couldn't save the friend's list! (" + ee.getMessage() + ")");
-            }
-        }, 0, TimeUnit.NANOSECONDS);
+        AdorufuMod.SETTING_HANDLER.save(this);
     }
     public void removeFriend(String friendName) {
         Friend f1 = null;
@@ -63,11 +48,7 @@ public class FriendManager {
         }
         if (f1 != null) {
             friendList.remove(f1);
-            try {
-                AdorufuMod.DATA_MANAGER.saveFriends(friendList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            AdorufuMod.SETTING_HANDLER.save(this);
         }
     }
 

@@ -18,10 +18,7 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
-import com.sasha.adorufu.mod.feature.impl.CameraClipFeature;
-import com.sasha.adorufu.mod.feature.impl.NightVisionFeature;
-import com.sasha.adorufu.mod.feature.impl.TracersFeature;
-import com.sasha.adorufu.mod.feature.impl.WaypointsFeature;
+import com.sasha.adorufu.mod.feature.impl.*;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -78,7 +75,7 @@ public abstract class MixinEntityRenderer {
         GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float) (isThirdPersonFrontal ? -1 : 1) * viewerPitch, 1.0F, 0.0F, 0.0F);
         float scale = 0.030f;
-        if (Manager.Module.moduleRegistry.get(2).isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) {
             isSneaking = false;
             double distance = Math.sqrt(x * x + y * y + z * z);
             if (distance > 5) {
@@ -108,7 +105,7 @@ public abstract class MixinEntityRenderer {
         GlStateManager.enableTexture2D();
 
         if (!isSneaking) {
-            fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, Manager.Module.moduleRegistry.get(2).isEnabled() ? 0xFFFFFF : 553648127);
+            fontRendererIn.drawString(str, -fontRendererIn.getStringWidth(str) / 2, verticalShift, Manager.Feature.isFeatureEnabled(NamePlatesFeature.class) ? 0xFFFFFF : 553648127);
             GlStateManager.enableDepth();
         }
 
@@ -123,7 +120,7 @@ public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GlStateManager;matrixMode(I)V", ordinal = 4))
     public void renderWorldPass$0(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
-        if (Manager.Module.moduleRegistry.get(1).isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(WireframeFeature.class)) {
             GL11.glPushAttrib(1048575);
             GL11.glEnable(32823);
             GL11.glPolygonOffset(-1.0f, -1.0f);
@@ -135,14 +132,13 @@ public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GlStateManager;shadeModel(I)V", ordinal = 1))
     public void renderWorldPass$1(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
-        if (Manager.Module.moduleRegistry.get(1).isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(FreecamFeature.class)) {
             GL11.glPopAttrib();
         }
     }
 
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;renderHand(FI)V"))
     public void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
-        Manager.Module.renderModules();
         Manager.Feature.renderFeatures();
         GL11.glColor4f(0f, 0f, 0f, 0f);
     }
@@ -270,7 +266,7 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "updateLightmap", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/EntityRenderer;lightmapColors:[I"), cancellable = true)
     public void updateLightmap(float partialTicks, CallbackInfo info) {
-        if (!Manager.Module.getModule(NightVisionFeature.class).isEnabled()) return;
+        if (!Manager.Feature.isFeatureEnabled(NightVisionFeature.class)) return;
         for (int i = 0; i < 256; ++i) this.lightmapColors[i] = -16777216 | -20 << 16 | -20 << 8 | -20;
         this.lightmapTexture.updateDynamicTexture();
         this.lightmapUpdateNeeded = false;

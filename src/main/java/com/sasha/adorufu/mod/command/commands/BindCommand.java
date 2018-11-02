@@ -24,8 +24,6 @@ import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import org.lwjgl.input.Keyboard;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -54,17 +52,10 @@ public class BindCommand extends SimpleCommand {
         }
         AtomicBoolean found = new AtomicBoolean(false);
         final boolean finalNone = none;
-        Manager.Module.moduleRegistry.forEach(mod -> {
-            if (mod.getModuleName().equalsIgnoreCase(this.getArguments()[0])){
-                mod.setKeyBind(finalNone ? 0 : Keyboard.getKeyIndex(this.getArguments()[1]));
-                AdorufuMod.logMsg(false, "Changed " + mod.getModuleName() + "'s keybind!");
-                AdorufuMod.scheduler.schedule(() -> {
-                    try {
-                        AdorufuMod.DATA_MANAGER.saveModuleBind(mod);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }, 0, TimeUnit.NANOSECONDS);
+        Manager.Feature.getTogglableFeatures().forEachRemaining(mod -> {
+            if (mod.getFeatureName().equalsIgnoreCase(this.getArguments()[0])){
+                mod.setKeycode(finalNone ? 0 : Keyboard.getKeyIndex(this.getArguments()[1]));
+                AdorufuMod.logMsg(false, "Changed " + mod.getFeatureName() + "'s keybind!");
                 found.set(true);
             }
         });

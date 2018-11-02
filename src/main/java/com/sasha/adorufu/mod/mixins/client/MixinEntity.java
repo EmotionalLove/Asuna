@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.events.client.ClientEntityCollideEvent;
 import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
+import com.sasha.adorufu.mod.feature.impl.FreecamFeature;
 import com.sasha.adorufu.mod.feature.impl.SafewalkFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.material.Material;
@@ -95,7 +96,7 @@ public abstract class MixinEntity {
 
     @Inject(method = "isInsideOfMaterial", at = @At("HEAD"), cancellable = true)
     public void isInsideOfMaterial(Material materialIn, CallbackInfoReturnable<Boolean> info) {
-        if (Manager.Module.getModule("Freecam").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(FreecamFeature.class)) {
             info.setReturnValue(false);
             info.cancel();
         }
@@ -144,7 +145,6 @@ public abstract class MixinEntity {
      * Makes safewalk work (thanks brady)
      *
      * @param self ze entity
-     * @return
      */
     @Redirect(
             method = "move",
@@ -157,7 +157,7 @@ public abstract class MixinEntity {
     private boolean isSneaking(Entity self) {
         if (self instanceof EntityPlayerSP) { // dont make other players(?) safewalk cuz they cant
             // im not sure if entityPlayermp counts as a player movertype
-            return self.isSneaking() || Manager.Module.getModule(SafewalkFeature.class).isEnabled();
+            return self.isSneaking() || Manager.Feature.isFeatureEnabled(SafewalkFeature.class);
         } else {
             return self.isSneaking();
         }

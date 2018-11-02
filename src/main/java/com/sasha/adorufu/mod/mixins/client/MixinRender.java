@@ -56,7 +56,7 @@ public abstract class MixinRender {
             float f2 = entityIn.height + 0.5F - (flag ? 0.25F : 0.0F);
             int i = "deadmau5".equals(str) ? -10 : 0;
             String nameplatestr = str;
-            if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Module.getModule("NamePlates").isEnabled()) {
+            if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) {
                 //todo asuna
                 nameplatestr = str + " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
             }

@@ -31,7 +31,7 @@ public class MixinEntityLlama {
 
     @Inject(method = "canBeSteered", at = @At("HEAD"), cancellable = true)
     public void canBeSteered(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Manager.Module.getModule(EntitySpeedFeature.class).isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(EntitySpeedFeature.class)) {
             callbackInfoReturnable.setReturnValue(true);
             callbackInfoReturnable.cancel();
             // boom EZ PHI

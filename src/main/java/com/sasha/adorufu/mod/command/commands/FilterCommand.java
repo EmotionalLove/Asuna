@@ -23,8 +23,6 @@ import com.sasha.adorufu.mod.feature.impl.ClientIgnoreFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
-import java.io.IOException;
-
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
  **/
@@ -42,19 +40,9 @@ public class FilterCommand extends SimpleCommand {
         if (!ClientIgnoreFeature.filterList.contains(this.getArguments()[0])) {
             ClientIgnoreFeature.filterList.add(this.getArguments()[0]);
             AdorufuMod.logMsg(false, "\"" + this.getArguments()[0] + "\" will now be filtered.");
-            try {
-                AdorufuMod.DATA_MANAGER.saveFilterList(ClientIgnoreFeature.filterList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             return;
         }
         ClientIgnoreFeature.filterList.remove(this.getArguments()[0]);
         AdorufuMod.logMsg(false, "\"" + this.getArguments()[0] + "\" will no longer be filtered.");
-        try {
-            AdorufuMod.DATA_MANAGER.saveFilterList(ClientIgnoreFeature.filterList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

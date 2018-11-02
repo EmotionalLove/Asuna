@@ -22,6 +22,7 @@ import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.impl.ClientIgnoreFeature;
+import com.sasha.adorufu.mod.feature.impl.ExtendedTablistFeature;
 import com.sasha.adorufu.mod.feature.impl.NameProtectFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
@@ -72,13 +73,13 @@ public abstract class MixinGuiPlayerTabOverlay {
     @Overwrite
     public void renderPlayerlist(int width, Scoreboard scoreboardIn, @Nullable ScoreObjective scoreObjectiveIn)
     {
-        boolean exTab = Manager.Module.getModule("ExtendedTablist").isEnabled();
+        boolean exTab = Manager.Feature.isFeatureEnabled(ExtendedTablistFeature.class);
         NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
         List<NetworkPlayerInfo> list = ENTRY_ORDERING.sortedCopy(nethandlerplayclient.getPlayerInfoMap());
         int i = 0;
         int j = 0;
 
-        if (Manager.Module.getModule(NameProtectFeature.class).isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(NameProtectFeature.class)) {
             for (NetworkPlayerInfo networkPlayerInfo : list) {
                 if (networkPlayerInfo.getGameProfile().getName().equalsIgnoreCase(AdorufuMod.minecraft.player.getName())) {
                     list.remove(networkPlayerInfo);

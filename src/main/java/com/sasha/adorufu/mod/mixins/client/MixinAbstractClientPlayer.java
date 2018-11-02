@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
+import com.sasha.adorufu.mod.feature.impl.FreecamFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +32,7 @@ public class MixinAbstractClientPlayer {
 
     @Inject(method = "isSpectator", at = @At("HEAD"), cancellable = true)
     public void isSpectator(CallbackInfoReturnable<Boolean> info) {
-        if (Manager.Module.getModule("Freecam").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(FreecamFeature.class)) {
             info.setReturnValue(true);
             info.cancel();
         }

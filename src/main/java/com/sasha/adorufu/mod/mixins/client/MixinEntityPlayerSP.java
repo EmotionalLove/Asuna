@@ -47,7 +47,6 @@ public abstract class MixinEntityPlayerSP extends MixinEntityPlayer {
 
     @Inject(method = "onUpdate", at = @At("HEAD"), cancellable = true)
     public void onUpdate(CallbackInfo info) {
-        Manager.Module.tickModules();
         Manager.Feature.tickFeatures();
     }
 

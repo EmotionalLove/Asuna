@@ -19,14 +19,14 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import java.util.HashMap;
 
 import static com.sasha.adorufu.mod.AdorufuMod.*;
-import static com.sasha.adorufu.mod.misc.Manager.Module.moduleRegistry;
 /**
  * Created by Sasha on 10/08/2018 at 9:28 AM
  **/
@@ -62,10 +62,10 @@ public class HelpCommand extends SimpleCommand {
             }
             return;
         }
-        if (this.getArguments()[0].equalsIgnoreCase("feature")){
-            for (AdorufuModule module : moduleRegistry) {
-                if (module.getModuleName().equalsIgnoreCase(this.getArguments()[1])){
-                    logMsg(module.getDescription(module.getClass()));
+        if (this.getArguments()[0].toLowerCase().matches("feature|module")){
+            for (IAdorufuFeature module : Manager.Feature.featureRegistry) {
+                if (module.getFeatureName().equalsIgnoreCase(this.getArguments()[1])){
+                    logMsg(Manager.Feature.getFeatureInfo(module.getClass()));
                 }
             }
         }

@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
+import com.sasha.adorufu.mod.feature.impl.FreecamFeature;
 import com.sasha.adorufu.mod.feature.impl.XrayFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.Block;
@@ -43,44 +44,49 @@ public abstract class MixinBlock {
 
     @Shadow protected abstract Block setSoundType(SoundType sound);
 
-    @Inject(method = "isOpaqueCube", at = @At("HEAD") , cancellable = true)
+    @Inject(method = "isOpaqueCube", at = @At("HEAD"), cancellable = true)
     public void isOpaqueCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if (!Manager.Module.moduleRegistry.isEmpty() && Manager.Module.moduleRegistry.get(1).isEnabled()) {
+        if (!Manager.Feature.featureRegistry.isEmpty() && Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
             info.setReturnValue(true);
         }
-        if (!Manager.Module.moduleRegistry.isEmpty() && Manager.Module.moduleRegistry.get(0).isEnabled() ) {
+        if (!Manager.Feature.featureRegistry.isEmpty() && Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
             List<Block> blockList = XrayFeature.getXrayBlockList();
             info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
-    @Inject(method = "isFullBlock", at = @At("HEAD") , cancellable = true)
+
+    @Inject(method = "isFullBlock", at = @At("HEAD"), cancellable = true)
     public void isFullBlock(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if ((Manager.Module.moduleRegistry.get(0).isEnabled() || Manager.Module.moduleRegistry.get(1).isEnabled()) && !Manager.Module.moduleRegistry.isEmpty()) {
+        if ((Manager.Feature.isFeatureEnabled(XrayFeature.class) || Manager.Feature.isFeatureEnabled(FreecamFeature.class)) && !Manager.Feature.featureRegistry.isEmpty())
+        {
             info.setReturnValue(false);
         }
     }
-    @Inject(method = "isFullCube", at = @At("HEAD") , cancellable = true)
+
+    @Inject(method = "isFullCube", at = @At("HEAD"), cancellable = true)
     public void isFullCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if (!Manager.Module.moduleRegistry.isEmpty() && Manager.Module.moduleRegistry.get(1).isEnabled())     {
+        if (!Manager.Feature.featureRegistry.isEmpty() && Manager.Feature.isFeatureEnabled(FreecamFeature.class)) {
             info.setReturnValue(true);
         }
-        if (Manager.Module.moduleRegistry.get(0).isEnabled() && !Manager.Module.moduleRegistry.isEmpty()) {
+        if (Manager.Feature.isFeatureEnabled(XrayFeature.class) && !Manager.Feature.featureRegistry.isEmpty()) {
             List<Block> blockList = XrayFeature.getXrayBlockList();
             info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
-    @Inject(method = "getRenderType", at = @At("HEAD") , cancellable = true)
+
+    @Inject(method = "getRenderType", at = @At("HEAD"), cancellable = true)
     public void getRenderType(IBlockState state, CallbackInfoReturnable<EnumBlockRenderType> info) {
-        if (Manager.Module.moduleRegistry.get(0).isEnabled() && !Manager.Module.moduleRegistry.isEmpty()) {
+        if (Manager.Feature.isFeatureEnabled(XrayFeature.class) && !Manager.Feature.featureRegistry.isEmpty()) {
             List<Block> blockList = XrayFeature.getXrayBlockList();
             if (!state.getBlock().isNormalCube(state) && !blockList.contains(state.getBlock())) {
                 info.setReturnValue(EnumBlockRenderType.INVISIBLE);
             }
         }
     }
-    @Inject(method = "shouldSideBeRendered", at = @At("HEAD") , cancellable = true)
+
+    @Inject(method = "shouldSideBeRendered", at = @At("HEAD"), cancellable = true)
     public void shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info) {
-        if (Manager.Module.moduleRegistry.get(0).isEnabled() ) {
+        if (Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
             List<Block> blockList = XrayFeature.getXrayBlockList();
             info.setReturnValue(blockList.contains(blockState.getBlock()));
         }
