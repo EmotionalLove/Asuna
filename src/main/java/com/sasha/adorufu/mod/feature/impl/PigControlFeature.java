@@ -16,31 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 
-/**
- * Created by Sasha at 12:48 PM on 9/16/2018
- */
-public class ModulePowerBow extends AdorufuModule {
-    public ModulePowerBow() {
-        super("PowerBow", AdorufuCategory.COMBAT, false);
+@FeatureInfo(description = "Control pigs without carrots")
+public class PigControlFeature extends AbstractAdorufuTogglableFeature {
+    public PigControlFeature() {
+        super("PigControl", AdorufuCategory.MOVEMENT);
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
-    }
 }

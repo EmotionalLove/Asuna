@@ -16,31 +16,14 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
-@FeatureInfo(description = "See through the world kinda")
-public class ModuleWireframe extends AdorufuModule {
-    public ModuleWireframe() {
-        super("Wireframe", AdorufuCategory.RENDER, false);
+public class SafewalkFeature extends AbstractAdorufuTogglableFeature {
+    public SafewalkFeature() {
+        super("SafeWalk", AdorufuCategory.MOVEMENT);
     }
 
-    @Override
-    public void onEnable() {
-        AdorufuMod.minecraft.renderGlobal.loadRenderers();
-    }
-
-    @Override
-    public void onDisable() {
-        AdorufuMod.minecraft.renderGlobal.loadRenderers();
-    }
-
-    @Override
-    public void onTick() {
-
-    }
 }

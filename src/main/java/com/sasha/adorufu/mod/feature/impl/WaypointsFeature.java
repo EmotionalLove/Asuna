@@ -16,41 +16,33 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.waypoint.Waypoint;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 @FeatureInfo(description = "Display tracers to enabled waypoints.")
-public class ModuleWaypoints extends AdorufuModule {
+public class WaypointsFeature extends AbstractAdorufuTogglableFeature implements IAdorufuRenderableFeature {
 
     public static int i = 0;
 
 
-    public ModuleWaypoints() {
-        super("Waypoints", AdorufuCategory.RENDER, false);
+    public WaypointsFeature() {
+        super("Waypoints", AdorufuCategory.RENDER);
     }
 
-
-    @Override
-    public void onEnable() {
-
-    }
 
     @Override
     public void onDisable() {
         i = 0;
     }
 
-    @Override
-    public void onTick() {
-
-    }
 
     @Override
     public void onRender() {

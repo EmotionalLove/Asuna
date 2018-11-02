@@ -16,12 +16,13 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.AdorufuRender;
 import net.minecraft.block.BlockChest;
 import net.minecraft.tileentity.*;
@@ -30,9 +31,9 @@ import net.minecraft.tileentity.*;
  * Created by Sasha on 09/08/2018 at 7:32 PM
  **/
 @FeatureInfo(description = "Draws an outline around storage containers")
-public class ModuleStorageESP extends AdorufuModule {
-    public ModuleStorageESP() {
-        super("StorageESP", AdorufuCategory.RENDER, false);
+public class StorageESPFeature extends AbstractAdorufuTogglableFeature implements IAdorufuRenderableFeature {
+    public StorageESPFeature() {
+        super("StorageESP", AdorufuCategory.RENDER);
     }
 
     @Override
@@ -82,11 +83,6 @@ public class ModuleStorageESP extends AdorufuModule {
         }
         //todo int x = AdorufuMod.minecraft.world.loadedTileEntityList.stream().filter(tile -> tile. )
         this.setSuffix(i + "");
-    }
-
-    @Override
-    public void onTick() {
-
     }
 
 }

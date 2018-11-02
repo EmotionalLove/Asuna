@@ -16,23 +16,24 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.PlayerIdentity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityTameable;
 
 @FeatureInfo(description = "Show who tamed a tameable entity")
-public class ModuleWolfIdentity extends AdorufuModule {
+public class TamedIdentityFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
 
-    public ModuleWolfIdentity() {
-        super("TamedIdentity", AdorufuCategory.RENDER, false);
+    public TamedIdentityFeature() {
+        super("TamedIdentity", AdorufuCategory.RENDER);
     }
 
     @Override

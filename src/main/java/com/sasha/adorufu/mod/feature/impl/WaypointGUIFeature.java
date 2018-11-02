@@ -16,28 +16,29 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
+import com.sasha.adorufu.mod.gui.waypointgui.WaypointGUI;
 
-public class ModuleSafeWalk extends AdorufuModule {
-    public ModuleSafeWalk() {
-        super("SafeWalk", AdorufuCategory.MOVEMENT, false);
+/**
+ * Created by Sasha on 11/08/2018 at 10:27 AM
+ **/
+@PostToggleExec
+@FeatureInfo(description = "Displays the WaypointGUI")
+public class WaypointGUIFeature extends AbstractAdorufuTogglableFeature  {
+    public WaypointGUIFeature() {
+        super("WaypointGUI", AdorufuCategory.GUI);
     }
 
     @Override
     public void onEnable() {
-
+        AdorufuMod.minecraft.displayGuiScreen(new WaypointGUI());
+        this.toggleState();
     }
 
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
-    }
 }

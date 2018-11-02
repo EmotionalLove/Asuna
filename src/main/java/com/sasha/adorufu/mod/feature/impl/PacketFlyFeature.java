@@ -16,18 +16,19 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 @FeatureInfo(description = "NCP Flight bypass. Useful for 2b2t's nether roof.")
-public class ModulePacketFly extends AdorufuModule {
-    public ModulePacketFly() {
-        super("PacketFly", AdorufuCategory.MOVEMENT, false);
+public class PacketFlyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public PacketFlyFeature() {
+        super("PacketFly", AdorufuCategory.MOVEMENT);
     }
 
     @Override

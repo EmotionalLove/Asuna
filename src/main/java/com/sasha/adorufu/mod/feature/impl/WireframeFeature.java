@@ -16,42 +16,27 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
-import net.minecraft.network.play.client.CPacketConfirmTeleport;
 
-@FeatureInfo(description = "Become invinsible after using a nether portal")
-public class ModulePortalGodMode extends AdorufuModule implements SimpleListener {
-    public ModulePortalGodMode() {
-        super("PortalGodMode", AdorufuCategory.MOVEMENT, false);
+@FeatureInfo(description = "See through the world kinda")
+public class WireframeFeature extends AbstractAdorufuTogglableFeature {
+    public WireframeFeature() {
+        super("Wireframe", AdorufuCategory.RENDER);
     }
 
     @Override
     public void onEnable() {
-
+        AdorufuMod.minecraft.renderGlobal.loadRenderers();
     }
 
     @Override
     public void onDisable() {
-
+        AdorufuMod.minecraft.renderGlobal.loadRenderers();
     }
 
-    @Override
-    public void onTick() {
-
-    }
-
-    @SimpleEventHandler
-    public void onPckTx(ClientPacketSendEvent e) {
-        if (!this.isEnabled()) return;
-        if (e.getSendPacket() instanceof CPacketConfirmTeleport) {
-            e.setCancelled(true);
-        }
-    }
 }

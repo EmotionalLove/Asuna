@@ -16,13 +16,13 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketChat;
@@ -32,30 +32,14 @@ import java.util.concurrent.TimeUnit;
 import static com.sasha.adorufu.mod.feature.impl.AutoIgnoreFeature.stripColours;
 
 @FeatureInfo(description = "Show the estimated time left in queue in chat")
-public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
-    public static int milestone = 5;
-    public String tu = "Calculating...";
+public class QueueTimeFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    private String tu = "Calculating...";
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
     private static long preMeasurementMilestoneTime = 0;
 
-    public ModuleQueueTime() {
-        super("QueueTime", AdorufuCategory.CHAT, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
+    public QueueTimeFeature() {
+        super("QueueTime", AdorufuCategory.CHAT);
     }
 
     @SimpleEventHandler
@@ -66,6 +50,7 @@ public class ModuleQueueTime extends AdorufuModule implements SimpleListener {
             if (stripColours(e.getChatComponent().getUnformattedText()).startsWith("Position in queue: ")) {
                 int queuepos = Integer.parseInt(stripColours(e.chatComponent.getUnformattedText()).replace("Position in queue: ", ""));
                 //This runs when the module is initiated
+                int milestone = 5;
                 if (lastQueuePos == -1) {
                     lastQueuePos = queuepos;
                     AdorufuMod.logMsg("Wait patiently for " + milestone + " spots in the queue to pass to ensure (semi)accurate measurement.");

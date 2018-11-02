@@ -16,30 +16,27 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.events.client.ClientPacketSendEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
+import net.minecraft.network.play.client.CPacketConfirmTeleport;
 
-@FeatureInfo(description = "Control pigs without carrots")
-public class ModulePigControl extends AdorufuModule {
-    public ModulePigControl() {
-        super("PigControl", AdorufuCategory.MOVEMENT, false);
+@FeatureInfo(description = "Become invinsible after using a nether portal")
+public class PortalGodModeFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public PortalGodModeFeature() {
+        super("PortalGodMode", AdorufuCategory.MOVEMENT);
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
+    @SimpleEventHandler
+    public void onPckTx(ClientPacketSendEvent e) {
+        if (!this.isEnabled()) return;
+        if (e.getSendPacket() instanceof CPacketConfirmTeleport) {
+            e.setCancelled(true);
+        }
     }
 }

@@ -20,8 +20,8 @@ package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.feature.impl.CameraClipFeature;
 import com.sasha.adorufu.mod.feature.impl.NightVisionFeature;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleTracers;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleWaypoints;
+import com.sasha.adorufu.mod.feature.impl.TracersFeature;
+import com.sasha.adorufu.mod.feature.impl.WaypointsFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -149,7 +149,7 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "applyBobbing", at = @At("HEAD"), cancellable = true)
     public void applyBobbing(float partialTicks, CallbackInfo info) {
-        if (ModuleTracers.i > 0 || ModuleWaypoints.i > 0) {
+        if (TracersFeature.i > 0 || WaypointsFeature.i > 0) {
             info.cancel();
             //todo make tracers bob against camera so that we dont need to do this
         }

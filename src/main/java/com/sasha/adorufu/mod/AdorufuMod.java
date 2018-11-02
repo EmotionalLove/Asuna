@@ -260,7 +260,7 @@ public class AdorufuMod implements SimpleListener {
     private void registerModules() {
         Manager.Module.moduleRegistry.clear();
         Manager.Module.register(new XrayFeature());
-        Manager.Module.register(new ModuleWireframe());
+        Manager.Module.register(new WireframeFeature());
         Manager.Module.register(new NamePlatesFeature());
         Manager.Module.register(new TpsRenderableFeature());
         Manager.Module.register(new FpsRenderableFeature());
@@ -271,8 +271,8 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new FeaturelistRenderableFeature());
         Manager.Module.register(new WatermarkRenderableFeature());
         Manager.Module.register(new KillauraFeature());
-        Manager.Module.register(new ModuleStorageESP());
-        Manager.Module.register(new ModuleTracers());
+        Manager.Module.register(new StorageESPFeature());
+        Manager.Module.register(new TracersFeature());
         Manager.Module.register(new AntiHungerFeature());
         Manager.Module.register(new ClickGUIFeature());
         Manager.Module.register(new NightVisionFeature());
@@ -297,14 +297,14 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ExtendedTablistFeature());
         Manager.Module.register(new AntiAFKFeature());
         Manager.Module.register(new YawLockFeature());
-        Manager.Module.register(new ModuleQueueTime());
+        Manager.Module.register(new QueueTimeFeature());
         Manager.Module.register(new NoPushFeature());
-        Manager.Module.register(new ModulePacketFly());
-        Manager.Module.register(new ModulePigControl());
+        Manager.Module.register(new PacketFlyFeature());
+        Manager.Module.register(new PigControlFeature());
         Manager.Module.register(new AutoTotemFeature());
-        Manager.Module.register(new ModuleWaypointGUI());
-        Manager.Module.register(new ModuleWaypoints());
-        Manager.Module.register(new ModuleWolfIdentity());
+        Manager.Module.register(new WaypointGUIFeature());
+        Manager.Module.register(new WaypointsFeature());
+        Manager.Module.register(new TamedIdentityFeature());
         Manager.Module.register(new GhostBlockWarningFeature());
         Manager.Module.register(new AntiFireOverlayFeature());
         Manager.Module.register(new MinecraftMusicFeature());
@@ -323,10 +323,10 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new BoatFlyFeature());
         Manager.Module.register(new AutoReconnectFeature());
         Manager.Module.register(new NameProtectFeature());
-        Manager.Module.register(new ModuleSafeWalk());
-        Manager.Module.register(new ModulePortalGodMode());
+        Manager.Module.register(new SafewalkFeature());
+        Manager.Module.register(new PortalGodModeFeature());
         Manager.Module.register(new AutoEatFeature());
-        Manager.Module.register(new ModuleShulkerSpy());
+        Manager.Module.register(new ShulkerSpyFeature());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
     }
 */

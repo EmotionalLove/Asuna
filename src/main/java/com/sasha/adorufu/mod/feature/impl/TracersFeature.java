@@ -16,38 +16,34 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.gui.waypointgui.WaypointGUI;
+import com.sasha.adorufu.mod.misc.AdorufuRender;
 
 /**
- * Created by Sasha on 11/08/2018 at 10:27 AM
+ * Created by Sasha on 10/08/2018 at 8:55 AM
  **/
-@PostToggleExec
-@FeatureInfo(description = "Displays the WaypointGUI")
-public class ModuleWaypointGUI extends AdorufuModule {
-    public ModuleWaypointGUI() {
-        super("WaypointGUI", AdorufuCategory.GUI, false);
-    }
+@FeatureInfo(description = "Draws lines to nearby players.")
+public class TracersFeature extends AbstractAdorufuTogglableFeature implements IAdorufuRenderableFeature {
+    public static int i;
 
-    @Override
-    public void onEnable() {
-        AdorufuMod.minecraft.displayGuiScreen(new WaypointGUI());
-        this.toggle();
+    public TracersFeature() {
+        super("Tracers", AdorufuCategory.RENDER);
     }
 
     @Override
     public void onDisable() {
-
+        i = 0;
     }
 
     @Override
-    public void onTick() {
-
+    public void onRender() {
+        if (this.isEnabled()) {
+            i = AdorufuRender.tracers();
+        }
     }
 }

@@ -16,12 +16,13 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.ItemStackHelper;
@@ -31,19 +32,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
 @FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
-public class ModuleShulkerSpy extends AdorufuModule {
-    public ModuleShulkerSpy() {
-        super("ShulkerSpy", AdorufuCategory.RENDER, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
+public class ShulkerSpyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+    public ShulkerSpyFeature() {
+        super("ShulkerSpy", AdorufuCategory.RENDER);
     }
 
     /**

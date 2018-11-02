@@ -23,7 +23,7 @@ import com.sasha.adorufu.mod.events.client.ClientEntityCollideEvent;
 import com.sasha.adorufu.mod.events.client.ClientPushOutOfBlocksEvent;
 import com.sasha.adorufu.mod.events.client.EntityMoveEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleSafeWalk;
+import com.sasha.adorufu.mod.feature.impl.SafewalkFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -157,7 +157,7 @@ public abstract class MixinEntity {
     private boolean isSneaking(Entity self) {
         if (self instanceof EntityPlayerSP) { // dont make other players(?) safewalk cuz they cant
             // im not sure if entityPlayermp counts as a player movertype
-            return self.isSneaking() || Manager.Module.getModule(ModuleSafeWalk.class).isEnabled();
+            return self.isSneaking() || Manager.Module.getModule(SafewalkFeature.class).isEnabled();
         } else {
             return self.isSneaking();
         }
