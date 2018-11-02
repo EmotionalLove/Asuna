@@ -78,8 +78,8 @@ dependencies {
     compile files('libs/MultiTasker.jar')
 
     // Are these even used?
-    compile 'javax.activation:javax.activation-api:1.2.0'
-    compile 'javax.mail:javax.mail-api:1.6.2'
+    //compile 'javax.activation:javax.activation-api:1.2.0'
+    //compile 'javax.mail:javax.mail-api:1.6.2'
 
     compile 'club.minnced:java-discord-rpc:2.0.1'
     compile 'club.minnced:discord-rpc-release:v3.3.0'
