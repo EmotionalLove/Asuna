@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.gui.hud;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
+import com.sasha.adorufu.mod.events.adorufu.AdorufuTogglableFeatureTogglePostEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
@@ -62,10 +62,8 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     }
 
     @SimpleEventHandler
-    public void onPostToggle(AdorufuModuleTogglePostEvent e) {
-        if (e.getToggledModule().isRenderable()) {
-            resetHUD();
-        }
+    public void onPostToggle(AdorufuTogglableFeatureTogglePostEvent e) {
+        resetHUD();
     }
 
     /* todo optimise this */
@@ -140,9 +138,9 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
         }
 
 
-        if (!AdorufuModule.displayList.isEmpty()) {
+        /*if (!AdorufuModule.displayList.isEmpty()) {
             AdorufuModule.displayList.sort((m, m1) -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(m1.getModuleName() + m1.getSuffix()) - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(m.getModuleName() + m.getSuffix()));
-        }
+        }*/
     }
 
     /*

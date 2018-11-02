@@ -80,7 +80,7 @@ public class AdorufuMod implements SimpleListener {
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.5.3";
+    public static final String VERSION = "1.6";
 
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
@@ -220,7 +220,6 @@ public class AdorufuMod implements SimpleListener {
     private void registerCommands() throws Exception {
         COMMAND_PROCESSOR.register(AboutCommand.class);
         COMMAND_PROCESSOR.register(ToggleCommand.class);
-        COMMAND_PROCESSOR.register(ModulesCommand.class);
         COMMAND_PROCESSOR.register(HelpCommand.class);
         COMMAND_PROCESSOR.register(BindCommand.class);
         COMMAND_PROCESSOR.register(XrayCommand.class);

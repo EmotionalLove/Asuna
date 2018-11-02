@@ -18,6 +18,7 @@
 
 package com.sasha.adorufu.mod.events.adorufu;
 
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.eventsys.SimpleCancellableEvent;
 
@@ -25,10 +26,10 @@ import com.sasha.eventsys.SimpleCancellableEvent;
  * Created by Sasha on 08/08/2018 at 9:18 AM
  **/
 public class AdorufuTogglableFeatureTogglePreEvent extends SimpleCancellableEvent {
-    private AdorufuModule toggledModule;
+    private IAdorufuTogglableFeature toggledModule;
     private ModuleState toggleState;
 
-    public AdorufuTogglableFeatureTogglePreEvent(AdorufuModule toggledModule, ModuleState toggleState){
+    public AdorufuTogglableFeatureTogglePreEvent(IAdorufuTogglableFeature toggledModule, ModuleState toggleState){
         this.toggledModule= toggledModule;
         this.toggleState= toggleState;
     }
@@ -37,7 +38,7 @@ public class AdorufuTogglableFeatureTogglePreEvent extends SimpleCancellableEven
         return toggleState;
     }
 
-    public AdorufuModule getToggledModule() {
+    public IAdorufuTogglableFeature getToggledModule() {
         return toggledModule;
     }
 }
