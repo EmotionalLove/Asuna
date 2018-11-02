@@ -241,14 +241,14 @@ public class AdorufuMod implements SimpleListener {
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
-    private void registerFeatures() {
+    private void registerFeatures() throws IOException {
         AdorufuMod.logMsg(true, "Finding and initialising features...");
         Manager.Feature.featureRegistry.clear();
-        Manager.getClassesInPackage(AFKFishFeature.class.getPackage().getName())
+        Manager.findClasses(AFKFishFeature.class.getPackage().getName())
                 .forEach(e -> {
                     AdorufuMod.logMsg(true, "Found " + e.getSimpleName() + ".class");
                     try {
-                        IAdorufuFeature feature = (IAdorufuFeature) e.getConstructor().newInstance();
+                        IAdorufuFeature feature = (IAdorufuFeature) e.load().getConstructor().newInstance();
                         Manager.Feature.featureRegistry.add(feature);
                         AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {

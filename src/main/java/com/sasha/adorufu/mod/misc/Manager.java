@@ -18,19 +18,23 @@
 
 package com.sasha.adorufu.mod.misc;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.*;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleListener;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Sasha at 9:09 AM on 9/17/2018
@@ -127,12 +131,8 @@ public class Manager {
             AdorufuMod.SETTING_CLASSES.add(robj);
         }
     }
-
-    public static Set<Class<?>> getClassesInPackage(String pckge) {
-        Reflections reflections = new Reflections(new ConfigurationBuilder()
-                .setScanners(new SubTypesScanner(false), new ResourcesScanner())
-                .setUrls(ClasspathHelper.forClassLoader(classLoadersList.toArray(new ClassLoader[0])))
-                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(pckge))));
-        return reflections.getSubTypesOf(Object.class);
+    public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
+        return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
     }
 }
+
