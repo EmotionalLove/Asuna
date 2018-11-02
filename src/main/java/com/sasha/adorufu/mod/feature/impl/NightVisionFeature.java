@@ -16,40 +16,20 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.events.client.ClientEntityCollideEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.eventsys.SimpleEventHandler;
-import com.sasha.eventsys.SimpleListener;
 
-@FeatureInfo(description = "Don't collide with other entities")
-public class ModuleNoPush extends AdorufuModule implements SimpleListener {
-    public ModuleNoPush() {
-        super("NoPush", AdorufuCategory.MOVEMENT, false);
+/**
+ * Created by Sasha on 11/08/2018 at 11:39 AM
+ **/
+@FeatureInfo(description = "Lets you see in the dark.")
+public class NightVisionFeature extends AbstractAdorufuTogglableFeature {
+
+    public NightVisionFeature() {
+        super("NightVision", AdorufuCategory.RENDER);
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
-    }
-
-    @SimpleEventHandler
-    public void onEntityCollide(ClientEntityCollideEvent e) {
-        if (this.isEnabled()) {
-            e.setCancelled(true);
-        }
-    }
 }

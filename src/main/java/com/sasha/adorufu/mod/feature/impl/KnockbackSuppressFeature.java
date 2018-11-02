@@ -16,12 +16,15 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOptionBehaviour;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -30,11 +33,13 @@ import com.sasha.eventsys.SimpleListener;
  * Created by Sasha at 7:59 PM on 9/2/2018
  */
 @FeatureInfo(description = "Reduce or completely ignore knockback")
-public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleListener {
-    public ModuleKnockbackSuppress() {
-        super("KnockbackSuppress", AdorufuCategory.COMBAT, false, true, true);
-        this.addOption("Ignore", true);
-        this.addOption("Reduce", false);
+public class KnockbackSuppressFeature extends AbstractAdorufuTogglableFeature
+        implements SimpleListener, IAdorufuTickableFeature {
+    public KnockbackSuppressFeature() {
+        super("KnockbackSuppress", AdorufuCategory.COMBAT,
+                new AdorufuFeatureOptionBehaviour(true),
+                new AdorufuFeatureOption<>("Ignore", true),
+                new AdorufuFeatureOption<>("Reduce", false));
     }
 
     @Override
@@ -49,7 +54,7 @@ public class ModuleKnockbackSuppress extends AdorufuModule implements SimpleList
 
     @Override
     public void onTick() {
-        this.setSuffix(this.getModuleOptionsMap());
+        this.setSuffix(this.getFormattableOptionsMap());
     }
 
     @SimpleEventHandler

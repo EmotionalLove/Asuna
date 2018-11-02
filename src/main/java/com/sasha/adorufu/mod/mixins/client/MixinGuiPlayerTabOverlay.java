@@ -22,7 +22,7 @@ import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.impl.ClientIgnoreFeature;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNameProtect;
+import com.sasha.adorufu.mod.feature.impl.NameProtectFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -78,7 +78,7 @@ public abstract class MixinGuiPlayerTabOverlay {
         int i = 0;
         int j = 0;
 
-        if (Manager.Module.getModule(ModuleNameProtect.class).isEnabled()) {
+        if (Manager.Module.getModule(NameProtectFeature.class).isEnabled()) {
             for (NetworkPlayerInfo networkPlayerInfo : list) {
                 if (networkPlayerInfo.getGameProfile().getName().equalsIgnoreCase(AdorufuMod.minecraft.player.getName())) {
                     list.remove(networkPlayerInfo);

@@ -16,36 +16,24 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.events.playerclient.PlayerJumpEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.eventsys.SimpleEventHandler;
+import com.sasha.eventsys.SimpleListener;
 
-/**
- * Created by Sasha on 11/08/2018 at 11:39 AM
- **/
-@PostToggleExec
-@FeatureInfo(description = "Lets you see in the dark.")
-public class ModuleNightVision extends AdorufuModule {
-
-    public ModuleNightVision() {
-        super("NightVision", AdorufuCategory.RENDER, false);
+@FeatureInfo(description = "Jump slightly lower than vanilla height so that you don't hit your head")
+public class LowJumpFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public LowJumpFeature() {
+        super("LowJump", AdorufuCategory.MOVEMENT);
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
+    @SimpleEventHandler
+    public void onJump(PlayerJumpEvent e) {
+        if (!this.isEnabled()) return;
+        e.setJumpHeight(0.40f);
     }
 }

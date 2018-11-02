@@ -16,33 +16,18 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 
 import static com.sasha.adorufu.mod.misc.AdorufuMath.dround;
 
 @FeatureInfo(description = "Display an enchanced nametag above a player's head")
-public class ModuleNamePlates extends AdorufuModule {
-    public ModuleNamePlates() {
-        super("NamePlates", AdorufuCategory.RENDER, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
+public class NamePlatesFeature extends AbstractAdorufuTogglableFeature {
+    public NamePlatesFeature() {
+        super("NamePlates", AdorufuCategory.RENDER);
     }
 
     public static String formatHealthTag(double health) {

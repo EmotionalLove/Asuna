@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleXray;
+import com.sasha.adorufu.mod.feature.impl.XrayFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
@@ -39,12 +39,12 @@ public class XrayCommand extends SimpleCommand {
         }
         if (this.getArguments().length == 1 && this.getArguments()[0].equalsIgnoreCase("list")) {
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < ModuleXray.xRayBlocks.size(); i++) {
+            for (int i = 0; i < XrayFeature.xRayBlocks.size(); i++) {
                 if (i==0) {
-                    builder.append(Block.getBlockById(ModuleXray.xRayBlocks.get(i)).getLocalizedName());
+                    builder.append(Block.getBlockById(XrayFeature.xRayBlocks.get(i)).getLocalizedName());
                     continue;
                 }
-                builder.append(", ").append(Block.getBlockById(ModuleXray.xRayBlocks.get(i)).getLocalizedName());
+                builder.append(", ").append(Block.getBlockById(XrayFeature.xRayBlocks.get(i)).getLocalizedName());
             }
             AdorufuMod.logMsg(false, "Listing registered blocks:");
             AdorufuMod.logMsg(builder.toString());
@@ -58,11 +58,11 @@ public class XrayCommand extends SimpleCommand {
                         AdorufuMod.logErr(false, this.getArguments()[1] + " isn't a valid block! (If the name of your block has spaces in it, try surrounding the entire name in quotation marks)");
                         break;
                     }
-                    if (ModuleXray.xRayBlocks.contains(Block.getIdFromBlock(b))) {
+                    if (XrayFeature.xRayBlocks.contains(Block.getIdFromBlock(b))) {
                         AdorufuMod.logErr(false, "That block is already added to xray!");
                         break;
                     }
-                    ModuleXray.xRayBlocks.add(Block.getIdFromBlock(b));
+                    XrayFeature.xRayBlocks.add(Block.getIdFromBlock(b));
                     AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully added");
                     AdorufuMod.minecraft.renderGlobal.loadRenderers();
                     break;
@@ -72,11 +72,11 @@ public class XrayCommand extends SimpleCommand {
                         AdorufuMod.logErr(false, this.getArguments()[1] + " isn't a valid block! (If the name of your block has spaces in it, try surrounding the entire name in quotation marks)");
                         break;
                     }
-                    if (!ModuleXray.xRayBlocks.contains(Block.getIdFromBlock(delb))) {
+                    if (!XrayFeature.xRayBlocks.contains(Block.getIdFromBlock(delb))) {
                         AdorufuMod.logErr(false, "That block is not added to xray!");
                         break;
                     }
-                    ModuleXray.xRayBlocks.remove(Block.getIdFromBlock(delb));
+                    XrayFeature.xRayBlocks.remove(Block.getIdFromBlock(delb));
                     AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully removed");
                     AdorufuMod.minecraft.renderGlobal.loadRenderers();
                     break;

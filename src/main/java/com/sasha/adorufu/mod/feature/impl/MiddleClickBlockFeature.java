@@ -16,13 +16,13 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientMouseClickEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
@@ -31,24 +31,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 
 @FeatureInfo(description = "Middle click a block to add it to xray")
-public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListener {
-    public ModuleMiddleClickBlock() {
-        super("MiddleClickBlock", AdorufuCategory.MISC, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
+public class MiddleClickBlockFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public MiddleClickBlockFeature() {
+        super("MiddleClickBlock", AdorufuCategory.MISC);
     }
 
     @SimpleEventHandler
@@ -58,19 +43,19 @@ public class ModuleMiddleClickBlock extends AdorufuModule implements SimpleListe
         }
         BlockPos en = AdorufuMod.minecraft.objectMouseOver.getBlockPos();
         Block b = AdorufuMod.minecraft.world.getBlockState(en).getBlock();
-        if (!ModuleXray.isXrayBlock(b)) {
-            ModuleXray.xRayBlocks.add(Block.getIdFromBlock(b));
+        if (!XrayFeature.isXrayBlock(b)) {
+            XrayFeature.xRayBlocks.add(Block.getIdFromBlock(b));
             AdorufuMod.logMsg(false, b.getLocalizedName() + " added.");
             refreshXray();
             return;
         }
-        ModuleXray.xRayBlocks.remove(Block.getIdFromBlock(b));
+        XrayFeature.xRayBlocks.remove(Block.getIdFromBlock(b));
         refreshXray();
         AdorufuMod.logMsg(false, b.getLocalizedName() + " removed.");
     }
 
     private static void refreshXray() {
-        if (Manager.Module.getModule("X-Ray").isEnabled()) {
+        if (Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
             AdorufuMod.minecraft.renderGlobal.loadRenderers();
         }
     }

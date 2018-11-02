@@ -16,13 +16,15 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
@@ -33,22 +35,23 @@ import java.util.*;
  * Created by Sasha at 7:07 PM on 8/30/2018
  */
 @FeatureInfo(description = "Show client-sided join/leave messages, or use greeter to announce them.")
-public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleListener {
+public class JoinLeaveMessagesFeature extends AbstractAdorufuTogglableFeature
+        implements SimpleListener, IAdorufuTickableFeature {
 
     private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
     public static boolean defaultLoaded = false;
     public static List<String> joinMessages = new ArrayList<>();
     public static List<String> leaveMessages = new ArrayList<>();
 
-    public ModuleJoinLeaveMessages() {
-        super("JoinLeaveMessages", AdorufuCategory.CHAT, false, true);
-        this.addOption("Greeter", false);
+    public JoinLeaveMessagesFeature() {
+        super("JoinLeaveMessages", AdorufuCategory.CHAT,
+                new AdorufuFeatureOption<>("Greeter", false));
     }
 
     @Override
     public void onEnable() {
         if (AdorufuMod.minecraft.getConnection() == null) {
-            this.toggle();
+            this.toggleState();
         }
     }
 
@@ -61,7 +64,7 @@ public class ModuleJoinLeaveMessages extends AdorufuModule implements SimpleList
     public void onTick() {
         if (!this.isEnabled()) return;
         if (AdorufuMod.minecraft.getConnection() == null) {
-            this.toggle();
+            this.toggleState();
         }
         LinkedHashMap<String, Boolean> suffixMap = new LinkedHashMap<>();
         suffixMap.put("Greeter", this.getOption("Greeter"));

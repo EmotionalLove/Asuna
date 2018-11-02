@@ -259,9 +259,9 @@ public class AdorufuMod implements SimpleListener {
 /*
     private void registerModules() {
         Manager.Module.moduleRegistry.clear();
-        Manager.Module.register(new ModuleXray());
+        Manager.Module.register(new XrayFeature());
         Manager.Module.register(new ModuleWireframe());
-        Manager.Module.register(new ModuleNamePlates());
+        Manager.Module.register(new NamePlatesFeature());
         Manager.Module.register(new TpsRenderableFeature());
         Manager.Module.register(new FpsRenderableFeature());
         Manager.Module.register(new CoordinatesRenderableFeature());
@@ -270,13 +270,13 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new HorsestatsRenderableFeature());
         Manager.Module.register(new FeaturelistRenderableFeature());
         Manager.Module.register(new WatermarkRenderableFeature());
-        Manager.Module.register(new ModuleKillaura());
+        Manager.Module.register(new KillauraFeature());
         Manager.Module.register(new ModuleStorageESP());
         Manager.Module.register(new ModuleTracers());
         Manager.Module.register(new AntiHungerFeature());
         Manager.Module.register(new ClickGUIFeature());
-        Manager.Module.register(new ModuleNightVision());
-        Manager.Module.register(new ModuleNoSlow());
+        Manager.Module.register(new NightVisionFeature());
+        Manager.Module.register(new NoSlowFeature());
         Manager.Module.register(new AnnouncerFeature());
         Manager.Module.register(new AFKFishFeature());
         Manager.Module.register(new AutoRespawnFeature());
@@ -292,13 +292,13 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ElytraBoostFeature());
         Manager.Module.register(new ElytraFlightFeature());
         Manager.Module.register(new EntitySpeedFeature());
-        Manager.Module.register(new ModuleLowJump());
-        Manager.Module.register(new ModuleMiddleClickBlock());
+        Manager.Module.register(new LowJumpFeature());
+        Manager.Module.register(new MiddleClickBlockFeature());
         Manager.Module.register(new ExtendedTablistFeature());
         Manager.Module.register(new AntiAFKFeature());
         Manager.Module.register(new YawLockFeature());
         Manager.Module.register(new ModuleQueueTime());
-        Manager.Module.register(new ModuleNoPush());
+        Manager.Module.register(new NoPushFeature());
         Manager.Module.register(new ModulePacketFly());
         Manager.Module.register(new ModulePigControl());
         Manager.Module.register(new AutoTotemFeature());
@@ -307,12 +307,12 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new ModuleWolfIdentity());
         Manager.Module.register(new GhostBlockWarningFeature());
         Manager.Module.register(new AntiFireOverlayFeature());
-        Manager.Module.register(new ModuleMinecraftMusic());
+        Manager.Module.register(new MinecraftMusicFeature());
         Manager.Module.register(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...
         Manager.Module.register(new ModuleAutoArmor());
-        Manager.Module.register(new ModuleJoinLeaveMessages());
+        Manager.Module.register(new JoinLeaveMessagesFeature());
         Manager.Module.register(new CraftInventoryFeature());
-        Manager.Module.register(new ModuleKnockbackSuppress());
+        Manager.Module.register(new KnockbackSuppressFeature());
         Manager.Module.register(new EquipmentDamageRenderableFeature());
         Manager.Module.register(new DesktopNotificationsFeature());
         Manager.Module.register(new CPUControlFeature());
@@ -322,7 +322,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new AutoWalkFeature());
         Manager.Module.register(new BoatFlyFeature());
         Manager.Module.register(new AutoReconnectFeature());
-        Manager.Module.register(new ModuleNameProtect());
+        Manager.Module.register(new NameProtectFeature());
         Manager.Module.register(new ModuleSafeWalk());
         Manager.Module.register(new ModulePortalGodMode());
         Manager.Module.register(new AutoEatFeature());

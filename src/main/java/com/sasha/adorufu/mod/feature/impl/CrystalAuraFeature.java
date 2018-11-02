@@ -37,7 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.lwjgl.input.Mouse;
 
-import static com.sasha.adorufu.mod.feature.impl.deprecated.ModuleKillaura.rotateTowardsEntity;
+import static com.sasha.adorufu.mod.feature.impl.KillauraFeature.rotateTowardsEntity;
 
 /**
  * Created by Sasha on 12/08/2018 at 8:53 AM

@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNamePlates;
+import com.sasha.adorufu.mod.feature.impl.NamePlatesFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
@@ -58,7 +58,7 @@ public abstract class MixinRender {
             String nameplatestr = str;
             if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Module.getModule("NamePlates").isEnabled()) {
                 //todo asuna
-                nameplatestr = str + " " + ModuleNamePlates.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
+                nameplatestr = str + " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
             }
             EntityRenderer.drawNameplate(this.getFontRendererFromRenderManager(), nameplatestr, (float)x, (float)y + f2, (float)z, i, f, f1, flag1, flag);
         }

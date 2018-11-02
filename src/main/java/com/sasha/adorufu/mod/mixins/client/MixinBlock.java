@@ -18,7 +18,7 @@
 
 package com.sasha.adorufu.mod.mixins.client;
 
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleXray;
+import com.sasha.adorufu.mod.feature.impl.XrayFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -49,7 +49,7 @@ public abstract class MixinBlock {
             info.setReturnValue(true);
         }
         if (!Manager.Module.moduleRegistry.isEmpty() && Manager.Module.moduleRegistry.get(0).isEnabled() ) {
-            List<Block> blockList = ModuleXray.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlockList();
             info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
@@ -65,14 +65,14 @@ public abstract class MixinBlock {
             info.setReturnValue(true);
         }
         if (Manager.Module.moduleRegistry.get(0).isEnabled() && !Manager.Module.moduleRegistry.isEmpty()) {
-            List<Block> blockList = ModuleXray.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlockList();
             info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
     @Inject(method = "getRenderType", at = @At("HEAD") , cancellable = true)
     public void getRenderType(IBlockState state, CallbackInfoReturnable<EnumBlockRenderType> info) {
         if (Manager.Module.moduleRegistry.get(0).isEnabled() && !Manager.Module.moduleRegistry.isEmpty()) {
-            List<Block> blockList = ModuleXray.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlockList();
             if (!state.getBlock().isNormalCube(state) && !blockList.contains(state.getBlock())) {
                 info.setReturnValue(EnumBlockRenderType.INVISIBLE);
             }
@@ -81,7 +81,7 @@ public abstract class MixinBlock {
     @Inject(method = "shouldSideBeRendered", at = @At("HEAD") , cancellable = true)
     public void shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info) {
         if (Manager.Module.moduleRegistry.get(0).isEnabled() ) {
-            List<Block> blockList = ModuleXray.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlockList();
             info.setReturnValue(blockList.contains(blockState.getBlock()));
         }
     }

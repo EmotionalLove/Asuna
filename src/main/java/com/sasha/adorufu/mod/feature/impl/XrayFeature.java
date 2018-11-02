@@ -16,14 +16,13 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.block.Block;
 
@@ -35,22 +34,22 @@ import java.util.stream.Collectors;
  * Created by Sasha on 11/08/2018 at 11:39 AM
  **/
 @FeatureInfo(description = "Makes chosen blocks invisible so that you can find ores or other blocks.")
-public class ModuleXray extends AdorufuModule {
+public class XrayFeature extends AbstractAdorufuTogglableFeature {
 
     @Setting
     public static ArrayList<Integer> xRayBlocks = new ArrayList<>();
 
     private boolean wasNightVisionsOff = false;
 
-    public ModuleXray() {
-        super("XRay", AdorufuCategory.RENDER, false);
+    public XrayFeature() {
+        super("XRay", AdorufuCategory.RENDER);
     }
 
 
     @Override
     public void onEnable() {
-        if (!Manager.Module.getModule(ModuleNightVision.class).isEnabled()) {
-            Manager.Module.getModule(ModuleNightVision.class).forceState(ModuleState.ENABLE, true, true);
+        if (!Manager.Feature.isFeatureEnabled(NightVisionFeature.class)) {
+            Manager.Feature.findFeature(NightVisionFeature.class).setState(true, true);
             wasNightVisionsOff = true;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();
@@ -59,19 +58,13 @@ public class ModuleXray extends AdorufuModule {
     @Override
     public void onDisable() {
         if (wasNightVisionsOff) {
-            Manager.Module.getModule(ModuleNightVision.class).forceState(ModuleState.DISABLE, true, true);
+            Manager.Feature.findFeature(NightVisionFeature.class).setState(false, true);
             wasNightVisionsOff = false;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();
     }
-
-    @Override
-    public void onTick() {
-
-    }
-
     public static List<Block> getXrayBlockList() {
-        return ModuleXray.xRayBlocks.stream().map(Block::getBlockById).collect(Collectors.toList());
+        return XrayFeature.xRayBlocks.stream().map(Block::getBlockById).collect(Collectors.toList());
     }
 
     public static boolean isXrayBlock(Block b) {

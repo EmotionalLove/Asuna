@@ -16,13 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOptionBehaviour;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
@@ -30,12 +33,14 @@ import com.sasha.eventsys.SimpleListener;
 /**
  * Created by Sasha on 11/08/2018 at 3:18 PM
  **/
-@FeatureInfo(description = "Don't slow down whilst eating.") //todo
-public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
-    public ModuleNoSlow() {
-        super("NoSlow", AdorufuCategory.MOVEMENT, false, true, true);
-        this.addOption("NCP", true);
-        this.addOption("AAC", false);
+@FeatureInfo(description = "Don't slow down whilst eating.")
+public class NoSlowFeature extends AbstractAdorufuTogglableFeature
+        implements SimpleListener, IAdorufuTickableFeature {
+    public NoSlowFeature() {
+        super("NoSlow", AdorufuCategory.MOVEMENT,
+                new AdorufuFeatureOptionBehaviour(true),
+                new AdorufuFeatureOption<>("NCP", true),
+                new AdorufuFeatureOption<>("AAC", false));
     }
 
     @Override
@@ -50,7 +55,7 @@ public class ModuleNoSlow extends AdorufuModule implements SimpleListener {
 
     @Override
     public void onTick() {
-        this.setSuffix(this.getModuleOptionsMap());
+        this.setSuffix(this.getFormattableOptionsMap());
     }
 
     @SimpleEventHandler

@@ -16,39 +16,25 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
-import com.sasha.adorufu.mod.events.playerclient.PlayerJumpEvent;
+import com.sasha.adorufu.mod.events.client.ClientEntityCollideEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
-@FeatureInfo(description = "Jump slightly lower than vanilla height so that you don't hit your head")
-public class ModuleLowJump extends AdorufuModule implements SimpleListener {
-    public ModuleLowJump() {
-        super("LowJump", AdorufuCategory.MOVEMENT, false);
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-
+@FeatureInfo(description = "Don't collide with other entities")
+public class NoPushFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public NoPushFeature() {
+        super("NoPush", AdorufuCategory.MOVEMENT);
     }
 
     @SimpleEventHandler
-    public void onJump(PlayerJumpEvent e) {
-        if (!this.isEnabled()) return;
-        e.setJumpHeight(0.40f);
+    public void onEntityCollide(ClientEntityCollideEvent e) {
+        if (this.isEnabled()) {
+            e.setCancelled(true);
+        }
     }
 }

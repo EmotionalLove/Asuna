@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.mixins.client;
 
 import com.sasha.adorufu.mod.feature.impl.CameraClipFeature;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleNightVision;
+import com.sasha.adorufu.mod.feature.impl.NightVisionFeature;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleTracers;
 import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleWaypoints;
 import com.sasha.adorufu.mod.misc.Manager;
@@ -270,7 +270,7 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "updateLightmap", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/EntityRenderer;lightmapColors:[I"), cancellable = true)
     public void updateLightmap(float partialTicks, CallbackInfo info) {
-        if (!Manager.Module.getModule(ModuleNightVision.class).isEnabled()) return;
+        if (!Manager.Module.getModule(NightVisionFeature.class).isEnabled()) return;
         for (int i = 0; i < 256; ++i) this.lightmapColors[i] = -16777216 | -20 << 16 | -20 << 8 | -20;
         this.lightmapTexture.updateDynamicTexture();
         this.lightmapUpdateNeeded = false;

@@ -36,7 +36,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.logWarn;
 /*
 import com.sasha.adorufu.mod.exception.AdorufuNoSuchElementInDataFileException;
 import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
-import com.sasha.adorufu.mod.feature.impl.deprecated.ModuleJoinLeaveMessages;
+import com.sasha.adorufu.mod.feature.impl.JoinLeaveMessagesFeature;
 import com.sasha.adorufu.mod.friend.Friend;
 import com.sasha.adorufu.mod.gui.clickgui.elements.AdorufuGuiWindow;
 import com.sasha.adorufu.mod.gui.clickgui.legacy.elements.AdorufuWindow;
@@ -376,7 +376,7 @@ public class AdorufuDataManager {
                 ArrayList<String> defaultLeave = new ArrayList<>();
                 defaultJoin.add("Hi, [player]");
                 defaultLeave.add("Bye, [player]");
-                ModuleJoinLeaveMessages.defaultLoaded = true;
+                JoinLeaveMessagesFeature.defaultLoaded = true;
                 ArrayList<List<String>> defaults = new ArrayList<>();
                 defaults.add(defaultJoin);
                 defaults.add(defaultLeave);
@@ -390,7 +390,7 @@ public class AdorufuDataManager {
                 ArrayList<String> defaultLeave = new ArrayList<>();
                 defaultJoin.add("Hi, [player]");
                 defaultLeave.add("Bye, [player]");
-                ModuleJoinLeaveMessages.defaultLoaded = true;
+                JoinLeaveMessagesFeature.defaultLoaded = true;
                 ArrayList<List<String>> defaults = new ArrayList<>();
                 defaults.add(defaultJoin);
                 defaults.add(defaultLeave);

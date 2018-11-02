@@ -16,13 +16,15 @@
  *
  */
 
-package com.sasha.adorufu.mod.feature.impl.deprecated;
+package com.sasha.adorufu.mod.feature.impl;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientGetMusicTypeEvent;
+import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.deprecated.AdorufuModule;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOptionBehaviour;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.audio.MusicTicker;
@@ -31,14 +33,15 @@ import net.minecraft.client.audio.MusicTicker;
  * Created by Sasha at 3:48 PM on 8/27/2018
  */
 @FeatureInfo(description = "Plays the creative mode exclusive music in other gamemodes.")
-public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListener {
-    public ModuleMinecraftMusic() {
-        super("MinecraftMusic", AdorufuCategory.MISC, false, true, true);
-        this.addOption("Creative", true);
-        this.addOption("Survival", false);
-        this.addOption("Nether", false);
-        this.addOption("End", false);
-        this.addOption("Main Menu", false);
+public class MinecraftMusicFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
+    public MinecraftMusicFeature() {
+        super("MinecraftMusic", AdorufuCategory.MISC,
+                new AdorufuFeatureOptionBehaviour(true),
+                new AdorufuFeatureOption<>("Creative", true),
+                new AdorufuFeatureOption<>("Survival", false),
+                new AdorufuFeatureOption<>("Nether", false),
+                new AdorufuFeatureOption<>("End", false),
+                new AdorufuFeatureOption<>("Main Menu", false));
     }
 
     @Override
@@ -51,15 +54,10 @@ public class ModuleMinecraftMusic extends AdorufuModule implements SimpleListene
         AdorufuMod.minecraft.getMusicTicker().update();
     }
 
-    @Override
-    public void onTick() {
-
-    }
-
     @SimpleEventHandler
     public void onMusicSelect(ClientGetMusicTypeEvent e) {
         if (!this.isEnabled()) return;
-        this.getModuleOptionsMap().forEach((option, bool) -> {
+        this.getFormattableOptionsMap().forEach((option, bool) -> {
             if (bool) {
                 switch (option.toLowerCase()) {
                     case "creative":
