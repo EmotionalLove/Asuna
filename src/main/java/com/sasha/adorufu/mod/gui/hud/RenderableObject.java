@@ -38,7 +38,7 @@ public class RenderableObject {
     @Transiant private IAdorufuFeature tiedFeature;
 
 
-    public RenderableObject(String name, ScreenCornerPos defaultPos, IAdorufuFeature feature){
+    public RenderableObject(String name, ScreenCornerPos defaultPos, IAdorufuFeature feature) {
         this.name = name;
         this.defaultPos = defaultPos;
         this.stringPos = getPosStr(defaultPos);
@@ -47,15 +47,16 @@ public class RenderableObject {
 
     /**
      * Creates a new RenderableObject
-     * @param name What is this RenderableObject called?
-     * @param pos Which corner of the screen will it be on?
+     *
+     * @param name       What is this RenderableObject called?
+     * @param pos        Which corner of the screen will it be on?
      * @param defaultPos What's the default position of this RO? (In case @param pos is null)
      */
     public RenderableObject(String name, @Nullable String pos, ScreenCornerPos defaultPos, IAdorufuFeature feature) {
         this.name = name;
         this.defaultPos = defaultPos;
         this.tiedFeature = feature;
-        if (pos == null){
+        if (pos == null) {
             this.pos = this.defaultPos;
             this.stringPos = getPosStr(this.pos);
             return;
@@ -77,6 +78,7 @@ public class RenderableObject {
 
     // x's are always the same, thankfully. no need to worry about that.
     public void renderTheObject(int pos) {
+        if (!this.shouldRender()) return;
         if (this.pos == ScreenCornerPos.LEFTBOTTOM) {
             renderObjectLB(pos);
         }
@@ -97,19 +99,22 @@ public class RenderableObject {
      * >has to write 4 different rendering voids for each corner of the screen
      * >also requires me to rewrite my entire HUD code and to develop a configuration system
      * >fml
-     *
+     * <p>
      * tf is this - me 2018
      * this javadoc is gay af
      */
     public void renderObjectLT(int yyy) {
 
     }
+
     public void renderObjectLB(int yyy) {
 
     }
+
     public void renderObjectRT(int yyy) {
 
     }
+
     public void renderObjectRB(int yyy) {
 
     }
@@ -138,6 +143,7 @@ public class RenderableObject {
         this.pos = getPosEnum(pos);
         this.stringPos = getPosStr(this.pos);
     }
+
     public void setPos(ScreenCornerPos pos) {
         this.pos = pos;
         this.stringPos = getPosStr(pos);
@@ -158,6 +164,7 @@ public class RenderableObject {
         }
         return null;
     }
+
     public static String getPosStr(ScreenCornerPos pos) {
         if (pos == ScreenCornerPos.LEFTTOP) {
             return "LT";
