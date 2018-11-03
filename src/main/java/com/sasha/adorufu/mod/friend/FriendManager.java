@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.friend;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.Manager;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class FriendManager {
     private ArrayList<Friend> friendList = new ArrayList<>();
 
     public FriendManager() {
-        AdorufuMod.SETTING_CLASSES.add(this);
+        Manager.Data.registerSettingObject(this);
     }
 
     public void addFriend(String friendName) {

@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
@@ -33,6 +34,7 @@ import net.minecraft.network.play.server.SPacketChat;
 import java.util.ArrayList;
 import java.util.List;
 
+@DataFeature
 @FeatureInfo(description = "Ignore players on the client side.")
 public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature implements SimpleListener,
         IAdorufuTickableFeature {

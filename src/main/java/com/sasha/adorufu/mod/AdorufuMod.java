@@ -66,7 +66,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -87,7 +86,6 @@ public class AdorufuMod implements SimpleListener {
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     @Deprecated public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
     public static SettingHandler SETTING_HANDLER = new SettingHandler("AdorufuSettingData");
-    public static List<Object> SETTING_CLASSES = new ArrayList<>();
     /**
      * desktop notifications
      */
@@ -178,7 +176,6 @@ public class AdorufuMod implements SimpleListener {
                     }
                 });
                 TRAY_MANAGER = new AdorufuSystemTrayManager();
-                SETTING_CLASSES.forEach(x -> SETTING_HANDLER.read(x));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -197,9 +194,9 @@ public class AdorufuMod implements SimpleListener {
             AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
-        SETTING_CLASSES.forEach(setting -> SETTING_HANDLER.read(setting));
+        Manager.Data.recoverSettings();
         adorufuHUD.setupHUD();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> SETTING_CLASSES.forEach(x -> SETTING_HANDLER.save(x))));
+        Runtime.getRuntime().addShutdownHook(new Thread(Manager.Data::saveCurrentSettings));
     }
 
     private void reload(boolean async) {
@@ -258,7 +255,7 @@ public class AdorufuMod implements SimpleListener {
                     }
                 });
         // todo api
-        SETTING_CLASSES.addAll(Manager.Feature.featureRegistry);
+        Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
     }
 /*
     private void registerModules() {

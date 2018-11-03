@@ -22,13 +22,14 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.util.math.MathHelper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
+@DataFeature
 @FeatureInfo(description = "Press the spacebar to go faster")
 public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 

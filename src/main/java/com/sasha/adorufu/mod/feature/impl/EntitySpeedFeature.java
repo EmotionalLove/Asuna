@@ -22,6 +22,7 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.entity.Entity;
@@ -29,6 +30,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityLlama;
 import net.minecraft.util.MovementInput;
 
+@DataFeature
 @FeatureInfo(description = "Speedhack for ridable animals")
 public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 

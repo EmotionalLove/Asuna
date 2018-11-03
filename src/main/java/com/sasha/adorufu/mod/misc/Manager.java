@@ -25,6 +25,7 @@ import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
+import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleListener;
@@ -53,6 +54,9 @@ public class Manager {
                 }
             }
             if (event) AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) feature);
+            if (feature.getClass().getAnnotation(DataFeature.class) != null) {
+                Data.registerSettingObject(feature);
+            }
             feature.onLoad();
         }
 
@@ -127,12 +131,29 @@ public class Manager {
 
         public static void register(RenderableObject robj) {
             renderableRegistry.add(robj);
-            AdorufuMod.SETTING_CLASSES.add(robj);
+            Data.registerSettingObject(robj);
         }
     }
 
     public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
         return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
+    }
+    public static class Data {
+
+        public static List<Object> settingRegistry;
+
+        public static void registerSettingObject(Object object) {
+            settingRegistry.add(object);
+        }
+
+        public static void recoverSettings() {
+            settingRegistry.forEach(e -> AdorufuMod.SETTING_HANDLER.read(e));
+        }
+
+        public static void saveCurrentSettings() {
+            settingRegistry.forEach(e -> AdorufuMod.SETTING_HANDLER.save(e));
+        }
+
     }
 }
 
