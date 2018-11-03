@@ -16,7 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins.client;
+package com.sasha.adorufu.mod.mixin.client;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientEnderPearlSpawnEvent;

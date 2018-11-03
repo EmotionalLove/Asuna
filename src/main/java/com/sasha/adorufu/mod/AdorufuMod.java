@@ -110,6 +110,7 @@ public class AdorufuMod implements SimpleListener {
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
     public static AdorufuWindowsBatteryManager BATTERY_MANAGER_INTERFACE;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
+    public static AdorufuHUD adorufuHUD;
 
     public static Minecraft minecraft = Minecraft.getMinecraft();
 
@@ -164,8 +165,9 @@ public class AdorufuMod implements SimpleListener {
                 this.registerRenderables();
                 EVENT_MANAGER.registerListener(new CommandHandler());
                 //EVENT_MANAGER.registerListener(new Manager.Feature());
-                AdorufuHUD.setupHUD();
-                EVENT_MANAGER.registerListener(new AdorufuHUD());
+                adorufuHUD = new AdorufuHUD();
+                adorufuHUD.setupHUD();
+                EVENT_MANAGER.registerListener(adorufuHUD);
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
                 //loadBindsAndStates();
@@ -205,7 +207,6 @@ public class AdorufuMod implements SimpleListener {
             try {
                 //Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
                 this.registerRenderables();
-                AdorufuHUD.resetHUD();
                 AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
             } catch (Exception e) {
                 throw new AdorufuException("Severe error occurred whilst reloading client " + e.getMessage());

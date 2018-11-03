@@ -19,7 +19,6 @@
 package com.sasha.adorufu.mod.gui.hud;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuTogglableFeatureTogglePostEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
@@ -40,32 +39,27 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     public static int sWidth;
 
     // starts at x = 12
-    private static ArrayList<RenderableObject> leftTop = new ArrayList<>();
+    private ArrayList<RenderableObject> leftTop = new ArrayList<>();
 
     // starts at x = (sHeight - 15)
     // possible blockades: chatbox
-    private static ArrayList<RenderableObject> leftBottom = new ArrayList<>();
+    private ArrayList<RenderableObject> leftBottom = new ArrayList<>();
 
     // starts at x = 2
     // possible blockades: potion effects
-    private static ArrayList<RenderableObject> rightTop = new ArrayList<>();
+    private ArrayList<RenderableObject> rightTop = new ArrayList<>();
 
     // starts at x = (sHeight - 15)
     // possible blockades: hack arraylist
-    private static ArrayList<RenderableObject> rightBottom = new ArrayList<>();
+    private ArrayList<RenderableObject> rightBottom = new ArrayList<>();
 
     @SimpleEventHandler
     public void onOverlayRender(ClientOverlayRenderEvent e) {
         renderScreen();
     }
 
-    @SimpleEventHandler
-    public void onPostToggle(AdorufuTogglableFeatureTogglePostEvent e) {
-        resetHUD();
-    }
-
     /* todo optimise this */
-    public static void setupHUD() {
+    public void setupHUD() {
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject renderableElement : renderableRegistry) {
             Manager.Feature.getTogglableFeatures().forEachRemaining(moduleElement -> {
@@ -93,7 +87,7 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
         }
     }
 
-    public static void renderScreen() {
+    public void renderScreen() {
         sHeight = new ScaledResolution(AdorufuMod.minecraft).getScaledHeight();
         sWidth = new ScaledResolution(AdorufuMod.minecraft).getScaledWidth();
         if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && AdorufuMod.minecraft.world.isRemote && AdorufuMod.minecraft.currentScreen == null) {
@@ -102,11 +96,14 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
 
         int lt_count = 0;
         for (RenderableObject o : leftTop) {
+            AdorufuMod.logMsg(true, "doing " + o.getName());
             o.renderTheObject((2) + (10 * lt_count));
             lt_count++;
         }
         int lb_count = 0;
         for (RenderableObject o : leftBottom) {
+            AdorufuMod.logMsg(true, "doing " + o.getName());
+
             if (AdorufuMod.minecraft.currentScreen instanceof GuiChat) {
                 o.renderTheObject(((sHeight - 15) - (10 * lb_count)) - 14);
                 lb_count++;
@@ -117,11 +114,15 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
         }
         int rt_count = 0;
         for (RenderableObject o : rightTop) {
+            AdorufuMod.logMsg(true, "doing " + o.getName());
+
             o.renderTheObject(((2) + (10 * rt_count)) + AdorufuMath.calculateFutureSyndromeFix());
             rt_count++;
         }
         int rb_count = 0;
         for (RenderableObject o : rightBottom) {
+            AdorufuMod.logMsg(true, "doing " + o.getName());
+
             if (AdorufuMod.minecraft.currentScreen instanceof GuiChat) {
                 o.renderTheObject(((sHeight - 15) - (10 * rb_count)) - 14);
                 rb_count++;
@@ -130,26 +131,5 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
             o.renderTheObject((sHeight - 15) - (10 * rb_count));
             rb_count++;
         }
-
-
-        /*if (!AdorufuModule.displayList.isEmpty()) {
-            AdorufuModule.displayList.sort((m, m1) -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(m1.getModuleName() + m1.getSuffix()) - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(m.getModuleName() + m.getSuffix()));
-        }*/
-    }
-
-    /*
-    private static void renderServerResponding() {
-        if (!AdorufuMod.minecraft.world.isRemote) {
-            return;
-        }
-        Fonts.segoe_36.drawCenteredString("\247" + "4The server is not responding! (" + ServerResponding.responding/20 + " sec)", sWidth / 2, (sHeight / 2) - 15, 0xffffff, true);
-    }*/
-
-    public static void resetHUD() {
-        leftBottom.clear();
-        leftTop.clear();
-        rightBottom.clear();
-        rightTop.clear();
-        setupHUD();
     }
 }

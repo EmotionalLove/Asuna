@@ -16,25 +16,16 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins.client;
+package com.sasha.adorufu.mod.mixin.client;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.Gui;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.List;
-
 /**
- * Created by Sasha at 12:59 PM on 9/2/2018
+ * Created by Sasha at 7:54 PM on 9/24/2018
  */
-@Mixin(value = GuiScreen.class, priority = 999)
-public class MixinGuiScreen {
-
-
-    @Shadow public int height;
-    @Shadow public int width;
-    @Shadow protected List<GuiButton> buttonList;
-    @Shadow public Minecraft mc;
+@Mixin(value = Gui.class, priority = 999)
+public abstract class MixinGui {
+    @Shadow public abstract void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height);
 }

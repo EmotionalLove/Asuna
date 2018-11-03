@@ -16,25 +16,24 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins.client;
+package com.sasha.adorufu.mod.mixin.client;
 
-import com.sasha.adorufu.mod.feature.impl.FreecamFeature;
-import com.sasha.adorufu.mod.misc.Manager;
-import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = AbstractClientPlayer.class, priority = 999)
-public class MixinAbstractClientPlayer {
-
-
-    @Inject(method = "isSpectator", at = @At("HEAD"), cancellable = true)
-    public void isSpectator(CallbackInfoReturnable<Boolean> info) {
-        if (Manager.Feature.isFeatureEnabled(FreecamFeature.class)) {
-            info.setReturnValue(true);
-            info.cancel();
-        }
+@Mixin(value = BlockLiquid.class, priority = 999)
+public abstract class MixinBlockLiquid extends MixinBlock {
+    @Inject(method = "getCollisionBoundingBox", at = @At("HEAD"), cancellable = true)
+    public void getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<AxisAlignedBB> info) {
+        //boolean flag = JesusFeature.INSTANCE.doJesus();
+        //info.setReturnValue(flag ? WATER_JESUS_AABB : NULL_AABB);
+        //info.cancel();
     }
 }

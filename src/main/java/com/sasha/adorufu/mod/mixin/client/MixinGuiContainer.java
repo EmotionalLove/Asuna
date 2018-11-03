@@ -16,40 +16,32 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins.client;
+package com.sasha.adorufu.mod.mixin.client;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.events.playerclient.PlayerJumpEvent;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import com.sasha.adorufu.mod.events.client.ClientPlayerInventoryCloseEvent;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+/**
+ * Created by Sasha at 12:49 PM on 9/2/2018
+ */
+@Mixin(value = GuiContainer.class, priority = 999)
+public class MixinGuiContainer extends MixinGuiScreen {
 
-@Mixin(value = EntityLivingBase.class, priority = 999)
-public abstract class MixinEntityLivingBase {
+    @Shadow public Container inventorySlots;
 
-
-    @Shadow @Nullable public abstract PotionEffect getActivePotionEffect(Potion potionIn);
-
-    @Shadow public float moveForward;
-
-    @Shadow public float moveStrafing;
-
-    /**
-     * @author Sasha Stevens
-     * @reason bc ZOZZLE ofc
-     */
-    @Inject(method = "getJumpUpwardsMotion", at = @At("HEAD"), cancellable = true)
-    protected void getJumpUpwardsMotion(CallbackInfoReturnable<Float> info) {
-        PlayerJumpEvent event = new PlayerJumpEvent(0.42f);
+    @Inject(method = "onGuiClosed", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Container;onContainerClosed(Lnet/minecraft/entity/player/EntityPlayer;)V"), cancellable = true)
+    public void onContainerClosed(CallbackInfo info) {
+        ClientPlayerInventoryCloseEvent event = new ClientPlayerInventoryCloseEvent(this.inventorySlots);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
-        info.setReturnValue(event.getJumpHeight());
-        info.cancel();
+        if (event.isCancelled()) {
+            info.cancel();
+        }
     }
 }

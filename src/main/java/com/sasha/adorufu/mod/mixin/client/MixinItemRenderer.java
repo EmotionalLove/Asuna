@@ -16,26 +16,23 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins.client;
+package com.sasha.adorufu.mod.mixin.client;
 
-import com.sasha.adorufu.mod.feature.impl.EntitySpeedFeature;
-import com.sasha.adorufu.mod.misc.Manager;
-import net.minecraft.entity.passive.EntityLlama;
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientRenderFireOverlayEvent;
+import net.minecraft.client.renderer.ItemRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = EntityLlama.class, priority = 999)
-public class MixinEntityLlama {
+@Mixin(value = ItemRenderer.class, priority = 999)
+public class MixinItemRenderer {
 
-    @Inject(method = "canBeSteered", at = @At("HEAD"), cancellable = true)
-    public void canBeSteered(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Manager.Feature.isFeatureEnabled(EntitySpeedFeature.class)) {
-            callbackInfoReturnable.setReturnValue(true);
-            callbackInfoReturnable.cancel();
-            // boom EZ PHI
-        }
+    @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
+    private void renderFireInFirstPerson(CallbackInfo info) {
+        ClientRenderFireOverlayEvent event = new ClientRenderFireOverlayEvent();
+        AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+        if (event.isCancelled()) info.cancel();
     }
-
 }

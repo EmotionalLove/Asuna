@@ -16,17 +16,25 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins.client;
+package com.sasha.adorufu.mod.mixin.client;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.List;
+
 /**
- * Created by Sasha at 1:06 PM on 9/2/2018
+ * Created by Sasha at 12:59 PM on 9/2/2018
  */
-@Mixin(value = EntityPlayer.class, priority = 999)
-public class MixinEntityPlayer {
-    @Shadow public Container openContainer;
+@Mixin(value = GuiScreen.class, priority = 999)
+public class MixinGuiScreen {
+
+
+    @Shadow public int height;
+    @Shadow public int width;
+    @Shadow protected List<GuiButton> buttonList;
+    @Shadow public Minecraft mc;
 }

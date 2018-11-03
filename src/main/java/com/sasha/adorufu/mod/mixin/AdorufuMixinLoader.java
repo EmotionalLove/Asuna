@@ -16,7 +16,7 @@
  *
  */
 
-package com.sasha.adorufu.mod.mixins;
+package com.sasha.adorufu.mod.mixin;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
