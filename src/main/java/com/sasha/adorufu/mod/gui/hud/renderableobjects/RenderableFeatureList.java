@@ -95,7 +95,7 @@ public class RenderableFeatureList extends RenderableObject {
                 activeFeatureList.add(e);
             }
         });
-        return reverse ? activeFeatureList
+        return !reverse ? activeFeatureList
                 .stream()
                 .sorted(Comparator
                         .comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
