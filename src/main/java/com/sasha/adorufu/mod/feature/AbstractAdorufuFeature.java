@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
 
     private String name;
-    private String suffix;
+    private String suffix = "";
     private AdorufuCategory category;
     private List<AdorufuFeatureOption<Boolean>> featureOptions;
     private AdorufuFeatureOptionBehaviour behaviour;
