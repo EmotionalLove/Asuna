@@ -19,6 +19,8 @@
 package com.sasha.adorufu.mod.gui.hud;
 
 
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.simplesettings.annotation.SerialiseSuper;
 import com.sasha.simplesettings.annotation.Transiant;
 
@@ -33,12 +35,14 @@ public class RenderableObject {
     @Transiant private ScreenCornerPos defaultPos;
     private String stringPos;
     @Transiant private static int LT_x = 12;
+    @Transiant private IAdorufuFeature tiedFeature;
 
 
-    public RenderableObject(String name, ScreenCornerPos defaultPos){
+    public RenderableObject(String name, ScreenCornerPos defaultPos, IAdorufuFeature feature){
         this.name = name;
         this.defaultPos = defaultPos;
         this.stringPos = getPosStr(defaultPos);
+        this.tiedFeature = feature;
     }
 
     /**
@@ -47,9 +51,10 @@ public class RenderableObject {
      * @param pos Which corner of the screen will it be on?
      * @param defaultPos What's the default position of this RO? (In case @param pos is null)
      */
-    public RenderableObject(String name, @Nullable String pos, ScreenCornerPos defaultPos) {
+    public RenderableObject(String name, @Nullable String pos, ScreenCornerPos defaultPos, IAdorufuFeature feature) {
         this.name = name;
         this.defaultPos = defaultPos;
+        this.tiedFeature = feature;
         if (pos == null){
             this.pos = this.defaultPos;
             this.stringPos = getPosStr(this.pos);
@@ -61,8 +66,9 @@ public class RenderableObject {
 
     // just in case i need it, better to use the above one instead though :///
     @Deprecated
-    public RenderableObject(String name) {
+    public RenderableObject(String name, IAdorufuFeature feature) {
         this.name = name;
+        this.tiedFeature = feature;
     }
 
     /**
@@ -106,6 +112,13 @@ public class RenderableObject {
     }
     public void renderObjectRB(int yyy) {
 
+    }
+
+    public boolean shouldRender() {
+        if (this.tiedFeature instanceof IAdorufuTogglableFeature) {
+            return ((IAdorufuTogglableFeature) this.tiedFeature).isEnabled();
+        }
+        return true;
     }
 
     public ScreenCornerPos getPos() {

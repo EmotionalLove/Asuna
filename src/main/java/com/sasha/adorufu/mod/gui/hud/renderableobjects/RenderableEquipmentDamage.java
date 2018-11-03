@@ -20,14 +20,17 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.EquipmentDamageRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 
 public class RenderableEquipmentDamage extends RenderableObject {
 
     public RenderableEquipmentDamage() {
-        super("EquipmentDamage", ScreenCornerPos.RIGHTTOP);
+        super("EquipmentDamage", ScreenCornerPos.RIGHTTOP,
+                Manager.Feature.findFeature(EquipmentDamageRenderableFeature.class));
 
     }
 

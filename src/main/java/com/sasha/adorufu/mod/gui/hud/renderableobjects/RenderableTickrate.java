@@ -20,14 +20,17 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.TickrateRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.misc.TPS;
 
 public class RenderableTickrate extends RenderableObject {
     public RenderableTickrate() {
-        super("TPS", ScreenCornerPos.RIGHTTOP);
+        super("TPS", ScreenCornerPos.RIGHTTOP,
+                Manager.Feature.findFeature(TickrateRenderableFeature.class));
 
     }
 

@@ -28,12 +28,10 @@ import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleListener;
-import org.reflections.util.ClasspathHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -41,19 +39,20 @@ import java.util.List;
  */
 public class Manager {
 
-    private static List<ClassLoader> classLoadersList = new LinkedList<ClassLoader>();
-    static {
-        classLoadersList.add(ClasspathHelper.contextClassLoader());
-        classLoadersList.add(ClasspathHelper.staticClassLoader());
-
-    }
-
     public static class Feature implements SimpleListener {
 
         public static List<IAdorufuFeature> featureRegistry = new ArrayList<>();
 
         public static void registerFeature(IAdorufuFeature feature) {
             featureRegistry.add(feature);
+            boolean event = false;
+            for (Class<?> anInterface : feature.getClass().getInterfaces()) {
+                if (anInterface == SimpleListener.class) {
+                    event = true;
+                    break;
+                }
+            }
+            if (event) AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) feature);
             feature.onLoad();
         }
 
@@ -131,6 +130,7 @@ public class Manager {
             AdorufuMod.SETTING_CLASSES.add(robj);
         }
     }
+
     public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
         return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
     }

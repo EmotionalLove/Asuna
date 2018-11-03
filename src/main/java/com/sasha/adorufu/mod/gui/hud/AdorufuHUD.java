@@ -21,7 +21,6 @@ package com.sasha.adorufu.mod.gui.hud;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuTogglableFeatureTogglePostEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
-import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
@@ -32,7 +31,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
@@ -70,32 +68,28 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     public static void setupHUD() {
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject renderableElement : renderableRegistry) {
-            for (Iterator<IAdorufuTogglableFeature> it = Manager.Feature.getTogglableFeatures(); it.hasNext(); ) {
-                IAdorufuTogglableFeature moduleElement = it.next();
-                if (renderableElement.getName().equalsIgnoreCase(moduleElement.getFeatureName())) {
-                    if (moduleElement.isEnabled()) {
-                        ScreenCornerPos thePos = renderableElement.getPos();
-                        if (renderableElement.getPos() == null) {
-                            thePos = renderableElement.getDefaultPos();
-                        }
-                        switch (thePos) {
-                            case LEFTTOP:
-                                leftTop.add(renderableElement);
-                                break;
-                            case LEFTBOTTOM:
-                                leftBottom.add(renderableElement);
-                                break;
-                            case RIGHTBOTTOM:
-                                rightBottom.add(renderableElement);
-                                break;
-                            case RIGHTTOP:
-                                rightTop.add(renderableElement);
-                                break;
-                        }
-                        break;
+            Manager.Feature.getTogglableFeatures().forEachRemaining(moduleElement -> {
+                if (moduleElement.isEnabled()) {
+                    ScreenCornerPos thePos = renderableElement.getPos();
+                    if (renderableElement.getPos() == null) {
+                        thePos = renderableElement.getDefaultPos();
+                    }
+                    switch (thePos) {
+                        case LEFTTOP:
+                            leftTop.add(renderableElement);
+                            break;
+                        case LEFTBOTTOM:
+                            leftBottom.add(renderableElement);
+                            break;
+                        case RIGHTBOTTOM:
+                            rightBottom.add(renderableElement);
+                            break;
+                        case RIGHTTOP:
+                            rightTop.add(renderableElement);
+                            break;
                     }
                 }
-            }
+            });
         }
     }
 

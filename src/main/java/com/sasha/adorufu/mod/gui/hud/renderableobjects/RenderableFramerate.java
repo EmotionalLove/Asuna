@@ -20,14 +20,17 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.FeaturelistRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
 
 public class RenderableFramerate extends RenderableObject {
     public RenderableFramerate() {
-        super("FPS", ScreenCornerPos.LEFTBOTTOM);
+        super("FPS", ScreenCornerPos.LEFTBOTTOM,
+                Manager.Feature.findFeature(FeaturelistRenderableFeature.class));
 
     }
 

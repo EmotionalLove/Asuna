@@ -21,9 +21,11 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.adorufu.AdorufuBatteryLevelChangedEvent;
+import com.sasha.adorufu.mod.feature.impl.BatteryLifeRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 
 public class RenderableBatteryLife extends RenderableObject {
 
@@ -31,7 +33,8 @@ public class RenderableBatteryLife extends RenderableObject {
     private int lastPercent = -1;
 
     public RenderableBatteryLife() {
-        super("BatteryLife", ScreenCornerPos.LEFTBOTTOM);
+        super("BatteryLife", ScreenCornerPos.LEFTBOTTOM,
+                Manager.Feature.findFeature(BatteryLifeRenderableFeature.class));
         if (AdorufuMod.BATTERY_MANAGER != null) {
             isSupported = true;
         }

@@ -249,7 +249,7 @@ public class AdorufuMod implements SimpleListener {
                     AdorufuMod.logMsg(true, "Found " + e.getSimpleName() + ".class");
                     try {
                         IAdorufuFeature feature = (IAdorufuFeature) e.load().getConstructor().newInstance();
-                        Manager.Feature.featureRegistry.add(feature);
+                        Manager.Feature.registerFeature(feature);
                         AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                         e1.printStackTrace();

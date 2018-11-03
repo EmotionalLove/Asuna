@@ -20,13 +20,16 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.WatermarkRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 
 public class RenderableWatermark extends RenderableObject {
     public RenderableWatermark() {
-        super("Watermark", ScreenCornerPos.LEFTTOP);
+        super("Watermark", ScreenCornerPos.LEFTTOP,
+                Manager.Feature.findFeature(WatermarkRenderableFeature.class));
 
     }
 

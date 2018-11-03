@@ -33,64 +33,58 @@ import static com.sasha.adorufu.mod.gui.hud.AdorufuHUD.sWidth;
 
 public class RenderableFeatureList extends RenderableObject {
     public RenderableFeatureList() {
-        super("Featurelist", ScreenCornerPos.RIGHTBOTTOM);
+        super("Featurelist", ScreenCornerPos.RIGHTBOTTOM,
+                Manager.Feature.findFeature(FeaturelistRenderableFeature.class));
 
     }
 
     @Override
     public void renderObjectLT(int yyy) {
-        if (Manager.Feature.isFeatureEnabled(FeaturelistRenderableFeature.class)) {
-            int count = 0;
-            for (IAdorufuTogglableFeature module : getValidList()) {
-                if (module.getSuffix().equals("")) {
-                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName(), 4, (yyy) + (10 * count), 0xffffff);
-                    count++;
-                }
-                else {
-                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
-                    count++;
-                }
+        int count = 0;
+        for (IAdorufuTogglableFeature module : getValidList()) {
+            if (module.getSuffix().equals("")) {
+                AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName(), 4, (yyy) + (10 * count), 0xffffff);
+                count++;
+            } else {
+                AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName() + module.getSuffix(), 4, (yyy) - (10 * count), 0xffffff);
+                count++;
             }
         }
     }
+
     @Override
     public void renderObjectLB(int yyy) {
-        if (Manager.Feature.isFeatureEnabled(FeaturelistRenderableFeature.class)) {
-            // TODO
-        }
+        // TODO
     }
+
     @Override
     public void renderObjectRT(int yyy) {
-        if (Manager.Feature.isFeatureEnabled(FeaturelistRenderableFeature.class)) {
-            int count = 0;
-            for (IAdorufuTogglableFeature module : getValidList()) {
-                if (module.isEnabled() && module.getSuffix().equals("")) {
-                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getFeatureName(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName()) - 2, (yyy) + (10 * count), 0xffffff);
-                    count++;
-                }
-                else if (module.isEnabled()) {
-                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getFeatureName() + module.getSuffix(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName() + module.getSuffix()) - 2, (yyy) + (10 * count), 0xffffff);
-                    count++;
-                }
+        int count = 0;
+        for (IAdorufuTogglableFeature module : getValidList()) {
+            if (module.isEnabled() && module.getSuffix().equals("")) {
+                AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getFeatureName(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName()) - 2, (yyy) + (10 * count), 0xffffff);
+                count++;
+            } else if (module.isEnabled()) {
+                AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getFeatureName() + module.getSuffix(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName() + module.getSuffix()) - 2, (yyy) + (10 * count), 0xffffff);
+                count++;
             }
         }
     }
+
     @Override
     public void renderObjectRB(int yyy) {
-        if (Manager.Feature.isFeatureEnabled(FeaturelistRenderableFeature.class)) {
-            int count = 0;
-            for (IAdorufuTogglableFeature module : getValidList()) {
-                if (module.getSuffix().equals("")) {
-                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getColouredName()) - 2, (yyy) - (10 * count), 0xffffff);
-                    count++;
-                }
-                else if (module.isEnabled()) {
-                    AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName() + module.getSuffix(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName() + module.getSuffix()) - 2, (yyy) - (10 * count), 0xffffff);
-                    count++;
-                }
+        int count = 0;
+        for (IAdorufuTogglableFeature module : getValidList()) {
+            if (module.getSuffix().equals("")) {
+                AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getColouredName()) - 2, (yyy) - (10 * count), 0xffffff);
+                count++;
+            } else if (module.isEnabled()) {
+                AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName() + module.getSuffix(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName() + module.getSuffix()) - 2, (yyy) - (10 * count), 0xffffff);
+                count++;
             }
         }
     }
+
     private List<IAdorufuTogglableFeature> getValidList() {
         List<IAdorufuTogglableFeature> activeFeatureList = new ArrayList<>();
         Manager.Feature.getTogglableFeatures().forEachRemaining(e -> {

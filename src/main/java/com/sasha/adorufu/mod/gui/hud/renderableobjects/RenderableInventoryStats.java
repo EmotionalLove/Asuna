@@ -20,9 +20,11 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.InventoryStatsRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -31,7 +33,8 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 
 public class RenderableInventoryStats extends RenderableObject {
     public RenderableInventoryStats() {
-        super("InventoryStats", ScreenCornerPos.RIGHTTOP);
+        super("InventoryStats", ScreenCornerPos.RIGHTTOP,
+                Manager.Feature.findFeature(InventoryStatsRenderableFeature.class));
 
     }
 
