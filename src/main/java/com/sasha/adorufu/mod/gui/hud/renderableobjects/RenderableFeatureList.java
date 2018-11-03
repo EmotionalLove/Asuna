@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.impl.FeaturelistRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
@@ -27,7 +28,9 @@ import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
 import com.sasha.adorufu.mod.misc.Manager;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.sasha.adorufu.mod.gui.hud.AdorufuHUD.sWidth;
 
@@ -41,7 +44,7 @@ public class RenderableFeatureList extends RenderableObject {
     @Override
     public void renderObjectLT(int yyy) {
         int count = 0;
-        for (IAdorufuTogglableFeature module : getValidList()) {
+        for (IAdorufuTogglableFeature module : getValidList(false)) {
             if (module.getSuffix().equals("")) {
                 AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName(), 4, (yyy) + (10 * count), 0xffffff);
                 count++;
@@ -60,7 +63,7 @@ public class RenderableFeatureList extends RenderableObject {
     @Override
     public void renderObjectRT(int yyy) {
         int count = 0;
-        for (IAdorufuTogglableFeature module : getValidList()) {
+        for (IAdorufuTogglableFeature module : getValidList(false)) {
             if (module.isEnabled() && module.getSuffix().equals("")) {
                 AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getFeatureName(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getFeatureName()) - 2, (yyy) + (10 * count), 0xffffff);
                 count++;
@@ -74,7 +77,7 @@ public class RenderableFeatureList extends RenderableObject {
     @Override
     public void renderObjectRB(int yyy) {
         int count = 0;
-        for (IAdorufuTogglableFeature module : getValidList()) {
+        for (IAdorufuTogglableFeature module : getValidList(true)) {
             if (module.getSuffix().equals("")) {
                 AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("" + module.getColouredName(), sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(module.getColouredName()) - 2, (yyy) - (10 * count), 0xffffff);
                 count++;
@@ -85,13 +88,24 @@ public class RenderableFeatureList extends RenderableObject {
         }
     }
 
-    private List<IAdorufuTogglableFeature> getValidList() {
+    private List<IAdorufuTogglableFeature> getValidList(boolean reverse) {
         List<IAdorufuTogglableFeature> activeFeatureList = new ArrayList<>();
         Manager.Feature.getTogglableFeatures().forEachRemaining(e -> {
             if (e.isEnabled()) {
                 activeFeatureList.add(e);
             }
         });
-        return activeFeatureList;
+        return reverse ? activeFeatureList
+                .stream()
+                .sorted(Comparator
+                        .comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
+                                (e.getColouredName() + e.getSuffix())))
+                .collect(Collectors.toList())
+        :
+        activeFeatureList
+                .stream()
+                .sorted(Comparator.comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
+                        (((IAdorufuFeature)e).getColouredName() + ((IAdorufuFeature)e).getSuffix())).reversed())
+                .collect(Collectors.toList());
     }
 }
