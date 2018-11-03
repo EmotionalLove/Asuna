@@ -166,7 +166,6 @@ public class AdorufuMod implements SimpleListener {
                 EVENT_MANAGER.registerListener(new CommandHandler());
                 //EVENT_MANAGER.registerListener(new Manager.Feature());
                 adorufuHUD = new AdorufuHUD();
-                adorufuHUD.setupHUD();
                 EVENT_MANAGER.registerListener(adorufuHUD);
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
@@ -199,6 +198,7 @@ public class AdorufuMod implements SimpleListener {
                     "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
                     " developers can run malicious code in their plugins.");
         SETTING_CLASSES.forEach(setting -> SETTING_HANDLER.read(setting));
+        adorufuHUD.setupHUD();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> SETTING_CLASSES.forEach(x -> SETTING_HANDLER.save(x))));
     }
 

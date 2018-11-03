@@ -21,7 +21,6 @@ package com.sasha.adorufu.mod.gui.hud;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
-import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.client.gui.GuiChat;
@@ -62,28 +61,25 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
     public void setupHUD() {
         AdorufuMod.logWarn(true, "The HUD is (re)setting up!");
         for (RenderableObject renderableElement : renderableRegistry) {
-            Manager.Feature.getTogglableFeatures().forEachRemaining(moduleElement -> {
-                if (moduleElement.isEnabled()) {
-                    ScreenCornerPos thePos = renderableElement.getPos();
-                    if (renderableElement.getPos() == null) {
-                        thePos = renderableElement.getDefaultPos();
-                    }
-                    switch (thePos) {
-                        case LEFTTOP:
-                            leftTop.add(renderableElement);
-                            break;
-                        case LEFTBOTTOM:
-                            leftBottom.add(renderableElement);
-                            break;
-                        case RIGHTBOTTOM:
-                            rightBottom.add(renderableElement);
-                            break;
-                        case RIGHTTOP:
-                            rightTop.add(renderableElement);
-                            break;
-                    }
-                }
-            });
+            ScreenCornerPos thePos = renderableElement.getPos();
+            if (renderableElement.getPos() == null) {
+                thePos = renderableElement.getDefaultPos();
+            }
+            switch (thePos) {
+                case LEFTTOP:
+                    leftTop.add(renderableElement);
+                    break;
+                case LEFTBOTTOM:
+                    leftBottom.add(renderableElement);
+                    break;
+                case RIGHTBOTTOM:
+                    rightBottom.add(renderableElement);
+                    break;
+                case RIGHTTOP:
+                    rightTop.add(renderableElement);
+                    break;
+            }
+
         }
     }
 
@@ -96,14 +92,13 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
 
         int lt_count = 0;
         for (RenderableObject o : leftTop) {
-            AdorufuMod.logMsg(true, "doing " + o.getName());
+            if (!o.shouldRender()) continue;
             o.renderTheObject((2) + (10 * lt_count));
             lt_count++;
         }
         int lb_count = 0;
         for (RenderableObject o : leftBottom) {
-            AdorufuMod.logMsg(true, "doing " + o.getName());
-
+            if (!o.shouldRender()) continue;
             if (AdorufuMod.minecraft.currentScreen instanceof GuiChat) {
                 o.renderTheObject(((sHeight - 15) - (10 * lb_count)) - 14);
                 lb_count++;
@@ -114,15 +109,13 @@ public class AdorufuHUD extends GuiScreen implements SimpleListener {
         }
         int rt_count = 0;
         for (RenderableObject o : rightTop) {
-            AdorufuMod.logMsg(true, "doing " + o.getName());
-
+            if (!o.shouldRender()) continue;
             o.renderTheObject(((2) + (10 * rt_count)) + AdorufuMath.calculateFutureSyndromeFix());
             rt_count++;
         }
         int rb_count = 0;
         for (RenderableObject o : rightBottom) {
-            AdorufuMod.logMsg(true, "doing " + o.getName());
-
+            if (!o.shouldRender()) continue;
             if (AdorufuMod.minecraft.currentScreen instanceof GuiChat) {
                 o.renderTheObject(((sHeight - 15) - (10 * rb_count)) - 14);
                 rb_count++;
