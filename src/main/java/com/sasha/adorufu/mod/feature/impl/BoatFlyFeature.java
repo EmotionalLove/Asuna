@@ -33,24 +33,24 @@ public class BoatFlyFeature extends AbstractAdorufuTogglableFeature implements I
 
     public BoatFlyFeature() {
         super("BoatFly", AdorufuCategory.MOVEMENT,
-                new AdorufuFeatureOption<>("yawlock", false),
-                new AdorufuFeatureOption<>("gravity", true),
-                new AdorufuFeatureOption<>("all entities", false));
+                new AdorufuFeatureOption<>("Yawlock", false),
+                new AdorufuFeatureOption<>("Gravity", true),
+                new AdorufuFeatureOption<>("All Entities", false));
     }
 
     @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
         if (AdorufuMod.minecraft.player.isRiding()) {
-            if (AdorufuMod.minecraft.player.getRidingEntity() instanceof EntityBoat || this.getFormattableOptionsMap().get("all entities")) {
+            if (AdorufuMod.minecraft.player.getRidingEntity() instanceof EntityBoat || this.getFormattableOptionsMap().get("All Entities")) {
                 Entity e = AdorufuMod.minecraft.player.getRidingEntity();
                 if (e == null) return;
-                if (!this.getFormattableOptionsMap().get("gravity")) {
+                if (!this.getFormattableOptionsMap().get("Gravity")) {
                     e.setNoGravity(true);
                 } else {
                     e.setNoGravity(false);
                 }
-                if (this.getFormattableOptionsMap().get("yawlock"))
+                if (this.getFormattableOptionsMap().get("Yawlock"))
                     e.rotationYaw = (AdorufuMod.minecraft.player.rotationYaw);
                 // actual boatfly
                 if (AdorufuMod.minecraft.gameSettings.keyBindJump.isPressed()) {

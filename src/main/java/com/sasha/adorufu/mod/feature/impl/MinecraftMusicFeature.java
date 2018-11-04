@@ -60,19 +60,19 @@ public class MinecraftMusicFeature extends AbstractAdorufuTogglableFeature imple
         this.getFormattableOptionsMap().forEach((option, bool) -> {
             if (bool) {
                 switch (option.toLowerCase()) {
-                    case "creative":
+                    case "Creative":
                         e.setMusicType(MusicTicker.MusicType.CREATIVE);
                         break;
-                    case "survival":
+                    case "Survival":
                         e.setMusicType(MusicTicker.MusicType.GAME);
                         break;
-                    case "nether":
+                    case "Nether":
                         e.setMusicType(MusicTicker.MusicType.NETHER);
                         break;
-                    case "end":
+                    case "End":
                         e.setMusicType(MusicTicker.MusicType.END);
                         break;
-                    case "main menu":
+                    case "Main Menu":
                         e.setMusicType(MusicTicker.MusicType.MENU);
                         break;
                     default:

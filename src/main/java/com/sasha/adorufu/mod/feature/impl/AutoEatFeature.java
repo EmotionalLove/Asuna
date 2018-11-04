@@ -34,8 +34,8 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
 
     public AutoEatFeature() {
         super("AutoEat", AdorufuCategory.MISC,
-                new AdorufuFeatureOption<>("priority gapple", false),
-                new AdorufuFeatureOption<>("conserve  gapple", true));
+                new AdorufuFeatureOption<>("Priority gapple", false),
+                new AdorufuFeatureOption<>("Conserve  gapple", true));
     }
 
     @Override
@@ -46,24 +46,24 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
             for (int s = 0; s <= 8; s++) {
                 if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
                     // we can eat this item
-                    if (this.getFormattableOptionsMap().get("conserve gapple")) {
+                    if (this.getFormattableOptionsMap().get("Conserve gapple")) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
                             continue;
                         }
-                    } else if (this.getFormattableOptionsMap().get("priority gapple") && !checked) {
+                    } else if (this.getFormattableOptionsMap().get("Priority gapple") && !checked) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
                             continue;
                         }
                     }
+                    if (!eating) prevSlot = AdorufuMod.minecraft.player.inventory.currentItem;
                     eating = true;
                     checked = false;
-                    prevSlot = AdorufuMod.minecraft.player.inventory.currentItem;
                     AdorufuMod.minecraft.player.inventory.currentItem = s;
                     AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindUseItem, true);
                     return;
                 }
             }
-            if (this.getFormattableOptionsMap().get("priority gapple")) {
+            if (this.getFormattableOptionsMap().get("Priority gapple")) {
                 checked = true;
             }
             return;

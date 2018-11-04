@@ -46,16 +46,20 @@ import static com.sasha.adorufu.mod.feature.impl.KillauraFeature.rotateTowardsEn
 public class CrystalAuraFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
     public CrystalAuraFeature() {
         super("CrystalAura", AdorufuCategory.COMBAT,
-                new AdorufuFeatureOption<>("aura", true),
-                new AdorufuFeatureOption<>("auto", false),
-                new AdorufuFeatureOption<>("auto all", false));
+                new AdorufuFeatureOption<>("Aura", true),
+                new AdorufuFeatureOption<>("Auto", false, e -> {
+                    if (e) AdorufuMod.logWarn(false, "This feature doesn't work quite yet!");
+                }),
+                new AdorufuFeatureOption<>("Auto All", false, e -> {
+                    if (e) AdorufuMod.logWarn(false, "This feature doesn't work quite yet!");
+                }));
     }
 
     @Override
     public void onTick() {
         if (this.isEnabled()) {
             this.setSuffix(this.getFormattableOptionsMap());
-            if (this.getFormattableOptionsMap().get("auto")) { // use radius of 3
+            if (this.getFormattableOptionsMap().get("Auto")) { // use radius of 3
                 boolean hasCrystals = false; // make sure the player even has crystal in their hotbar.
                 for (int s = 36; s <= 44; s++) {
                     ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
@@ -88,7 +92,7 @@ public class CrystalAuraFeature extends AbstractAdorufuTogglableFeature implemen
             }
 
 
-            if (this.getFormattableOptionsMap().get("aura")) {
+            if (this.getFormattableOptionsMap().get("Aura")) {
                 for (Entity e : AdorufuMod.minecraft.world.loadedEntityList) {
                     if (e instanceof EntityEnderCrystal) {
                         if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f) {

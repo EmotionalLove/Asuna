@@ -40,15 +40,15 @@ public class AntiHungerFeature extends AbstractAdorufuTogglableFeature implement
         super("AntiHunger"
                 , AdorufuCategory.MOVEMENT,
                 new AdorufuFeatureOptionBehaviour(true)
-                , new AdorufuFeatureOption<>("ncp", true)
-                , new AdorufuFeatureOption<>("aac", false));
+                , new AdorufuFeatureOption<>("NCP", true)
+                , new AdorufuFeatureOption<>("AAC", false));
     }
 
     @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
         if (!AdorufuMod.minecraft.gameSettings.keyBindAttack.isPressed() || !AdorufuMod.minecraft.gameSettings.keyBindAttack.isKeyDown()) {
-            if (this.getOption("aac")) {
+            if (this.getOption("AAC")) {
                 return;
             }
             AdorufuMod.minecraft.getConnection().sendPacket(new CPacketPlayer(false));
@@ -60,7 +60,7 @@ public class AntiHungerFeature extends AbstractAdorufuTogglableFeature implement
         if (!this.isEnabled()) {
             return;
         }
-        if (AdorufuMod.minecraft.player.motionY > 0.1 && this.getOption("aac")) {
+        if (AdorufuMod.minecraft.player.motionY > 0.1 && this.getOption("AAC")) {
             return;
         }
         if (e.getSendPacket() instanceof CPacketPlayer) {

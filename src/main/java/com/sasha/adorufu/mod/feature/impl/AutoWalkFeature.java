@@ -40,9 +40,12 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
     public AutoWalkFeature() {
         super("AutoWalk", AdorufuCategory.MOVEMENT,
                 new AdorufuFeatureOption<>("Normal", true),
-                new AdorufuFeatureOption<>("Pathfinder", false));
+                new AdorufuFeatureOption<>("Pathfinder", false, e -> {
+                    if (e) AdorufuMod.logWarn(false, "This feature is obsolete. Try using the \"-path\" command instead!");
+                }));
     }
 
+    @Deprecated
     private static boolean isBlockBlockingInFront() {
         Direction dir = AdorufuMath.getCardinalDirection(AdorufuMod.minecraft.player.rotationYaw);
         if (dir == Direction.posX) {
@@ -64,6 +67,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         return false;
     }
 
+    @Deprecated
     private static boolean isHoleInFront() {
         Direction dir = AdorufuMath.getCardinalDirection(AdorufuMod.minecraft.player.rotationYaw);
         if (dir == Direction.posX) {
@@ -89,6 +93,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         return false;
     }
 
+    @Deprecated
     private static boolean isObstacleThere() {
         Direction dir = AdorufuMath.getCardinalDirection(AdorufuMod.minecraft.player.rotationYaw);
         if (dir == Direction.posX) {
@@ -114,6 +119,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         return false;
     }
 
+    @Deprecated
     private static boolean isObstacleThereManual(float yaw) {
         Direction dir = AdorufuMath.getCardinalDirection(yaw);
         if (dir == Direction.posX) {
@@ -137,16 +143,6 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
             return b != Blocks.AIR || bb != Blocks.AIR;
         }
         return false;
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @Override
@@ -196,6 +192,7 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
     }
 }
 
+@Deprecated
 class WalkThread implements Runnable {
     private Thread t;
     private String threadName;

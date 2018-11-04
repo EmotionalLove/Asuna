@@ -24,6 +24,7 @@ import com.sasha.adorufu.mod.misc.YMLParser;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class AdorufuFeatureOption<T> { //todo figure out how to store these
 
@@ -32,9 +33,17 @@ public class AdorufuFeatureOption<T> { //todo figure out how to store these
     private String identifer;
     private T status;
 
+    private Consumer<T> consumer;
+
     public AdorufuFeatureOption(String identifer, @Nonnull T def) {
         this.identifer = identifer;
         this.status = def;
+        this.recover();
+    }
+    public AdorufuFeatureOption(String identifer, @Nonnull T def, Consumer<T> consumer) {
+        this.identifer = identifer;
+        this.status = def;
+        this.consumer = consumer;
         this.recover();
     }
 
@@ -44,6 +53,7 @@ public class AdorufuFeatureOption<T> { //todo figure out how to store these
 
     public void setStatus(T status) {
         this.status = status;
+        if (this.consumer != null) consumer.accept(status);
         this.save();
     }
 
