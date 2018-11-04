@@ -19,6 +19,7 @@
 package com.sasha.adorufu.mod.gui.clickgui.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 import org.lwjgl.opengl.GL11;
 
@@ -131,6 +132,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
                 this.offsetCursorX = x - this.x;
                 this.offsetCursorY = y - this.y;
                 drag = true;
+                AdorufuClickGUI.requestFocus(this);
                 return true;
             }
         }

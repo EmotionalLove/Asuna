@@ -137,14 +137,16 @@ public class AdorufuClickGUI extends GuiScreen {
 
     //todo
     public static void requestFocus(AdorufuGuiWindow element) {
-        lock.lock();
-        try {
-            if (elementList.indexOf(element) == 0) return;
-            elementList.remove(element);
-            elementList.add(0, element);
-        } finally {
-            lock.unlock();
-        }
+        new Thread(() -> {
+            lock.lock();
+            try {
+                if (elementList.indexOf(element) == elementList.size() - 1) return;
+                elementList.remove(element);
+                elementList.add(element);
+            } finally {
+                lock.unlock();
+            }
+        }).start();
     }
 
     @Override

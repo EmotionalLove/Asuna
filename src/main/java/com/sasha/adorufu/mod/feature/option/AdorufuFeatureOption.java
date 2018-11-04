@@ -51,25 +51,27 @@ public class AdorufuFeatureOption<T> { //todo figure out how to store these
         return identifer;
     }
 
-    public void save() {
+    private void save() {
         try {
             File file = new File(OPTIONS_DATA_NAME);
             if (!file.exists()) file.createNewFile();
             YMLParser parser = new YMLParser(file);
             parser.set(identifer, status);
+            parser.save();
         } catch (IOException ex) {
             ex.printStackTrace();
             AdorufuMod.logErr(true, "A severe error occured whilst saving the option " + identifer);
         }
     }
 
-    public void recover() {
+    private void recover() {
         try {
             File file = new File(OPTIONS_DATA_NAME);
             if (!file.exists()) file.createNewFile();
             YMLParser parser = new YMLParser(file);
             if (!parser.exists(identifer)) {
                 parser.set(identifer, status);
+                parser.save();
                 return;
             }
             status = (T) parser.get(identifer);
