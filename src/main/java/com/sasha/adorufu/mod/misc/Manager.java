@@ -134,9 +134,10 @@ public class Manager {
     public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
         return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
     }
+
     public static class Data {
 
-        public static List<Object> settingRegistry;
+        public static List<Object> settingRegistry = new ArrayList<>();
 
         public static void registerSettingObject(Object object) {
             settingRegistry.add(object);
