@@ -25,7 +25,6 @@ import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
-import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.eventsys.SimpleListener;
@@ -54,9 +53,6 @@ public class Manager {
                 }
             }
             if (event) AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) feature);
-            if (feature.getClass().getAnnotation(DataFeature.class) != null) {
-                Data.registerSettingObject(feature);
-            }
             feature.onLoad();
         }
 

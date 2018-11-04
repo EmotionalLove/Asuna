@@ -22,7 +22,7 @@ package com.sasha.adorufu.mod.gui.hud;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.simplesettings.annotation.SerialiseSuper;
-import com.sasha.simplesettings.annotation.Transiant;
+import com.sasha.simplesettings.annotation.Transient;
 
 import javax.annotation.Nullable;
 
@@ -30,12 +30,12 @@ import javax.annotation.Nullable;
 @SerialiseSuper
 public class RenderableObject {
 
-    @Transiant private String name;
-    @Transiant private ScreenCornerPos pos = null;
-    @Transiant private ScreenCornerPos defaultPos;
+    @Transient private String name;
+    @Transient private ScreenCornerPos pos = null;
+    @Transient private ScreenCornerPos defaultPos;
     private String stringPos;
-    @Transiant private static int LT_x = 12;
-    @Transiant private IAdorufuFeature tiedFeature;
+    @Transient private static int LT_x = 12;
+    @Transient private IAdorufuFeature tiedFeature;
 
 
     public RenderableObject(String name, ScreenCornerPos defaultPos, IAdorufuFeature feature) {
