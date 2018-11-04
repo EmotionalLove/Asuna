@@ -84,8 +84,7 @@ public class MixinGuiConnecting extends MixinGuiScreen {
                 MixinGuiConnecting.LOGGER.error("Couldn't connect to server", (Throwable) unknownhostexception);
                 if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
                     MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"}), AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-                }
-                else {
+                } else {
                     MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"})));
                 }
             } catch (Exception exception) {
@@ -103,8 +102,7 @@ public class MixinGuiConnecting extends MixinGuiScreen {
 
                 if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
                     MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s}), AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-                }
-                else {
+                } else {
                     MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s})));
                 }
             }

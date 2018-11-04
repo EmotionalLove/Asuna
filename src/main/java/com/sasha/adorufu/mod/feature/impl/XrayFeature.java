@@ -47,6 +47,13 @@ public class XrayFeature extends AbstractAdorufuTogglableFeature {
         super("XRay", AdorufuCategory.RENDER);
     }
 
+    public static List<Block> getXrayBlockList() {
+        return XrayFeature.xRayBlocks.stream().map(Block::getBlockById).collect(Collectors.toList());
+    }
+
+    public static boolean isXrayBlock(Block b) {
+        return xRayBlocks.contains(b);
+    }
 
     @Override
     public void onEnable() {
@@ -64,13 +71,6 @@ public class XrayFeature extends AbstractAdorufuTogglableFeature {
             wasNightVisionsOff = false;
         }
         AdorufuMod.minecraft.renderGlobal.loadRenderers();
-    }
-    public static List<Block> getXrayBlockList() {
-        return XrayFeature.xRayBlocks.stream().map(Block::getBlockById).collect(Collectors.toList());
-    }
-
-    public static boolean isXrayBlock(Block b) {
-        return xRayBlocks.contains(b);
     }
 
 }

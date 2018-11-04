@@ -24,6 +24,7 @@ import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
@@ -35,13 +36,13 @@ public class ToggleCommand extends SimpleCommand {
 
     @Override
     public void onCommand() {
-        if (this.getArguments() == null){
+        if (this.getArguments() == null) {
             AdorufuMod.logErr(false, "Arguments required! \"-toggle <feature>\"");
             return;
         }
         AtomicBoolean found = new AtomicBoolean(false);
         Manager.Feature.getTogglableFeatures().forEachRemaining(mod -> {
-            if (mod.getFeatureName().equalsIgnoreCase(this.getArguments()[0])){
+            if (mod.getFeatureName().equalsIgnoreCase(this.getArguments()[0])) {
                 mod.toggleState();
                 AdorufuMod.logMsg(false, "Toggled " + mod.getFeatureName());
                 found.set(true);

@@ -30,7 +30,7 @@ import com.sasha.adorufu.mod.gui.waypointgui.WaypointGUI;
  **/
 @PostToggleExec
 @FeatureInfo(description = "Displays the WaypointGUI")
-public class WaypointGUIFeature extends AbstractAdorufuTogglableFeature  {
+public class WaypointGUIFeature extends AbstractAdorufuTogglableFeature {
     public WaypointGUIFeature() {
         super("WaypointGUI", AdorufuCategory.GUI);
     }

@@ -33,10 +33,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = PlayerControllerMP.class, priority = 999)
 public class MixinPlayerControllerMP {
     @Inject(method = "onPlayerDestroyBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;playEvent(ILnet/minecraft/util/math/BlockPos;I)V"), cancellable = true)
-    public void onPlayerDestroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> info){
+    public void onPlayerDestroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> info) {
         PlayerBlockBreakEvent event = new PlayerBlockBreakEvent(pos);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
-        if (event.isCancelled()){
+        if (event.isCancelled()) {
             info.setReturnValue(false);
             if (!info.isCancelled()) info.cancel();
         }

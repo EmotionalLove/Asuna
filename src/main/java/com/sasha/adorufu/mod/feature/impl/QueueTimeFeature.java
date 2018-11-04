@@ -33,13 +33,20 @@ import static com.sasha.adorufu.mod.feature.impl.AutoIgnoreFeature.stripColours;
 
 @FeatureInfo(description = "Show the estimated time left in queue in chat")
 public class QueueTimeFeature extends AbstractAdorufuTogglableFeature implements SimpleListener {
-    private String tu = "Calculating...";
     private static int lastQueuePos = -1;
     private static int queueMeasurementMilestone = 0;
     private static long preMeasurementMilestoneTime = 0;
+    private String tu = "Calculating...";
 
     public QueueTimeFeature() {
         super("QueueTime", AdorufuCategory.CHAT);
+    }
+
+    private static String convert(long miliSeconds) {
+        int hrs = (int) TimeUnit.MILLISECONDS.toHours(miliSeconds) % 24;
+        int min = (int) TimeUnit.MILLISECONDS.toMinutes(miliSeconds) % 60;
+        int sec = (int) TimeUnit.MILLISECONDS.toSeconds(miliSeconds) % 60;
+        return String.format("%02dh %02dm %02ds", hrs, min, sec);
     }
 
     @SimpleEventHandler
@@ -75,13 +82,6 @@ public class QueueTimeFeature extends AbstractAdorufuTogglableFeature implements
 
             }
         }
-    }
-
-    private static String convert(long miliSeconds) {
-        int hrs = (int) TimeUnit.MILLISECONDS.toHours(miliSeconds) % 24;
-        int min = (int) TimeUnit.MILLISECONDS.toMinutes(miliSeconds) % 60;
-        int sec = (int) TimeUnit.MILLISECONDS.toSeconds(miliSeconds) % 60;
-        return String.format("%02dh %02dm %02ds", hrs, min, sec);
     }
 
 }

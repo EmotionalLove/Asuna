@@ -29,7 +29,7 @@ public class ClientInputUpdateEvent extends SimpleCancellableEvent {
     private MovementInput movementInput;
 
     public ClientInputUpdateEvent(MovementInput movementInput) {
-        this.movementInput= movementInput;
+        this.movementInput = movementInput;
     }
 
     public MovementInput getMovementInput() {

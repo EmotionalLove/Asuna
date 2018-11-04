@@ -29,9 +29,9 @@ public class AdorufuTogglableFeatureTogglePreEvent extends SimpleCancellableEven
     private IAdorufuTogglableFeature toggledModule;
     private ModuleState toggleState;
 
-    public AdorufuTogglableFeatureTogglePreEvent(IAdorufuTogglableFeature toggledModule, ModuleState toggleState){
-        this.toggledModule= toggledModule;
-        this.toggleState= toggleState;
+    public AdorufuTogglableFeatureTogglePreEvent(IAdorufuTogglableFeature toggledModule, ModuleState toggleState) {
+        this.toggledModule = toggledModule;
+        this.toggleState = toggleState;
     }
 
     public ModuleState getToggleState() {

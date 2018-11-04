@@ -42,8 +42,13 @@ public class AdorufuPluginLoader {
     private static LinkedHashMap<File /*jar*/, File /*.yml*/> theRawPlugins = new LinkedHashMap<>();
     private static List<AdorufuPlugin> loadedPlugins = new ArrayList<>();
 
+    public static List<AdorufuPlugin> getLoadedPlugins() {
+        return loadedPlugins;
+    }
+
     /**
      * Find plugin in the plugins folder
+     *
      * @return an array of .yml and .jar files in the plugins folder.
      */
     public List<File> findPlugins() throws IOException {
@@ -95,19 +100,24 @@ public class AdorufuPluginLoader {
     }
 
     public void loadPlugins() {
-        theRawPlugins.forEach((jar, yml)->{
+        theRawPlugins.forEach((jar, yml) -> {
             YMLParser parser = new YMLParser(yml);
             // validation checks
-            if (!parser.exists("main")) throw new AdorufuPluginLoaderException("\"main\" key does not exist in " + yml.getName() + "!");
-            if (!parser.exists("name")) throw new AdorufuPluginLoaderException("\"name\" key does not exist in " + yml.getName() + "!");
-            if (!parser.exists("description")) throw new AdorufuPluginLoaderException("\"description\" key does not exist in " + yml.getName() + "!");
-            if (!parser.exists("author")) throw new AdorufuPluginLoaderException("\"author\" key does not exist in " + yml.getName() + "!");
+            if (!parser.exists("main"))
+                throw new AdorufuPluginLoaderException("\"main\" key does not exist in " + yml.getName() + "!");
+            if (!parser.exists("name"))
+                throw new AdorufuPluginLoaderException("\"name\" key does not exist in " + yml.getName() + "!");
+            if (!parser.exists("description"))
+                throw new AdorufuPluginLoaderException("\"description\" key does not exist in " + yml.getName() + "!");
+            if (!parser.exists("author"))
+                throw new AdorufuPluginLoaderException("\"author\" key does not exist in " + yml.getName() + "!");
             // the class loader
             try {
                 URLClassLoader classLoader = new URLClassLoader(new URL[]{jar.toURI().toURL()}, this.getClass().getClassLoader());
                 Class mainClass = Class.forName(parser.getString("main"), true, classLoader);
                 // verify that the main class extends AdorufuPlugin
-                if (mainClass.getSuperclass() == null || mainClass.getSuperclass() != AdorufuPlugin.class) throw new AdorufuPluginLoaderException("The main class does not extend AdorufuPlugin.class!");
+                if (mainClass.getSuperclass() == null || mainClass.getSuperclass() != AdorufuPlugin.class)
+                    throw new AdorufuPluginLoaderException("The main class does not extend AdorufuPlugin.class!");
                 // initialise an instance of the plugin
                 AdorufuPlugin plugin = (AdorufuPlugin) mainClass.newInstance();
                 // set the plugin's information.
@@ -125,8 +135,5 @@ public class AdorufuPluginLoader {
                 e.printStackTrace();
             }
         });
-    }
-    public static List<AdorufuPlugin> getLoadedPlugins() {
-        return loadedPlugins;
     }
 }

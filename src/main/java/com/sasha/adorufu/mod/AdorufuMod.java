@@ -29,8 +29,8 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
-import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.AdorufuDiscordPresense;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.impl.AFKFishFeature;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
@@ -81,8 +81,6 @@ public class AdorufuMod implements SimpleListener {
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
     public static final String VERSION = "1.6";
-
-    private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     @Deprecated public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
     public static SettingHandler SETTING_HANDLER = new SettingHandler("AdorufuSettingData");
@@ -109,8 +107,49 @@ public class AdorufuMod implements SimpleListener {
     public static AdorufuWindowsBatteryManager BATTERY_MANAGER_INTERFACE;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
     public static AdorufuHUD adorufuHUD;
-
     public static Minecraft minecraft = Minecraft.getMinecraft();
+    private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
+
+    /**
+     * Set a key to be pressed
+     */
+    public static void setPressed(KeyBinding key, boolean pressed) {
+        KeyBinding.setKeyBindState(key.getKeyCode(), pressed);
+    }
+
+    /**
+     * Log a regular message
+     */
+    public static void logMsg(boolean consoleOnly, String logMsg) {
+        logger.log(Level.INFO, logMsg);
+        if (consoleOnly) return;
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + "\2478] \2477" + logMsg));
+    }
+
+    /**
+     * Log message without the Adorufu branding to chat
+     */
+    public static void logMsg(String logMsg) {
+        minecraft.player.sendMessage(new TextComponentString("\2477" + logMsg));
+    }
+
+    /**
+     * Log an error
+     */
+    public static void logErr(boolean consoleOnly, String logMsg) {
+        logger.log(Level.ERROR, logMsg);
+        if (consoleOnly) return;
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247cERROR\2478] \247c" + logMsg));
+    }
+
+    /**
+     * Log a warning
+     */
+    public static void logWarn(boolean consoleOnly, String logMsg) {
+        logger.log(Level.WARN, logMsg);
+        if (consoleOnly) return;
+        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -150,6 +189,80 @@ public class AdorufuMod implements SimpleListener {
             e.printStackTrace();
         }
     }
+/*
+    private void registerModules() {
+        Manager.Module.moduleRegistry.clear();
+        Manager.Module.register(new XrayFeature());
+        Manager.Module.register(new WireframeFeature());
+        Manager.Module.register(new NamePlatesFeature());
+        Manager.Module.register(new TpsRenderableFeature());
+        Manager.Module.register(new FpsRenderableFeature());
+        Manager.Module.register(new CoordinatesRenderableFeature());
+        Manager.Module.register(new SaturationRenderableFeature());
+        Manager.Module.register(new InventoryStatsRenderableFeature());
+        Manager.Module.register(new HorsestatsRenderableFeature());
+        Manager.Module.register(new FeaturelistRenderableFeature());
+        Manager.Module.register(new WatermarkRenderableFeature());
+        Manager.Module.register(new KillauraFeature());
+        Manager.Module.register(new StorageESPFeature());
+        Manager.Module.register(new TracersFeature());
+        Manager.Module.register(new AntiHungerFeature());
+        Manager.Module.register(new ClickGUIFeature());
+        Manager.Module.register(new NightVisionFeature());
+        Manager.Module.register(new NoSlowFeature());
+        Manager.Module.register(new AnnouncerFeature());
+        Manager.Module.register(new AFKFishFeature());
+        Manager.Module.register(new AutoRespawnFeature());
+        Manager.Module.register(new ChunkTraceFeature());
+        Manager.Module.register(new FreecamFeature());
+        Manager.Module.register(new CrystalAuraFeature());
+        Manager.Module.register(new CrystalLogoutFeature());
+        Manager.Module.register(new JesusFeature());
+        Manager.Module.register(new ClientIgnoreFeature());
+        Manager.Module.register(new AutoIgnoreFeature());
+        Manager.Module.register(new AutoSprintFeature());
+        Manager.Module.register(new CameraClipFeature());
+        Manager.Module.register(new ElytraBoostFeature());
+        Manager.Module.register(new ElytraFlightFeature());
+        Manager.Module.register(new EntitySpeedFeature());
+        Manager.Module.register(new LowJumpFeature());
+        Manager.Module.register(new MiddleClickBlockFeature());
+        Manager.Module.register(new ExtendedTablistFeature());
+        Manager.Module.register(new AntiAFKFeature());
+        Manager.Module.register(new YawLockFeature());
+        Manager.Module.register(new QueueTimeFeature());
+        Manager.Module.register(new NoPushFeature());
+        Manager.Module.register(new PacketFlyFeature());
+        Manager.Module.register(new PigControlFeature());
+        Manager.Module.register(new AutoTotemFeature());
+        Manager.Module.register(new WaypointGUIFeature());
+        Manager.Module.register(new WaypointsFeature());
+        Manager.Module.register(new TamedIdentityFeature());
+        Manager.Module.register(new GhostBlockWarningFeature());
+        Manager.Module.register(new AntiFireOverlayFeature());
+        Manager.Module.register(new MinecraftMusicFeature());
+        Manager.Module.register(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...
+        Manager.Module.register(new ModuleAutoArmor());
+        Manager.Module.register(new JoinLeaveMessagesFeature());
+        Manager.Module.register(new CraftInventoryFeature());
+        Manager.Module.register(new KnockbackSuppressFeature());
+        Manager.Module.register(new EquipmentDamageRenderableFeature());
+        Manager.Module.register(new DesktopNotificationsFeature());
+        Manager.Module.register(new CPUControlFeature());
+        Manager.Module.register(new BatteryLifeRenderableFeature());
+        Manager.Module.register(new ModulePowerBow());
+        Manager.Module.register(new BookForgerFeature());
+        Manager.Module.register(new AutoWalkFeature());
+        Manager.Module.register(new BoatFlyFeature());
+        Manager.Module.register(new AutoReconnectFeature());
+        Manager.Module.register(new NameProtectFeature());
+        Manager.Module.register(new SafewalkFeature());
+        Manager.Module.register(new PortalGodModeFeature());
+        Manager.Module.register(new AutoEatFeature());
+        Manager.Module.register(new ShulkerSpyFeature());
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
+    }
+*/
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -251,86 +364,12 @@ public class AdorufuMod implements SimpleListener {
                         AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
                         e1.printStackTrace();
-                        AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " +e.getSimpleName() + "!");
+                        AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
                     }
                 });
         // todo api
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
     }
-/*
-    private void registerModules() {
-        Manager.Module.moduleRegistry.clear();
-        Manager.Module.register(new XrayFeature());
-        Manager.Module.register(new WireframeFeature());
-        Manager.Module.register(new NamePlatesFeature());
-        Manager.Module.register(new TpsRenderableFeature());
-        Manager.Module.register(new FpsRenderableFeature());
-        Manager.Module.register(new CoordinatesRenderableFeature());
-        Manager.Module.register(new SaturationRenderableFeature());
-        Manager.Module.register(new InventoryStatsRenderableFeature());
-        Manager.Module.register(new HorsestatsRenderableFeature());
-        Manager.Module.register(new FeaturelistRenderableFeature());
-        Manager.Module.register(new WatermarkRenderableFeature());
-        Manager.Module.register(new KillauraFeature());
-        Manager.Module.register(new StorageESPFeature());
-        Manager.Module.register(new TracersFeature());
-        Manager.Module.register(new AntiHungerFeature());
-        Manager.Module.register(new ClickGUIFeature());
-        Manager.Module.register(new NightVisionFeature());
-        Manager.Module.register(new NoSlowFeature());
-        Manager.Module.register(new AnnouncerFeature());
-        Manager.Module.register(new AFKFishFeature());
-        Manager.Module.register(new AutoRespawnFeature());
-        Manager.Module.register(new ChunkTraceFeature());
-        Manager.Module.register(new FreecamFeature());
-        Manager.Module.register(new CrystalAuraFeature());
-        Manager.Module.register(new CrystalLogoutFeature());
-        Manager.Module.register(new JesusFeature());
-        Manager.Module.register(new ClientIgnoreFeature());
-        Manager.Module.register(new AutoIgnoreFeature());
-        Manager.Module.register(new AutoSprintFeature());
-        Manager.Module.register(new CameraClipFeature());
-        Manager.Module.register(new ElytraBoostFeature());
-        Manager.Module.register(new ElytraFlightFeature());
-        Manager.Module.register(new EntitySpeedFeature());
-        Manager.Module.register(new LowJumpFeature());
-        Manager.Module.register(new MiddleClickBlockFeature());
-        Manager.Module.register(new ExtendedTablistFeature());
-        Manager.Module.register(new AntiAFKFeature());
-        Manager.Module.register(new YawLockFeature());
-        Manager.Module.register(new QueueTimeFeature());
-        Manager.Module.register(new NoPushFeature());
-        Manager.Module.register(new PacketFlyFeature());
-        Manager.Module.register(new PigControlFeature());
-        Manager.Module.register(new AutoTotemFeature());
-        Manager.Module.register(new WaypointGUIFeature());
-        Manager.Module.register(new WaypointsFeature());
-        Manager.Module.register(new TamedIdentityFeature());
-        Manager.Module.register(new GhostBlockWarningFeature());
-        Manager.Module.register(new AntiFireOverlayFeature());
-        Manager.Module.register(new MinecraftMusicFeature());
-        Manager.Module.register(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...
-        Manager.Module.register(new ModuleAutoArmor());
-        Manager.Module.register(new JoinLeaveMessagesFeature());
-        Manager.Module.register(new CraftInventoryFeature());
-        Manager.Module.register(new KnockbackSuppressFeature());
-        Manager.Module.register(new EquipmentDamageRenderableFeature());
-        Manager.Module.register(new DesktopNotificationsFeature());
-        Manager.Module.register(new CPUControlFeature());
-        Manager.Module.register(new BatteryLifeRenderableFeature());
-        Manager.Module.register(new ModulePowerBow());
-        Manager.Module.register(new BookForgerFeature());
-        Manager.Module.register(new AutoWalkFeature());
-        Manager.Module.register(new BoatFlyFeature());
-        Manager.Module.register(new AutoReconnectFeature());
-        Manager.Module.register(new NameProtectFeature());
-        Manager.Module.register(new SafewalkFeature());
-        Manager.Module.register(new PortalGodModeFeature());
-        Manager.Module.register(new AutoEatFeature());
-        Manager.Module.register(new ShulkerSpyFeature());
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
-    }
-*/
 
     private void registerRenderables() {
         renderableRegistry.clear();
@@ -345,47 +384,6 @@ public class AdorufuMod implements SimpleListener {
         Manager.Renderable.register(new RenderableEquipmentDamage());
         Manager.Renderable.register(new RenderableBatteryLife());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
-    }
-
-    /**
-     * Set a key to be pressed
-     */
-    public static void setPressed(KeyBinding key, boolean pressed) {
-        KeyBinding.setKeyBindState(key.getKeyCode(), pressed);
-    }
-
-    /**
-     * Log a regular message
-     */
-    public static void logMsg(boolean consoleOnly, String logMsg) {
-        logger.log(Level.INFO, logMsg);
-        if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + "\2478] \2477" + logMsg));
-    }
-
-    /**
-     * Log message without the Adorufu branding to chat
-     */
-    public static void logMsg(String logMsg) {
-        minecraft.player.sendMessage(new TextComponentString("\2477" + logMsg));
-    }
-
-    /**
-     * Log an error
-     */
-    public static void logErr(boolean consoleOnly, String logMsg) {
-        logger.log(Level.ERROR, logMsg);
-        if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247cERROR\2478] \247c" + logMsg));
-    }
-
-    /**
-     * Log a warning
-     */
-    public static void logWarn(boolean consoleOnly, String logMsg) {
-        logger.log(Level.WARN, logMsg);
-        if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
     }
 
     @SimpleEventHandler

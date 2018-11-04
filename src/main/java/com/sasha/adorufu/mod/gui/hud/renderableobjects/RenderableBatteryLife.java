@@ -44,20 +44,24 @@ public class RenderableBatteryLife extends RenderableObject {
     public void renderObjectLT(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fBattery" + "\247" + "7: " + formatBattery(), 4, yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectLB(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fBattery" + "\247" + "7: " + formatBattery(), 4, yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectRT(int yyy) {
         String s = "\247" + "fBattery" + "\247" + "7: " + formatBattery();
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectRB(int yyy) {
         String s = "\247" + "fBattery" + "\247" + "7: " + formatBattery();
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
+
     private String formatBattery() {
         int old = lastPercent;
         if (!isSupported || AdorufuMod.BATTERY_MANAGER_INTERFACE == null) {
@@ -66,27 +70,23 @@ public class RenderableBatteryLife extends RenderableObject {
         AdorufuMod.BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(AdorufuMod.BATTERY_MANAGER);
         if (lastPercent != AdorufuMod.BATTERY_MANAGER.BatteryLifePercent) {
             lastPercent = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;
-            AdorufuBatteryLevelChangedEvent event = new AdorufuBatteryLevelChangedEvent(old, lastPercent, AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte)1);
+            AdorufuBatteryLevelChangedEvent event = new AdorufuBatteryLevelChangedEvent(old, lastPercent, AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte) 1);
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
         }
         int battery = AdorufuMod.BATTERY_MANAGER.BatteryLifePercent;
-        if (battery == (byte)255) {
+        if (battery == (byte) 255) {
             return "\2478???%";
         }
-        boolean charging = AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte)1;
+        boolean charging = AdorufuMod.BATTERY_MANAGER.ACLineStatus == (byte) 1;
         if (charging) {
             return "\247" + "b" + battery + "%";
-        }
-        else if (battery > 80) {
+        } else if (battery > 80) {
             return "\247" + "a" + battery + "%";
-        }
-        else if (battery > 50) {
+        } else if (battery > 50) {
             return "\247" + "e" + battery + "%";
-        }
-        else if (battery > 20) {
+        } else if (battery > 20) {
             return "\247" + "c" + battery + "%";
-        }
-        else if (battery >= 0) {
+        } else if (battery >= 0) {
             return "\247" + "4" + battery + "%";
         }
         return "\247" + "b" + battery + "%";

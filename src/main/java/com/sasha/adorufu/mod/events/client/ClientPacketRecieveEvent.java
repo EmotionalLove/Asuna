@@ -28,7 +28,7 @@ public class ClientPacketRecieveEvent extends SimpleCancellableEvent {
 
     private Packet<?> recievedPacket;
 
-    public ClientPacketRecieveEvent(Packet<?> recievedPacket){
+    public ClientPacketRecieveEvent(Packet<?> recievedPacket) {
         this.recievedPacket = recievedPacket;
     }
 

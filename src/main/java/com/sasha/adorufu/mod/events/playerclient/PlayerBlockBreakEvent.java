@@ -39,6 +39,7 @@ public class PlayerBlockBreakEvent extends SimpleCancellableEvent {
     public Block getBlock() {
         return block;
     }
+
     public BlockPos getBlockPos() {
         return brokenPos;
     }

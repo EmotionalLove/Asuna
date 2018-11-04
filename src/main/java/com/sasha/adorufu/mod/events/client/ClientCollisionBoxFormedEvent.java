@@ -36,6 +36,7 @@ public class ClientCollisionBoxFormedEvent extends SimpleEvent {
         this.pos = pos;
         this.aabb = aabb;
     }
+
     public Block getBlock() {
         return block;
     }
@@ -44,15 +45,15 @@ public class ClientCollisionBoxFormedEvent extends SimpleEvent {
         return pos;
     }
 
+    public void setPos(BlockPos pos) {
+        this.pos = pos;
+    }
+
     public AxisAlignedBB getAabb() {
         return aabb;
     }
 
     public void setAabb(AxisAlignedBB aabb) {
         this.aabb = aabb;
-    }
-
-    public void setPos(BlockPos pos) {
-        this.pos = pos;
     }
 }

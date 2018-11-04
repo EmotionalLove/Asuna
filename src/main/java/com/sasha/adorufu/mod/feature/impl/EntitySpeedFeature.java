@@ -41,24 +41,6 @@ public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implemen
         super("EntitySpeed", AdorufuCategory.MOVEMENT);
     }
 
-    @Override
-    public void onTick() {
-        if (!this.isEnabled())
-            return;
-        this.setSuffix(speed + "");
-        if (AdorufuMod.minecraft.player.ridingEntity != null) {
-            Entity theEntity = AdorufuMod.minecraft.player.ridingEntity;
-            speedEntity(AdorufuMod.minecraft.player.ridingEntity);
-            for (Entity e : AdorufuMod.minecraft.world.getLoadedEntityList()) {
-                if (e.riddenByEntities.contains(theEntity)) {
-                    for (Entity riddenByEntity : e.riddenByEntities) {
-                        speedEntity(riddenByEntity);
-                    }
-                }
-            }
-        }
-    }
-
     private static void speedEntity(Entity entity) {
         if (entity instanceof EntityLlama) {
             entity.rotationYaw = AdorufuMod.minecraft.player.rotationYaw;
@@ -90,6 +72,24 @@ public class EntitySpeedFeature extends AbstractAdorufuTogglableFeature implemen
             if (entity instanceof EntityMinecart) {
                 EntityMinecart em = (EntityMinecart) entity;
                 em.setVelocity((forward * speed * Math.cos(Math.toRadians(yaw + 90.0F)) + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0F))), em.motionY, (forward * speed * Math.sin(Math.toRadians(yaw + 90.0F)) - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0F))));
+            }
+        }
+    }
+
+    @Override
+    public void onTick() {
+        if (!this.isEnabled())
+            return;
+        this.setSuffix(speed + "");
+        if (AdorufuMod.minecraft.player.ridingEntity != null) {
+            Entity theEntity = AdorufuMod.minecraft.player.ridingEntity;
+            speedEntity(AdorufuMod.minecraft.player.ridingEntity);
+            for (Entity e : AdorufuMod.minecraft.world.getLoadedEntityList()) {
+                if (e.riddenByEntities.contains(theEntity)) {
+                    for (Entity riddenByEntity : e.riddenByEntities) {
+                        speedEntity(riddenByEntity);
+                    }
+                }
             }
         }
     }

@@ -39,6 +39,7 @@ public class MixinGuiMainMenu extends GuiScreen {
     public void initGui(CallbackInfo info) {
         this.buttonList.add(new GuiButton(600, 5, 5, fontRenderer.getStringWidth("Adorufu Cloud") + 10, 20, "Adorufu Cloud"));
     }
+
     @Inject(method = "actionPerformed", at = @At(value = "HEAD"), cancellable = true)
     public void actionPerformed(GuiButton button, CallbackInfo info) {
         if (button.id == 600) {

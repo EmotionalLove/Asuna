@@ -39,6 +39,10 @@ import java.util.List;
  */
 public class Manager {
 
+    public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
+        return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
+    }
+
     public static class Feature implements SimpleListener {
 
         public static List<IAdorufuFeature> featureRegistry = new ArrayList<>();
@@ -129,10 +133,6 @@ public class Manager {
             renderableRegistry.add(robj);
             Data.registerSettingObject(robj);
         }
-    }
-
-    public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
-        return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
     }
 
     public static class Data {

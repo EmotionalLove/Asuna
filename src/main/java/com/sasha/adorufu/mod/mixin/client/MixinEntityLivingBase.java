@@ -35,11 +35,10 @@ import javax.annotation.Nullable;
 public abstract class MixinEntityLivingBase {
 
 
-    @Shadow @Nullable public abstract PotionEffect getActivePotionEffect(Potion potionIn);
-
     @Shadow public float moveForward;
-
     @Shadow public float moveStrafing;
+
+    @Shadow @Nullable public abstract PotionEffect getActivePotionEffect(Potion potionIn);
 
     /**
      * @author Sasha Stevens

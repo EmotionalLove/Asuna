@@ -40,22 +40,17 @@ import java.util.List;
 @Mixin(value = GuiRecipeBook.class, priority = 999)
 public abstract class MixinGuiRecipeBook extends MixinGui {
 
-    @Shadow public abstract boolean isVisible();
-
+    @Shadow @Final protected static ResourceLocation RECIPE_BOOK;
     @Shadow private Minecraft mc;
     @Shadow private int xOffset;
     @Shadow private int height;
     @Shadow private int width;
-
-    @Shadow @Final protected static ResourceLocation RECIPE_BOOK;
-
     @Shadow private GuiTextField searchBar;
-
     @Shadow @Final private List<GuiButtonRecipeTab> recipeTabs;
-
     @Shadow private GuiButtonToggle toggleRecipesBtn;
-
     @Shadow @Final private RecipeBookPage recipeBookPage;
+
+    @Shadow public abstract boolean isVisible();
 
     /**
      * @author Sasha Stevens
@@ -85,7 +80,8 @@ public abstract class MixinGuiRecipeBook extends MixinGui {
                 this.recipeBookPage.render(i, j, mouseX, mouseY, partialTicks);
                 GlStateManager.popMatrix();
             }
-        }catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
 }

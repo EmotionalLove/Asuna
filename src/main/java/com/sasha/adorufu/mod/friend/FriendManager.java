@@ -37,6 +37,7 @@ public class FriendManager {
         friendList.add(new Friend(friendName));
         AdorufuMod.SETTING_HANDLER.save(this);
     }
+
     public void removeFriend(String friendName) {
         Friend f1 = null;
         for (Friend f : friendList) {
@@ -63,6 +64,7 @@ public class FriendManager {
     public ArrayList<Friend> getFriendList() {
         return friendList;
     }
+
     public ArrayList<String> getFriendListString() {
         ArrayList<String> friendStrs = new ArrayList<>();
         for (Friend friend : friendList) {

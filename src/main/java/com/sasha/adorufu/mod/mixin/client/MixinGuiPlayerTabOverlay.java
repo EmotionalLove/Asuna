@@ -52,7 +52,10 @@ import static net.minecraft.client.gui.Gui.drawRect;
 
 @Mixin(value = GuiPlayerTabOverlay.class, priority = 999)
 public abstract class MixinGuiPlayerTabOverlay {
+    @Shadow @Final private static Ordering<NetworkPlayerInfo> ENTRY_ORDERING;
     @Shadow @Final private Minecraft mc;
+    @Shadow private ITextComponent footer;
+    @Shadow private ITextComponent header;
 
     @Shadow protected abstract void drawPing(int p_175245_1_, int p_175245_2_, int p_175245_3_, NetworkPlayerInfo networkPlayerInfoIn);
 
@@ -60,19 +63,12 @@ public abstract class MixinGuiPlayerTabOverlay {
 
     @Shadow public abstract String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn);
 
-    @Shadow private ITextComponent footer;
-
-    @Shadow private ITextComponent header;
-
-    @Shadow @Final private static Ordering<NetworkPlayerInfo> ENTRY_ORDERING;
-
     /**
      * @author Sasha Stevens
      * @reason make this THICCer
      */
     @Overwrite
-    public void renderPlayerlist(int width, Scoreboard scoreboardIn, @Nullable ScoreObjective scoreObjectiveIn)
-    {
+    public void renderPlayerlist(int width, Scoreboard scoreboardIn, @Nullable ScoreObjective scoreObjectiveIn) {
         boolean exTab = Manager.Feature.isFeatureEnabled(ExtendedTablistFeature.class);
         NetHandlerPlayClient nethandlerplayclient = this.mc.player.connection;
         List<NetworkPlayerInfo> list = ENTRY_ORDERING.sortedCopy(nethandlerplayclient.getPlayerInfoMap());
@@ -98,13 +94,11 @@ public abstract class MixinGuiPlayerTabOverlay {
             }
         }
 
-        for (NetworkPlayerInfo networkplayerinfo : list)
-        {
+        for (NetworkPlayerInfo networkplayerinfo : list) {
             int k = this.mc.fontRenderer.getStringWidth(this.getPlayerName(networkplayerinfo));
             i = Math.max(i, k);
 
-            if (scoreObjectiveIn != null && scoreObjectiveIn.getRenderType() != IScoreCriteria.EnumRenderType.HEARTS)
-            {
+            if (scoreObjectiveIn != null && scoreObjectiveIn.getRenderType() != IScoreCriteria.EnumRenderType.HEARTS) {
                 k = this.mc.fontRenderer.getStringWidth(" " + scoreboardIn.getOrCreateScore(networkplayerinfo.getGameProfile().getName(), scoreObjectiveIn).getScorePoints());
                 j = Math.max(j, k);
             }
@@ -115,27 +109,20 @@ public abstract class MixinGuiPlayerTabOverlay {
         int i4 = l3;
         int j4;
 
-        for (j4 = 1; i4 > (exTab && list.size() >= 80 ? 25 : 20); i4 = (l3 + j4 - 1) / j4)
-        {
+        for (j4 = 1; i4 > (exTab && list.size() >= 80 ? 25 : 20); i4 = (l3 + j4 - 1) / j4) {
             ++j4;
         }
 
         boolean flag = this.mc.isIntegratedServerRunning() || this.mc.getConnection().getNetworkManager().isEncrypted();
         int l;
 
-        if (scoreObjectiveIn != null)
-        {
-            if (scoreObjectiveIn.getRenderType() == IScoreCriteria.EnumRenderType.HEARTS)
-            {
+        if (scoreObjectiveIn != null) {
+            if (scoreObjectiveIn.getRenderType() == IScoreCriteria.EnumRenderType.HEARTS) {
                 l = 90;
-            }
-            else
-            {
+            } else {
                 l = j;
             }
-        }
-        else
-        {
+        } else {
             l = 0;
         }
 
@@ -145,36 +132,30 @@ public abstract class MixinGuiPlayerTabOverlay {
         int l1 = i1 * j4 + (j4 - 1) * 5;
         List<String> list1 = null;
 
-        if (this.header != null)
-        {
+        if (this.header != null) {
             list1 = this.mc.fontRenderer.listFormattedStringToWidth(this.header.getFormattedText(), width - 50);
 
-            for (String s : list1)
-            {
+            for (String s : list1) {
                 l1 = Math.max(l1, this.mc.fontRenderer.getStringWidth(s));
             }
         }
 
         List<String> list2 = null;
 
-        if (this.footer != null)
-        {
+        if (this.footer != null) {
             list2 = this.mc.fontRenderer.listFormattedStringToWidth(this.footer.getFormattedText(), width - 50);
 
-            for (String s1 : list2)
-            {
+            for (String s1 : list2) {
                 l1 = Math.max(l1, this.mc.fontRenderer.getStringWidth(s1));
             }
         }
 
-        if (list1 != null)
-        {
+        if (list1 != null) {
             drawRect(width / 2 - l1 / 2 - 1, k1 - 1, width / 2 + l1 / 2 + 1, k1 + list1.size() * this.mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
 
-            for (String s2 : list1)
-            {
+            for (String s2 : list1) {
                 int i2 = this.mc.fontRenderer.getStringWidth(s2);
-                this.mc.fontRenderer.drawStringWithShadow(s2, (float)(width / 2 - i2 / 2), (float)k1, -1);
+                this.mc.fontRenderer.drawStringWithShadow(s2, (float) (width / 2 - i2 / 2), (float) k1, -1);
                 k1 += this.mc.fontRenderer.FONT_HEIGHT;
             }
 
@@ -183,8 +164,7 @@ public abstract class MixinGuiPlayerTabOverlay {
 
         drawRect(width / 2 - l1 / 2 - 1, k1 - 1, width / 2 + l1 / 2 + 1, k1 + i4 * 9, Integer.MIN_VALUE);
 
-        for (int k4 = 0; k4 < l3; ++k4)
-        {
+        for (int k4 = 0; k4 < l3; ++k4) {
             int l4 = k4 / i4;
             int i5 = k4 % i4;
             int j2 = j1 + l4 * i1 + l4 * 5;
@@ -195,25 +175,22 @@ public abstract class MixinGuiPlayerTabOverlay {
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
-            if (k4 < list.size())
-            {
+            if (k4 < list.size()) {
                 NetworkPlayerInfo networkplayerinfo1 = list.get(k4);
                 GameProfile gameprofile = networkplayerinfo1.getGameProfile();
 
-                if (flag)
-                {
+                if (flag) {
                     EntityPlayer entityplayer = this.mc.world.getPlayerEntityByUUID(gameprofile.getId());
                     boolean flag1 = entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.CAPE) && ("Dinnerbone".equals(gameprofile.getName()) || "Grumm".equals(gameprofile.getName()));
                     this.mc.getTextureManager().bindTexture(networkplayerinfo1.getLocationSkin());
                     int l2 = 8 + (flag1 ? 8 : 0);
                     int i3 = 8 * (flag1 ? -1 : 1);
-                    Gui.drawScaledCustomSizeModalRect(j2, k2, 8.0F, (float)l2, 8, i3, 8, 8, 64.0F, 64.0F);
+                    Gui.drawScaledCustomSizeModalRect(j2, k2, 8.0F, (float) l2, 8, i3, 8, 8, 64.0F, 64.0F);
 
-                    if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT))
-                    {
+                    if (entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.HAT)) {
                         int j3 = 8 + (flag1 ? 8 : 0);
                         int k3 = 8 * (flag1 ? -1 : 1);
-                        Gui.drawScaledCustomSizeModalRect(j2, k2, 40.0F, (float)j3, 8, k3, 8, 8, 64.0F, 64.0F);
+                        Gui.drawScaledCustomSizeModalRect(j2, k2, 40.0F, (float) j3, 8, k3, 8, 8, 64.0F, 64.0F);
                     }
 
                     j2 += 9;
@@ -221,22 +198,17 @@ public abstract class MixinGuiPlayerTabOverlay {
 
                 String s4 = this.getPlayerName(networkplayerinfo1);
 
-                if (networkplayerinfo1.getGameType() == GameType.SPECTATOR)
-                {
-                    this.mc.fontRenderer.drawStringWithShadow(TextFormatting.ITALIC + s4, (float)j2, (float)k2, -1862270977);
-                }
-                else
-                {
-                    this.mc.fontRenderer.drawStringWithShadow(s4, (float)j2, (float)k2, -1);
+                if (networkplayerinfo1.getGameType() == GameType.SPECTATOR) {
+                    this.mc.fontRenderer.drawStringWithShadow(TextFormatting.ITALIC + s4, (float) j2, (float) k2, -1862270977);
+                } else {
+                    this.mc.fontRenderer.drawStringWithShadow(s4, (float) j2, (float) k2, -1);
                 }
 
-                if (scoreObjectiveIn != null && networkplayerinfo1.getGameType() != GameType.SPECTATOR)
-                {
+                if (scoreObjectiveIn != null && networkplayerinfo1.getGameType() != GameType.SPECTATOR) {
                     int k5 = j2 + i + 1;
                     int l5 = k5 + l;
 
-                    if (l5 - k5 > 5)
-                    {
+                    if (l5 - k5 > 5) {
                         this.drawScoreboardValues(scoreObjectiveIn, k2, gameprofile.getName(), k5, l5, networkplayerinfo1);
                     }
                 }
@@ -245,15 +217,13 @@ public abstract class MixinGuiPlayerTabOverlay {
             }
         }
 
-        if (list2 != null)
-        {
+        if (list2 != null) {
             k1 = k1 + i4 * 9 + 1;
             drawRect(width / 2 - l1 / 2 - 1, k1 - 1, width / 2 + l1 / 2 + 1, k1 + list2.size() * this.mc.fontRenderer.FONT_HEIGHT, Integer.MIN_VALUE);
 
-            for (String s3 : list2)
-            {
+            for (String s3 : list2) {
                 int j5 = this.mc.fontRenderer.getStringWidth(s3);
-                this.mc.fontRenderer.drawStringWithShadow(s3, (float)(width / 2 - j5 / 2), (float)k1, -1);
+                this.mc.fontRenderer.drawStringWithShadow(s3, (float) (width / 2 - j5 / 2), (float) k1, -1);
                 k1 += this.mc.fontRenderer.FONT_HEIGHT;
             }
         }

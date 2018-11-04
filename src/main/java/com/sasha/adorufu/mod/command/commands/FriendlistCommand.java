@@ -23,6 +23,7 @@ import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import static com.sasha.adorufu.mod.AdorufuMod.logMsg;
+
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
  **/
@@ -32,7 +33,7 @@ public class FriendlistCommand extends SimpleCommand {
         super("friendlist");
     }
 
-    public void onCommand(){
+    public void onCommand() {
         if (this.getArguments() == null) {
             StringBuilder builder = new StringBuilder();
             logMsg(false, "Listing \247l" + AdorufuMod.FRIEND_MANAGER.getFriendList().size() + " \247r\2477friended players:");

@@ -60,7 +60,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             misc_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Misc");
-                elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(),15), 100, 0f, 181f, 150f, 255f,  "Misc", misc_elements));
+                elementList.add(new AdorufuGuiWindow(coords[0], coords[1], calcListLength(misc_elements.size(), 15), 100, 0f, 181f, 150f, 255f, "Misc", misc_elements));
                 Manager.Feature.featureRegistry.stream()
                         .filter(e -> e instanceof IAdorufuTogglableFeature)
                         .filter(e -> e.getCategory() == AdorufuCategory.GUI).sorted(Comparator.comparing(IAdorufuFeature::getFeatureName))
@@ -68,7 +68,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             gui_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$0 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("HUD");
-                elementList.add(new AdorufuGuiWindow(coords$0[0], coords$0[1], calcListLength(gui_elements.size(),15), 100, 79f, 79f, 79f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$0[0], coords$0[1], calcListLength(gui_elements.size(), 15), 100, 79f, 79f, 79f, 255f
                         , "HUD", gui_elements));
                 Manager.Feature.featureRegistry.stream()
                         .filter(e -> e instanceof IAdorufuTogglableFeature)
@@ -77,7 +77,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             combat_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$1 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Combat");
-                elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(),15), 100, 175f, 0f, 0f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$1[0], coords$1[1], calcListLength(combat_elements.size(), 15), 100, 175f, 0f, 0f, 255f
                         , "Combat", combat_elements));
                 Manager.Feature.featureRegistry.stream()
                         .filter(e -> e instanceof IAdorufuTogglableFeature)
@@ -86,7 +86,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             chat_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$2 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Chat");
-                elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(),15), 100, 0f, 91f, 99f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$2[0], coords$2[1], calcListLength(chat_elements.size(), 15), 100, 0f, 91f, 99f, 255f
                         , "Chat", chat_elements));
                 Manager.Feature.featureRegistry.stream()
                         .filter(e -> e instanceof IAdorufuTogglableFeature)
@@ -95,7 +95,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             render_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$3 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Render");
-                elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(),15), 100, 204f, 136f, 0f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$3[0], coords$3[1], calcListLength(render_elements.size(), 15), 100, 204f, 136f, 0f, 255f
                         , "Render", render_elements));
                 Manager.Feature.featureRegistry.stream()
                         .filter(e -> e instanceof IAdorufuTogglableFeature)
@@ -104,7 +104,7 @@ public class AdorufuClickGUI extends GuiScreen {
                             movement_elements.add(new AdorufuGuiButton(e.getFeatureName() + (e.hasOptions() ? " \2477[...]" : ""), 0, 0, 100, 15, new FeatureToggler((IAdorufuTogglableFeature) e)));
                         });
                 int[] coords$4 = AdorufuMod.DATA_MANAGER.loadGuiElementPos("Movement");
-                elementList.add(new AdorufuGuiWindow(coords$4[0], coords$4[1], calcListLength(movement_elements.size(),15), 100, 119f, 0f, 103f, 255f
+                elementList.add(new AdorufuGuiWindow(coords$4[0], coords$4[1], calcListLength(movement_elements.size(), 15), 100, 119f, 0f, 103f, 255f
                         , "Movement", movement_elements));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -112,6 +112,39 @@ public class AdorufuClickGUI extends GuiScreen {
                 lock.unlock();
             }
         }, 0, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Calculates what the length of you list should be
+     *
+     * @param i the amount of buttons that the window will have
+     * @return the length value
+     */
+    public static int calcListLength(int i, int heightPerButton) {
+        return i * heightPerButton;
+    }
+
+    //todo
+    public static boolean hasFocus(AdorufuGuiWindow element) {
+        lock.lock();
+        try {
+            if (!elementList.contains(element)) return false;
+            return elementList.indexOf(element) == 0;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    //todo
+    public static void requestFocus(AdorufuGuiWindow element) {
+        lock.lock();
+        try {
+            if (elementList.indexOf(element) == 0) return;
+            elementList.remove(element);
+            elementList.add(0, element);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -132,61 +165,27 @@ public class AdorufuClickGUI extends GuiScreen {
         lock.lock();
         try {
             elementList.forEach(e -> e.drawElement(x, y));
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
+
     @Override
     public void mouseClicked(int x, int y, int b) {
         lock.lock();
         try {
             elementList.stream().filter(e -> e.onMouseEngage(x, y, b)).findFirst();
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
+
     @Override
     public void mouseReleased(int x, int y, int b) {
         lock.lock();
         try {
             elementList.stream().filter(e -> e.onMouseRelease(x, y, b)).findFirst();
-        }
-        finally {
-            lock.unlock();
-        }
-    }
-
-    /**
-     * Calculates what the length of you list should be
-     * @param i the amount of buttons that the window will have
-     * @return the length value
-     */
-    public static int calcListLength(int i, int heightPerButton) {
-        return i * heightPerButton;
-    }
-
-    //todo
-    public static boolean hasFocus(AdorufuGuiWindow element) {
-        lock.lock();
-        try {
-            if (!elementList.contains(element)) return false;
-            return elementList.indexOf(element) == 0;
-        }
-        finally {
-            lock.unlock();
-        }
-    }
-    //todo
-    public static void requestFocus(AdorufuGuiWindow element) {
-        lock.lock();
-        try {
-            if (elementList.indexOf(element) == 0) return;
-            elementList.remove(element);
-            elementList.add(0, element);
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }

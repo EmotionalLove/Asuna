@@ -30,11 +30,11 @@ import javax.annotation.Nullable;
 @SerialiseSuper
 public class RenderableObject {
 
+    @Transient private static int LT_x = 12;
     @Transient private String name;
     @Transient private ScreenCornerPos pos = null;
     @Transient private ScreenCornerPos defaultPos;
     private String stringPos;
-    @Transient private static int LT_x = 12;
     @Transient private IAdorufuFeature tiedFeature;
 
 
@@ -70,6 +70,38 @@ public class RenderableObject {
     public RenderableObject(String name, IAdorufuFeature feature) {
         this.name = name;
         this.tiedFeature = feature;
+    }
+
+    public static ScreenCornerPos getPosEnum(String pos) {
+        if (pos.equalsIgnoreCase("LT")) {
+            return ScreenCornerPos.LEFTTOP;
+        }
+        if (pos.equalsIgnoreCase("LB")) {
+            return ScreenCornerPos.LEFTBOTTOM;
+        }
+        if (pos.equalsIgnoreCase("RT")) {
+            return ScreenCornerPos.RIGHTTOP;
+        }
+        if (pos.equalsIgnoreCase("RB")) {
+            return ScreenCornerPos.RIGHTBOTTOM;
+        }
+        return null;
+    }
+
+    public static String getPosStr(ScreenCornerPos pos) {
+        if (pos == ScreenCornerPos.LEFTTOP) {
+            return "LT";
+        }
+        if (pos == ScreenCornerPos.LEFTBOTTOM) {
+            return "LB";
+        }
+        if (pos == ScreenCornerPos.RIGHTTOP) {
+            return "RT";
+        }
+        if (pos == ScreenCornerPos.RIGHTBOTTOM) {
+            return "RB";
+        }
+        return null;
     }
 
     /**
@@ -131,6 +163,11 @@ public class RenderableObject {
         return this.pos;
     }
 
+    public void setPos(ScreenCornerPos pos) {
+        this.pos = pos;
+        this.stringPos = getPosStr(pos);
+    }
+
     public ScreenCornerPos getDefaultPos() {
         return defaultPos;
     }
@@ -142,42 +179,5 @@ public class RenderableObject {
     public void setPos(String pos) {
         this.pos = getPosEnum(pos);
         this.stringPos = getPosStr(this.pos);
-    }
-
-    public void setPos(ScreenCornerPos pos) {
-        this.pos = pos;
-        this.stringPos = getPosStr(pos);
-    }
-
-    public static ScreenCornerPos getPosEnum(String pos) {
-        if (pos.equalsIgnoreCase("LT")) {
-            return ScreenCornerPos.LEFTTOP;
-        }
-        if (pos.equalsIgnoreCase("LB")) {
-            return ScreenCornerPos.LEFTBOTTOM;
-        }
-        if (pos.equalsIgnoreCase("RT")) {
-            return ScreenCornerPos.RIGHTTOP;
-        }
-        if (pos.equalsIgnoreCase("RB")) {
-            return ScreenCornerPos.RIGHTBOTTOM;
-        }
-        return null;
-    }
-
-    public static String getPosStr(ScreenCornerPos pos) {
-        if (pos == ScreenCornerPos.LEFTTOP) {
-            return "LT";
-        }
-        if (pos == ScreenCornerPos.LEFTBOTTOM) {
-            return "LB";
-        }
-        if (pos == ScreenCornerPos.RIGHTTOP) {
-            return "RT";
-        }
-        if (pos == ScreenCornerPos.RIGHTBOTTOM) {
-            return "RB";
-        }
-        return null;
     }
 }

@@ -36,6 +36,11 @@ public class RenderableCoordinates extends RenderableObject {
                 Manager.Feature.findFeature(CoordinatesRenderableFeature.class));
     }
 
+    private static String attachDirection() {
+        return " " + "\247" + "f[" + AdorufuMath.getStringDirection(AdorufuMath.getCardinalDirection(minecraft.player.rotationYaw)) + "]";
+
+    }
+
     @Override
     public void renderObjectLT(int yyy) {
         double xx = dround(minecraft.player.posX, 3);
@@ -94,10 +99,5 @@ public class RenderableCoordinates extends RenderableObject {
             String s = "\247" + "fX " + "\247" + "7" + xx + " (" + dround(xx * 8, 3) + ") " + "\247" + "fY " + "\247" + "7" + y + " " + "\247" + "fZ " + "\247" + "7" + z + " (" + dround(z * 8, 3) + ")" + attachDirection();
             AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, width - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2, yyy, 0xffffff);
         }
-    }
-
-    private static String attachDirection() {
-        return " " + "\247" + "f[" + AdorufuMath.getStringDirection(AdorufuMath.getCardinalDirection(minecraft.player.rotationYaw)) + "]";
-
     }
 }

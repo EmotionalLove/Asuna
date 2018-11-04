@@ -29,9 +29,9 @@ public class AdorufuTogglableFeatureTogglePostEvent extends SimpleCancellableEve
     private AbstractAdorufuTogglableFeature toggledFeature;
     private ModuleState toggleState;
 
-    public AdorufuTogglableFeatureTogglePostEvent(AbstractAdorufuTogglableFeature toggledModule, ModuleState toggleState){
+    public AdorufuTogglableFeatureTogglePostEvent(AbstractAdorufuTogglableFeature toggledModule, ModuleState toggleState) {
         this.toggledFeature = toggledModule;
-        this.toggleState= toggleState;
+        this.toggleState = toggleState;
     }
 
     public ModuleState getToggleState() {

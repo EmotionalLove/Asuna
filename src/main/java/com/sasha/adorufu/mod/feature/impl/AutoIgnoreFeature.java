@@ -47,6 +47,26 @@ public class AutoIgnoreFeature extends AbstractAdorufuTogglableFeature implement
         super("AutoIgnore", AdorufuCategory.CHAT);
     }
 
+    public static String stripColours(String txt) {
+        return txt.replaceAll("\247" + ".", "");
+    }
+
+    private static void handleIgnoring() {
+        for (HashMap.Entry<String, Integer> entry : spamViolationMap.entrySet()) {
+            if (entry.getValue() > 40 && !ClientIgnoreFeature.ignorelist.contains(entry.getKey())) {
+                ClientIgnoreFeature.ignorelist.add(entry.getKey());
+                AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "1--------------------------------------------------"));
+                AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "4" + entry.getKey() + " " + "\247" + "6was automatically ignored."));
+                AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "1--------------------------------------------------"));
+                removalList.add(entry.getKey());
+            }
+        }
+        for (String keys : removalList) {
+            spamViolationMap.remove(keys);
+        }
+        removalList.clear();
+    }
+
     @Override
     public void onEnable() {
         if (!Manager.Feature.isFeatureEnabled(ClientIgnoreFeature.class)) {
@@ -90,25 +110,5 @@ public class AutoIgnoreFeature extends AbstractAdorufuTogglableFeature implement
                 lastMessage = message;
             }
         }
-    }
-
-    public static String stripColours(String txt) {
-        return txt.replaceAll("\247" + ".", "");
-    }
-
-    private static void handleIgnoring() {
-        for (HashMap.Entry<String, Integer> entry : spamViolationMap.entrySet()) {
-            if (entry.getValue() > 40 && !ClientIgnoreFeature.ignorelist.contains(entry.getKey())) {
-                ClientIgnoreFeature.ignorelist.add(entry.getKey());
-                AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "1--------------------------------------------------"));
-                AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "4" + entry.getKey() + " " + "\247" + "6was automatically ignored."));
-                AdorufuMod.minecraft.player.sendMessage(new TextComponentString("\247" + "1--------------------------------------------------"));
-                removalList.add(entry.getKey());
-            }
-        }
-        for (String keys : removalList) {
-            spamViolationMap.remove(keys);
-        }
-        removalList.clear();
     }
 }

@@ -34,13 +34,13 @@ public class YawCommand extends SimpleCommand {
 
     @Override
     public void onCommand() {
-        if (this.getArguments() == null){
+        if (this.getArguments() == null) {
             AdorufuMod.logErr(false, "Arguments required! Try \"-help command yaw\"");
             return;
         }
         try {
             YawLockFeature.yawDegrees = Integer.parseInt(this.getArguments()[0]);
-        }catch (Exception e) {
+        } catch (Exception e) {
             AdorufuMod.logErr(false, "Your argument must be an integer.");
         }
     }

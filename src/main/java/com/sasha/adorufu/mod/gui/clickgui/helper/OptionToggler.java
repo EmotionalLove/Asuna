@@ -36,7 +36,7 @@ public class OptionToggler implements Runnable, IToggler {
 
     @Override
     public void run() {
-        minecraft.world.playSound(minecraft.player.posX, minecraft.player.posY, minecraft.player.posZ, SoundEvents.UI_BUTTON_CLICK , SoundCategory.AMBIENT, 1f, 1f, false);
+        minecraft.world.playSound(minecraft.player.posX, minecraft.player.posY, minecraft.player.posZ, SoundEvents.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 1f, 1f, false);
         m.setOption(optionName, !m.getOption(optionName));
     }
 
@@ -48,7 +48,6 @@ public class OptionToggler implements Runnable, IToggler {
     public boolean isTrue() {
         return m.getOption(optionName);
     }
-
 
 
 }

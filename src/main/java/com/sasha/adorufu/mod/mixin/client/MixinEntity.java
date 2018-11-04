@@ -46,10 +46,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Entity.class, priority = 999)
 public abstract class MixinEntity {
     @Shadow
-    public abstract void setEntityBoundingBox(AxisAlignedBB bb);
+    public double motionX;
+    @Shadow
+    public double motionY;
+    @Shadow
+    public double motionZ;
+    @Shadow
+    public boolean onGround;
+    @Shadow
+    public Entity ridingEntity;
+    @Shadow
+    public int entityId;
+    @Shadow
+    public World world;
+    @Shadow
+    public float stepHeight;
 
     @Shadow
     public abstract AxisAlignedBB getEntityBoundingBox();
+
+    @Shadow
+    public abstract void setEntityBoundingBox(AxisAlignedBB bb);
 
     @Shadow
     public abstract void resetPositionToBB();
@@ -58,31 +75,7 @@ public abstract class MixinEntity {
     public abstract String getName();
 
     @Shadow
-    public double motionX;
-
-    @Shadow
-    public double motionY;
-
-    @Shadow
-    public double motionZ;
-
-    @Shadow
-    public boolean onGround;
-
-    @Shadow
     public abstract boolean isSneaking();
-
-    @Shadow
-    public Entity ridingEntity;
-
-    @Shadow
-    public int entityId;
-
-    @Shadow
-    public World world;
-
-    @Shadow
-    public float stepHeight;
 
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {

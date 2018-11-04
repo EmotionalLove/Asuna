@@ -38,24 +38,6 @@ public class RenderableInventoryStats extends RenderableObject {
 
     }
 
-    @Override
-    public void renderObjectLT(int yyy) {
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player), 4, yyy, 0xffffff);
-    }
-    @Override
-    public void renderObjectLB(int yyy) {
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player), 4, yyy, 0xffffff);
-    }
-    @Override
-    public void renderObjectRT(int yyy) {
-        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player);
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
-    }
-    @Override
-    public void renderObjectRB(int yyy) {
-        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player);
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
-    }
     public static String getFoodItemsInInventory(EntityPlayerSP player) {
         int i = 0;
         for (ItemStack stack : player.inventory.mainInventory) {
@@ -71,11 +53,11 @@ public class RenderableInventoryStats extends RenderableObject {
         }
         if (i <= 32) {
             return "\247" + "e" + i;
-        }
-        else {
+        } else {
             return "\247" + "a" + i;
         }
     }
+
     public static String getBuildingBlocksInInventory(EntityPlayerSP player) {
         int i = 0;
         for (ItemStack stack : player.inventory.mainInventory) {
@@ -91,9 +73,30 @@ public class RenderableInventoryStats extends RenderableObject {
         }
         if (i <= 32) {
             return "\247" + "e" + i;
-        }
-        else {
+        } else {
             return "\247" + "a" + i;
         }
+    }
+
+    @Override
+    public void renderObjectLT(int yyy) {
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player), 4, yyy, 0xffffff);
+    }
+
+    @Override
+    public void renderObjectLB(int yyy) {
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player), 4, yyy, 0xffffff);
+    }
+
+    @Override
+    public void renderObjectRT(int yyy) {
+        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
+    }
+
+    @Override
+    public void renderObjectRB(int yyy) {
+        String s = "\247" + "fInventory Statistics" + "\247" + "7: " + "Food " + getFoodItemsInInventory(minecraft.player) + " " + "\247" + "7Building Blocks " + getBuildingBlocksInInventory(minecraft.player);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
 }

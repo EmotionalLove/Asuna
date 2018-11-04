@@ -53,6 +53,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         this.title = title;
         this.moduleElements = moduleElements;
     }
+
     public AdorufuGuiWindow(int x, int y, int length, int width, int colour, String title, List<IAdorufuGuiElement> moduleElements) {
         this.x = x;
         this.y = y;
@@ -65,6 +66,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
         themeColourB = (float) (colour & 0xFF) / 255F;
         this.moduleElements = moduleElements;
     }
+
     public AdorufuGuiWindow(int x, int y, int length, int width, float colourR, float colourG, float colourB, float colourA, String title, List<IAdorufuGuiElement> moduleElements) {
         this.x = x;
         this.y = y;
@@ -110,6 +112,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
                 themeColourR, themeColourG, themeColourB, themeColourA);
         AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString(this.title, (this.x + (this.width / 2)), this.y + 5, 0xffffff, true);
     }
+
     private void drawRestOfWindow() {
         AdorufuMath.drawRect(this.x, (this.y + TITLEBAR_BOUND), this.x + this.width, (this.y + TITLEBAR_BOUND) + this.length, Integer.MIN_VALUE);
     }
@@ -117,14 +120,14 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     @Override
     public boolean onMouseEngage(int x, int y, int b) {
         for (IAdorufuGuiElement moduleElement : this.moduleElements) {
-            if (moduleElement.onMouseEngage(x,y,b)) {
+            if (moduleElement.onMouseEngage(x, y, b)) {
                 return true;
             }
         }
         if (b == 0) {
             if ((x >= this.x && x <= (this.x + this.width))
-            &&
-            y >= this.y && y <= (this.y + TITLEBAR_BOUND)){
+                    &&
+                    y >= this.y && y <= (this.y + TITLEBAR_BOUND)) {
                 this.offsetCursorX = x - this.x;
                 this.offsetCursorY = y - this.y;
                 drag = true;
@@ -137,7 +140,7 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     @Override
     public boolean onMouseRelease(int x, int y, int b) {
         for (IAdorufuGuiElement moduleElement : this.moduleElements) {
-            if (moduleElement.onMouseRelease(x,y,b)) {
+            if (moduleElement.onMouseRelease(x, y, b)) {
                 return true;
             }
         }
@@ -154,13 +157,13 @@ public class AdorufuGuiWindow implements IAdorufuGuiElement {
     }
 
     @Override
-    public int getY() {
-        return this.y;
+    public void setX(int x) {
+        this.x = x;
     }
 
     @Override
-    public void setX(int x) {
-        this.x = x;
+    public int getY() {
+        return this.y;
     }
 
     @Override

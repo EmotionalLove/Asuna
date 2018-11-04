@@ -29,18 +29,31 @@ public interface IAdorufuFeature {
     default void onLoad() {
         //
     }
+
     AdorufuCategory getCategory();
+
     List<AdorufuFeatureOption<Boolean>> getOptions();
+
     AdorufuFeatureOptionBehaviour getOptionBehaviour();
+
     void setOption(String key, boolean state);
+
     boolean getOption(String key);
+
     Map<String, Boolean> getFormattableOptionsMap();
+
     boolean hasOptions();
+
     String getColouredName();
+
     String getFeatureName();
+
     void setSuffix(String s);
+
     void setSuffix(String[] s);
-    void setSuffix(Map<String, Boolean> boolMap);
+
     String getSuffix();
+
+    void setSuffix(Map<String, Boolean> boolMap);
 
 }

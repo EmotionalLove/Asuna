@@ -53,29 +53,6 @@ public class PlayerIdentity implements Serializable {
         this.lastUpdated = System.currentTimeMillis();
     }
 
-    public String getDisplayName() {
-        return this.displayName;
-    }
-    public String getStringUuid() {
-        return this.stringUuid;
-    }
-
-    /**
-     * run this on a seperate thread pls so u dont kill the game
-     */
-    public void updateDisplayName() {
-        new Thread(() -> {
-            PlayerIdentity identity = new PlayerIdentity(this.stringUuid);
-            this.displayName = identity.getDisplayName();
-            this.lastUpdated = System.currentTimeMillis();
-            identity = null;
-        }).start();
-    }
-
-    public boolean shouldUpdate() {
-        return System.currentTimeMillis() - this.lastUpdated >= 6.048e+8 /* one week */;
-    }
-
     private static String getName(String UUID) {
         LinkedHashMap<String, Long> nameHistories = new LinkedHashMap<>();
         try {
@@ -107,14 +84,38 @@ public class PlayerIdentity implements Serializable {
             } catch (Exception ee) {
                 return nameform;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.print("fuck");
         }
         return UUID;
     }
+
     private static String getDateFormat(int mm, int dd, int yyyy) {
         return mm + "/" + dd + "/" + yyyy;
+    }
+
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public String getStringUuid() {
+        return this.stringUuid;
+    }
+
+    /**
+     * run this on a seperate thread pls so u dont kill the game
+     */
+    public void updateDisplayName() {
+        new Thread(() -> {
+            PlayerIdentity identity = new PlayerIdentity(this.stringUuid);
+            this.displayName = identity.getDisplayName();
+            this.lastUpdated = System.currentTimeMillis();
+            identity = null;
+        }).start();
+    }
+
+    public boolean shouldUpdate() {
+        return System.currentTimeMillis() - this.lastUpdated >= 6.048e+8 /* one week */;
     }
 }

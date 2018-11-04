@@ -148,13 +148,13 @@ public class AdorufuGuiButton implements IAdorufuGuiElement {
     }
 
     @Override
-    public int getY() {
-        return this.y;
+    public void setX(int x) {
+        this.x = x;
     }
 
     @Override
-    public void setX(int x) {
-        this.x = x;
+    public int getY() {
+        return this.y;
     }
 
     @Override

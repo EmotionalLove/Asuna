@@ -63,15 +63,28 @@ public abstract class MixinMinecraft {
     @Shadow
     @Final
     public PropertyMap profileProperties;
+    @Shadow
+    public GameSettings gameSettings;
+    @Shadow
+    public boolean actionKeyF3;
+    @Shadow
+    @Nullable
+    public GuiScreen currentScreen;
+    @Shadow
+    public EntityRenderer entityRenderer;
+    @Shadow
+    public long debugCrashKeyPressTime;
+    @Shadow
+    public RayTraceResult objectMouseOver;
+    @Shadow
+    public boolean inGameHasFocus;
+    @Shadow
+    public WorldClient world;
+    @Shadow
+    public int leftClickCounter;
 
     @Shadow
     public abstract void processKeyBinds();
-
-    @Shadow
-    public GameSettings gameSettings;
-
-    @Shadow
-    public boolean actionKeyF3;
 
     @Shadow
     public abstract void updateDebugProfilerName(int keyCount);
@@ -83,29 +96,7 @@ public abstract class MixinMinecraft {
     public abstract boolean processKeyF3(int auxKey);
 
     @Shadow
-    @Nullable
-    public GuiScreen currentScreen;
-
-    @Shadow
-    public EntityRenderer entityRenderer;
-
-    @Shadow
     public abstract void dispatchKeypresses();
-
-    @Shadow
-    public long debugCrashKeyPressTime;
-
-    @Shadow
-    public RayTraceResult objectMouseOver;
-
-    @Shadow
-    public boolean inGameHasFocus;
-
-    @Shadow
-    public WorldClient world;
-
-    @Shadow
-    public int leftClickCounter;
 
     @Inject(method = "rightClickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;swingArm(Lnet/minecraft/util/EnumHand;)V"))
     public void rightClickMouse(CallbackInfo info) {

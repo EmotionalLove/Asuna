@@ -37,12 +37,18 @@ public class WaypointsFeature extends AbstractAdorufuTogglableFeature implements
         super("Waypoints", AdorufuCategory.RENDER);
     }
 
+    private static Vec3d getClientLookVec() {
+        double f = Math.cos(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float) Math.PI);
+        double f1 = Math.sin(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float) Math.PI);
+        double f2 = -Math.cos(-AdorufuMod.minecraft.player.rotationPitch * 0.017453292F);
+        double f3 = Math.sin(-AdorufuMod.minecraft.player.rotationPitch * 0.017453292F);
+        return new Vec3d(f1 * f2, f3, f * f2);
+    }
 
     @Override
     public void onDisable() {
         i = 0;
     }
-
 
     @Override
     public void onRender() {
@@ -87,13 +93,5 @@ public class WaypointsFeature extends AbstractAdorufuTogglableFeature implements
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_LINE_SMOOTH);
         }
-    }
-
-    private static Vec3d getClientLookVec() {
-        double f = Math.cos(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float) Math.PI);
-        double f1 = Math.sin(-AdorufuMod.minecraft.player.rotationYaw * 0.017453292F - (float) Math.PI);
-        double f2 = -Math.cos(-AdorufuMod.minecraft.player.rotationPitch * 0.017453292F);
-        double f3 = Math.sin(-AdorufuMod.minecraft.player.rotationPitch * 0.017453292F);
-        return new Vec3d(f1 * f2, f3, f * f2);
     }
 }

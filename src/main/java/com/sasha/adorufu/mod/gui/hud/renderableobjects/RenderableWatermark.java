@@ -37,15 +37,18 @@ public class RenderableWatermark extends RenderableObject {
     public void renderObjectLT(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectLB(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectRT(int yyy) {
         String s = "\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION;
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectRB(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "4" + AdorufuMod.NAME + " \247" + "7" + AdorufuMod.VERSION, 4, yyy, 0xffffff);

@@ -41,9 +41,9 @@ import net.minecraft.util.math.BlockPos;
 @FeatureInfo(description = "Walk on water!")
 public class JesusFeature extends AbstractAdorufuTogglableFeature
         implements SimpleListener, IAdorufuTickableFeature {
-    private boolean waterjump = false;
     public static AxisAlignedBB WATER_JESUS_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.99, 1);
     public static JesusFeature INSTANCE;
+    private boolean waterjump = false;
 
     public JesusFeature() {
         super("Jesus", AdorufuCategory.MOVEMENT);

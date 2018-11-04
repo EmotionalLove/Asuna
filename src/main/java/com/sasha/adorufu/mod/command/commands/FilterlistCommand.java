@@ -33,7 +33,7 @@ public class FilterlistCommand extends SimpleCommand {
         super("filterlist");
     }
 
-    public void onCommand(){
+    public void onCommand() {
         if (this.getArguments() == null) {
             StringBuilder builder = new StringBuilder();
             logMsg(false, "Listing \247l" + filterList.size() + " \247r\2477ignored words and/or phrases:");

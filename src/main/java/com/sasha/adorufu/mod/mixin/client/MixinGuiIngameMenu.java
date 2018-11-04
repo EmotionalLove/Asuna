@@ -34,11 +34,12 @@ public class MixinGuiIngameMenu extends MixinGuiScreen {
     @Inject(method = "initGui", at = @At("RETURN"), cancellable = true)
     public void initGui(CallbackInfo info) {
         if (!this.mc.isIntegratedServerRunning()) info.cancel();
-        this.buttonList.add(new GuiButton(666, this.width/ 2 - 100, this.height / 4 + 144 + -16, "Reconnect"));
+        this.buttonList.add(new GuiButton(666, this.width / 2 - 100, this.height / 4 + 144 + -16, "Reconnect"));
     }
+
     @Inject(method = "actionPerformed", at = @At("HEAD"), cancellable = true)
     protected void actionPerformed(GuiButton button, CallbackInfo info) {
-        if (button.id == 666){
+        if (button.id == 666) {
             ServerData data = this.mc.getCurrentServerData();
             this.mc.world.sendQuittingDisconnectingPacket();
             FMLClientHandler.instance().connectToServer(new GuiMainMenu(), data);

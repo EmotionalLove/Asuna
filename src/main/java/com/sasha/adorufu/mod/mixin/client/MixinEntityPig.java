@@ -39,17 +39,13 @@ public abstract class MixinEntityPig {
      * @reason pig control
      */
     @Overwrite
-    public boolean canBeSteered()
-    {
+    public boolean canBeSteered() {
         Entity entity = this.getControllingPassenger();
 
-        if (!(entity instanceof EntityPlayer))
-        {
+        if (!(entity instanceof EntityPlayer)) {
             return false;
-        }
-        else
-        {
-            EntityPlayer entityplayer = (EntityPlayer)entity;
+        } else {
+            EntityPlayer entityplayer = (EntityPlayer) entity;
             if (Manager.Feature.isFeatureEnabled(PigControlFeature.class)) {
                 return true;
             }

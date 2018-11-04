@@ -42,13 +42,13 @@ public abstract class AbstractAdorufuTogglableFeature
     }
 
     @Override
-    public void setKeycode(int keycode) {
-        this.keycode = keycode;
+    public int getKeycode() {
+        return keycode;
     }
 
     @Override
-    public int getKeycode() {
-        return keycode;
+    public void setKeycode(int keycode) {
+        this.keycode = keycode;
     }
 
     @Override

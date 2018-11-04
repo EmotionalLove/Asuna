@@ -45,11 +45,12 @@ public class AdorufuUpdateChecker implements SimpleListener {
             }
             br.close();
             return true;
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
+
     @SimpleEventHandler
     public void onPacketRx(ClientPacketRecieveEvent e) {
         if (e.getRecievedPacket() instanceof SPacketServerDifficulty) {

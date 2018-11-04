@@ -38,10 +38,10 @@ import java.util.*;
 public class JoinLeaveMessagesFeature extends AbstractAdorufuTogglableFeature
         implements SimpleListener, IAdorufuTickableFeature {
 
-    private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
     public static boolean defaultLoaded = false;
     public static List<String> joinMessages = new ArrayList<>();
     public static List<String> leaveMessages = new ArrayList<>();
+    private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
 
     public JoinLeaveMessagesFeature() {
         super("JoinLeaveMessages", AdorufuCategory.CHAT,

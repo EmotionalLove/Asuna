@@ -93,6 +93,23 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
         return this.suffix;
     }
 
+    public void setSuffix(Map<String, Boolean> boolMap) {
+        StringBuilder b = new StringBuilder();
+        AtomicInteger counter = new AtomicInteger();
+        boolMap.entrySet().stream().filter(Map.Entry::getValue).forEach(strBool -> {
+            if (counter.get() == 0) {
+                b.append(strBool.getKey());
+                counter.getAndIncrement();
+                return;
+            }
+            b.append(", ").append(strBool.getKey());
+        });
+        if (counter.get() == 0) {
+            b.append("\247cNone");
+        }
+        this.suffix = " \2478[\2477" + b.toString() + "\2478]";
+    }
+
     public boolean getOption(String key) {
         for (AdorufuFeatureOption<Boolean> option : this.getOptions()) {
             if (option.getIdentifer().equalsIgnoreCase(key)) {
@@ -158,23 +175,6 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
                 continue;
             }
             b.append(", ").append(s[i]);
-        }
-        this.suffix = " \2478[\2477" + b.toString() + "\2478]";
-    }
-
-    public void setSuffix(Map<String, Boolean> boolMap) {
-        StringBuilder b = new StringBuilder();
-        AtomicInteger counter = new AtomicInteger();
-        boolMap.entrySet().stream().filter(Map.Entry::getValue).forEach(strBool -> {
-            if (counter.get() == 0) {
-                b.append(strBool.getKey());
-                counter.getAndIncrement();
-                return;
-            }
-            b.append(", ").append(strBool.getKey());
-        });
-        if (counter.get() == 0) {
-            b.append("\247cNone");
         }
         this.suffix = " \2478[\2477" + b.toString() + "\2478]";
     }

@@ -45,6 +45,13 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
         super("GhostBlockWarning", AdorufuCategory.RENDER);
     }
 
+    private static boolean between(int i, int coord, double min, double max) {
+        if (coord < 0) {
+            coord--;
+        }
+        return i >= (coord - min) && i <= (coord + max);
+    }
+
     @Override
     public void onRender() {
         if (!this.isEnabled()) {
@@ -72,13 +79,6 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
                 BlakeIsMyBoyfriendMap.put(fugg.getKey(), true);
             }
         }
-    }
-
-    private static boolean between(int i, int coord, double min, double max) {
-        if (coord < 0) {
-            coord--;
-        }
-        return i >= (coord - min) && i <= (coord + max);
     }
 }
 

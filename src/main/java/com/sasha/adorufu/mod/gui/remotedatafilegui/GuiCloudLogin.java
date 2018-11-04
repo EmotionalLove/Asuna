@@ -35,6 +35,8 @@ import java.io.IOException;
  */
 public class GuiCloudLogin extends GuiScreen {
 
+    public static String message;
+    public static boolean previouslyConnected = false;
     public GuiScreen parent;
     private GuiTextField usernameBox;
     private GuiPasswordField passwordBox;
@@ -43,21 +45,17 @@ public class GuiCloudLogin extends GuiScreen {
     private GuiButton registerButton;
     private GuiButton backButton;
     private GuiButton ipButton;
-    public static String message;
-    public static boolean previouslyConnected = false;
 
-    public GuiCloudLogin(GuiScreen paramScreen)
-    {
+    public GuiCloudLogin(GuiScreen paramScreen) {
         this.parent = paramScreen;
     }
-    public GuiCloudLogin()
-    {
+
+    public GuiCloudLogin() {
         this.parent = new GuiMainMenu();
     }
 
 
-    public void initGui()
-    {
+    public void initGui() {
         this.loginButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Login");
         this.registerButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Register");
         this.backButton = new GuiButton(3, width / 2 - 100, height / 4 + 96 + 60, "Back");
@@ -80,20 +78,17 @@ public class GuiCloudLogin extends GuiScreen {
         message = "fUse your Adorufu Cloud credentials to log in, or, create an account";
     }
 
-    public void onGuiClosed()
-    {
+    public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
     }
 
-    public void updateScreen()
-    {
+    public void updateScreen() {
         usernameBox.updateCursorCounter();
         passwordBox.updateCursorCounter();
         //passwordConfirmBox.updateCursorCounter();
     }
 
-    public void mouseClicked(int x, int y, int b) throws IOException
-    {
+    public void mouseClicked(int x, int y, int b) throws IOException {
         usernameBox.mouseClicked(x, y, b);
         passwordBox.mouseClicked(x, y, b);
         //passwordConfirmBox.mouseClicked(x,y,b);
@@ -101,8 +96,7 @@ public class GuiCloudLogin extends GuiScreen {
     }
 
     @ParametersAreNonnullByDefault
-    public void actionPerformed(GuiButton button)
-    {
+    public void actionPerformed(GuiButton button) {
         switch (button.id) {
             case 1:
                 if (this.usernameBox.getText().equalsIgnoreCase("")) {
@@ -154,21 +148,17 @@ public class GuiCloudLogin extends GuiScreen {
             }).start();
         }*/
     }
-    protected void keyTyped(char c, int i)
-    {
+
+    protected void keyTyped(char c, int i) {
         usernameBox.textboxKeyTyped(c, i);
         passwordBox.textboxKeyTyped(c, i);
         //passwordConfirmBox.textboxKeyTyped(c, i);
-        if(c == '\t')
-        {
-            if(usernameBox.isFocused())
-            {
+        if (c == '\t') {
+            if (usernameBox.isFocused()) {
                 usernameBox.setFocused(false);
                 //passwordConfirmBox.setFocused(false);
                 passwordBox.setFocused(true);
-            }
-            else if(passwordBox.isFocused())
-            {
+            } else if (passwordBox.isFocused()) {
                 usernameBox.setFocused(false);
                 //passwordConfirmBox.setFocused(true);
                 passwordBox.setFocused(false);
@@ -179,14 +169,12 @@ public class GuiCloudLogin extends GuiScreen {
                 //passwordConfirmBox.setFocused(false);
             }*/
         }
-        if(c == '\r')
-        {
+        if (c == '\r') {
             actionPerformed((GuiButton) buttonList.get(0));
         }
     }
 
-    public void drawScreen(int x, int y, float f)
-    {
+    public void drawScreen(int x, int y, float f) {
         if (AdorufuMod.REMOTE_DATA_MANAGER.loggedIn) {
             mc.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
         }
@@ -195,15 +183,14 @@ public class GuiCloudLogin extends GuiScreen {
         drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
         drawCenteredString(this.fontRenderer, "\247" + message, width / 2, height - 40, 0xffffff);
         //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
-        try{
+        try {
             //passwordConfirmBox.setEnabled(true);
             usernameBox.setEnabled(true);
             passwordBox.setEnabled(true);
             //passwordConfirmBox.drawTextBox();
             usernameBox.drawTextBox();
             passwordBox.drawTextBox();
-        }catch(Exception err)
-        {
+        } catch (Exception err) {
             err.printStackTrace();
         }
         super.drawScreen(x, y, f);

@@ -22,6 +22,8 @@ import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 
 public interface IToggler {
     boolean isTrue();
+
     void run();
+
     IAdorufuFeature getMod();
 }

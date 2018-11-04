@@ -57,8 +57,7 @@ public abstract class MixinBlock {
 
     @Inject(method = "isFullBlock", at = @At("HEAD"), cancellable = true)
     public void isFullBlock(IBlockState state, CallbackInfoReturnable<Boolean> info) {
-        if ((Manager.Feature.isFeatureEnabled(XrayFeature.class) || Manager.Feature.isFeatureEnabled(FreecamFeature.class)) && !Manager.Feature.featureRegistry.isEmpty())
-        {
+        if ((Manager.Feature.isFeatureEnabled(XrayFeature.class) || Manager.Feature.isFeatureEnabled(FreecamFeature.class)) && !Manager.Feature.featureRegistry.isEmpty()) {
             info.setReturnValue(false);
         }
     }

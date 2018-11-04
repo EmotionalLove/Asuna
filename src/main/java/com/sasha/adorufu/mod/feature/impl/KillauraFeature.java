@@ -35,7 +35,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 /**
  * Created by Sasha on 08/08/2018 at 12:23 PM
  **/
-@FeatureInfo(description ="Automatically attacks nearby entities, excluding friended players.")
+@FeatureInfo(description = "Automatically attacks nearby entities, excluding friended players.")
 public class KillauraFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
     public static double range = 5.0;
@@ -44,6 +44,22 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
         super("KillAura", AdorufuCategory.COMBAT);
     }
 
+    public static void rotateTowardsEntity(Entity entity) {
+        double x = entity.posX - minecraft.player.posX;
+        double z = entity.posZ - minecraft.player.posZ;
+        double y = entity.posY + entity.getEyeHeight() / 1.4D - minecraft.player.posY/* + minecraft.player.getEyeHeight() / 1.4D**/;
+        double rotatesq = MathHelper.sqrt(x * x + z * z);
+        float newYaw = (float) Math.toDegrees(-Math.atan(x / z));
+        float newPitch = (float) -Math.toDegrees(Math.atan(y / rotatesq) - 0.8f);
+        if ((z < 0.0D) && (x < 0.0D)) {
+            newYaw = (float) (90.0D + Math.toDegrees(Math.atan(z / x)));
+        } else if ((z < 0.0D) && (x > 0.0D)) {
+            newYaw = (float) (-90.0D + Math.toDegrees(Math.atan(z / x)));
+        }
+        minecraft.player.rotationYaw = newYaw;
+        minecraft.player.rotationPitch = newPitch;
+        minecraft.player.rotationYawHead = newPitch;
+    }
 
     @Override
     public void onTick() {
@@ -76,22 +92,5 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
                     minecraft.player.setSprinting(true);
             }
         }
-    }
-
-    public static void rotateTowardsEntity(Entity entity) {
-        double x = entity.posX - minecraft.player.posX;
-        double z = entity.posZ - minecraft.player.posZ;
-        double y = entity.posY + entity.getEyeHeight() / 1.4D - minecraft.player.posY/* + minecraft.player.getEyeHeight() / 1.4D**/;
-        double rotatesq = MathHelper.sqrt(x * x + z * z);
-        float newYaw = (float) Math.toDegrees(-Math.atan(x / z));
-        float newPitch = (float) -Math.toDegrees(Math.atan(y / rotatesq) - 0.8f);
-        if ((z < 0.0D) && (x < 0.0D)) {
-            newYaw = (float) (90.0D + Math.toDegrees(Math.atan(z / x)));
-        } else if ((z < 0.0D) && (x > 0.0D)) {
-            newYaw = (float) (-90.0D + Math.toDegrees(Math.atan(z / x)));
-        }
-        minecraft.player.rotationYaw = newYaw;
-        minecraft.player.rotationPitch = newPitch;
-        minecraft.player.rotationYawHead = newPitch;
     }
 }

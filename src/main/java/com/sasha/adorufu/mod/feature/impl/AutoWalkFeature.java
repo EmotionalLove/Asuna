@@ -22,7 +22,6 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
-import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.adorufu.mod.gui.hud.Direction;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
@@ -42,62 +41,6 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
         super("AutoWalk", AdorufuCategory.MOVEMENT,
                 new AdorufuFeatureOption<>("Normal", true),
                 new AdorufuFeatureOption<>("Pathfinder", false));
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onTick() {
-        this.setSuffix(this.getFormattableOptionsMap());
-        AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindForward, true);
-        if (this.getFormattableOptionsMap().get("Pathfinder")) {
-            timer++;
-            if (timer >= 20) {
-                if (isObstacleThere()) {
-                    if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw + 90)) {
-                        boolean wasToggled = false;
-                        if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
-                            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
-                            wasToggled = true;
-                        }
-                        float oldRot = AdorufuMod.minecraft.player.rotationYaw;
-                        AdorufuMod.minecraft.player.rotationYaw += 90;
-                        WalkThread wt = new WalkThread("AutoWalker", oldRot, wasToggled);
-                        wt.start();
-                        timer = 0;
-                    } else if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw - 90)) {
-                        boolean wasToggled = false;
-                        if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
-                            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
-                            wasToggled = true;
-                        }
-                        float oldRot = AdorufuMod.minecraft.player.rotationYaw;
-                        AdorufuMod.minecraft.player.rotationYaw -= 90;
-                        WalkThread wt = new WalkThread("AutoWalker", oldRot, wasToggled);
-                        wt.start();
-                        timer = 0;
-                    } else {
-                        AdorufuMod.logWarn(false, "Can't evade obstacle, manual input needed!");
-                    }
-                }
-                if (isBlockBlockingInFront()) {
-                    AdorufuMod.minecraft.player.jump();
-                    timer = 0;
-                }
-                if (isHoleInFront()) {
-                    AdorufuMod.minecraft.player.jump();
-                    timer = 0;
-                }
-            }
-        }
     }
 
     private static boolean isBlockBlockingInFront() {
@@ -194,6 +137,62 @@ public class AutoWalkFeature extends AbstractAdorufuTogglableFeature implements 
             return b != Blocks.AIR || bb != Blocks.AIR;
         }
         return false;
+    }
+
+    @Override
+    public void onEnable() {
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    @Override
+    public void onTick() {
+        this.setSuffix(this.getFormattableOptionsMap());
+        AdorufuMod.setPressed(AdorufuMod.minecraft.gameSettings.keyBindForward, true);
+        if (this.getFormattableOptionsMap().get("Pathfinder")) {
+            timer++;
+            if (timer >= 20) {
+                if (isObstacleThere()) {
+                    if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw + 90)) {
+                        boolean wasToggled = false;
+                        if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
+                            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
+                            wasToggled = true;
+                        }
+                        float oldRot = AdorufuMod.minecraft.player.rotationYaw;
+                        AdorufuMod.minecraft.player.rotationYaw += 90;
+                        WalkThread wt = new WalkThread("AutoWalker", oldRot, wasToggled);
+                        wt.start();
+                        timer = 0;
+                    } else if (!isObstacleThereManual(AdorufuMod.minecraft.player.rotationYaw - 90)) {
+                        boolean wasToggled = false;
+                        if (Manager.Feature.isFeatureEnabled(YawLockFeature.class)) {
+                            Manager.Feature.findFeature(YawLockFeature.class).toggleState();
+                            wasToggled = true;
+                        }
+                        float oldRot = AdorufuMod.minecraft.player.rotationYaw;
+                        AdorufuMod.minecraft.player.rotationYaw -= 90;
+                        WalkThread wt = new WalkThread("AutoWalker", oldRot, wasToggled);
+                        wt.start();
+                        timer = 0;
+                    } else {
+                        AdorufuMod.logWarn(false, "Can't evade obstacle, manual input needed!");
+                    }
+                }
+                if (isBlockBlockingInFront()) {
+                    AdorufuMod.minecraft.player.jump();
+                    timer = 0;
+                }
+                if (isHoleInFront()) {
+                    AdorufuMod.minecraft.player.jump();
+                    timer = 0;
+                }
+            }
+        }
     }
 }
 

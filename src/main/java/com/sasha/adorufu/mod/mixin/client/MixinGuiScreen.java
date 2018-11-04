@@ -35,6 +35,6 @@ public class MixinGuiScreen {
 
     @Shadow public int height;
     @Shadow public int width;
-    @Shadow protected List<GuiButton> buttonList;
     @Shadow public Minecraft mc;
+    @Shadow protected List<GuiButton> buttonList;
 }

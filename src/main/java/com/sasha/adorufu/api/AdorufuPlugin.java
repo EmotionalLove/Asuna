@@ -35,14 +35,19 @@ public abstract class AdorufuPlugin {
     private boolean infoSet = false;
 
     public abstract void onEnable();
+
     public abstract void onDisable();
+
     public abstract void onModuleRegistration();
+
     public abstract void onRenderableRegistration();
+
     public abstract void onCommandRegistration();
 
     public SimpleEventManager getEventManager() {
         return AdorufuMod.EVENT_MANAGER;
     }
+
     protected void setInfo(String pluginName, String pluginDescription, String pluginAuthor) {
         if (infoSet) {
             return;
@@ -64,9 +69,11 @@ public abstract class AdorufuPlugin {
     public String getPluginDescription() {
         return pluginDescription;
     }
+
     public EntityPlayerSP getPlayer() {
         return AdorufuMod.minecraft.player;
     }
+
     public Minecraft getMinecraft() {
         return AdorufuMod.minecraft;
     }

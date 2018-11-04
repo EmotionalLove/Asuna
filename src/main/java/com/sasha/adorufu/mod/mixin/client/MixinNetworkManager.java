@@ -45,27 +45,24 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public abstract class MixinNetworkManager {
 
     @Shadow
-    protected abstract void dispatchPacket(Packet<?> inPacket, @Nullable GenericFutureListener<? extends Future<? super Void>>[] futureListeners);
-
-    @Shadow
     public INetHandler packetListener;
-
     @Shadow
     public Channel channel;
+    @Shadow
+    @Final
+    public Queue<NetworkManager.InboundHandlerTuplePacketListener> outboundPacketsQueue;
+    @Shadow
+    @Final
+    public ReentrantReadWriteLock readWriteLock;
+
+    @Shadow
+    protected abstract void dispatchPacket(Packet<?> inPacket, @Nullable GenericFutureListener<? extends Future<? super Void>>[] futureListeners);
 
     @Shadow
     public abstract boolean isChannelOpen();
 
     @Shadow
     protected abstract void flushOutboundQueue();
-
-    @Shadow
-    @Final
-    public Queue<NetworkManager.InboundHandlerTuplePacketListener> outboundPacketsQueue;
-
-    @Shadow
-    @Final
-    public ReentrantReadWriteLock readWriteLock;
 
     /**
      * @author
@@ -106,21 +103,16 @@ public abstract class MixinNetworkManager {
      * @author
      */
     @Overwrite
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet<?> p_channelRead0_2_) throws Exception
-    {
-        if (this.channel.isOpen())
-        {
-            try
-            {
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet<?> p_channelRead0_2_) throws Exception {
+        if (this.channel.isOpen()) {
+            try {
                 ClientPacketRecieveEvent event = new ClientPacketRecieveEvent(p_channelRead0_2_);
                 AdorufuMod.EVENT_MANAGER.invokeEvent(event);
                 if (event.isCancelled()) {
                     return;
                 }
-                ((Packet<INetHandler>)event.getRecievedPacket()).processPacket(this.packetListener);
-            }
-            catch (ThreadQuickExitException ignored)
-            {
+                ((Packet<INetHandler>) event.getRecievedPacket()).processPacket(this.packetListener);
+            } catch (ThreadQuickExitException ignored) {
                 //
             }
         }

@@ -29,6 +29,7 @@ import net.minecraft.util.math.MathHelper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 @DataFeature
 @FeatureInfo(description = "Press the spacebar to go faster")
 public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
@@ -38,6 +39,14 @@ public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implemen
 
     public ElytraBoostFeature() {
         super("ElytraBoost", AdorufuCategory.MOVEMENT);
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     @Override
@@ -60,13 +69,5 @@ public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implemen
                 }
             }
         }
-    }
-
-    private static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
     }
 }

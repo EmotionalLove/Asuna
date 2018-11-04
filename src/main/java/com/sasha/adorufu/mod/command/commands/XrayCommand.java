@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.feature.impl.XrayFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
+
 /**
  * Created by Sasha on 11/08/2018 at 1:18 PM
  **/
@@ -31,6 +32,7 @@ public class XrayCommand extends SimpleCommand {
     public XrayCommand() {
         super("xray");
     }
+
     @Override
     public void onCommand() {
         if (this.getArguments() == null) {
@@ -40,7 +42,7 @@ public class XrayCommand extends SimpleCommand {
         if (this.getArguments().length == 1 && this.getArguments()[0].equalsIgnoreCase("list")) {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < XrayFeature.xRayBlocks.size(); i++) {
-                if (i==0) {
+                if (i == 0) {
                     builder.append(Block.getBlockById(XrayFeature.xRayBlocks.get(i)).getLocalizedName());
                     continue;
                 }
@@ -50,7 +52,7 @@ public class XrayCommand extends SimpleCommand {
             AdorufuMod.logMsg(builder.toString());
             return;
         }
-        if (this.getArguments().length==2) {
+        if (this.getArguments().length == 2) {
             switch (this.getArguments()[0].toLowerCase()) {
                 case "add":
                     Block b = Block.getBlockFromName(this.getArguments()[1]);

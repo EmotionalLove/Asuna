@@ -44,8 +44,7 @@ public class LoginResponsePacket extends Packet.Incoming {
             AdorufuMod.REMOTE_DATA_MANAGER.loggedIn = true;
             AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId = this.adorufuSessionId;
             //AdorufuMod.minecraft.displayGuiScreen(new GuiCloudControl(new GuiMainMenu()));
-        }
-        else {
+        } else {
             AdorufuMod.logErr(true, "Data Server returned the \"failed login\" statuscode!");
         }
     }

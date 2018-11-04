@@ -43,12 +43,10 @@ public abstract class MixinRender {
      * @reason x
      */
     @Overwrite
-    protected void renderLivingLabel(Entity entityIn, String str, double x, double y, double z, int maxDistance)
-    {
+    protected void renderLivingLabel(Entity entityIn, String str, double x, double y, double z, int maxDistance) {
         double d0 = entityIn.getDistanceSq(this.renderManager.renderViewEntity);
 
-        if (d0 <= (double)(maxDistance * maxDistance))
-        {
+        if (d0 <= (double) (maxDistance * maxDistance)) {
             boolean flag = entityIn.isSneaking();
             float f = this.renderManager.playerViewY;
             float f1 = this.renderManager.playerViewX;
@@ -60,7 +58,7 @@ public abstract class MixinRender {
                 //todo asuna
                 nameplatestr = str + " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
             }
-            EntityRenderer.drawNameplate(this.getFontRendererFromRenderManager(), nameplatestr, (float)x, (float)y + f2, (float)z, i, f, f1, flag1, flag);
+            EntityRenderer.drawNameplate(this.getFontRendererFromRenderManager(), nameplatestr, (float) x, (float) y + f2, (float) z, i, f, f1, flag1, flag);
         }
     }
 }

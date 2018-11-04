@@ -767,12 +767,12 @@ public class AdorufuDataManager {
 
     */
 /**
-     * Used for saving a float,double,string,int,long... anything like that, really.
-     *
-     * @param path    the path in the config to save it to. (recommended is Adorufu.something)
-     * @param varName the name of the variable in the cfg file
-     * @param obj     the thing to save.
-     *//*
+ * Used for saving a float,double,string,int,long... anything like that, really.
+ *
+ * @param path    the path in the config to save it to. (recommended is Adorufu.something)
+ * @param varName the name of the variable in the cfg file
+ * @param obj     the thing to save.
+ *//*
 
     public synchronized void savePluginData(String path, String varName, Object obj) throws IOException {
         threadLock.lock();

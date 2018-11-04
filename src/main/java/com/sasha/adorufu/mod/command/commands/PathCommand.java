@@ -69,6 +69,44 @@ public class PathCommand extends SimpleCommand {
         super("path");
     }
 
+    // todo armour and feather falling/enchants?????
+    public static void tick() {
+        if (AdorufuMod.minecraft.world == null) return;
+        int fall = 3;
+        fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
+        BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
+        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Feature.isFeatureEnabled(JesusFeature.class);
+        if (avoid) {
+            BlockPos pos = isHostileEntityClose();
+            if (BaritoneAPI.getPathingBehavior().isPathing() && (!(BaritoneAPI.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
+                BaritoneAPI.getPathingBehavior().cancel();
+                BaritoneAPI.getPathingBehavior().setGoal(new GoalRunAway(50, pos));
+                BaritoneAPI.getPathingBehavior().path();
+                AdorufuMod.scheduler.schedule(() -> {
+                    BaritoneAPI.getPathingBehavior().cancel();
+                    BaritoneAPI.getPathingBehavior().setGoal(rememberGoal);
+                    BaritoneAPI.getPathingBehavior().path();
+                    rememberGoal = null;
+                }, 20L, TimeUnit.SECONDS);
+            }
+        }
+    }
+
+    /**
+     * Check if a hostile entity is within 6 blocks of us
+     *
+     * @return the entity's blockpos, if one is present.
+     */
+    @Nullable
+    private static BlockPos isHostileEntityClose() {
+        for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
+            if (entity instanceof EntityMob && entity.getDistance(AdorufuMod.minecraft.player) <= 6f) {
+                return entity.getPosition();
+            }
+        }
+        return null;
+    }
+
     @Override
     public void onCommand() {
         if (!set) {
@@ -238,43 +276,5 @@ public class PathCommand extends SimpleCommand {
             }
         }
         AdorufuMod.logErr(false, "Unknown parametre. Try -help command path");
-    }
-
-    // todo armour and feather falling/enchants?????
-    public static void tick() {
-        if (AdorufuMod.minecraft.world == null) return;
-        int fall = 3;
-        fall += (0.5f * AdorufuMod.minecraft.player.getHealth()); // make sure falling wont kill the player
-        BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
-        BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Feature.isFeatureEnabled(JesusFeature.class);
-        if (avoid) {
-            BlockPos pos = isHostileEntityClose();
-            if (BaritoneAPI.getPathingBehavior().isPathing() && (!(BaritoneAPI.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
-                BaritoneAPI.getPathingBehavior().cancel();
-                BaritoneAPI.getPathingBehavior().setGoal(new GoalRunAway(50, pos));
-                BaritoneAPI.getPathingBehavior().path();
-                AdorufuMod.scheduler.schedule(() -> {
-                    BaritoneAPI.getPathingBehavior().cancel();
-                    BaritoneAPI.getPathingBehavior().setGoal(rememberGoal);
-                    BaritoneAPI.getPathingBehavior().path();
-                    rememberGoal = null;
-                }, 20L, TimeUnit.SECONDS);
-            }
-        }
-    }
-
-    /**
-     * Check if a hostile entity is within 6 blocks of us
-     *
-     * @return the entity's blockpos, if one is present.
-     */
-    @Nullable
-    private static BlockPos isHostileEntityClose() {
-        for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {
-            if (entity instanceof EntityMob && entity.getDistance(AdorufuMod.minecraft.player) <= 6f) {
-                return entity.getPosition();
-            }
-        }
-        return null;
     }
 }

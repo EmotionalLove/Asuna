@@ -102,11 +102,11 @@ public class RenderableFeatureList extends RenderableObject {
                         .comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
                                 (e.getColouredName() + e.getSuffix())))
                 .collect(Collectors.toList())
-        :
-        activeFeatureList
-                .stream()
-                .sorted(Comparator.comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
-                        (((IAdorufuFeature)e).getColouredName() + ((IAdorufuFeature)e).getSuffix())).reversed())
-                .collect(Collectors.toList());
+                :
+                activeFeatureList
+                        .stream()
+                        .sorted(Comparator.comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
+                                (((IAdorufuFeature) e).getColouredName() + ((IAdorufuFeature) e).getSuffix())).reversed())
+                        .collect(Collectors.toList());
     }
 }

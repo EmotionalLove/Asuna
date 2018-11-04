@@ -28,7 +28,9 @@ public class ServerPlayerLeaveEvent extends SimpleEvent {
 
     private GameProfile gp;
 
-    public ServerPlayerLeaveEvent(GameProfile gp) {this.gp = gp;}
+    public ServerPlayerLeaveEvent(GameProfile gp) {
+        this.gp = gp;
+    }
 
     public GameProfile getGameProfile() {
         return gp;

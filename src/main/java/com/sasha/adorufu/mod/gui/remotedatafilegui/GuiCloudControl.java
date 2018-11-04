@@ -44,17 +44,11 @@ public class GuiCloudControl extends GuiScreen {
     private GuiButton backButton;
     //private static String message = "fYou can save or retrieve your datafile from the server.";
 
-    public GuiCloudControl(GuiScreen paramScreen)
-    {
+    public GuiCloudControl(GuiScreen paramScreen) {
         this.parent = paramScreen;
     }
 
-    public static class GuiCloudLoginEventHandler implements SimpleListener {
-
-    }
-
-    public void initGui()
-    {
+    public void initGui() {
         message = "fYou can save or retrieve your datafile from the server.";
         this.retrieveButton = new GuiButton(1, width / 2 - 100, height / 4 + 96 + 12, "Retrieve Data File");
         this.saveButton = new GuiButton(2, width / 2 - 100, height / 4 + 96 + 36, "Save Data File");
@@ -70,23 +64,19 @@ public class GuiCloudControl extends GuiScreen {
         //passwordBox.setMaxStringLength(200);
     }
 
-    public void onGuiClosed()
-    {
+    public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
     }
 
-    public void updateScreen()
-    {
+    public void updateScreen() {
     }
 
-    public void mouseClicked(int x, int y, int b) throws IOException
-    {
+    public void mouseClicked(int x, int y, int b) throws IOException {
         super.mouseClicked(x, y, b);
     }
 
     @ParametersAreNonnullByDefault
-    public void actionPerformed(GuiButton button)
-    {
+    public void actionPerformed(GuiButton button) {
         switch (button.id) {
             case 1:
                 RetrieveDataFileRequestPacket pck = new RetrieveDataFileRequestPacket(AdorufuDataClient.processor, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId);
@@ -104,7 +94,7 @@ public class GuiCloudControl extends GuiScreen {
         }
         /*
         if (button.id == 1) {
-            
+
         }
         else if (button.id == 2) {
             mc.displayGuiScreen(parent);
@@ -126,17 +116,20 @@ public class GuiCloudControl extends GuiScreen {
             }).start();
         }*/
     }
-    protected void keyTyped(char c, int i)
-    {
+
+    protected void keyTyped(char c, int i) {
     }
 
-    public void drawScreen(int x, int y, float f)
-    {
+    public void drawScreen(int x, int y, float f) {
         drawDefaultBackground();
         //drawString(this.fontRenderer, "Username", width / 2 - 100, 63 - 25, 0xA0A0A0);
         //drawString(this.fontRenderer, "Password", width / 2 - 100, 104 - 25, 0xA0A0A0);
         drawCenteredString(this.fontRenderer, "\247" + message, width / 2, height - 40, 0xffffff);
         //drawString(this.fontRenderer, "Confirm Password", width / 2 - 100, 143 - 25, 0xA0A0A0);
         super.drawScreen(x, y, f);
+    }
+
+    public static class GuiCloudLoginEventHandler implements SimpleListener {
+
     }
 }

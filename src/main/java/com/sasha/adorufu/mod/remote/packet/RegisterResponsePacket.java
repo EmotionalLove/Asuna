@@ -50,8 +50,7 @@ public class RegisterResponsePacket extends Packet.Incoming {
         GuiCloudLogin.message = this.message;
         if (registrationSuccessful) {
             AdorufuMod.minecraft.displayGuiScreen(new GuiCloudLogin());
-        }
-        else {
+        } else {
             AdorufuMod.logErr(true, "Data Server returned the \"failed login\" statuscode!");
         }
     }

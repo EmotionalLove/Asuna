@@ -38,25 +38,19 @@ import javax.annotation.Nullable;
 
 @Mixin(value = NetHandlerLoginClient.class, priority = 999)
 public class MixinNetHandlerLoginClient {
+    @Shadow @Final private static Logger LOGGER;
     @Shadow @Final @Nullable private GuiScreen previousGuiScreen;
-
     @Shadow @Final private Minecraft mc;
 
-    @Shadow @Final private static Logger LOGGER;
-
     /**
-     * @author Sasha Stevens
      * @param reason autoreconnect
+     * @author Sasha Stevens
      */
     @Overwrite
-    public void onDisconnect(ITextComponent reason)
-    {
-        if (this.previousGuiScreen != null && this.previousGuiScreen instanceof GuiScreenRealmsProxy)
-        {
-            this.mc.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy)this.previousGuiScreen).getProxy(), "connect.failed", reason)).getProxy());
-        }
-        else
-        {
+    public void onDisconnect(ITextComponent reason) {
+        if (this.previousGuiScreen != null && this.previousGuiScreen instanceof GuiScreenRealmsProxy) {
+            this.mc.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy) this.previousGuiScreen).getProxy(), "connect.failed", reason)).getProxy());
+        } else {
             if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
                 this.mc.displayGuiScreen(new GuiDisconnectedAuto(this.previousGuiScreen, "connect.failed", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
                 return;

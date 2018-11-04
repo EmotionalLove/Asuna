@@ -52,9 +52,10 @@ public class SeargeAdapter {
 
     /**
      * Gets the value of a field in this MinecraftAdapter's set class.
-     * @see StaticSeargeAdapter for getting the value of STATIC fields.
+     *
      * @param unobfFieldName The unobfuscated name of the field you're trying to get.
      * @return a generic object of the returned thingy
+     * @see StaticSeargeAdapter for getting the value of STATIC fields.
      */
     @Nullable
     public Object getField(String unobfFieldName) {
@@ -63,21 +64,23 @@ public class SeargeAdapter {
             Field f = obfname.getValue().getDeclaredField(obfname.getKey());
             f.setAccessible(true);
             return f.get(this.targetInstance);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
     public void setField(String unobfFieldName, Object value) {
         Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
             Field f = obfname.getValue().getDeclaredField(obfname.getKey());
             f.setAccessible(true);
             f.set(this.targetInstance, value);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Nullable
     public Object invokeFunction(String unobfFuncName, @Nullable Object... params) {
         Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFuncName, TranslateTypeEnum.FUNCTION);
@@ -89,7 +92,7 @@ public class SeargeAdapter {
             Method f = obfname.getValue().getDeclaredMethod(obfname.getKey(), classes);
             f.setAccessible(true);
             return f.invoke(this.targetInstance, params);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

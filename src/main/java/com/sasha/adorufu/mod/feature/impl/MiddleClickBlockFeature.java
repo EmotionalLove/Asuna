@@ -36,6 +36,12 @@ public class MiddleClickBlockFeature extends AbstractAdorufuTogglableFeature imp
         super("MiddleClickBlock", AdorufuCategory.MISC);
     }
 
+    private static void refreshXray() {
+        if (Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
+            AdorufuMod.minecraft.renderGlobal.loadRenderers();
+        }
+    }
+
     @SimpleEventHandler
     public void onMiddleClick(ClientMouseClickEvent.Middle e) {
         if (AdorufuMod.minecraft.world.getBlockState(AdorufuMod.minecraft.objectMouseOver.getBlockPos()).getBlock().material == Material.AIR) {
@@ -52,11 +58,5 @@ public class MiddleClickBlockFeature extends AbstractAdorufuTogglableFeature imp
         XrayFeature.xRayBlocks.remove(Block.getIdFromBlock(b));
         refreshXray();
         AdorufuMod.logMsg(false, b.getLocalizedName() + " removed.");
-    }
-
-    private static void refreshXray() {
-        if (Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
-            AdorufuMod.minecraft.renderGlobal.loadRenderers();
-        }
     }
 }

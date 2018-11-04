@@ -18,7 +18,15 @@
 
 package com.sasha.adorufu.mod.feature.option;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.YMLParser;
+
+import java.io.File;
+import java.io.IOException;
+
 public class AdorufuFeatureOption<T> { //todo figure out how to store these
+
+    public static final String OPTIONS_DATA_NAME = "AdorufuFeatureOptionsData.yml";
 
     private String identifer;
     private T status;
@@ -28,15 +36,43 @@ public class AdorufuFeatureOption<T> { //todo figure out how to store these
         this.status = def;
     }
 
-    public void setStatus(T status) {
-        this.status = status;
-    }
-
     public T getStatus() {
         return status;
     }
 
+    public void setStatus(T status) {
+        this.status = status;
+    }
+
     public String getIdentifer() {
         return identifer;
+    }
+
+    public void save() {
+        try {
+            File file = new File(OPTIONS_DATA_NAME);
+            if (!file.exists()) file.createNewFile();
+            YMLParser parser = new YMLParser(file);
+            parser.set(identifer, status);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            AdorufuMod.logErr(true, "A severe error occured whilst saving the option " + identifer);
+        }
+    }
+
+    public void recover() {
+        try {
+            File file = new File(OPTIONS_DATA_NAME);
+            if (!file.exists()) file.createNewFile();
+            YMLParser parser = new YMLParser(file);
+            if (!parser.exists(identifer)) {
+                parser.set(identifer, status);
+                return;
+            }
+            status = (T) parser.get(identifer);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            AdorufuMod.logErr(true, "A severe error occured whilst saving the option " + identifer);
+        }
     }
 }
