@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.impl.FeaturelistRenderableFeature;
@@ -91,7 +92,7 @@ public class RenderableFeatureList extends RenderableObject {
     private List<IAdorufuTogglableFeature> getValidList(boolean reverse) {
         List<IAdorufuTogglableFeature> activeFeatureList = new ArrayList<>();
         Manager.Feature.getTogglableFeatures().forEachRemaining(e -> {
-            if (e.isEnabled()) {
+            if (e.isEnabled() && (e.getCategory() != AdorufuCategory.GUI || e.getCategory() != AdorufuCategory.NA)) {
                 activeFeatureList.add(e);
             }
         });

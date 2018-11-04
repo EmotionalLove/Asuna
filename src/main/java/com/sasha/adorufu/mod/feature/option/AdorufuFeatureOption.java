@@ -18,10 +18,7 @@
 
 package com.sasha.adorufu.mod.feature.option;
 
-import com.sasha.simplesettings.annotation.SerialiseSuper;
-
-@SerialiseSuper
-public class AdorufuFeatureOption<T> {
+public class AdorufuFeatureOption<T> { //todo figure out how to store these
 
     private String identifer;
     private T status;
