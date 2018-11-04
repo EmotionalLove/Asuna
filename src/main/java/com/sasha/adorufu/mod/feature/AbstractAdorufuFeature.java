@@ -156,6 +156,9 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
             case MOVEMENT:
                 colour += "6";
                 break;
+            case RENDER:
+                colour += "d";
+                break;
             default:
                 colour += "8";
         }

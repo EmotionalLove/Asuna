@@ -21,7 +21,6 @@ package com.sasha.adorufu.mod.feature.impl;
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
-import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.simplesettings.annotation.Setting;
@@ -34,7 +33,6 @@ import java.util.stream.Collectors;
 /**
  * Created by Sasha on 11/08/2018 at 11:39 AM
  **/
-@DataFeature
 @FeatureInfo(description = "Makes chosen blocks invisible so that you can find ores or other blocks.")
 public class XrayFeature extends AbstractAdorufuTogglableFeature {
 

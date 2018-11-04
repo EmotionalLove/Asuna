@@ -92,7 +92,7 @@ public class RenderableFeatureList extends RenderableObject {
     private List<IAdorufuTogglableFeature> getValidList(boolean reverse) {
         List<IAdorufuTogglableFeature> activeFeatureList = new ArrayList<>();
         Manager.Feature.getTogglableFeatures().forEachRemaining(e -> {
-            if (e.isEnabled() && (e.getCategory() != AdorufuCategory.GUI || e.getCategory() != AdorufuCategory.NA)) {
+            if (e.isEnabled() && e.getCategory() != AdorufuCategory.NA) {
                 activeFeatureList.add(e);
             }
         });

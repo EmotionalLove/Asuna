@@ -22,11 +22,9 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
-import com.sasha.adorufu.mod.feature.annotation.DataFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.simplesettings.annotation.Setting;
 
-@DataFeature
 @FeatureInfo(description = "Lock your yaw to a specified angle")
 public class YawLockFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 

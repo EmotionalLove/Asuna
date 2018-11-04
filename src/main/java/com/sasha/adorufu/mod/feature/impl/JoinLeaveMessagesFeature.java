@@ -27,6 +27,7 @@ import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 
 import java.util.*;
@@ -39,9 +40,13 @@ public class JoinLeaveMessagesFeature extends AbstractAdorufuTogglableFeature
         implements SimpleListener, IAdorufuTickableFeature {
 
     public static boolean defaultLoaded = false;
-    public static List<String> joinMessages = new ArrayList<>();
-    public static List<String> leaveMessages = new ArrayList<>();
+    @Setting public List<String> joinMessages = new ArrayList<>();
+    @Setting public List<String> leaveMessages = new ArrayList<>();
     private LinkedHashMap<UUID, String> nameMap = new LinkedHashMap<>();
+    {
+        joinMessages.add("Welcome [player] to [server]");
+        leaveMessages.add("Bye [player]");
+    }
 
     public JoinLeaveMessagesFeature() {
         super("JoinLeaveMessages", AdorufuCategory.CHAT,
