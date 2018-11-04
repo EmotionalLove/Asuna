@@ -241,6 +241,7 @@ public class PathCommand extends SimpleCommand {
                 BaritoneAPI.getPathingBehavior().path();
             } catch (Exception e) {
                 AdorufuMod.logErr(false, "Coordinates must be integers!");
+                e.printStackTrace();
                 return;
             }
             return;

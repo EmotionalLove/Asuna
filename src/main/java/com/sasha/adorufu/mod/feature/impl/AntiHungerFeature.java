@@ -60,6 +60,7 @@ public class AntiHungerFeature extends AbstractAdorufuTogglableFeature implement
         if (!this.isEnabled()) {
             return;
         }
+        if (AdorufuMod.minecraft.player == null) return;
         if (AdorufuMod.minecraft.player.motionY > 0.1 && this.getOption("AAC")) {
             return;
         }
