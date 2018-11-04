@@ -21,6 +21,7 @@ package com.sasha.adorufu.mod.feature;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOptionBehaviour;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public abstract class AbstractAdorufuFeature implements IAdorufuFeature {
     private String name;
     private String suffix = "";
     private AdorufuCategory category;
-    private List<AdorufuFeatureOption<Boolean>> featureOptions;
+    private List<AdorufuFeatureOption<Boolean>> featureOptions = new ArrayList<>();
     private AdorufuFeatureOptionBehaviour behaviour;
 
     /**

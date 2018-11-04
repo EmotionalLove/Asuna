@@ -22,14 +22,12 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
-import com.sasha.adorufu.mod.feature.annotation.PostToggleExec;
 import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
 
 
 /**
  * Created by Sasha on 11/08/2018 at 10:27 AM
  **/
-@PostToggleExec
 @FeatureInfo(description = "Displays the Clickgui")
 public class ClickGUIFeature extends AbstractAdorufuTogglableFeature {
     public ClickGUIFeature() {
