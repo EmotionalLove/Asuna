@@ -39,7 +39,7 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
     /**
      * dont ask why this variable is named this it was like this already HUSH PLS
      */
-    private static LinkedHashMap<Coordinate, Boolean> BlakeIsMyBoyfriendMap = new LinkedHashMap<>();
+    private static LinkedHashMap<Coordinate, Boolean> coordMap = new LinkedHashMap<>();
 
     public GhostBlockWarningFeature() {
         super("GhostBlockWarning", AdorufuCategory.RENDER);
@@ -57,7 +57,7 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
         if (!this.isEnabled()) {
             return;
         }
-        for (HashMap.Entry<Coordinate, Boolean> wow : BlakeIsMyBoyfriendMap.entrySet()) {
+        for (HashMap.Entry<Coordinate, Boolean> wow : coordMap.entrySet()) {
             if (!wow.getValue()) {
                 AdorufuRender.ghostBlock(wow.getKey().getX(), wow.getKey().getY(), wow.getKey().getZ(), 1.0f, 0.0f, 0.0f, 0.5f);
             }
@@ -67,16 +67,16 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
     @SimpleEventHandler
     public void onBlockBreak(PlayerBlockBreakEvent e) {
         if (e.getBlock().canHarvestBlock(AdorufuMod.minecraft.world, e.getBlockPos(), AdorufuMod.minecraft.player)) {
-            BlakeIsMyBoyfriendMap.put(new Coordinate(e.getBlockPos().x, e.getBlockPos().y, e.getBlockPos().z, AdorufuMod.minecraft.player.dimension), false);
+            coordMap.put(new Coordinate(e.getBlockPos().x, e.getBlockPos().y, e.getBlockPos().z, AdorufuMod.minecraft.player.dimension), false);
         }
     }
 
     @SimpleEventHandler
     public void onItemDrop(ClientItemSpawnEvent e) {
         int[] coords = e.getCoordinate();
-        for (HashMap.Entry<Coordinate, Boolean> fugg : BlakeIsMyBoyfriendMap.entrySet()) {
+        for (HashMap.Entry<Coordinate, Boolean> fugg : coordMap.entrySet()) {
             if (!fugg.getValue() && between(fugg.getKey().getX(), coords[0], 0.25d, 0.25d) && between(fugg.getKey().getY(), coords[1], 0.25d, 0.25d) && between(fugg.getKey().getZ(), coords[2], 0.25d, 0.25d)) {
-                BlakeIsMyBoyfriendMap.put(fugg.getKey(), true);
+                coordMap.put(fugg.getKey(), true);
             }
         }
     }
