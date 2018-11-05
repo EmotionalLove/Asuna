@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOptionBehaviour;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 
@@ -34,6 +35,7 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
 
     public AutoEatFeature() {
         super("AutoEat", AdorufuCategory.MISC,
+                new AdorufuFeatureOptionBehaviour(true),
                 new AdorufuFeatureOption<>("Priority gapple", false),
                 new AdorufuFeatureOption<>("Conserve  gapple", true));
     }
@@ -46,11 +48,11 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
             for (int s = 0; s <= 8; s++) {
                 if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
                     // we can eat this item
-                    if (this.getFormattableOptionsMap().get("Conserve gapple")) {
+                    if (this.getOption("Conserve gapple")) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
                             continue;
                         }
-                    } else if (this.getFormattableOptionsMap().get("Priority gapple") && !checked) {
+                    } else if (this.getOption("Priority gapple") && !checked) {
                         if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
                             continue;
                         }
@@ -63,7 +65,7 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
                     return;
                 }
             }
-            if (this.getFormattableOptionsMap().get("Priority gapple")) {
+            if (this.getOption("Priority gapple")) {
                 checked = true;
             }
             return;

@@ -36,4 +36,6 @@ public interface IAdorufuTogglableFeature extends IAdorufuFeature {
 
     void setState(boolean state, boolean execute);
 
+    boolean shouldShowInFeatureList();
+
 }

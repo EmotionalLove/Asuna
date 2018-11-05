@@ -74,4 +74,9 @@ public abstract class AbstractAdorufuTogglableFeature
             else this.onDisable();
         }
     }
+
+    public boolean shouldShowInFeatureList() {
+        return this.getCategory() != AdorufuCategory.NA && this.getCategory() != AdorufuCategory.GUI;
+    }
+
 }

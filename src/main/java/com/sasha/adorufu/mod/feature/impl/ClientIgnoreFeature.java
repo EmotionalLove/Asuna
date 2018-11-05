@@ -44,7 +44,8 @@ public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature impleme
 
     public ClientIgnoreFeature() {
         super("ClientIgnore", AdorufuCategory.CHAT,
-                new AdorufuFeatureOption<>("Players", true));
+                new AdorufuFeatureOption<>("Players", true),
+                new AdorufuFeatureOption<>("Words", false));
     }
 
     @Override
@@ -57,7 +58,7 @@ public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature impleme
     public void onPckRx(ClientPacketRecieveEvent e) {
         if (this.isEnabled() && e.getRecievedPacket() instanceof SPacketChat) {
             String msg = AutoIgnoreFeature.stripColours(((SPacketChat) e.getRecievedPacket()).getChatComponent().getUnformattedText());
-            if (this.getFormattableOptionsMap().get("Players")) {
+            if (this.getOption("Players")) {
                 for (String s : ignorelist) {
                     if (msg.toLowerCase().startsWith("<" + s.toLowerCase() + ">")) {
                         e.setCancelled(true);
@@ -71,7 +72,7 @@ public class ClientIgnoreFeature extends AbstractAdorufuTogglableFeature impleme
                     }
                 }
             }
-            if (this.getFormattableOptionsMap().get("Words")) {
+            if (this.getOption("Words")) {
                 String[] msgs = msg.split(" ");
                 for (String s : filterList) {
                     for (String msg1 : msgs) {
