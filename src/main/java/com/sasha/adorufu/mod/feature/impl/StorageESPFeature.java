@@ -80,6 +80,10 @@ public class StorageESPFeature extends AbstractAdorufuTogglableFeature implement
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.0f, 1.0f);
             }
+            if (TE instanceof TileEntityHopper) {
+                i++;
+                AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 0.3f, 0.3f, 0.3f);
+            }
         }
         //todo int x = AdorufuMod.minecraft.world.loadedTileEntityList.stream().filter(tile -> tile. )
         this.setSuffix(i + "");
