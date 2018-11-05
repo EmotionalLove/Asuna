@@ -20,8 +20,8 @@ package com.sasha.adorufu.mod.gui.clickgui.elements;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.gui.clickgui.AdorufuClickGUI;
+import com.sasha.adorufu.mod.gui.clickgui.helper.FeatureToggler;
 import com.sasha.adorufu.mod.gui.clickgui.helper.IToggler;
-import com.sasha.adorufu.mod.gui.clickgui.helper.ModuleToggler;
 import com.sasha.adorufu.mod.gui.clickgui.helper.OptionToggler;
 import com.sasha.adorufu.mod.misc.AdorufuMath;
 
@@ -104,20 +104,33 @@ public class AdorufuGuiButton implements IAdorufuGuiElement {
             if ((x >= this.x && x <= (this.x + this.width))
                     &&
                     y >= this.y && y <= (this.y + this.height)) {
-                if (buttonAction instanceof ModuleToggler && buttonAction.getMod().hasOptions()) {
-                    List<IAdorufuGuiElement> listelem = new ArrayList<>();
-                    buttonAction.getMod().getModuleOptionsMap().forEach((name, bool) -> {
-                        listelem.add(new AdorufuGuiButton(name, 0, 0, 100, 12,
-                                new OptionToggler(buttonAction.getMod(), name)));
+                if (buttonAction instanceof FeatureToggler && ((FeatureToggler) buttonAction).getFeature().hasOptions()) {
+                    List<IAdorufuGuiElement> proposedOptionButtons = new ArrayList<>();
+                    ((FeatureToggler) buttonAction).getFeature().getOptions().forEach(name -> {
+                        String optionName = name.getIdentifer();
+                        proposedOptionButtons.add(
+                                new AdorufuGuiButton(
+                                        name.getIdentifer(),
+                                        0,
+                                        0,
+                                        100,
+                                        12,
+                                        new OptionToggler(buttonAction.getMod(), optionName)));
                     });
                     new Thread(() -> {
                         try {
                             AdorufuClickGUI.elementList.add(
-                                    new AdorufuGuiWindow(this.x + (this.width + 10),
-                                            y, AdorufuClickGUI.calcListLength(listelem.size(), 12), 100,
-                                            86f, 0f, 80f, 255f,
-                                            buttonAction.getMod().getModuleName(),
-                                            listelem)
+                                    new AdorufuGuiWindow(
+                                            this.x + (this.width + 10),
+                                            y,
+                                            AdorufuClickGUI.calcListLength(proposedOptionButtons.size(), 12),
+                                            100,
+                                            86f,
+                                            0f,
+                                            80f,
+                                            255f,
+                                            buttonAction.getMod().getFeatureName(),
+                                            proposedOptionButtons)
                             );
                         } finally {
                             AdorufuClickGUI.lock.unlock();
@@ -135,13 +148,13 @@ public class AdorufuGuiButton implements IAdorufuGuiElement {
     }
 
     @Override
-    public int getY() {
-        return this.y;
+    public void setX(int x) {
+        this.x = x;
     }
 
     @Override
-    public void setX(int x) {
-        this.x = x;
+    public int getY() {
+        return this.y;
     }
 
     @Override

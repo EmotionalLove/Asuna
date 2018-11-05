@@ -85,13 +85,13 @@ public class AdorufuGuiField implements IAdorufuGuiElement {
     }
 
     @Override
-    public int getY() {
-        return 0;
+    public void setX(int x) {
+
     }
 
     @Override
-    public void setX(int x) {
-
+    public int getY() {
+        return 0;
     }
 
     @Override
@@ -103,6 +103,7 @@ public class AdorufuGuiField implements IAdorufuGuiElement {
     public int getHeight() {
         return 0;
     }
+
     private void drawHighlight() {
         AdorufuMath.drawRect(this.x, this.y,
                 this.x + this.width,
@@ -116,7 +117,7 @@ public class AdorufuGuiField implements IAdorufuGuiElement {
                 this.y + this.height,
                 145f, 255f, 158f, 50f);
         if (cursorTicker > 500) {
-            AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString("_", (this.x + (this.width / 2)) + AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(text) , this.y + (((this.y + this.height) - this.y) / 4), 0xfffff);
+            AdorufuMod.FONT_MANAGER.segoe_36.drawCenteredString("_", (this.x + (this.width / 2)) + AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(text), this.y + (((this.y + this.height) - this.y) / 4), 0xfffff);
         }
     }
 

@@ -38,7 +38,7 @@ public class RequestSaveDataFilePacket extends Packet.Outgoing {
 
     @Override
     public void dispatchPck() {
-        File file = new File("AdorufuData.yml");
+        File file = new File("AdorufuSettingData.yml");
         if (!file.exists()) {
             return;
         }

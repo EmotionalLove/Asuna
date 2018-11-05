@@ -215,15 +215,15 @@ public abstract class AdorufuMath {
         GL11.glPopMatrix();
     }
 
-public static class ScreenPos {
-    public final int x;
-    public final int y;
-    public final boolean isVisible;
+    public static class ScreenPos {
+        public final int x;
+        public final int y;
+        public final boolean isVisible;
 
-    public ScreenPos(double x, double y, boolean isVisible) {
-        this.x = (int) x;
-        this.y = (int) y;
-        this.isVisible = isVisible;
+        public ScreenPos(double x, double y, boolean isVisible) {
+            this.x = (int) x;
+            this.y = (int) y;
+            this.isVisible = isVisible;
+        }
     }
-}
 }

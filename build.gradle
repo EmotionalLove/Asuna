@@ -9,98 +9,91 @@ buildscript {
             name = 'SpongePowered'
             url = 'http://repo.spongepowered.org/maven'
         }
-        maven {
-            name = 'Brady'
-            url = 'https://impactdevelopment.github.io/maven/'
-        }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.4-SNAPSHOT'
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
     }
 }
 
-ext.configFile = file "project.properties"
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-configFile.withReader { 
-    // read config.  it shall from now on be referenced as simply config or as project.config 
-    def prop = new Properties() 
-    prop.load(it) 
-    project.ext.config = new ConfigSlurper().parse prop 
-} 
- 
-version = "${config.minecraft_version}-${config.mod_version}" 
-if (hasProperty('appendBuildNumber')) { 
-    version = version + "-" + appendBuildNumber.toString() 
+ext.configFile = file 'project.properties'
+
+configFile.withReader {
+    // read config.  it shall from now on be referenced as simply config or as project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
 }
- 
-group = "${config.group_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html 
+
+version = "${config.minecraft_version}-${config.mod_version}"
+if (hasProperty('appendBuildNumber')) {
+    version = version + "-" + appendBuildNumber.toString()
+}
+
+group = "${config.group_id}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${config.mod_id_cap}"
 
 minecraft {
     version = project.forgeVersion
-    runDir = "run"
+    runDir = 'run'
     mappings = project.mcpVersion
-    coreMod = "com.sasha.adorufu.mod.mixins.AdorufuMixinLoader"
+    coreMod = 'com.sasha.adorufu.mod.mixin.AdorufuMixinLoader'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 repositories {
     maven {
-        name = 'spongepowered-repo'
+        name = 'SpongePowered'
         url = 'http://repo.spongepowered.org/maven/'
     }
     maven {
-        name = 'swt-repo'
-        url = "http://maven-eclipse.github.io/maven"
+        name = 'Jitpack'
+        url = 'https://jitpack.io'
     }
     maven {
-        name = "jitpack.io"
-        url = "https://jitpack.io"
-    }
-    maven {
-        name = 'Brady'
+        name = 'ImpactDevelopment'
         url = 'https://impactdevelopment.github.io/maven/'
     }
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     //mixin needs to be distributed with the mod, very important
-    compile("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+    compile('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
         exclude module: 'launchwrapper'
         exclude module: 'guava'
         exclude module: 'gson'
         exclude module: 'commons-io'
     }
+
+    // Should only contain things that are not available from a maven server
     compile files('libs/SimpleEventSystem.jar')
-    compile files('libs/discord-rpc-2.0.1-all.jar')
-    compile files('libs/javax.mail.jar')
-    compile files('libs/activation.jar')
     compile files('libs/SimpleCommandSystem.jar')
-    compile files('libs/jna-4.2.2.jar')
     compile files('libs/MultiTasker.jar')
+
+    compile 'club.minnced:java-discord-rpc:2.0.1'
+    compile 'club.minnced:discord-rpc-release:v3.3.0'
+    compile 'com.github.EmotionalLove:SimpleSettingSystem:e2aaa43f25'
     compile 'com.github.cabaletta:baritone:v1.0.0-hotfix-2'
-    compile group: 'cabaletta', name: 'baritone-api', version: '1.0.0'
-    compile group: 'net.jodah', name: 'typetools', version: '0.5.0'
-    compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
-    compile(group: 'org.reflections', name: 'reflections', version: '0.9.11') {
-        exclude group: 'com.google.guava', module: 'guava'
-    }
+    compile 'cabaletta:baritone-api:1.0.0'
+    compile 'net.jodah:typetools:0.5.0'
+    compile 'org.yaml:snakeyaml:1.19'
 }
 
 processResources {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
+        include 'mcmod.info'
 
         // replace version and mcversion
         expand "version": project.version, "mcversion": project.minecraft.version
@@ -108,7 +101,7 @@ processResources {
 
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
+        exclude 'mcmod.info'
     }
 
     // move _at.cfg into META-INF
@@ -117,7 +110,7 @@ processResources {
 
 mixin {
     defaultObfuscationEnv searge
-    add sourceSets.main, "mixins.adorufu.refmap.json"
+    add sourceSets.main, 'mixins.adorufu.refmap.json'
 }
 
 reobf {
@@ -158,10 +151,11 @@ shadowJar {
         include(dependency('org.spongepowered:mixin'))
         include(dependency('net.jodah:typetools'))
         include(dependency('org.yaml:snakeyaml'))
-        include(dependency('org.reflections:reflections'))
         include(dependency('club.minnced:java-discord-rpc'))
+        include(dependency('com.github.EmotionalLove:SimpleSettingSystem'))
+        include(dependency('club.minnced:java-discord-rpc:2.0.1'))
+        include(dependency('club.minnced:discord-rpc-release:v3.3.0'))
         include(dependency(group: 'cabaletta', name: 'baritone-api', version: '1.0.0'))
-        //exclude(dependency('com.github.cabaletta:baritone'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'
@@ -177,10 +171,10 @@ jar {
                 "tweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
                 "TweakOrder": 0,
                 'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.sasha.adorufu.mod.mixins.AdorufuMixinLoader',
+                'FMLCorePlugin': 'com.sasha.adorufu.mod.mixin.AdorufuMixinLoader',
                 'ForceLoadAsMod': 'true',
                 'FMLAT': 'adorufu_at.cfg'
         )
     }
 }
-sourceCompatibility = targetCompatibility = "1.8"
+sourceCompatibility = targetCompatibility = '1.8'

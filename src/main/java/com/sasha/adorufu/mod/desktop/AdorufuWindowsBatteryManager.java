@@ -31,6 +31,10 @@ import java.util.List;
 public interface AdorufuWindowsBatteryManager extends StdCallLibrary {
 
 
+    /**
+     * Fill the structure.
+     */
+    public int GetSystemPowerStatus(SYSTEM_POWER_STATUS result);
 
     public class SYSTEM_POWER_STATUS extends Structure {
         public byte ACLineStatus;
@@ -58,9 +62,12 @@ public interface AdorufuWindowsBatteryManager extends StdCallLibrary {
          */
         public String getACLineStatusString() {
             switch (ACLineStatus) {
-                case (0): return "Discharging";
-                case (1): return "Charging";
-                default: return "Unknown";
+                case (0):
+                    return "Discharging";
+                case (1):
+                    return "Charging";
+                default:
+                    return "Unknown";
             }
         }
 
@@ -85,9 +92,4 @@ public interface AdorufuWindowsBatteryManager extends StdCallLibrary {
             return (BatteryFullLifeTime == -1) ? "Unknown" : BatteryFullLifeTime + " seconds";
         }
     }
-
-    /**
-     * Fill the structure.
-     */
-    public int GetSystemPowerStatus(SYSTEM_POWER_STATUS result);
 }

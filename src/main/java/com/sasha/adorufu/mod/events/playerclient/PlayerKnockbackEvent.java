@@ -39,20 +39,20 @@ public class PlayerKnockbackEvent extends SimpleCancellableEvent {
         return motionX;
     }
 
-    public double getMotionY() {
-        return motionY;
-    }
-
-    public double getMotionZ() {
-        return motionZ;
-    }
-
     public void setMotionX(double motionX) {
         this.motionX = motionX;
     }
 
+    public double getMotionY() {
+        return motionY;
+    }
+
     public void setMotionY(double motionY) {
         this.motionY = motionY;
+    }
+
+    public double getMotionZ() {
+        return motionZ;
     }
 
     public void setMotionZ(double motionZ) {

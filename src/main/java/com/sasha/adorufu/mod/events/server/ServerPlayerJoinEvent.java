@@ -28,7 +28,9 @@ public class ServerPlayerJoinEvent extends SimpleEvent {
 
     private GameProfile gp;
 
-    public ServerPlayerJoinEvent(GameProfile gp) {this.gp = gp;}
+    public ServerPlayerJoinEvent(GameProfile gp) {
+        this.gp = gp;
+    }
 
     public GameProfile getGameProfile() {
         return gp;

@@ -18,8 +18,8 @@
 
 package com.sasha.adorufu.mod.events.playerclient;
 
-import com.sasha.eventsys.SimpleCancellableEvent;
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.eventsys.SimpleCancellableEvent;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 
@@ -39,6 +39,7 @@ public class PlayerBlockBreakEvent extends SimpleCancellableEvent {
     public Block getBlock() {
         return block;
     }
+
     public BlockPos getBlockPos() {
         return brokenPos;
     }

@@ -23,8 +23,8 @@ import java.net.Socket;
 
 public class AdorufuDataClient {
 
-    public Socket socket;
     public static PacketProcessor processor;
+    public Socket socket;
 
     public AdorufuDataClient(InetAddress serverAddress, int serverPort) throws Exception {
         this.socket = new Socket(serverAddress, serverPort);

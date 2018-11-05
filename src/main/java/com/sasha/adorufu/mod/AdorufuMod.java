@@ -29,21 +29,22 @@ import com.sasha.adorufu.mod.events.adorufu.AdorufuDataFileRetrievedEvent;
 import com.sasha.adorufu.mod.events.client.ClientInputUpdateEvent;
 import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
+import com.sasha.adorufu.mod.feature.AdorufuDiscordPresense;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.impl.AFKFishFeature;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.renderableobjects.*;
 import com.sasha.adorufu.mod.misc.Manager;
-import com.sasha.adorufu.mod.misc.ModuleState;
 import com.sasha.adorufu.mod.misc.TPS;
-import com.sasha.adorufu.mod.module.modules.*;
-import com.sasha.adorufu.mod.module.modules.hudelements.*;
 import com.sasha.adorufu.mod.remote.RemoteDataManager;
 import com.sasha.adorufu.mod.waypoint.WaypointManager;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleEventManager;
 import com.sasha.eventsys.SimpleListener;
 import com.sasha.simplecmdsys.SimpleCommandProcessor;
+import com.sasha.simplesettings.SettingHandler;
 import com.sun.jna.Native;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -64,27 +65,25 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static com.sasha.adorufu.mod.misc.Manager.Module.loadBindsAndStates;
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
 @Mod(modid = AdorufuMod.MODID, name = AdorufuMod.NAME, version = AdorufuMod.VERSION, canBeDeactivated = true, clientSideOnly = true)
 public class AdorufuMod implements SimpleListener {
+
     public static final String MODID = "adorufuforge";
     public static final String NAME = "Adorufu";
     public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.5.3";
-
-
-    private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
+    public static final String VERSION = "1.6pre";
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
-    public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
+    @Deprecated public static AdorufuDataManager DATA_MANAGER = new AdorufuDataManager();
+    public static SettingHandler SETTING_HANDLER = new SettingHandler("AdorufuSettingData");
     /**
      * desktop notifications
      */
@@ -107,247 +106,9 @@ public class AdorufuMod implements SimpleListener {
     public static AdorufuPerformanceAnalyser PERFORMANCE_ANAL = new AdorufuPerformanceAnalyser(); // no, stop, this ISN'T lewd... I SWEAR!!!
     public static AdorufuWindowsBatteryManager BATTERY_MANAGER_INTERFACE;
     public static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
-
+    public static AdorufuHUD adorufuHUD;
     public static Minecraft minecraft = Minecraft.getMinecraft();
-
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        MinecraftMappingUpdater.updateMappings();
-        ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
-        FRIEND_MANAGER = new FriendManager();
-        try {
-            if (DATA_MANAGER.getDRPEnabled()) {
-                AdorufuDiscordPresense.setupPresense();
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                    AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
-                }));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            AdorufuDiscordPresense.setupPresense();
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
-            }));
-        }
-        try {
-            if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
-                AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
-                BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
-                logMsg(true, batteryStatus.getBatteryLifePercent());
-                BATTERY_MANAGER = batteryStatus;
-            }
-        } catch (Exception x) {
-            //
-        }
-        // plugin loading
-        AdorufuPluginLoader pluginLoader = new AdorufuPluginLoader();
-        try {
-            logMsg(true, "Finding plugins...");
-            List<File> files = pluginLoader.findPlugins();
-            if (files.size() == 0) {
-                logMsg(true, "No plugins to load, continuing the initialisation of vanilla Adorufu");
-                return;
-            }
-            logMsg(true, "Preparing plugins...");
-            int i = pluginLoader.preparePlugins(files);
-            logMsg(true, "Prepared " + i + " plugin(s)");
-            pluginLoader.loadPlugins();
-            logMsg(true, "Successfully loaded plugins!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        logger.info("Adorufu is initialising...");
-        logMsg(true, "Registering commands, renderables and modules...");
-        scheduler.schedule(() -> {
-            try {
-                COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
-                this.registerCommands();
-                this.registerModules();
-                this.registerRenderables();
-                EVENT_MANAGER.registerListener(new CommandHandler());
-                EVENT_MANAGER.registerListener(new Manager.Module());
-                AdorufuHUD.setupHUD();
-                EVENT_MANAGER.registerListener(new AdorufuHUD());
-                ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
-                TPS.INSTANCE = new TPS();
-                EVENT_MANAGER.registerListener(TPS.INSTANCE);
-                loadBindsAndStates();
-                ArrayList<List<String>> greets = DATA_MANAGER.loadGreets();
-                ModuleJoinLeaveMessages.joinMessages = greets.get(0);
-                ModuleJoinLeaveMessages.leaveMessages = greets.get(1);
-                ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
-                WAYPOINT_MANAGER = new WaypointManager();
-                DATA_MANAGER.loadPlayerIdentities();
-                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
-                    if (id.shouldUpdate()) {
-                        id.updateDisplayName();
-                    }
-                });
-                TRAY_MANAGER = new AdorufuSystemTrayManager();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }, 0, TimeUnit.NANOSECONDS);
-        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
-        EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
-        EVENT_MANAGER.registerListener(this);
-        logMsg(true, "Adorufu cleanly initialised!");
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent e) {
-        FONT_MANAGER = new FontManager();
-        FONT_MANAGER.loadFonts(); // I would load this on a separate thread if I could, because it takes forEVER to execute.
-        if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
-            AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
-                    "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
-                    " developers can run malicious code in their plugins.");
-    }
-
-    private void reload(boolean async) {
-        Thread thread = new Thread(() -> {
-            try {
-                Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
-                this.registerRenderables();
-                ModuleXray.xrayBlocks = DATA_MANAGER.getXrayBlocks();
-                loadBindsAndStates();
-                try {
-                    ModuleEntitySpeed.speed = (double) AdorufuMod.DATA_MANAGER.loadSomeGenericValue("Adorufu.values", "entityspeed", 2.5d);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                AdorufuHUD.resetHUD();
-                AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
-            } catch (Exception e) {
-                throw new AdorufuException("Severe error occurred whilst reloading client " + e.getMessage());
-            }
-        });
-        if (async) {
-            thread.start();
-            return;
-        }
-        thread.run();
-    }
-
-    private void registerCommands() throws Exception {
-        COMMAND_PROCESSOR.register(AboutCommand.class);
-        COMMAND_PROCESSOR.register(ToggleCommand.class);
-        COMMAND_PROCESSOR.register(ModulesCommand.class);
-        COMMAND_PROCESSOR.register(HelpCommand.class);
-        COMMAND_PROCESSOR.register(BindCommand.class);
-        COMMAND_PROCESSOR.register(XrayCommand.class);
-        COMMAND_PROCESSOR.register(LagCommand.class);
-        COMMAND_PROCESSOR.register(IgnoreCommand.class);
-        COMMAND_PROCESSOR.register(IgnorelistCommand.class);
-        COMMAND_PROCESSOR.register(YawCommand.class);
-        COMMAND_PROCESSOR.register(FriendCommand.class);
-        COMMAND_PROCESSOR.register(FriendlistCommand.class);
-        COMMAND_PROCESSOR.register(WaypointCommand.class);
-        COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
-        COMMAND_PROCESSOR.register(FilterCommand.class);
-        COMMAND_PROCESSOR.register(FilterlistCommand.class);
-        COMMAND_PROCESSOR.register(UpdateCommand.class);
-        COMMAND_PROCESSOR.register(PluginsCommand.class);
-        COMMAND_PROCESSOR.register(AutoReconnectCommand.class);
-        COMMAND_PROCESSOR.register(PathCommand.class);
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
-    }
-
-    private void registerModules() {
-        Manager.Module.moduleRegistry.clear();
-        Manager.Module.register(new ModuleXray());
-        Manager.Module.register(new ModuleWireframe());
-        Manager.Module.register(new ModuleNamePlates());
-        Manager.Module.register(new ModuleTPS());
-        Manager.Module.register(new ModuleFPS());
-        Manager.Module.register(new ModuleCoordinates());
-        Manager.Module.register(new ModuleSaturation());
-        Manager.Module.register(new ModuleInventoryStats());
-        Manager.Module.register(new ModuleHorsestats());
-        Manager.Module.register(new ModuleHacklist());
-        Manager.Module.register(new ModuleWatermark());
-        Manager.Module.register(new ModuleKillaura());
-        Manager.Module.register(new ModuleStorageESP());
-        Manager.Module.register(new ModuleTracers());
-        Manager.Module.register(new ModuleAntiHunger());
-        Manager.Module.register(new ModuleClickGUI());
-        Manager.Module.register(new ModuleNightVision());
-        Manager.Module.register(new ModuleNoSlow());
-        Manager.Module.register(new ModuleAnnouncer());
-        Manager.Module.register(new ModuleAFKFish());
-        Manager.Module.register(new ModuleAutoRespawn());
-        Manager.Module.register(new ModuleChunkTrace());
-        Manager.Module.register(new ModuleFreecam());
-        Manager.Module.register(new ModuleCrystalAura());
-        Manager.Module.register(new ModuleCrystalLogout());
-        Manager.Module.register(new ModuleFlight());
-        Manager.Module.register(new ModuleJesus());
-        Manager.Module.register(new ModuleClientIgnore());
-        Manager.Module.register(new ModuleAutoIgnore());
-        Manager.Module.register(new ModuleAutoSprint());
-        Manager.Module.register(new ModuleCameraClip());
-        Manager.Module.register(new ModuleElytraBoost());
-        Manager.Module.register(new ModuleElytraFlight());
-        Manager.Module.register(new ModuleEntitySpeed());
-        Manager.Module.register(new ModuleLowJump());
-        Manager.Module.register(new ModuleMiddleClickBlock());
-        Manager.Module.register(new ModuleExtendedTablist());
-        Manager.Module.register(new ModuleAntiAFK());
-        Manager.Module.register(new ModuleYawLock());
-        Manager.Module.register(new ModuleQueueTime());
-        Manager.Module.register(new ModuleNoPush());
-        Manager.Module.register(new ModulePacketFly());
-        Manager.Module.register(new ModulePigControl());
-        Manager.Module.register(new ModuleAutoTotem());
-        Manager.Module.register(new ModuleWaypointGUI());
-        Manager.Module.register(new ModuleWaypoints());
-        Manager.Module.register(new ModuleWolfIdentity());
-        Manager.Module.register(new ModuleGhostBlockWarning());
-        Manager.Module.register(new ModuleAntiFireOverlay());
-        Manager.Module.register(new ModuleMinecraftMusic());
-        Manager.Module.register(new ModuleBlink()); // No clue if this is what blink is suppposed to do... i dont pvp...
-        Manager.Module.register(new ModuleAutoArmor());
-        Manager.Module.register(new ModuleJoinLeaveMessages());
-        Manager.Module.register(new ModuleCraftInventory());
-        Manager.Module.register(new ModuleKnockbackSuppress());
-        Manager.Module.register(new ModuleEquipmentDamage());
-        Manager.Module.register(new ModuleDesktopNotifications());
-        Manager.Module.register(new ModuleCPUControl());
-        Manager.Module.register(new ModuleBatteryLife());
-        Manager.Module.register(new ModulePowerBow());
-        Manager.Module.register(new ModuleBookForger());
-        Manager.Module.register(new ModuleAutoWalk());
-        Manager.Module.register(new ModuleBoatFly());
-        Manager.Module.register(new ModuleAutoReconnect());
-        Manager.Module.register(new ModuleNameProtect());
-        Manager.Module.register(new ModuleSafeWalk());
-        Manager.Module.register(new ModulePortalGodMode());
-        Manager.Module.register(new ModuleAutoEat());
-        Manager.Module.register(new ModuleShulkerSpy());
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
-    }
-
-
-    private void registerRenderables() {
-        renderableRegistry.clear();
-        Manager.Renderable.register(new RenderableWatermark());
-        Manager.Renderable.register(new RenderableHacklist());
-        Manager.Renderable.register(new RenderableCoordinates());
-        Manager.Renderable.register(new RenderableSaturation());
-        Manager.Renderable.register(new RenderableInventoryStats());
-        Manager.Renderable.register(new RenderableHorseStats());
-        Manager.Renderable.register(new RenderableFramerate());
-        Manager.Renderable.register(new RenderableTickrate());
-        Manager.Renderable.register(new RenderableEquipmentDamage());
-        Manager.Renderable.register(new RenderableBatteryLife());
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
-
-    }
+    private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
 
     /**
      * Set a key to be pressed
@@ -388,6 +149,241 @@ public class AdorufuMod implements SimpleListener {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
+    }
+
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        MinecraftMappingUpdater.updateMappings();
+        ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
+        FRIEND_MANAGER = new FriendManager();
+        AdorufuDiscordPresense.setupPresense();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
+        }));
+        try {
+            if (Util.getOSType() == Util.EnumOS.WINDOWS) {
+                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
+                AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
+                BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
+                logMsg(true, batteryStatus.getBatteryLifePercent());
+                BATTERY_MANAGER = batteryStatus;
+            }
+        } catch (Exception x) {
+            //
+        }
+        // plugin loading
+        AdorufuPluginLoader pluginLoader = new AdorufuPluginLoader();
+        try {
+            logMsg(true, "Finding plugins...");
+            List<File> files = pluginLoader.findPlugins();
+            if (files.size() == 0) {
+                logMsg(true, "No plugins to load, continuing the initialisation of vanilla Adorufu");
+                return;
+            }
+            logMsg(true, "Preparing plugins...");
+            int i = pluginLoader.preparePlugins(files);
+            logMsg(true, "Prepared " + i + " plugin(s)");
+            pluginLoader.loadPlugins();
+            logMsg(true, "Successfully loaded plugins!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+/*
+    private void registerModules() {
+        Manager.Module.moduleRegistry.clear();
+        Manager.Module.register(new XrayFeature());
+        Manager.Module.register(new WireframeFeature());
+        Manager.Module.register(new NamePlatesFeature());
+        Manager.Module.register(new TpsRenderableFeature());
+        Manager.Module.register(new FpsRenderableFeature());
+        Manager.Module.register(new CoordinatesRenderableFeature());
+        Manager.Module.register(new SaturationRenderableFeature());
+        Manager.Module.register(new InventoryStatsRenderableFeature());
+        Manager.Module.register(new HorsestatsRenderableFeature());
+        Manager.Module.register(new FeaturelistRenderableFeature());
+        Manager.Module.register(new WatermarkRenderableFeature());
+        Manager.Module.register(new KillauraFeature());
+        Manager.Module.register(new StorageESPFeature());
+        Manager.Module.register(new TracersFeature());
+        Manager.Module.register(new AntiHungerFeature());
+        Manager.Module.register(new ClickGUIFeature());
+        Manager.Module.register(new NightVisionFeature());
+        Manager.Module.register(new NoSlowFeature());
+        Manager.Module.register(new AnnouncerFeature());
+        Manager.Module.register(new AFKFishFeature());
+        Manager.Module.register(new AutoRespawnFeature());
+        Manager.Module.register(new ChunkTraceFeature());
+        Manager.Module.register(new FreecamFeature());
+        Manager.Module.register(new CrystalAuraFeature());
+        Manager.Module.register(new CrystalLogoutFeature());
+        Manager.Module.register(new JesusFeature());
+        Manager.Module.register(new ClientIgnoreFeature());
+        Manager.Module.register(new AutoIgnoreFeature());
+        Manager.Module.register(new AutoSprintFeature());
+        Manager.Module.register(new CameraClipFeature());
+        Manager.Module.register(new ElytraBoostFeature());
+        Manager.Module.register(new ElytraFlightFeature());
+        Manager.Module.register(new EntitySpeedFeature());
+        Manager.Module.register(new LowJumpFeature());
+        Manager.Module.register(new MiddleClickBlockFeature());
+        Manager.Module.register(new ExtendedTablistFeature());
+        Manager.Module.register(new AntiAFKFeature());
+        Manager.Module.register(new YawLockFeature());
+        Manager.Module.register(new QueueTimeFeature());
+        Manager.Module.register(new NoPushFeature());
+        Manager.Module.register(new PacketFlyFeature());
+        Manager.Module.register(new PigControlFeature());
+        Manager.Module.register(new AutoTotemFeature());
+        Manager.Module.register(new WaypointGUIFeature());
+        Manager.Module.register(new WaypointsFeature());
+        Manager.Module.register(new TamedIdentityFeature());
+        Manager.Module.register(new GhostBlockWarningFeature());
+        Manager.Module.register(new AntiFireOverlayFeature());
+        Manager.Module.register(new MinecraftMusicFeature());
+        Manager.Module.register(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...
+        Manager.Module.register(new ModuleAutoArmor());
+        Manager.Module.register(new JoinLeaveMessagesFeature());
+        Manager.Module.register(new CraftInventoryFeature());
+        Manager.Module.register(new KnockbackSuppressFeature());
+        Manager.Module.register(new EquipmentDamageRenderableFeature());
+        Manager.Module.register(new DesktopNotificationsFeature());
+        Manager.Module.register(new CPUControlFeature());
+        Manager.Module.register(new BatteryLifeRenderableFeature());
+        Manager.Module.register(new ModulePowerBow());
+        Manager.Module.register(new BookForgerFeature());
+        Manager.Module.register(new AutoWalkFeature());
+        Manager.Module.register(new BoatFlyFeature());
+        Manager.Module.register(new AutoReconnectFeature());
+        Manager.Module.register(new NameProtectFeature());
+        Manager.Module.register(new SafewalkFeature());
+        Manager.Module.register(new PortalGodModeFeature());
+        Manager.Module.register(new AutoEatFeature());
+        Manager.Module.register(new ShulkerSpyFeature());
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
+    }
+*/
+
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        logger.info("Adorufu is initialising...");
+        logMsg(true, "Registering commands, renderables and impl...");
+        scheduler.schedule(() -> {
+            try {
+                COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
+                this.registerCommands();
+                this.registerFeatures();
+                this.registerRenderables();
+                EVENT_MANAGER.registerListener(new CommandHandler());
+                //EVENT_MANAGER.registerListener(new Manager.Feature());
+                adorufuHUD = new AdorufuHUD();
+                EVENT_MANAGER.registerListener(adorufuHUD);
+                TPS.INSTANCE = new TPS();
+                EVENT_MANAGER.registerListener(TPS.INSTANCE);
+                //loadBindsAndStates();
+                WAYPOINT_MANAGER = new WaypointManager();
+                DATA_MANAGER.loadPlayerIdentities();
+                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
+                    if (id.shouldUpdate()) {
+                        id.updateDisplayName();
+                    }
+                });
+                TRAY_MANAGER = new AdorufuSystemTrayManager();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 0, TimeUnit.NANOSECONDS);
+        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
+        EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
+        EVENT_MANAGER.registerListener(this);
+        logMsg(true, "Adorufu cleanly initialised!");
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+        FONT_MANAGER = new FontManager();
+        FONT_MANAGER.loadFonts(); // I would load this on a separate thread if I could, because it takes forEVER to execute.
+        if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
+            AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
+                    "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
+                    " developers can run malicious code in their plugins.");
+        Manager.Data.recoverSettings();
+        adorufuHUD.setupHUD();
+        Runtime.getRuntime().addShutdownHook(new Thread(Manager.Data::saveCurrentSettings));
+    }
+
+    private void reload(boolean async) {
+        Thread thread = new Thread(() -> {
+            try {
+                //Manager.Module.moduleRegistry.forEach(m -> m.forceState(ModuleState.DISABLE, false, false));
+                this.registerRenderables();
+                AdorufuMod.logMsg(true, "Adorufu successfully reloaded.");
+            } catch (Exception e) {
+                throw new AdorufuException("Severe error occurred whilst reloading client " + e.getMessage());
+            }
+        });
+        if (async) {
+            thread.start();
+            return;
+        }
+        thread.run();
+    }
+
+    private void registerCommands() throws Exception {
+        COMMAND_PROCESSOR.register(AboutCommand.class);
+        COMMAND_PROCESSOR.register(ToggleCommand.class);
+        COMMAND_PROCESSOR.register(HelpCommand.class);
+        COMMAND_PROCESSOR.register(BindCommand.class);
+        COMMAND_PROCESSOR.register(XrayCommand.class);
+        COMMAND_PROCESSOR.register(LagCommand.class);
+        COMMAND_PROCESSOR.register(IgnoreCommand.class);
+        COMMAND_PROCESSOR.register(IgnorelistCommand.class);
+        COMMAND_PROCESSOR.register(YawCommand.class);
+        COMMAND_PROCESSOR.register(FriendCommand.class);
+        COMMAND_PROCESSOR.register(FriendlistCommand.class);
+        COMMAND_PROCESSOR.register(WaypointCommand.class);
+        COMMAND_PROCESSOR.register(EntitySpeedCommand.class);
+        COMMAND_PROCESSOR.register(FilterCommand.class);
+        COMMAND_PROCESSOR.register(FilterlistCommand.class);
+        COMMAND_PROCESSOR.register(UpdateCommand.class);
+        COMMAND_PROCESSOR.register(PluginsCommand.class);
+        COMMAND_PROCESSOR.register(AutoReconnectCommand.class);
+        COMMAND_PROCESSOR.register(PathCommand.class);
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
+    }
+
+    private void registerFeatures() throws IOException {
+        AdorufuMod.logMsg(true, "Finding and initialising features...");
+        Manager.Feature.featureRegistry.clear();
+        Manager.findClasses(AFKFishFeature.class.getPackage().getName())
+                .forEach(e -> {
+                    AdorufuMod.logMsg(true, "Found " + e.getSimpleName() + ".class");
+                    try {
+                        IAdorufuFeature feature = (IAdorufuFeature) e.load().getConstructor().newInstance();
+                        Manager.Feature.registerFeature(feature);
+                        AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
+                        e1.printStackTrace();
+                        AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
+                    }
+                });
+        // todo api
+        Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
+    }
+
+    private void registerRenderables() {
+        renderableRegistry.clear();
+        Manager.Renderable.register(new RenderableWatermark());
+        Manager.Renderable.register(new RenderableFeatureList());
+        Manager.Renderable.register(new RenderableCoordinates());
+        Manager.Renderable.register(new RenderableSaturation());
+        Manager.Renderable.register(new RenderableInventoryStats());
+        Manager.Renderable.register(new RenderableHorseStats());
+        Manager.Renderable.register(new RenderableFramerate());
+        Manager.Renderable.register(new RenderableTickrate());
+        Manager.Renderable.register(new RenderableEquipmentDamage());
+        Manager.Renderable.register(new RenderableBatteryLife());
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onRenderableRegistration);
     }
 
     @SimpleEventHandler

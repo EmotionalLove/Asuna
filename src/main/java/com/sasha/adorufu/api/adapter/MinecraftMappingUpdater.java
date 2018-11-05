@@ -56,7 +56,7 @@ public class MinecraftMappingUpdater {
             FileUtils.copyURLToFile(new URL("http://export.mcpbot.bspk.rs/mcp_snapshot/20180731-1.12/mcp_snapshot-20180731-1.12.zip"), file);
             unzip(file, dir);
             file.delete(); // delete the zip after unzipping it.
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -68,7 +68,7 @@ public class MinecraftMappingUpdater {
             fis = new FileInputStream(zipFile);
             ZipInputStream zis = new ZipInputStream(fis);
             ZipEntry ze = zis.getNextEntry();
-            while(ze != null){
+            while (ze != null) {
                 String fileName = ze.getName();
                 File newFile = new File(destDir, fileName);
                 new File(newFile.getParent()).mkdirs();

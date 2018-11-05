@@ -18,148 +18,139 @@
 
 package com.sasha.adorufu.mod.misc;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.command.commands.PathCommand;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePostEvent;
-import com.sasha.adorufu.mod.events.adorufu.AdorufuModuleTogglePreEvent;
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
+import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
-import com.sasha.adorufu.mod.module.AdorufuModule;
-import com.sasha.adorufu.mod.module.ManualListener;
-import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
-
-import static com.sasha.adorufu.mod.AdorufuMod.DATA_MANAGER;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Sasha at 9:09 AM on 9/17/2018
  */
 public class Manager {
 
-    public static class Renderable implements SimpleListener {
-        public static ArrayList<RenderableObject> renderableRegistry = new ArrayList<>();
-
-        public static void register(RenderableObject robj) {
-            renderableRegistry.add(robj);
-        }
+    public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
+        return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
     }
 
-    public static class Module implements SimpleListener {
+    public static class Feature implements SimpleListener {
 
-        public static ArrayList<AdorufuModule> moduleRegistry = new ArrayList<>();
+        public static List<IAdorufuFeature> featureRegistry = new ArrayList<>();
 
-        @SimpleEventHandler
-        public void onPreToggle(AdorufuModuleTogglePreEvent e) {
-            if (e.getToggledModule().hasForcefulAnnotation(e.getToggledModule().getClass()) && e.getToggleState() == ModuleState.DISABLE) {
-                e.setCancelled(true);
-                return;
+        public static void registerFeature(IAdorufuFeature feature) {
+            featureRegistry.add(feature);
+            boolean event = false;
+            for (Class<?> anInterface : feature.getClass().getInterfaces()) {
+                if (anInterface == SimpleListener.class) {
+                    event = true;
+                    break;
+                }
             }
-            if (e.getToggleState() == ModuleState.ENABLE && !e.getToggledModule().isPostExec(e.getToggledModule().getClass())) {
-                e.getToggledModule().onEnable();
-                return;
-            }
-            if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) return;
-            e.getToggledModule().onDisable();
+            if (event) AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) feature);
+            feature.onLoad();
         }
 
-        @SimpleEventHandler
-        public void onModPostToggle(AdorufuModuleTogglePostEvent e) {
-            try {
-                DATA_MANAGER.saveModuleStates(true);
-            } catch (IOException e1) {
-                AdorufuMod.logErr(false, "Couldn't save module state. " + e1.getMessage());
-                e1.printStackTrace();
-            }
-            if (e.getToggleState() == ModuleState.ENABLE) {
-                if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onEnable();
-
-                if (!e.getToggledModule().isRenderable()) {
-                    AdorufuModule.displayList.add(e.getToggledModule());
-                    return;
-                }
-                return;
-            }
-            if (e.getToggledModule().isPostExec(e.getToggledModule().getClass())) e.getToggledModule().onDisable();
-            if (!e.getToggledModule().isRenderable()) {
-                AdorufuModule.displayList.remove(e.getToggledModule());
-                return;
-            }
+        public static Iterator<IAdorufuTogglableFeature> getTogglableFeatures() {
+            return featureRegistry
+                    .stream()
+                    .filter(IAdorufuTogglableFeature.class::isInstance)
+                    .map(IAdorufuTogglableFeature.class::cast)
+                    .iterator();
         }
 
         /**
-         * This will automatically register listeners to the Event Manager if they implement SimpleListener
+         * Tick all Tickable features.
+         * If a feature is togglable, it will only tick if it's enabled.
          */
-        public static void register(AdorufuModule mod) {
-            moduleRegistry.add(mod);
-            if (mod.getClass().getInterfaces().length != 0) {
-                if (mod.getClass().getInterfaces()[0] == SimpleListener.class) {
-                    if (mod.getClass().getAnnotation(ManualListener.class) != null) {
-                        return;
-                    }
-                    AdorufuMod.logMsg(true, mod.getModuleName() + " is listening for events.");
-                    AdorufuMod.EVENT_MANAGER.registerListener((SimpleListener) mod);
-                }
+        public static void tickFeatures() {
+            featureRegistry
+                    .stream()
+                    .filter(IAdorufuTickableFeature.class::isInstance)
+                    .map(IAdorufuTickableFeature.class::cast)
+                    .forEach(feature -> {
+                        if (feature instanceof IAdorufuTogglableFeature) {
+                            if (((IAdorufuTogglableFeature) feature).isEnabled()) {
+                                feature.onTick();
+                            }
+                            return;
+                        }
+                        feature.onTick();
+                    });
+        }
+
+        public static void renderFeatures() {
+            featureRegistry
+                    .stream()
+                    .filter(IAdorufuRenderableFeature.class::isInstance)
+                    .map(IAdorufuRenderableFeature.class::cast)
+                    .forEach(feature -> {
+                        if (feature instanceof IAdorufuTogglableFeature) {
+                            if (((IAdorufuTogglableFeature) feature).isEnabled()) {
+                                feature.onRender();
+                            }
+                            return;
+                        }
+                        feature.onRender();
+                    });
+        }
+
+        public static String getFeatureInfo(Class<? extends IAdorufuFeature> featureClass) {
+            if (featureClass.getAnnotation(FeatureInfo.class) == null) {
+                return "No information provided for this feature!";
             }
-            mod.init();
+            FeatureInfo info = featureClass.getAnnotation(FeatureInfo.class);
+            return info.description();
         }
 
-        public static void loadBindsAndStates() {
-            Module.moduleRegistry.forEach(mod -> {
-                try {
-                    if (DATA_MANAGER.getSavedModuleState(mod.getModuleName())) {
-                        mod.forceState(ModuleState.ENABLE, false, true);
-                    }
-                    if (mod.hasForcefulAnnotation(mod.getClass())) {
-                        mod.forceState(ModuleState.ENABLE, false, true);
-                    }
-                    mod.setKeyBind(DATA_MANAGER.getSavedKeybind(mod));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+        public static <T extends IAdorufuFeature> T findFeature(Class<T> featureClass) {
+            // noinspection unchecked
+            return (T) featureRegistry.stream()
+                    .filter(f -> f.getClass().equals(featureClass))
+                    .findFirst().orElse(null);
         }
 
-        public static AdorufuModule getModule(String key) {
-            for (AdorufuModule m : moduleRegistry) {
-                if (m.getModuleName().equalsIgnoreCase(key)) return m;
-            }
-            return null;
+        public static <T extends IAdorufuFeature> boolean isFeatureEnabled(Class<T> featureClass) {
+            IAdorufuFeature feature = findFeature(featureClass);
+            return feature instanceof IAdorufuTogglableFeature && ((IAdorufuTogglableFeature) feature).isEnabled();
+        }
+    }
+
+    public static class Renderable implements SimpleListener {
+
+        public static List<RenderableObject> renderableRegistry = new ArrayList<>();
+
+        public static void register(RenderableObject robj) {
+            renderableRegistry.add(robj);
+            Data.registerSettingObject(robj);
+        }
+    }
+
+    public static class Data {
+
+        public static List<Object> settingRegistry = new ArrayList<>();
+
+        public static void registerSettingObject(Object object) {
+            settingRegistry.add(object);
         }
 
-        public static AdorufuModule getModule(Class<? extends AdorufuModule> clazz) {
-            for (AdorufuModule m : moduleRegistry) {
-                if (m.getClass() == clazz) return m;
-            }
-            return null;
+        public static void recoverSettings() {
+            settingRegistry.forEach(e -> AdorufuMod.SETTING_HANDLER.read(e));
         }
 
-        public static void tickModules() {
-            long l = System.currentTimeMillis();
-            moduleRegistry.forEach(mod -> {
-                try {
-                    mod.onTick();
-                } catch (Exception e) {
-                    AdorufuMod.logErr(false, "A severe uncaught exception occurred inside of a module onTick() function");
-                    mod.forceState(ModuleState.DISABLE, false, true);
-                    StringWriter sw = new StringWriter();
-                    PrintWriter w = new PrintWriter(sw);
-                    e.printStackTrace(w);
-                    AdorufuMod.logMsg("\247c" + sw.toString().replace("\r\n", "\n"));
-                }
-            });
-            PathCommand.tick();
-            AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));
-        }
-
-        public static void renderModules() {
-            long l = System.currentTimeMillis();
-            moduleRegistry.forEach(AdorufuModule::onRender);
-            AdorufuMod.PERFORMANCE_ANAL.recordNewRenderTime((int) (System.currentTimeMillis() - l));
+        public static void saveCurrentSettings() {
+            settingRegistry.forEach(e -> AdorufuMod.SETTING_HANDLER.save(e));
         }
 
     }
 }
+

@@ -28,11 +28,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class TTFont {
 
+    private final IntObject[] chars = new IntObject[2048];
+    private final Font font;
     public int IMAGE_WIDTH = 1024;
     public int IMAGE_HEIGHT = 1024;
     private int texID;
-    private final IntObject[] chars = new IntObject[2048];
-    private final Font font;
     private boolean antiAlias;
     private int fontHeight = -1;
     private int charOffset = 8;

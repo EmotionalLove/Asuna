@@ -21,12 +21,11 @@ package com.sasha.adorufu.mod.gui.clickgui.helper;
 @Deprecated
 public class DragHelper {
 
+    public boolean dragging;
     protected int x;
     protected int offsetX;
     protected int y;
     protected int offsetY;
-
-    public boolean dragging;
 
     public DragHelper(int x, int y) {
         this.x = x;

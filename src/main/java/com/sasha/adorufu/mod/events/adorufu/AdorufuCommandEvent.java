@@ -27,7 +27,7 @@ public class AdorufuCommandEvent extends SimpleCancellableEvent {
 
     private String msg;
 
-    public AdorufuCommandEvent(String msg){
+    public AdorufuCommandEvent(String msg) {
         this.msg = msg;
     }
 

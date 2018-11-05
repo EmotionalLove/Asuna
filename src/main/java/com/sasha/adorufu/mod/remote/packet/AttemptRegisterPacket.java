@@ -37,6 +37,7 @@ public class AttemptRegisterPacket extends Packet.Outgoing {
         this.passwordConfirm = passwordConfirm;
         this.username = username;
     }
+
     @Override
     public void dispatchPck() {
         this.getProcessor().send(PacketProcessor.formatPacket(AttemptRegisterPacket.class, this));

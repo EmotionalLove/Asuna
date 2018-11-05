@@ -39,7 +39,7 @@ public class SaveDataFilePacket extends Packet.Incoming {
 
     @Override
     public void processIncomingPacket() {
-        File file = new File("AdorufuData.yml");
+        File file = new File("AdorufuSettingData.yml");
         if (!file.exists()) {
             return; // nothing to do.
         }

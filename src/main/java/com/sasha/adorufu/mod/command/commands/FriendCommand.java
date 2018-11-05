@@ -20,11 +20,8 @@ package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.simplecmdsys.SimpleCommand;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import com.sasha.simplecmdsys.SimpleCommandInfo;
+
 /**
  * Created by Sasha on 08/08/2018 at 9:26 PM
  **/
@@ -36,7 +33,7 @@ public class FriendCommand extends SimpleCommand {
 
     @Override
     public void onCommand() {
-        if (this.getArguments() == null || this.getArguments().length != 2){
+        if (this.getArguments() == null || this.getArguments().length != 2) {
             AdorufuMod.logErr(false, "Arguments required! Try \"-help command friend\"");
             return;
         }
@@ -48,9 +45,7 @@ public class FriendCommand extends SimpleCommand {
                 }
                 AdorufuMod.FRIEND_MANAGER.addFriend(this.getArguments()[1]);
                 AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully added");
-                AdorufuMod.scheduler.schedule(() -> {
-                    try { AdorufuMod.DATA_MANAGER.saveFriends(AdorufuMod.FRIEND_MANAGER.getFriendList()); } catch (IOException e) { e.printStackTrace(); }
-                }, 0, TimeUnit.NANOSECONDS);
+
                 break;
             case "del":
                 if (!AdorufuMod.FRIEND_MANAGER.isFriended(this.getArguments()[1])) {
@@ -59,9 +54,6 @@ public class FriendCommand extends SimpleCommand {
                 }
                 AdorufuMod.FRIEND_MANAGER.removeFriend(this.getArguments()[1]);
                 AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully removed");
-                AdorufuMod.scheduler.schedule(() -> {
-                    try { AdorufuMod.DATA_MANAGER.saveFriends(AdorufuMod.FRIEND_MANAGER.getFriendList()); } catch (IOException e) { e.printStackTrace(); }
-                }, 0, TimeUnit.NANOSECONDS);
                 break;
         }
     }

@@ -19,12 +19,9 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.modules.ModuleEntitySpeed;
+import com.sasha.adorufu.mod.feature.impl.EntitySpeedFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 @SimpleCommandInfo(description = "Adjust the speed of entityspeed", syntax = {"<speed (decimals allowed)>"})
 public class EntitySpeedCommand extends SimpleCommand {
@@ -44,14 +41,7 @@ public class EntitySpeedCommand extends SimpleCommand {
             AdorufuMod.logErr(false, "Speed values smaller than 0.1 are not allowed.");
             return;
         }
-        ModuleEntitySpeed.speed = newSpeed;
+        EntitySpeedFeature.speed = newSpeed;
         AdorufuMod.logMsg(false, "EntitySpeed's speed changed to " + newSpeed);
-        AdorufuMod.scheduler.schedule(() -> {
-            try {
-                AdorufuMod.DATA_MANAGER.saveSomeGenericValue("Adorufu.values", "entityspeed", newSpeed);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }, 0, TimeUnit.NANOSECONDS);
     }
 }

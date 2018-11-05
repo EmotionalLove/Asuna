@@ -70,8 +70,7 @@ public class AdorufuSystemTrayManager {
             trayIcon.setPopupMenu(pm);
             tray.add(trayIcon);
             AdorufuMod.EVENT_MANAGER.registerListener(new AdorufuSystemTrayEventHandler());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

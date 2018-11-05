@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.modules.ModuleYawLock;
+import com.sasha.adorufu.mod.feature.impl.YawLockFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
@@ -34,13 +34,13 @@ public class YawCommand extends SimpleCommand {
 
     @Override
     public void onCommand() {
-        if (this.getArguments() == null){
+        if (this.getArguments() == null) {
             AdorufuMod.logErr(false, "Arguments required! Try \"-help command yaw\"");
             return;
         }
         try {
-            ModuleYawLock.yawDegrees = Integer.parseInt(this.getArguments()[0]);
-        }catch (Exception e) {
+            YawLockFeature.yawDegrees = Integer.parseInt(this.getArguments()[0]);
+        } catch (Exception e) {
             AdorufuMod.logErr(false, "Your argument must be an integer.");
         }
     }

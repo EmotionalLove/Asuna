@@ -19,13 +19,11 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.modules.ModuleXray;
+import com.sasha.adorufu.mod.feature.impl.XrayFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import com.sasha.simplecmdsys.SimpleCommandInfo;
 /**
  * Created by Sasha on 11/08/2018 at 1:18 PM
  **/
@@ -34,6 +32,7 @@ public class XrayCommand extends SimpleCommand {
     public XrayCommand() {
         super("xray");
     }
+
     @Override
     public void onCommand() {
         if (this.getArguments() == null) {
@@ -42,18 +41,18 @@ public class XrayCommand extends SimpleCommand {
         }
         if (this.getArguments().length == 1 && this.getArguments()[0].equalsIgnoreCase("list")) {
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < ModuleXray.xrayBlocks.size(); i++) {
-                if (i==0) {
-                    builder.append(ModuleXray.xrayBlocks.get(i).getLocalizedName());
+            for (int i = 0; i < XrayFeature.xRayBlocks.size(); i++) {
+                if (i == 0) {
+                    builder.append(Block.getBlockById(XrayFeature.xRayBlocks.get(i)).getLocalizedName());
                     continue;
                 }
-                builder.append(", ").append(ModuleXray.xrayBlocks.get(i).getLocalizedName());
+                builder.append(", ").append(Block.getBlockById(XrayFeature.xRayBlocks.get(i)).getLocalizedName());
             }
             AdorufuMod.logMsg(false, "Listing registered blocks:");
             AdorufuMod.logMsg(builder.toString());
             return;
         }
-        if (this.getArguments().length==2) {
+        if (this.getArguments().length == 2) {
             switch (this.getArguments()[0].toLowerCase()) {
                 case "add":
                     Block b = Block.getBlockFromName(this.getArguments()[1]);
@@ -61,16 +60,13 @@ public class XrayCommand extends SimpleCommand {
                         AdorufuMod.logErr(false, this.getArguments()[1] + " isn't a valid block! (If the name of your block has spaces in it, try surrounding the entire name in quotation marks)");
                         break;
                     }
-                    if (ModuleXray.xrayBlocks.contains(b)) {
+                    if (XrayFeature.xRayBlocks.contains(Block.getIdFromBlock(b))) {
                         AdorufuMod.logErr(false, "That block is already added to xray!");
                         break;
                     }
-                    ModuleXray.xrayBlocks.add(b);
+                    XrayFeature.xRayBlocks.add(Block.getIdFromBlock(b));
                     AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully added");
                     AdorufuMod.minecraft.renderGlobal.loadRenderers();
-                    AdorufuMod.scheduler.schedule(() -> {
-                        try { AdorufuMod.DATA_MANAGER.saveXrayBlocks(ModuleXray.xrayBlocks); } catch (IOException e) { e.printStackTrace(); }
-                    }, 0, TimeUnit.NANOSECONDS);
                     break;
                 case "del":
                     Block delb = Block.getBlockFromName(this.getArguments()[1]);
@@ -78,16 +74,13 @@ public class XrayCommand extends SimpleCommand {
                         AdorufuMod.logErr(false, this.getArguments()[1] + " isn't a valid block! (If the name of your block has spaces in it, try surrounding the entire name in quotation marks)");
                         break;
                     }
-                    if (!ModuleXray.xrayBlocks.contains(delb)) {
+                    if (!XrayFeature.xRayBlocks.contains(Block.getIdFromBlock(delb))) {
                         AdorufuMod.logErr(false, "That block is not added to xray!");
                         break;
                     }
-                    ModuleXray.xrayBlocks.remove(delb);
+                    XrayFeature.xRayBlocks.remove(Block.getIdFromBlock(delb));
                     AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully removed");
                     AdorufuMod.minecraft.renderGlobal.loadRenderers();
-                    AdorufuMod.scheduler.schedule(() -> {
-                        try { AdorufuMod.DATA_MANAGER.saveXrayBlocks(ModuleXray.xrayBlocks); } catch (IOException e) { e.printStackTrace(); }
-                    }, 0, TimeUnit.NANOSECONDS);
                     break;
             }
             return;

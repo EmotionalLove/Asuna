@@ -19,10 +19,11 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.simplecmdsys.SimpleCommand;
+import com.sasha.simplecmdsys.SimpleCommandInfo;
 
 import static com.sasha.adorufu.mod.AdorufuMod.logMsg;
-import static com.sasha.adorufu.mod.module.modules.ModuleClientIgnore.ignorelist;
-import com.sasha.simplecmdsys.SimpleCommandInfo;
+import static com.sasha.adorufu.mod.feature.impl.ClientIgnoreFeature.ignorelist;
+
 /**
  * Created by Sasha on 09/08/2018 at 3:28 PM
  **/
@@ -32,7 +33,7 @@ public class IgnorelistCommand extends SimpleCommand {
         super("ignorelist");
     }
 
-    public void onCommand(){
+    public void onCommand() {
         if (this.getArguments() == null) {
             StringBuilder builder = new StringBuilder();
             logMsg(false, "Listing \247l" + ignorelist.size() + " \247r\2477ignored players:");

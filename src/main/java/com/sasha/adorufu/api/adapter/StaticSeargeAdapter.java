@@ -44,9 +44,10 @@ public class StaticSeargeAdapter {
 
     /**
      * Gets the value of a field in this SeargeAdapter's set class.
-     * @see SeargeAdapter for getting the value of INSTANCE fields/funcs.
+     *
      * @param unobfFieldName The unobfuscated name of the field you're trying to get.
      * @return a generic object of the returned thingy
+     * @see SeargeAdapter for getting the value of INSTANCE fields/funcs.
      */
     @Nullable
     public Object getField(String unobfFieldName) {
@@ -55,21 +56,23 @@ public class StaticSeargeAdapter {
             Field f = obfname.getValue().getDeclaredField(obfname.getKey());
             f.setAccessible(true);
             return f.get(null);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
     public void setField(String unobfFieldName, Object value) {
         Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFieldName, TranslateTypeEnum.FIELD);
         try {
             Field f = obfname.getValue().getDeclaredField(obfname.getKey());
             f.setAccessible(true);
             f.set(null, value);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Nullable
     public Object invokeFunction(String unobfFuncName, @Nullable Object... params) {
         Pair<String, Class<?>> obfname = MappingUtils.translateUnobf(this.targetClass, unobfFuncName, TranslateTypeEnum.FUNCTION);
@@ -81,7 +84,7 @@ public class StaticSeargeAdapter {
             Method f = obfname.getValue().getDeclaredMethod(obfname.getKey(), classes);
             f.setAccessible(true);
             return f.invoke(null, params);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

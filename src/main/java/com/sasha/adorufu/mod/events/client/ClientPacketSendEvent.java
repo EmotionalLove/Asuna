@@ -28,8 +28,8 @@ public class ClientPacketSendEvent extends SimpleCancellableEvent {
 
     private Packet<?> sendPacket;
 
-    public ClientPacketSendEvent(Packet<?> sendPacket){
-        this.sendPacket= sendPacket;
+    public ClientPacketSendEvent(Packet<?> sendPacket) {
+        this.sendPacket = sendPacket;
     }
 
     public <T extends Packet<?>> T getSendPacket() {

@@ -87,9 +87,9 @@ public class GuiDisconnectedAuto extends GuiDisconnected {
      * Draws the screen and all the components in it.
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        milliseconds-=30;
+        milliseconds -= 30;
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(AdorufuMod.minecraft.fontRenderer, (float)milliseconds / 1000 + "s", this.width / 2,
+        this.drawCenteredString(AdorufuMod.minecraft.fontRenderer, (float) milliseconds / 1000 + "s", this.width / 2,
                 Math.min(this.height / 2 + this.textHeight / 2 + this.fontRenderer.FONT_HEIGHT,
                         this.height - 30) + 70, 0xffffff);
         if (milliseconds <= 0L) FMLClientHandler.instance().connectToServer(this.parentScreen, serverData);

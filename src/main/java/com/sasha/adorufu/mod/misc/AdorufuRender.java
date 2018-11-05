@@ -30,8 +30,8 @@ import static org.lwjgl.opengl.GL11.*;
  * Created by Sasha on 09/08/2018 at 7:50 PM
  **/
 public abstract class AdorufuRender {
-    public static int tracers(){
-        int i=0;
+    public static int tracers() {
+        int i = 0;
         try {
             glPushMatrix();
             glEnable(GL_BLEND);
@@ -90,6 +90,7 @@ public abstract class AdorufuRender {
         }
         return 0;
     }
+
     /**
      * @author Sasha Stevens
      */
@@ -153,6 +154,7 @@ public abstract class AdorufuRender {
         glDisable(2848);
         glPopMatrix();
     }
+
     public static void ghostBlock(double x, double y, double z, float r, float g, float b, float trans) {
         double posX = x - AdorufuMod.minecraft.renderManager.renderPosX;
         double posY = y - AdorufuMod.minecraft.renderManager.renderPosY;
@@ -216,6 +218,7 @@ public abstract class AdorufuRender {
 
     /**
      * Used for ChunkInspector (aka ChunkTrace)
+     *
      * @author Sasha Stevens
      */
     public static void chunkESP(double x, double y, double z, float r, float g, float b, float trans, double maxY) {

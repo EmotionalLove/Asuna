@@ -20,55 +20,52 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.feature.impl.FpsRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
+import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
+import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
-
-import java.io.IOException;
 
 public class RenderableFramerate extends RenderableObject {
     public RenderableFramerate() {
-        super("FPS", ScreenCornerPos.LEFTBOTTOM);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
+        super("FPS", ScreenCornerPos.LEFTBOTTOM,
+                Manager.Feature.findFeature(FpsRenderableFeature.class));
+
+    }
+
+    private static String formatFPS(int fps) {
+        if (fps > 80) {
+            return "\247" + "a" + fps;
+        } else if (fps > 60) {
+            return "\247" + "e" + fps;
+        } else if (fps > 30) {
+            return "\247" + "c" + fps;
+        } else if (fps >= 0) {
+            return "\247" + "4" + fps;
         }
+        return "\247" + "b" + fps;
     }
 
     @Override
     public void renderObjectLT(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fFPS" + "\247" + "7: " + formatFPS(Minecraft.getDebugFPS()), 4, yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectLB(int yyy) {
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow("\247" + "fFPS" + "\247" + "7: " + formatFPS(Minecraft.getDebugFPS()), 4, yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectRT(int yyy) {
         String s = "\247" + "fFPS" + "\247" + "7: " + formatFPS(Minecraft.getDebugFPS());
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
+
     @Override
     public void renderObjectRB(int yyy) {
         String s = "\247" + "fFPS" + "\247" + "7: " + formatFPS(Minecraft.getDebugFPS());
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
-    }
-    private static String formatFPS(int fps) {
-        if (fps > 80) {
-            return "\247" + "a" + fps;
-        }
-        else if (fps > 60) {
-            return "\247" + "e" + fps;
-        }
-        else if (fps > 30) {
-            return "\247" + "c" + fps;
-        }
-        else if (fps >= 0) {
-            return "\247" + "4" + fps;
-        }
-        return "\247" + "b" + fps;
     }
 }

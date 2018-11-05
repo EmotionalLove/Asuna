@@ -18,9 +18,9 @@
 
 package com.sasha.adorufu.mod.misc;
 
+import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
-import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import net.minecraft.network.play.server.SPacketTimeUpdate;
 import net.minecraft.util.math.MathHelper;
 
@@ -32,13 +32,11 @@ import java.util.Arrays;
 public class TPS implements SimpleListener {
 
     private static final float[] tickRates = new float[3];
+    public static TPS INSTANCE;
     private static int nextIndex = 0;
     private static long timeLastTimeUpdate;
 
-    public static TPS INSTANCE;
-
-    public static float getTickRate()
-    {
+    public static float getTickRate() {
         float numTicks = 0.0F;
         float sumTickRates = 0.0F;
         for (float tickRate : tickRates) {
@@ -49,18 +47,18 @@ public class TPS implements SimpleListener {
         }
         try {
             return AdorufuMath.fround(sumTickRates / numTicks, 2);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return 20f;
         }
     }
 
     @SimpleEventHandler
     public void onTimeUpdate(ClientPacketRecieveEvent e) {
-        if (!(e.getRecievedPacket() instanceof SPacketTimeUpdate)){
+        if (!(e.getRecievedPacket() instanceof SPacketTimeUpdate)) {
             return;
         }
         if (timeLastTimeUpdate != -1L) {
-            float timeElapsed = (float)(System.currentTimeMillis() - timeLastTimeUpdate) / 1000.0F;
+            float timeElapsed = (float) (System.currentTimeMillis() - timeLastTimeUpdate) / 1000.0F;
             tickRates[(nextIndex % tickRates.length)] = MathHelper.clamp(20.0F / timeElapsed, 0.0F, 20.0F);
             nextIndex += 1;
         }

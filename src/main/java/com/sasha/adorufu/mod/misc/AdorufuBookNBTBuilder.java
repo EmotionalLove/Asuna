@@ -18,10 +18,6 @@
 
 package com.sasha.adorufu.mod.misc;
 
-/**
- * Created by Sasha at 3:27 PM on 9/16/2018
- */
-
 import com.sasha.adorufu.mod.AdorufuMod;
 import io.netty.buffer.Unpooled;
 import net.minecraft.item.ItemStack;
@@ -31,6 +27,8 @@ import net.minecraft.network.play.client.CPacketCustomPayload;
 
 /**
  * Used for easily building the NBT for saving books
+ * <p>
+ * Created by Sasha at 3:27 PM on 9/16/2018
  */
 public class AdorufuBookNBTBuilder {
 

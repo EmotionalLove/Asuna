@@ -27,7 +27,7 @@ package com.sasha.adorufu.mod.exception;
  * Generic Adorufu exception (in case pepper does something dumb)
  */
 public class AdorufuException extends Error {
-    public AdorufuException(String error){
+    public AdorufuException(String error) {
         super(error);
     }
 }

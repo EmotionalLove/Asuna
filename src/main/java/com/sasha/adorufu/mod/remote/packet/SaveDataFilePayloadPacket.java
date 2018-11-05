@@ -39,7 +39,7 @@ public class SaveDataFilePayloadPacket extends Packet.Outgoing {
     public SaveDataFilePayloadPacket(PacketProcessor processor) {
         super(processor, 7);
         this.sessionId = AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId;
-        File file = new File("AdorufuData.yml");
+        File file = new File("AdorufuSettingData.yml");
         if (!file.exists()) {
             return; // nothing to do.
         }

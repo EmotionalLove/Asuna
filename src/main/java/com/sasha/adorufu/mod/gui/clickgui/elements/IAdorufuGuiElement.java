@@ -22,16 +22,24 @@ public interface IAdorufuGuiElement {
 
     /**
      * Draws the element
+     *
      * @param x The cursor's X position
      * @param y The cursor's Y position
      */
     void drawElement(int x, int y);
+
     boolean onMouseEngage(int x, int y, int b);
+
     boolean onMouseRelease(int x, int y, int b);
+
     int getX();
-    int getY();
+
     void setX(int x);
+
+    int getY();
+
     void setY(int y);
+
     int getHeight();
 
 }

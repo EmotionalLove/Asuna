@@ -19,7 +19,7 @@
 package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.module.modules.ModuleAutoReconnect;
+import com.sasha.adorufu.mod.feature.impl.AutoReconnectFeature;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 
@@ -41,7 +41,7 @@ public class AutoReconnectCommand extends SimpleCommand {
             AdorufuMod.logErr(false, "Speed values smaller than 0.1 are not allowed.");
             return;
         }
-        ModuleAutoReconnect.delay = (long)newSpeed/1000;
+        AutoReconnectFeature.delay = (long) newSpeed / 1000;
         AdorufuMod.logMsg(false, "AutoReconnect's speed changed to " + newSpeed);
     }
 }

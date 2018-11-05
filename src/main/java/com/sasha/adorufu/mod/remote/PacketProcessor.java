@@ -40,11 +40,10 @@ import static com.sasha.adorufu.mod.gui.remotedatafilegui.GuiCloudLogin.previous
  * The code in here is very "hacky" and ghetto. As long as it does it's job, I really don't care.
  */
 public class PacketProcessor {
+    public ScheduledFuture<?> keepAliveFuture;
     private Socket server;
     private PrintWriter writer;
     private ScheduledExecutorService scheduler;
-
-    public ScheduledFuture<?> keepAliveFuture;
 
     public PacketProcessor(Socket client) {
         this.scheduler = Executors.newScheduledThreadPool(4);
@@ -59,6 +58,29 @@ public class PacketProcessor {
                 new KeepAlivePacket(this, AdorufuMod.REMOTE_DATA_MANAGER.adorufuSessionId).dispatchPck();
             }
         }, 13, 13, TimeUnit.SECONDS);
+    }
+
+    public static ArrayList<String> formatPacket(Class<? extends Packet.Outgoing> pckClass, Object instance) {
+        ArrayList<String> pckArr = new ArrayList<>();
+        try {
+            pckArr.add("PCKSTART");
+            Packet.Outgoing pck = (Packet.Outgoing) instance;
+            pckArr.add("" + pck.getId());
+            for (Field field : pckClass.getDeclaredFields()) {
+                field.setAccessible(true);
+                PacketData dd = field.getDeclaredAnnotation(PacketData.class);
+                if (dd != null) {
+                    Object obj = field.get(instance);
+                    pckArr.add(obj.toString());
+                }
+            }
+            pckArr.add("PCKEND");
+            return pckArr;
+        } catch (Exception e) {
+            System.out.println("ERROR WHILE FORMATTING PACKET DATA. PACKET WILL !!!NOT!!! BE SENT!");
+            e.printStackTrace();
+            return pckArr;
+        }
     }
 
     public Socket getServer() {
@@ -137,29 +159,6 @@ public class PacketProcessor {
             keepAliveFuture = null;
             previouslyConnected = false;
             // relaunch
-        }
-    }
-
-    public static ArrayList<String> formatPacket(Class<? extends Packet.Outgoing> pckClass, Object instance) {
-        ArrayList<String> pckArr = new ArrayList<>();
-        try {
-            pckArr.add("PCKSTART");
-            Packet.Outgoing pck = (Packet.Outgoing) instance;
-            pckArr.add("" + pck.getId());
-            for (Field field : pckClass.getDeclaredFields()) {
-                field.setAccessible(true);
-                PacketData dd = field.getDeclaredAnnotation(PacketData.class);
-                if (dd != null) {
-                    Object obj = field.get(instance);
-                    pckArr.add(obj.toString());
-                }
-            }
-            pckArr.add("PCKEND");
-            return pckArr;
-        } catch (Exception e) {
-            System.out.println("ERROR WHILE FORMATTING PACKET DATA. PACKET WILL !!!NOT!!! BE SENT!");
-            e.printStackTrace();
-            return pckArr;
         }
     }
 

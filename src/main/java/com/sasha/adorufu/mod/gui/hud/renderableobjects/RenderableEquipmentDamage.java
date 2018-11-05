@@ -20,42 +20,20 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.feature.impl.EquipmentDamageRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
 import com.sasha.adorufu.mod.gui.hud.ScreenCornerPos;
-
-import java.io.IOException;
+import com.sasha.adorufu.mod.misc.Manager;
 
 public class RenderableEquipmentDamage extends RenderableObject {
 
     public RenderableEquipmentDamage() {
-        super("EquipmentDamage", ScreenCornerPos.RIGHTTOP);
-        try {
-            this.setPos(AdorufuMod.DATA_MANAGER.getHudPositionState(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.setPos(this.getDefaultPos());
-        }
+        super("EquipmentDamage", ScreenCornerPos.RIGHTTOP,
+                Manager.Feature.findFeature(EquipmentDamageRenderableFeature.class));
+
     }
 
-    @Override
-    public void renderObjectLT(int yyy) {
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(getTheWholeFuckingString(), 4, yyy, 0xffffff);
-    }
-    @Override
-    public void renderObjectLB(int yyy) {
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(getTheWholeFuckingString(), 4, yyy, 0xffffff);
-    }
-    @Override
-    public void renderObjectRT(int yyy) {
-        String s = getTheWholeFuckingString();
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
-    }
-    @Override
-    public void renderObjectRB(int yyy) {
-        String s = getTheWholeFuckingString();
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
-    }
     public static String getTheWholeFuckingString() {
         StringBuilder boolder = new StringBuilder("\247fEquipment Damage:");
         HELMCLR:
@@ -191,24 +169,51 @@ public class RenderableEquipmentDamage extends RenderableObject {
         }
         return boolder.toString();
     }
-    private static int bootsDamage(boolean bool){
+
+    private static int bootsDamage(boolean bool) {
         if (bool) return AdorufuMod.minecraft.player.inventory.armorInventory.get(0).getMaxDamage();
         return AdorufuMod.minecraft.player.inventory.armorInventory.get(0).getItemDamage();
     }
+
     private static int pantsDamage(boolean bool) {
         if (bool) return AdorufuMod.minecraft.player.inventory.armorInventory.get(1).getMaxDamage();
         return AdorufuMod.minecraft.player.inventory.armorInventory.get(1).getItemDamage();
     }
+
     private static int shirtDamage(boolean bool) {
         if (bool) return AdorufuMod.minecraft.player.inventory.armorInventory.get(2).getMaxDamage();
         return AdorufuMod.minecraft.player.inventory.armorInventory.get(2).getItemDamage();
     }
-    private static int helmDamage(boolean bool){
+
+    private static int helmDamage(boolean bool) {
         if (bool) return AdorufuMod.minecraft.player.inventory.armorInventory.get(3).getMaxDamage();
         return AdorufuMod.minecraft.player.inventory.armorInventory.get(3).getItemDamage();
     }
-    private static int heldDamage(boolean bool){
+
+    private static int heldDamage(boolean bool) {
         if (bool) return AdorufuMod.minecraft.player.getHeldItemMainhand().getMaxDamage();
         return AdorufuMod.minecraft.player.getHeldItemMainhand().getItemDamage();
+    }
+
+    @Override
+    public void renderObjectLT(int yyy) {
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(getTheWholeFuckingString(), 4, yyy, 0xffffff);
+    }
+
+    @Override
+    public void renderObjectLB(int yyy) {
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(getTheWholeFuckingString(), 4, yyy, 0xffffff);
+    }
+
+    @Override
+    public void renderObjectRT(int yyy) {
+        String s = getTheWholeFuckingString();
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
+    }
+
+    @Override
+    public void renderObjectRB(int yyy) {
+        String s = getTheWholeFuckingString();
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
 }

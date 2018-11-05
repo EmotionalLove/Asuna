@@ -19,42 +19,89 @@
 package com.sasha.adorufu.mod.gui.hud;
 
 
+import com.sasha.adorufu.mod.feature.IAdorufuFeature;
+import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
+import com.sasha.simplesettings.annotation.SerialiseSuper;
+import com.sasha.simplesettings.annotation.Transient;
+
 import javax.annotation.Nullable;
 
+@Deprecated
+@SerialiseSuper
 public class RenderableObject {
 
-    private String name;
-    private ScreenCornerPos pos = null;
-    private ScreenCornerPos defaultPos;
+    @Transient private static int LT_x = 12;
+    @Transient private String name;
+    @Transient private ScreenCornerPos pos = null;
+    @Transient private ScreenCornerPos defaultPos;
+    private String stringPos;
+    @Transient private IAdorufuFeature tiedFeature;
 
-    private static int LT_x = 12;
 
-
-    public RenderableObject(String name, ScreenCornerPos defaultPos){
+    public RenderableObject(String name, ScreenCornerPos defaultPos, IAdorufuFeature feature) {
         this.name = name;
         this.defaultPos = defaultPos;
+        this.stringPos = getPosStr(defaultPos);
+        this.tiedFeature = feature;
     }
 
     /**
      * Creates a new RenderableObject
-     * @param name What is this RenderableObject called?
-     * @param pos Which corner of the screen will it be on?
+     *
+     * @param name       What is this RenderableObject called?
+     * @param pos        Which corner of the screen will it be on?
      * @param defaultPos What's the default position of this RO? (In case @param pos is null)
      */
-    public RenderableObject(String name, @Nullable String pos, ScreenCornerPos defaultPos) {
+    public RenderableObject(String name, @Nullable String pos, ScreenCornerPos defaultPos, IAdorufuFeature feature) {
         this.name = name;
         this.defaultPos = defaultPos;
-        if (pos == null){
+        this.tiedFeature = feature;
+        if (pos == null) {
             this.pos = this.defaultPos;
+            this.stringPos = getPosStr(this.pos);
             return;
         }
         this.pos = getPosEnum(pos);
+        this.stringPos = getPosStr(this.pos);
     }
 
     // just in case i need it, better to use the above one instead though :///
     @Deprecated
-    public RenderableObject(String name) {
+    public RenderableObject(String name, IAdorufuFeature feature) {
         this.name = name;
+        this.tiedFeature = feature;
+    }
+
+    public static ScreenCornerPos getPosEnum(String pos) {
+        if (pos.equalsIgnoreCase("LT")) {
+            return ScreenCornerPos.LEFTTOP;
+        }
+        if (pos.equalsIgnoreCase("LB")) {
+            return ScreenCornerPos.LEFTBOTTOM;
+        }
+        if (pos.equalsIgnoreCase("RT")) {
+            return ScreenCornerPos.RIGHTTOP;
+        }
+        if (pos.equalsIgnoreCase("RB")) {
+            return ScreenCornerPos.RIGHTBOTTOM;
+        }
+        return null;
+    }
+
+    public static String getPosStr(ScreenCornerPos pos) {
+        if (pos == ScreenCornerPos.LEFTTOP) {
+            return "LT";
+        }
+        if (pos == ScreenCornerPos.LEFTBOTTOM) {
+            return "LB";
+        }
+        if (pos == ScreenCornerPos.RIGHTTOP) {
+            return "RT";
+        }
+        if (pos == ScreenCornerPos.RIGHTBOTTOM) {
+            return "RB";
+        }
+        return null;
     }
 
     /**
@@ -63,6 +110,7 @@ public class RenderableObject {
 
     // x's are always the same, thankfully. no need to worry about that.
     public void renderTheObject(int pos) {
+        if (!this.shouldRender()) return;
         if (this.pos == ScreenCornerPos.LEFTBOTTOM) {
             renderObjectLB(pos);
         }
@@ -83,25 +131,41 @@ public class RenderableObject {
      * >has to write 4 different rendering voids for each corner of the screen
      * >also requires me to rewrite my entire HUD code and to develop a configuration system
      * >fml
-     *
+     * <p>
      * tf is this - me 2018
      * this javadoc is gay af
      */
     public void renderObjectLT(int yyy) {
 
     }
+
     public void renderObjectLB(int yyy) {
 
     }
+
     public void renderObjectRT(int yyy) {
 
     }
+
     public void renderObjectRB(int yyy) {
 
     }
 
+    public boolean shouldRender() {
+        if (this.tiedFeature instanceof IAdorufuTogglableFeature) {
+            return ((IAdorufuTogglableFeature) this.tiedFeature).isEnabled();
+        }
+        return true;
+    }
+
     public ScreenCornerPos getPos() {
+        this.pos = getPosEnum(this.stringPos);
         return this.pos;
+    }
+
+    public void setPos(ScreenCornerPos pos) {
+        this.pos = pos;
+        this.stringPos = getPosStr(pos);
     }
 
     public ScreenCornerPos getDefaultPos() {
@@ -114,39 +178,6 @@ public class RenderableObject {
 
     public void setPos(String pos) {
         this.pos = getPosEnum(pos);
-    }
-    public void setPos(ScreenCornerPos pos) {
-        this.pos = pos;
-    }
-
-    public static ScreenCornerPos getPosEnum(String pos) {
-        if (pos.equalsIgnoreCase("LT")) {
-            return ScreenCornerPos.LEFTTOP;
-        }
-        if (pos.equalsIgnoreCase("LB")) {
-            return ScreenCornerPos.LEFTBOTTOM;
-        }
-        if (pos.equalsIgnoreCase("RT")) {
-            return ScreenCornerPos.RIGHTTOP;
-        }
-        if (pos.equalsIgnoreCase("RB")) {
-            return ScreenCornerPos.RIGHTBOTTOM;
-        }
-        return null;
-    }
-    public static String getPosStr(ScreenCornerPos pos) {
-        if (pos == ScreenCornerPos.LEFTTOP) {
-            return "LT";
-        }
-        if (pos == ScreenCornerPos.LEFTBOTTOM) {
-            return "LB";
-        }
-        if (pos == ScreenCornerPos.RIGHTTOP) {
-            return "RT";
-        }
-        if (pos == ScreenCornerPos.RIGHTBOTTOM) {
-            return "RB";
-        }
-        return null;
+        this.stringPos = getPosStr(this.pos);
     }
 }
