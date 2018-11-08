@@ -260,7 +260,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Module.register(new PortalGodModeFeature());
         Manager.Module.register(new AutoEatFeature());
         Manager.Module.register(new ShulkerSpyFeature());
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onModuleRegistration);
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
     }
 */
 
@@ -367,7 +367,7 @@ public class AdorufuMod implements SimpleListener {
                         AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
                     }
                 });
-        // todo api
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
     }
 

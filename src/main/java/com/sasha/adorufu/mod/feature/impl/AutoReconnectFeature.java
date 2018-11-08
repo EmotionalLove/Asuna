@@ -22,11 +22,12 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.client.multiplayer.ServerData;
 
 public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    public static long delay = 5000L;
+    @Setting public static long delay = 5000L;
     public static ServerData serverData = null;
 
     public AutoReconnectFeature() {

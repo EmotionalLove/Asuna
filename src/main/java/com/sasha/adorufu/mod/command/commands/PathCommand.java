@@ -158,7 +158,7 @@ public class PathCommand extends SimpleCommand {
                     BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(x, y + 1, z));
                     BaritoneAPI.getPathingBehavior().path();
                     AdorufuMod.logMsg(false, "Moving to higher ground");
-                    break;
+                    return;
                 }
             }
         }
@@ -180,7 +180,7 @@ public class PathCommand extends SimpleCommand {
                     BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(waypoint.getCoords()[0], waypoint.getCoords()[1], waypoint.getCoords()[2]));
                     BaritoneAPI.getPathingBehavior().path();
                     AdorufuMod.logMsg(false, "Going to " + waypoint.getName());
-                    break;
+                    return;
                 }
             }
             AdorufuMod.logErr(false, "That waypoint couldn't be found.");
@@ -261,7 +261,7 @@ public class PathCommand extends SimpleCommand {
                         return;
                     }
                     BaritoneAPI.getMineBehavior().mine(block);
-                    AdorufuMod.logErr(false, "Mining " + block.getLocalizedName());
+                    AdorufuMod.logMsg(false, "Mining " + block.getLocalizedName());
                     return;
                 }
                 if (Block.getBlockFromName(this.getArguments()[1]) == null) {
@@ -270,7 +270,7 @@ public class PathCommand extends SimpleCommand {
                 }
                 BaritoneAPI.getMineBehavior().cancel();
                 BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
-                AdorufuMod.logMsg(false, "Mining " + this.getArguments()[0].replace("_", " "));
+                AdorufuMod.logMsg(false, "Mining " + this.getArguments()[1].replace("_", " "));
                 return;
             } catch (Exception e) {
                 e.printStackTrace();

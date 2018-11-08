@@ -38,7 +38,7 @@ public abstract class AdorufuPlugin {
 
     public abstract void onDisable();
 
-    public abstract void onModuleRegistration();
+    public abstract void onFeatureRegistration();
 
     public abstract void onRenderableRegistration();
 
