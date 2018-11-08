@@ -27,22 +27,22 @@ import com.sasha.adorufu.mod.feature.impl.AutoReconnectFeature;
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.gui.GuiDisconnected;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.play.server.SPacketChunkData;
 import net.minecraft.network.play.server.SPacketExplosion;
 import net.minecraft.network.play.server.SPacketSpawnObject;
-import net.minecraft.realms.DisconnectedRealmsScreen;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.chunk.Chunk;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -89,30 +89,24 @@ public class MixinNetHandlerPlayClient {
         info.cancel();
     }
 
-    /**
-     * @param reason autoreconnect and also cuz im lazy
-     * @author Sasha Stevens
-     */
-    @Overwrite
-    public void onDisconnect(ITextComponent reason) {
-        this.client.loadWorld((WorldClient) null);
-
-        if (this.guiScreenServer != null) {
-            if (this.guiScreenServer instanceof GuiScreenRealmsProxy) {
-                this.client.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy) this.guiScreenServer).getProxy(), "disconnect.lost", reason)).getProxy());
-            } else {
-                if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
-                    this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-                } else {
-                    this.client.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
-                }
-            }
-        } else {
-            if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
-                this.client.displayGuiScreen(new GuiDisconnectedAuto(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-            } else {
-                this.client.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", reason));
-            }
+    @Redirect(
+            method = "onDisconnect",
+            at = @At(
+                    value = "INVOKE",
+                    target = "net/minecraft/client/Minecraft.displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"
+            )
+    )
+    private void onDisconnectDisplayScreen(Minecraft mc, GuiScreen screen) {
+        if (screen instanceof GuiDisconnected && Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
+            mc.displayGuiScreen(new GuiDisconnectedAuto(
+                    new GuiMultiplayer(new GuiMainMenu()),
+                    "disconnect.lost",
+                    ((GuiDisconnected) screen).message,
+                    AutoReconnectFeature.delay,
+                    AutoReconnectFeature.serverData
+            ));
+            return;
         }
+        mc.displayGuiScreen(screen);
     }
 }

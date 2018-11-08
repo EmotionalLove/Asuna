@@ -25,28 +25,18 @@ import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Created by Sasha at 3:51 PM on 9/16/2018
  */
 @Mixin(value = GuiScreenBook.class, priority = 999)
 public class MixinGuiScreenBook extends MixinGuiScreen {
-
-    @Shadow
-    @Final
-    private boolean bookIsUnsigned;
-
-    @Shadow
-    private boolean bookIsModified;
-
-    @Shadow
-    private NBTTagList bookPages;
 
     @Shadow
     @Final
@@ -59,35 +49,21 @@ public class MixinGuiScreenBook extends MixinGuiScreen {
     @Shadow
     private String bookTitle;
 
-    /**
-     * @author Sasha Stevens
-     * @reason book forge
-     */
-    @Overwrite
-    private void sendBookToServer(boolean publish) {
-        if (this.bookIsUnsigned && this.bookIsModified) {
-            if (this.bookPages != null) {
-                while (this.bookPages.tagCount() > 1) {
-                    String s = this.bookPages.getStringTagAt(this.bookPages.tagCount() - 1);
-                    if (!s.isEmpty()) {
-                        break;
-                    }
-                    this.bookPages.removeTag(this.bookPages.tagCount() - 1);
-                }
-                if (this.book.hasTagCompound()) {
-                    NBTTagCompound nbttagcompound = this.book.getTagCompound();
-                    nbttagcompound.setTag("pages", this.bookPages);
-                } else {
-                    this.book.setTagInfo("pages", this.bookPages);
-                }
-                AdorufuBookNBTBuilder builder = new AdorufuBookNBTBuilder(this.book);
-                boolean flag = Manager.Feature.isFeatureEnabled(BookForgerFeature.class);
-                builder.setAuthor(flag ? BookForgerFeature.author : this.editingPlayer.getName());
-                if (flag) AdorufuMod.logMsg(false, BookForgerFeature.author);
-                builder.setTitle(this.bookTitle);
-                builder.setSign(publish);
-                builder.push();
-            }
-        }
+    @Inject(
+            method = "sendBookToServer",
+            at = @At(
+                    value = "NEW",
+                    target = "net/minecraft/network/PacketBuffer"
+            )
+    )
+    private void preCreateBuffer(boolean publish, CallbackInfo ci) {
+        AdorufuBookNBTBuilder builder = new AdorufuBookNBTBuilder(this.book);
+        boolean flag = Manager.Feature.isFeatureEnabled(BookForgerFeature.class);
+        builder.setAuthor(flag ? BookForgerFeature.author : this.editingPlayer.getName());
+        if (flag) AdorufuMod.logMsg(false, BookForgerFeature.author);
+        builder.setTitle(this.bookTitle);
+        builder.setSign(publish);
+        builder.push();
+        ci.cancel();
     }
 }

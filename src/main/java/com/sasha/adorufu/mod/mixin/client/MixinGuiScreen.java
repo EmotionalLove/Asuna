@@ -30,8 +30,10 @@ import java.util.List;
  * Created by Sasha at 12:59 PM on 9/2/2018
  */
 @Mixin(value = GuiScreen.class, priority = 999)
-public class MixinGuiScreen {
+public abstract class MixinGuiScreen {
 
+
+    @Shadow public abstract void sendChatMessage(String msg);
 
     @Shadow public int height;
     @Shadow public int width;

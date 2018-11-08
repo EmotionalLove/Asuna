@@ -3,6 +3,9 @@
   "compatibilityLevel": "JAVA_8",
   "package": "com.sasha.adorufu.mod.mixin.client",
   "refmap": "mixins.adorufu.refmap.json",
+  "injectors": {
+    "maxShiftBy": 1
+  },
   "client": [
     "MixinEntityPlayerSP",
     "MixinNetworkManager",
@@ -25,7 +28,6 @@
     "MixinEntityPlayer",
     "MixinGuiContainer",
     "MixinGuiScreenBook",
-    "MixinGuiRecipeBook",
     "MixinGui",
     "MixinGuiConnecting",
     "MixinEntityLlama",
