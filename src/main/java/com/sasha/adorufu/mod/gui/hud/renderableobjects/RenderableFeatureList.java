@@ -95,18 +95,12 @@ public class RenderableFeatureList extends RenderableObject {
                 activeFeatureList.add(e);
             }
         });
-        return !reverse ? activeFeatureList
-                .stream()
-                .sorted(Comparator
-                        .comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
-                                (e.getColouredName() + e.getSuffix())))
-                .collect(Collectors.toList())
-                :
-                activeFeatureList
-                        .stream()
-                        .sorted(Comparator.comparing(e -> AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth
-                                (((IAdorufuFeature) e).getColouredName() + ((IAdorufuFeature) e).getSuffix())).reversed())
-                        .collect(Collectors.toList());
-    }
 
+        Comparator<IAdorufuTogglableFeature> comparator = Comparator.comparingInt(e ->
+                AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(e.getColouredName() + e.getSuffix()));
+
+        activeFeatureList.sort(reverse ? comparator.reversed() : comparator);
+
+        return activeFeatureList;
+    }
 }
