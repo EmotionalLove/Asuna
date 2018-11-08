@@ -30,12 +30,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -45,37 +41,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Entity.class, priority = 999)
 public abstract class MixinEntity {
-    @Shadow
-    public double motionX;
-    @Shadow
-    public double motionY;
-    @Shadow
-    public double motionZ;
-    @Shadow
-    public boolean onGround;
-    @Shadow
-    public Entity ridingEntity;
+
     @Shadow
     public int entityId;
+
     @Shadow
     public World world;
-    @Shadow
-    public float stepHeight;
-
-    @Shadow
-    public abstract AxisAlignedBB getEntityBoundingBox();
-
-    @Shadow
-    public abstract void setEntityBoundingBox(AxisAlignedBB bb);
-
-    @Shadow
-    public abstract void resetPositionToBB();
 
     @Shadow
     public abstract String getName();
-
-    @Shadow
-    public abstract boolean isSneaking();
 
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
@@ -114,24 +88,22 @@ public abstract class MixinEntity {
         }
     }
 
-    /**
-     * @author Sasha Stevens
-     * @reason PlayerKnockbackEvent
-     */
-    @SideOnly(Side.CLIENT)
-    @Overwrite
-    public void setVelocity(double x, double y, double z) {
-        PlayerKnockbackEvent event = new PlayerKnockbackEvent(x, y, z);
-        // i would use if (this instanceof EntityPlayerSP but mixins dont allow this soooooo //
-        if (this.getName().equals(AdorufuMod.minecraft.player.getName())) { // dont suppress knockback on other entities.
+    @Inject(
+            method = "setVelocity",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void preSetVelocity(double x, double y, double z, CallbackInfo ci) {
+        // >mixin doesn't allow this == mc.player
+        // (thinking)
+        // mfw
+        if (this.equals(AdorufuMod.minecraft.player)) {
+            PlayerKnockbackEvent event = new PlayerKnockbackEvent(x, y, z);
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
             if (event.isCancelled()) {
-                return;
+                ci.cancel();
             }
         }
-        this.motionX = event.getMotionX();
-        this.motionY = event.getMotionY();
-        this.motionZ = event.getMotionZ();
     }
 
     /**

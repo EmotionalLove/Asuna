@@ -22,40 +22,35 @@ import com.sasha.adorufu.mod.feature.impl.AutoReconnectFeature;
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiScreenRealmsProxy;
 import net.minecraft.client.network.NetHandlerLoginClient;
-import net.minecraft.realms.DisconnectedRealmsScreen;
 import net.minecraft.util.text.ITextComponent;
-import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-
-import javax.annotation.Nullable;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = NetHandlerLoginClient.class, priority = 999)
 public class MixinNetHandlerLoginClient {
-    @Shadow @Final private static Logger LOGGER;
-    @Shadow @Final @Nullable private GuiScreen previousGuiScreen;
+
+    @Shadow @Final private GuiScreen previousGuiScreen;
     @Shadow @Final private Minecraft mc;
 
-    /**
-     * @param reason autoreconnect
-     * @author Sasha Stevens
-     */
-    @Overwrite
-    public void onDisconnect(ITextComponent reason) {
-        if (this.previousGuiScreen != null && this.previousGuiScreen instanceof GuiScreenRealmsProxy) {
-            this.mc.displayGuiScreen((new DisconnectedRealmsScreen(((GuiScreenRealmsProxy) this.previousGuiScreen).getProxy(), "connect.failed", reason)).getProxy());
-        } else {
-            if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
-                this.mc.displayGuiScreen(new GuiDisconnectedAuto(this.previousGuiScreen, "connect.failed", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-                return;
-            }
-            this.mc.displayGuiScreen(new GuiDisconnected(this.previousGuiScreen, "connect.failed", reason));
+    @Inject(
+            method = "onDisconnect",
+            at = @At(
+                    value = "INVOKE",
+                    target = "net/minecraft/client/Minecraft.displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V",
+                    ordinal = 1
+            ),
+            cancellable = true
+    )
+    private void preDisconnectScreen(ITextComponent reason, CallbackInfo ci) {
+        if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
+            this.mc.displayGuiScreen(new GuiDisconnectedAuto(this.previousGuiScreen, "connect.failed", reason, AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
+            ci.cancel();
         }
     }
 }

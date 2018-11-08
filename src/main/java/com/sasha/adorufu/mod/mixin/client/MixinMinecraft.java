@@ -34,25 +34,18 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.util.ReportedException;
 import net.minecraft.util.math.RayTraceResult;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
-
-import static net.minecraft.client.Minecraft.getSystemTime;
 
 /**
  * Created by Sasha on 10/08/2018 at 1:40 PM
@@ -104,96 +97,21 @@ public abstract class MixinMinecraft {
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
     }
 
-    /**
-     * @author Sasha Stevens
-     * @reason ugh
-     */
-    @Overwrite
-    public void runTickKeyboard() throws IOException {
-        while (Keyboard.next()) {
-            int i = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey();
-
-            if (this.debugCrashKeyPressTime > 0L) {
-                if (getSystemTime() - this.debugCrashKeyPressTime >= 6000L) {
-                    throw new ReportedException(new CrashReport("Manually triggered debug crash", new Throwable()));
-                }
-
-                if (!Keyboard.isKeyDown(46) || !Keyboard.isKeyDown(61)) {
-                    this.debugCrashKeyPressTime = -1L;
-                }
-            } else if (Keyboard.isKeyDown(46) && Keyboard.isKeyDown(61)) {
-                this.actionKeyF3 = true;
-                this.debugCrashKeyPressTime = getSystemTime();
+    @Inject(
+            method = "runTickKeyboard",
+            at = @At(
+                    value = "INVOKE_ASSIGN",
+                    target = "net/minecraft/client/settings/KeyBinding.setKeyBindState(IZ)V",
+                    ordinal = 2
+            ),
+            locals = LocalCapture.CAPTURE_FAILHARD
+    )
+    private void postSetKeyState(CallbackInfo ci, int key, boolean flag) {
+        Manager.Feature.getTogglableFeatures().forEachRemaining(feature -> {
+            if (feature.getKeycode() == key) {
+                feature.toggleState();
             }
-
-            this.dispatchKeypresses();
-
-            if (this.currentScreen != null) {
-                this.currentScreen.handleKeyboardInput();
-            }
-
-            boolean flag = Keyboard.getEventKeyState();
-
-            if (flag) {
-                if (i == 62 && this.entityRenderer != null) {
-                    this.entityRenderer.switchUseShader();
-                }
-
-                boolean flag1 = false;
-
-                if (this.currentScreen == null) {
-                    if (i == 1) {
-                        this.displayInGameMenu();
-                    }
-
-                    flag1 = Keyboard.isKeyDown(61) && this.processKeyF3(i);
-                    this.actionKeyF3 |= flag1;
-
-                    if (i == 59) {
-                        this.gameSettings.hideGUI = !this.gameSettings.hideGUI;
-                    }
-                }
-
-                if (flag1) {
-                    KeyBinding.setKeyBindState(i, false);
-                } else {
-                    KeyBinding.setKeyBindState(i, true);
-                    KeyBinding.onTick(i);
-                }
-
-                if (this.gameSettings.showDebugProfilerChart) {
-                    if (i == 11) {
-                        this.updateDebugProfilerName(0);
-                    }
-
-                    for (int j = 0; j < 9; ++j) {
-                        if (i == 2 + j) {
-                            this.updateDebugProfilerName(j + 1);
-                        }
-                    }
-                }
-            } else {
-                KeyBinding.setKeyBindState(i, false);
-                Manager.Feature.getTogglableFeatures().forEachRemaining(feature -> {
-                    if (feature.getKeycode() == i) {
-                        feature.toggleState();
-                    }
-                });
-
-                if (i == 61) {
-                    if (this.actionKeyF3) {
-                        this.actionKeyF3 = false;
-                    } else {
-                        this.gameSettings.showDebugInfo = !this.gameSettings.showDebugInfo;
-                        this.gameSettings.showDebugProfilerChart = this.gameSettings.showDebugInfo && GuiScreen.isShiftKeyDown();
-                        this.gameSettings.showLagometer = this.gameSettings.showDebugInfo && GuiScreen.isAltKeyDown();
-                    }
-                }
-            }
-            net.minecraftforge.fml.common.FMLCommonHandler.instance().fireKeyInput();
-        }
-
-        this.processKeyBinds();
+        });
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"), cancellable = true)
@@ -232,20 +150,15 @@ public abstract class MixinMinecraft {
         screenIn = event.getScreen();
     }
 
-    /**
-     * @author Sasha Stevens
-     * @reason CPUControl
-     */
-    @Overwrite
-    public int getLimitFramerate() {
-        System.out.println(this.leftClickCounter); // THIS IS A TEST
-        if (this.world == null && this.currentScreen != null) {
-            return 30;
-        }
+    @Inject(
+            method = "getLimitFramerate",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void preGetLimitFramerate(CallbackInfoReturnable<Integer> cir) {
         if (!Display.isActive() && Manager.Feature.isFeatureEnabled(CPUControlFeature.class)) {
-            return 1;
+            cir.setReturnValue(1);
         }
-        return (this.gameSettings.limitFramerate);
     }
 
     @Inject(method = "shutdownMinecraftApplet", at = @At("HEAD"), cancellable = true)

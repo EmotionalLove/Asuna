@@ -21,91 +21,38 @@ package com.sasha.adorufu.mod.mixin.client;
 import com.sasha.adorufu.mod.feature.impl.AutoReconnectFeature;
 import com.sasha.adorufu.mod.gui.GuiDisconnectedAuto;
 import com.sasha.adorufu.mod.misc.Manager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.network.NetHandlerLoginClient;
-import net.minecraft.network.EnumConnectionState;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.handshake.client.C00Handshake;
-import net.minecraft.network.login.client.CPacketLoginStart;
-import net.minecraft.util.text.TextComponentTranslation;
-import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = GuiConnecting.class, priority = 999)
-public class MixinGuiConnecting extends MixinGuiScreen {
-
-    @Shadow
-    @Final
-    public static Logger LOGGER;
+public class MixinGuiConnecting {
 
     @Shadow
     public boolean cancel;
 
     @Shadow
-    public NetworkManager networkManager;
-
-    @Shadow
     @Final
     public GuiScreen previousGuiScreen;
 
-    /**
-     * @author Sasha Stevens
-     * @reason autoreconnect
-     */
-    @Overwrite
-    private void connect(final String ip, final int port) {
-        LOGGER.info("Connecting to {}, {}", ip, Integer.valueOf(port));
-        new Thread(() -> {
-            InetAddress inetaddress = null;
-
-            try {
-                if (MixinGuiConnecting.this.cancel) {
-                    return;
-                }
-
-                inetaddress = InetAddress.getByName(ip);
-                MixinGuiConnecting.this.networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, MixinGuiConnecting.this.mc.gameSettings.isUsingNativeTransport());
-                MixinGuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(MixinGuiConnecting.this.networkManager, MixinGuiConnecting.this.mc, MixinGuiConnecting.this.previousGuiScreen));
-                MixinGuiConnecting.this.networkManager.sendPacket(new C00Handshake(ip, port, EnumConnectionState.LOGIN, true));
-                MixinGuiConnecting.this.networkManager.sendPacket(new CPacketLoginStart(MixinGuiConnecting.this.mc.getSession().getProfile()));
-            } catch (UnknownHostException unknownhostexception) {
-                if (MixinGuiConnecting.this.cancel) {
-                    return;
-                }
-
-                MixinGuiConnecting.LOGGER.error("Couldn't connect to server", (Throwable) unknownhostexception);
-                if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
-                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"}), AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-                } else {
-                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{"Unknown host"})));
-                }
-            } catch (Exception exception) {
-                if (MixinGuiConnecting.this.cancel) {
-                    return;
-                }
-
-                GuiConnecting.LOGGER.error("Couldn't connect to server", (Throwable) exception);
-                String s = exception.toString();
-
-                if (inetaddress != null) {
-                    String s1 = inetaddress + ":" + port;
-                    s = s.replaceAll(s1, "");
-                }
-
-                if (Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
-                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnectedAuto(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s}), AutoReconnectFeature.delay, AutoReconnectFeature.serverData));
-                } else {
-                    MixinGuiConnecting.this.mc.displayGuiScreen(new GuiDisconnected(MixinGuiConnecting.this.previousGuiScreen, "connect.failed", new TextComponentTranslation("disconnect.genericReason", new Object[]{s})));
-                }
-            }
-        }).start();
+    @Redirect(
+            method = "connect",
+            at = @At(
+                    value = "INVOKE",
+                    target = "net/minecraft/client/Minecraft.displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"
+            )
+    )
+    private void onDisplayScreen(Minecraft mc, GuiScreen screen) {
+        if (screen instanceof GuiDisconnected && Manager.Feature.isFeatureEnabled(AutoReconnectFeature.class)) {
+            GuiDisconnected gui = (GuiDisconnected) screen;
+            screen = new GuiDisconnectedAuto(this.previousGuiScreen, gui.reason, gui.message, AutoReconnectFeature.delay, AutoReconnectFeature.serverData);
+        }
+        mc.displayGuiScreen(screen);
     }
 }
