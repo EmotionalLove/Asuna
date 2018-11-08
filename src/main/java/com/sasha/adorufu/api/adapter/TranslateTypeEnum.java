@@ -23,6 +23,6 @@ package com.sasha.adorufu.api.adapter;
  */
 public enum TranslateTypeEnum {
     FIELD,
-    PARAMETRE,
+    PARAMETER,
     FUNCTION
 }
