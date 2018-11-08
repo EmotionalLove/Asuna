@@ -276,6 +276,6 @@ public class PathCommand extends SimpleCommand {
                 e.printStackTrace();
             }
         }
-        AdorufuMod.logErr(false, "Unknown parametre. Try -help command path");
+        AdorufuMod.logErr(false, "Unknown parameter. Try -help command path");
     }
 }

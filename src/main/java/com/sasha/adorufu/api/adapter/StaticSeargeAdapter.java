@@ -110,20 +110,20 @@ public class StaticSeargeAdapter {
     public List<Method> findFunc(boolean debug, Object... args) {
         List<Method> preFuncs = new ArrayList<>();
         Arrays.stream(targetClass.getDeclaredMethods()).filter(f -> Modifier.isPublic(f.getModifiers()) && !Modifier.isStatic(f.getModifiers())).forEach(preFuncs::add);
-        List<Method> parametreSizeFuncs = new ArrayList<>();
+        List<Method> parameterSizeFuncs = new ArrayList<>();
         preFuncs.stream()
                 .filter(f -> f.getParameterCount() == args.length)
                 .forEach(func -> {
-                    parametreSizeFuncs.add(func);
-                    if (debug) AdorufuMod.logMsg(true, "Parametre count matched: " + func.getName());
+                    parameterSizeFuncs.add(func);
+                    if (debug) AdorufuMod.logMsg(true, "Parameter count matched: " + func.getName());
                 });
-        if (parametreSizeFuncs.size() == 0) {
+        if (parameterSizeFuncs.size() == 0) {
             if (debug) AdorufuMod.logMsg(true, "No matching functions were found!");
             return null;
         }
-        if (parametreSizeFuncs.size() == 1) {
+        if (parameterSizeFuncs.size() == 1) {
             List<Method> l = new ArrayList<>();
-            l.add(parametreSizeFuncs.get(0));
+            l.add(parameterSizeFuncs.get(0));
             if (debug) AdorufuMod.logMsg(true, "Found exactly one function: " + l.get(0).getName());
             return l;
         }
@@ -132,7 +132,7 @@ public class StaticSeargeAdapter {
          **/
         if (debug) AdorufuMod.logMsg(true, "Need to be more specific...");
         List<Method> theMethods = new ArrayList<>();
-        parametreSizeFuncs.forEach(func -> {
+        parameterSizeFuncs.forEach(func -> {
             for (int i = 0; i < args.length; i++) {
                 boolean flag = func.getParameterTypes()[i].isInstance(args[i]);
                 if (debug) AdorufuMod.logWarn(true, func.getParameterTypes()[i].getSimpleName()

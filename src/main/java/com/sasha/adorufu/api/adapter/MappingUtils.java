@@ -88,7 +88,7 @@ public class MappingUtils {
                     }
                 }
                 return null;
-            case PARAMETRE:
+            case PARAMETER:
                 // todo?
                 return null;
         }
@@ -99,7 +99,7 @@ public class MappingUtils {
         try {
             LinkedHashMap<String, String> map = new LinkedHashMap<>();
             switch (type) {
-                case FIELD:
+                case FIELD: {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_FIELD)));
                     String line;
                     while ((line = reader.readLine()) != null) {
@@ -108,24 +108,27 @@ public class MappingUtils {
                         map.put(thangs[1], thangs[0]);
                     }
                     return map;
-                case FUNCTION:
-                    BufferedReader reader$0 = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_FUNC)));
-                    String line$0;
-                    while ((line$0 = reader$0.readLine()) != null) {
-                        String[] thangs = line$0.split(",");
+                }
+                case FUNCTION: {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_FUNC)));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] thangs = line.split(",");
                         if (!thangs[0].startsWith("func_")) continue;
                         map.put(thangs[1], thangs[0]);
                     }
                     return map;
-                case PARAMETRE:
-                    BufferedReader reader$1 = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_PARAM)));
-                    String line$1;
-                    while ((line$1 = reader$1.readLine()) != null) {
-                        String[] thangs = line$1.split(",");
+                }
+                case PARAMETER: {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(MAP_PARAM)));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] thangs = line.split(",");
                         if (!thangs[0].startsWith("param_")) continue;
                         map.put(thangs[1], thangs[0]);
                     }
                     return map;
+                }
             }
             return map;
         } catch (IOException e) {
