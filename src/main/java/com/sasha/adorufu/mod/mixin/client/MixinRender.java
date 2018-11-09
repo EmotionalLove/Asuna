@@ -25,22 +25,23 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value = Render.class, priority = 999)
 public abstract class MixinRender {
 
-    @ModifyArgs(
+    @ModifyVariable(
             method = "renderLivingLabel",
+            argsOnly = true,
             at = @At(
                     value = "INVOKE",
                     target = "net/minecraft/client/renderer/EntityRenderer.drawNameplate(Lnet/minecraft/client/gui/FontRenderer;Ljava/lang/String;FFFIFFZZ)V"
             )
     )
-    private void modifyRenderLivingLabelArgs(Args args, Entity entityIn, String str, double x, double y, double z, int maxDistance) {
+    private String modifyRenderLivingLabelArgs(Entity entityIn, String str, double x, double y, double z, int maxDistance) {
         if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) {
-            args.set(1, str + " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth()));
+            return str + " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
         }
+        return str;
     }
 }
