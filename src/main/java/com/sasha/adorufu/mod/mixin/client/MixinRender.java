@@ -21,27 +21,37 @@ package com.sasha.adorufu.mod.mixin.client;
 import com.sasha.adorufu.mod.feature.impl.NamePlatesFeature;
 import com.sasha.adorufu.mod.misc.Manager;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = Render.class, priority = 999)
 public abstract class MixinRender {
 
-    @ModifyVariable(
+    @Shadow public abstract FontRenderer getFontRendererFromRenderManager();
+
+    @Inject(
             method = "renderLivingLabel",
-            argsOnly = true,
             at = @At(
                     value = "INVOKE",
                     target = "net/minecraft/client/renderer/EntityRenderer.drawNameplate(Lnet/minecraft/client/gui/FontRenderer;Ljava/lang/String;FFFIFFZZ)V"
-            )
+            ),
+            locals = LocalCapture.CAPTURE_FAILHARD,
+            cancellable = true
     )
-    private String modifyRenderLivingLabelArgs(Entity entityIn, String str, double x, double y, double z, int maxDistance) {
+    private void modifyLabelText(Entity entityIn, String str, double x, double y, double z, int maxDistance, CallbackInfo ci, double d0, boolean flag, float f, float f1, boolean flag1, float f2, int i) {
         if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) {
-            return str + " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
+            str += " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
         }
-        return str;
+        EntityRenderer.drawNameplate(this.getFontRendererFromRenderManager(), str, (float)x, (float)y + f2, (float)z, i, f, f1, flag1, flag);
+
+        ci.cancel();
     }
 }
