@@ -32,7 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Created by Sasha at 12:49 PM on 9/2/2018
  */
 @Mixin(value = GuiContainer.class, priority = 999)
-public class MixinGuiContainer extends MixinGuiScreen {
+public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Shadow public Container inventorySlots;
 

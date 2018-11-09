@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Created by Sasha at 3:51 PM on 9/16/2018
  */
 @Mixin(value = GuiScreenBook.class, priority = 999)
-public class MixinGuiScreenBook extends MixinGuiScreen {
+public abstract class MixinGuiScreenBook extends MixinGuiScreen {
 
     @Shadow
     @Final

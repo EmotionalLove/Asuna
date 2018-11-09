@@ -29,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = GuiIngameMenu.class, priority = 999)
-public class MixinGuiIngameMenu extends MixinGuiScreen {
+public abstract class MixinGuiIngameMenu extends MixinGuiScreen {
 
     @Inject(method = "initGui", at = @At("RETURN"), cancellable = true)
     public void initGui(CallbackInfo info) {
