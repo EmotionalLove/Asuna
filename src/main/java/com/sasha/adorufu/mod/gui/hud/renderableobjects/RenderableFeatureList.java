@@ -20,7 +20,6 @@ package com.sasha.adorufu.mod.gui.hud.renderableobjects;
 
 
 import com.sasha.adorufu.mod.AdorufuMod;
-import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.impl.FeaturelistRenderableFeature;
 import com.sasha.adorufu.mod.gui.hud.RenderableObject;
@@ -30,7 +29,6 @@ import com.sasha.adorufu.mod.misc.Manager;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.sasha.adorufu.mod.gui.hud.AdorufuHUD.sWidth;
 
@@ -99,7 +97,7 @@ public class RenderableFeatureList extends RenderableObject {
         Comparator<IAdorufuTogglableFeature> comparator = Comparator.comparingInt(e ->
                 AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(e.getColouredName() + e.getSuffix()));
 
-        activeFeatureList.sort(!reverse ? comparator.reversed() : comparator);
+        activeFeatureList.sort(reverse ? comparator.reversed() : comparator);
 
         return activeFeatureList;
     }
