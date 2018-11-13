@@ -100,7 +100,7 @@ public abstract class MixinMinecraft {
     @Inject(
             method = "runTickKeyboard",
             at = @At(
-                    value = "INVOKE_ASSIGN",
+                    value = "INVOKE",
                     target = "net/minecraft/client/settings/KeyBinding.setKeyBindState(IZ)V",
                     ordinal = 2
             ),
