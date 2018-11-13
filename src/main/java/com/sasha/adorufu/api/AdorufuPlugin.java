@@ -34,15 +34,15 @@ public abstract class AdorufuPlugin {
 
     private boolean infoSet = false;
 
-    public abstract void onEnable();
+    public void onEnable(){}
 
-    public abstract void onDisable();
+    public void onDisable(){}
 
-    public abstract void onFeatureRegistration();
+    public void onFeatureRegistration(){}
 
-    public abstract void onRenderableRegistration();
+    public void onRenderableRegistration(){}
 
-    public abstract void onCommandRegistration();
+    public void onCommandRegistration(){}
 
     public SimpleEventManager getEventManager() {
         return AdorufuMod.EVENT_MANAGER;

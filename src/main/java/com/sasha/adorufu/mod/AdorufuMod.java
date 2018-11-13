@@ -267,20 +267,21 @@ public class AdorufuMod implements SimpleListener {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
-        logMsg(true, "Registering commands, renderables and impl...");
+        logMsg(true, "Registering commands, renderables and features...");
         adorufuHUD = new AdorufuHUD();
         scheduler.schedule(() -> {
             try {
                 COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
+                logMsg(true, "Registering commands...");
                 this.registerCommands();
+                logMsg(true, "Registering features...");
                 this.registerFeatures();
+                logMsg(true, "Registering renderables...");
                 this.registerRenderables();
                 EVENT_MANAGER.registerListener(new CommandHandler());
-                //EVENT_MANAGER.registerListener(new Manager.Feature());
                 EVENT_MANAGER.registerListener(adorufuHUD);
                 TPS.INSTANCE = new TPS();
                 EVENT_MANAGER.registerListener(TPS.INSTANCE);
-                //loadBindsAndStates();
                 WAYPOINT_MANAGER = new WaypointManager();
                 DATA_MANAGER.loadPlayerIdentities();
                 DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
@@ -293,6 +294,7 @@ public class AdorufuMod implements SimpleListener {
                 e.printStackTrace();
             }
         }, 0, TimeUnit.NANOSECONDS);
+
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
         EVENT_MANAGER.registerListener(this);
@@ -367,7 +369,9 @@ public class AdorufuMod implements SimpleListener {
                         AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
                     }
                 });
-        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
+        AdorufuPluginLoader.getLoadedPlugins().forEach(pl -> {
+            pl.onFeatureRegistration();
+        });
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
     }
 
