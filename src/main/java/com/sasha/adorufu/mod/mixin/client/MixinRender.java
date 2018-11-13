@@ -43,7 +43,7 @@ public abstract class MixinRender {
                     value = "INVOKE",
                     target = "net/minecraft/client/renderer/EntityRenderer.drawNameplate(Lnet/minecraft/client/gui/FontRenderer;Ljava/lang/String;FFFIFFZZ)V"
             ),
-            locals = LocalCapture.CAPTURE_FAILHARD,
+            locals = LocalCapture.CAPTURE_FAILSOFT, // optifine changes this method??? No idea why it's not working on this computer, but works fine on my laptop...
             cancellable = true
     )
     private void modifyLabelText(Entity entityIn, String str, double x, double y, double z, int maxDistance, CallbackInfo ci, double d0, boolean flag, float f, float f1, boolean flag1, float f2, int i) {
