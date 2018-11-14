@@ -65,6 +65,10 @@ public class TPS implements SimpleListener {
         timeLastTimeUpdate = System.currentTimeMillis();
     }
 
+    public static boolean isServerResponding() {
+        return timeLastTimeUpdate == -1 || System.currentTimeMillis() - timeLastTimeUpdate <= 5000L;
+    }
+
     public void reset() {
         nextIndex = 0;
         timeLastTimeUpdate = -1L;

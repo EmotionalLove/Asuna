@@ -40,7 +40,7 @@ import java.util.List;
 public class Manager {
 
     public static ImmutableSet<ClassPath.ClassInfo> findClasses(String pkg) throws IOException {
-        return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClassesRecursive(pkg);
+        return ClassPath.from(Manager.class.getClassLoader()).getTopLevelClasses(pkg);
     }
 
     public static class Feature implements SimpleListener {

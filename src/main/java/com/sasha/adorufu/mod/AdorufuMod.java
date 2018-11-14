@@ -18,6 +18,8 @@
 
 package com.sasha.adorufu.mod;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import com.sasha.adorufu.api.AdorufuPlugin;
 import com.sasha.adorufu.api.AdorufuPluginLoader;
 import com.sasha.adorufu.api.adapter.MinecraftMappingUpdater;
@@ -31,7 +33,7 @@ import com.sasha.adorufu.mod.events.client.ClientOverlayRenderEvent;
 import com.sasha.adorufu.mod.exception.AdorufuException;
 import com.sasha.adorufu.mod.feature.AdorufuDiscordPresense;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
-import com.sasha.adorufu.mod.feature.impl.AFKFishFeature;
+import com.sasha.adorufu.mod.feature.impl.*;
 import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
@@ -65,12 +67,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
@@ -189,112 +189,116 @@ public class AdorufuMod implements SimpleListener {
             e.printStackTrace();
         }
     }
-/*
-    private void registerModules() {
-        Manager.Module.moduleRegistry.clear();
-        Manager.Module.register(new XrayFeature());
-        Manager.Module.register(new WireframeFeature());
-        Manager.Module.register(new NamePlatesFeature());
-        Manager.Module.register(new TpsRenderableFeature());
-        Manager.Module.register(new FpsRenderableFeature());
-        Manager.Module.register(new CoordinatesRenderableFeature());
-        Manager.Module.register(new SaturationRenderableFeature());
-        Manager.Module.register(new InventoryStatsRenderableFeature());
-        Manager.Module.register(new HorsestatsRenderableFeature());
-        Manager.Module.register(new FeaturelistRenderableFeature());
-        Manager.Module.register(new WatermarkRenderableFeature());
-        Manager.Module.register(new KillauraFeature());
-        Manager.Module.register(new StorageESPFeature());
-        Manager.Module.register(new TracersFeature());
-        Manager.Module.register(new AntiHungerFeature());
-        Manager.Module.register(new ClickGUIFeature());
-        Manager.Module.register(new NightVisionFeature());
-        Manager.Module.register(new NoSlowFeature());
-        Manager.Module.register(new AnnouncerFeature());
-        Manager.Module.register(new AFKFishFeature());
-        Manager.Module.register(new AutoRespawnFeature());
-        Manager.Module.register(new ChunkTraceFeature());
-        Manager.Module.register(new FreecamFeature());
-        Manager.Module.register(new CrystalAuraFeature());
-        Manager.Module.register(new CrystalLogoutFeature());
-        Manager.Module.register(new JesusFeature());
-        Manager.Module.register(new ClientIgnoreFeature());
-        Manager.Module.register(new AutoIgnoreFeature());
-        Manager.Module.register(new AutoSprintFeature());
-        Manager.Module.register(new CameraClipFeature());
-        Manager.Module.register(new ElytraBoostFeature());
-        Manager.Module.register(new ElytraFlightFeature());
-        Manager.Module.register(new EntitySpeedFeature());
-        Manager.Module.register(new LowJumpFeature());
-        Manager.Module.register(new MiddleClickBlockFeature());
-        Manager.Module.register(new ExtendedTablistFeature());
-        Manager.Module.register(new AntiAFKFeature());
-        Manager.Module.register(new YawLockFeature());
-        Manager.Module.register(new QueueTimeFeature());
-        Manager.Module.register(new NoPushFeature());
-        Manager.Module.register(new PacketFlyFeature());
-        Manager.Module.register(new PigControlFeature());
-        Manager.Module.register(new AutoTotemFeature());
-        Manager.Module.register(new WaypointGUIFeature());
-        Manager.Module.register(new WaypointsFeature());
-        Manager.Module.register(new TamedIdentityFeature());
-        Manager.Module.register(new GhostBlockWarningFeature());
-        Manager.Module.register(new AntiFireOverlayFeature());
-        Manager.Module.register(new MinecraftMusicFeature());
-        Manager.Module.register(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...
-        Manager.Module.register(new ModuleAutoArmor());
-        Manager.Module.register(new JoinLeaveMessagesFeature());
-        Manager.Module.register(new CraftInventoryFeature());
-        Manager.Module.register(new KnockbackSuppressFeature());
-        Manager.Module.register(new EquipmentDamageRenderableFeature());
-        Manager.Module.register(new DesktopNotificationsFeature());
-        Manager.Module.register(new CPUControlFeature());
-        Manager.Module.register(new BatteryLifeRenderableFeature());
-        Manager.Module.register(new ModulePowerBow());
-        Manager.Module.register(new BookForgerFeature());
-        Manager.Module.register(new AutoWalkFeature());
-        Manager.Module.register(new BoatFlyFeature());
-        Manager.Module.register(new AutoReconnectFeature());
-        Manager.Module.register(new NameProtectFeature());
-        Manager.Module.register(new SafewalkFeature());
-        Manager.Module.register(new PortalGodModeFeature());
-        Manager.Module.register(new AutoEatFeature());
-        Manager.Module.register(new ShulkerSpyFeature());
+
+    @Deprecated
+    private void registerFeaturesOld() {
+        Manager.Feature.featureRegistry.clear();
+        Manager.Feature.registerFeature(new XrayFeature());
+        Manager.Feature.registerFeature(new WireframeFeature());
+        Manager.Feature.registerFeature(new NamePlatesFeature());
+        Manager.Feature.registerFeature(new TickrateRenderableFeature());
+        Manager.Feature.registerFeature(new FramerateRenderableFeature());
+        Manager.Feature.registerFeature(new CoordinatesRenderableFeature());
+        Manager.Feature.registerFeature(new SaturationRenderableFeature());
+        Manager.Feature.registerFeature(new InventoryStatsRenderableFeature());
+        Manager.Feature.registerFeature(new HorsestatsRenderableFeature());
+        Manager.Feature.registerFeature(new FeaturelistRenderableFeature());
+        Manager.Feature.registerFeature(new WatermarkRenderableFeature());
+        Manager.Feature.registerFeature(new KillauraFeature());
+        Manager.Feature.registerFeature(new StorageESPFeature());
+        Manager.Feature.registerFeature(new TracersFeature());
+        Manager.Feature.registerFeature(new AntiHungerFeature());
+        Manager.Feature.registerFeature(new ClickGUIFeature());
+        Manager.Feature.registerFeature(new NightVisionFeature());
+        Manager.Feature.registerFeature(new NoSlowFeature());
+        Manager.Feature.registerFeature(new AnnouncerFeature());
+        Manager.Feature.registerFeature(new AFKFishFeature());
+        Manager.Feature.registerFeature(new AutoRespawnFeature());
+        Manager.Feature.registerFeature(new ChunkTraceFeature());
+        Manager.Feature.registerFeature(new FreecamFeature());
+        Manager.Feature.registerFeature(new CrystalAuraFeature());
+        Manager.Feature.registerFeature(new CrystalLogoutFeature());
+        Manager.Feature.registerFeature(new JesusFeature());
+        Manager.Feature.registerFeature(new ClientIgnoreFeature());
+        Manager.Feature.registerFeature(new CarpetWalkerFeature());
+        Manager.Feature.registerFeature(new AutoIgnoreFeature());
+        Manager.Feature.registerFeature(new AutoSprintFeature());
+        Manager.Feature.registerFeature(new CameraClipFeature());
+        Manager.Feature.registerFeature(new ElytraBoostFeature());
+        Manager.Feature.registerFeature(new ElytraFlightFeature());
+        Manager.Feature.registerFeature(new EntitySpeedFeature());
+        Manager.Feature.registerFeature(new LowJumpFeature());
+        Manager.Feature.registerFeature(new MiddleClickBlockFeature());
+        Manager.Feature.registerFeature(new ExtendedTablistFeature());
+        Manager.Feature.registerFeature(new AntiAFKFeature());
+        Manager.Feature.registerFeature(new YawLockFeature());
+        Manager.Feature.registerFeature(new QueueTimeFeature());
+        Manager.Feature.registerFeature(new NoPushFeature());
+        Manager.Feature.registerFeature(new PacketFlyFeature());
+        Manager.Feature.registerFeature(new PigControlFeature());
+        Manager.Feature.registerFeature(new AutoTotemFeature());
+        Manager.Feature.registerFeature(new WaypointGUIFeature());
+        Manager.Feature.registerFeature(new WaypointsFeature());
+        Manager.Feature.registerFeature(new TamedIdentityFeature());
+        Manager.Feature.registerFeature(new GhostBlockWarningFeature());
+        Manager.Feature.registerFeature(new AntiFireOverlayFeature());
+        Manager.Feature.registerFeature(new MinecraftMusicFeature());
+        Manager.Feature.registerFeature(new BlinkFeature()); // No clue if this is what blink is suppposed to do... i dont pvp...
+        Manager.Feature.registerFeature(new JoinLeaveMessagesFeature());
+        Manager.Feature.registerFeature(new CraftInventoryFeature());
+        Manager.Feature.registerFeature(new KnockbackSuppressFeature());
+        Manager.Feature.registerFeature(new EquipmentDamageRenderableFeature());
+        Manager.Feature.registerFeature(new DesktopNotificationsFeature());
+        Manager.Feature.registerFeature(new CPUControlFeature());
+        Manager.Feature.registerFeature(new BatteryLifeRenderableFeature());
+        Manager.Feature.registerFeature(new BookForgerFeature());
+        Manager.Feature.registerFeature(new AutoWalkFeature());
+        Manager.Feature.registerFeature(new BoatFlyFeature());
+        Manager.Feature.registerFeature(new AutoReconnectFeature());
+        Manager.Feature.registerFeature(new NameProtectFeature());
+        Manager.Feature.registerFeature(new SafewalkFeature());
+        Manager.Feature.registerFeature(new PortalGodModeFeature());
+        Manager.Feature.registerFeature(new AutoEatFeature());
+        Manager.Feature.registerFeature(new ShulkerSpyFeature());
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
     }
-*/
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
         logger.info("Adorufu is initialising...");
         logMsg(true, "Registering commands, renderables and features...");
         adorufuHUD = new AdorufuHUD();
-        scheduler.schedule(() -> {
-            try {
-                COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
-                logMsg(true, "Registering commands...");
-                this.registerCommands();
-                logMsg(true, "Registering features...");
-                this.registerFeatures();
-                logMsg(true, "Registering renderables...");
-                this.registerRenderables();
-                EVENT_MANAGER.registerListener(new CommandHandler());
-                EVENT_MANAGER.registerListener(adorufuHUD);
-                TPS.INSTANCE = new TPS();
-                EVENT_MANAGER.registerListener(TPS.INSTANCE);
-                WAYPOINT_MANAGER = new WaypointManager();
-                DATA_MANAGER.loadPlayerIdentities();
-                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
-                    if (id.shouldUpdate()) {
-                        id.updateDisplayName();
-                    }
-                });
-                TRAY_MANAGER = new AdorufuSystemTrayManager();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }, 0, TimeUnit.NANOSECONDS);
+        /*scheduler.schedule(() -> {
 
+        }, 0, TimeUnit.NANOSECONDS);*/
+        try {
+            COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
+            logMsg(true, "Registering commands...");
+            this.registerCommands();
+            logMsg(true, "Registering features...");
+            try {
+                this.registerFeaturesOld();
+            }
+            catch (Exception e) {
+                e.printStackTrace(); // why isn't anything loading on phi's computer?????????????????????????????
+            }
+            logMsg(true, "Registering renderables...");
+            this.registerRenderables();
+            EVENT_MANAGER.registerListener(new CommandHandler());
+            EVENT_MANAGER.registerListener(adorufuHUD);
+            TPS.INSTANCE = new TPS();
+            EVENT_MANAGER.registerListener(TPS.INSTANCE);
+            WAYPOINT_MANAGER = new WaypointManager();
+            DATA_MANAGER.loadPlayerIdentities();
+            DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
+                if (id.shouldUpdate()) {
+                    id.updateDisplayName();
+                }
+            });
+            TRAY_MANAGER = new AdorufuSystemTrayManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         MinecraftForge.EVENT_BUS.register(new ForgeEvent());
         EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
         EVENT_MANAGER.registerListener(this);
@@ -354,24 +358,29 @@ public class AdorufuMod implements SimpleListener {
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onCommandRegistration);
     }
 
-    private void registerFeatures() throws IOException {
+    private void registerFeatures() {
         AdorufuMod.logMsg(true, "Finding and initialising features...");
-        Manager.Feature.featureRegistry.clear();
-        Manager.findClasses(AFKFishFeature.class.getPackage().getName())
-                .forEach(e -> {
-                    AdorufuMod.logMsg(true, "Found " + e.getSimpleName() + ".class");
-                    try {
-                        IAdorufuFeature feature = (IAdorufuFeature) e.load().getConstructor().newInstance();
-                        Manager.Feature.registerFeature(feature);
-                        AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
-                        e1.printStackTrace();
-                        AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
-                    }
-                });
-        AdorufuPluginLoader.getLoadedPlugins().forEach(pl -> {
-            pl.onFeatureRegistration();
-        });
+        try {
+            ImmutableSet<ClassPath.ClassInfo> classes = Manager.findClasses("com.sasha.adorufu.mod.feature.impl");
+            if (classes.isEmpty()) {
+                throw new AdorufuException("I can't find any features!!!!!!!!!!! There is a problem!!!!!!!!! AAAAAAAAAAAAA");
+            }
+            classes.forEach(e -> {
+                AdorufuMod.logMsg(true, "Found " + e.getSimpleName() + ".class");
+                try {
+                    IAdorufuFeature feature = (IAdorufuFeature) e.load().getConstructor().newInstance();
+                    Manager.Feature.registerFeature(feature);
+                    AdorufuMod.logMsg(true, "Registered " + feature.getFeatureName() + "!");
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    AdorufuMod.logErr(true, "A severe uncaught exception occurred whilst initialising " + e.getSimpleName() + "!");
+                }
+            });
+        }catch (IOException ex) {
+            ex.printStackTrace();
+            logErr(true, "A severe exception occurred whilst registering Adorufu's features!");
+        }
+        AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
     }
 

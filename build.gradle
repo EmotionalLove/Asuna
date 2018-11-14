@@ -76,7 +76,7 @@ dependencies {
     compile files('libs/SimpleEventSystem.jar')
     compile files('libs/SimpleCommandSystem.jar')
     compile files('libs/MultiTasker.jar')
-
+    compile 'com.google.guava:guava:27.0-jre'
     compile 'club.minnced:java-discord-rpc:2.0.1'
     compile 'club.minnced:discord-rpc-release:v3.3.0'
     compile 'com.github.EmotionalLove:SimpleSettingSystem:e2aaa43f25'
@@ -155,6 +155,7 @@ shadowJar {
         include(dependency('com.github.EmotionalLove:SimpleSettingSystem'))
         include(dependency('club.minnced:java-discord-rpc:2.0.1'))
         include(dependency('club.minnced:discord-rpc-release:v3.3.0'))
+        include(dependency('com.google.guava:guava:27.0-jre'))
         include(dependency(group: 'cabaletta', name: 'baritone-api', version: '1.0.0'))
     }
     exclude 'dummyThing'

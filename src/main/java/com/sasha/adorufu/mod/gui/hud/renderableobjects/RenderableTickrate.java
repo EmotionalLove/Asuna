@@ -35,6 +35,9 @@ public class RenderableTickrate extends RenderableObject {
     }
 
     private static String formatTickrate(float tps) {
+        if (!TPS.isServerResponding()) {
+            return "\247" + "7" + tps + " \247l\247c(not responding!)";
+        }
         if (tps > 15) {
             return "\247" + "a" + tps;
         } else if (tps > 10) {
