@@ -71,6 +71,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.sasha.adorufu.mod.misc.Manager.Renderable.renderableRegistry;
 
@@ -109,6 +110,110 @@ public class AdorufuMod implements SimpleListener {
     public static AdorufuHUD adorufuHUD;
     public static Minecraft minecraft = Minecraft.getMinecraft();
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
+
+
+    ///////////// FORGE INIT ///////////////
+
+
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        MinecraftMappingUpdater.updateMappings();
+        ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
+        FRIEND_MANAGER = new FriendManager();
+        AdorufuDiscordPresense.setupPresense();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
+        }));
+        try {
+            if (Util.getOSType() == Util.EnumOS.WINDOWS) {
+                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
+                AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
+                BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
+                logMsg(true, batteryStatus.getBatteryLifePercent());
+                BATTERY_MANAGER = batteryStatus;
+            }
+        } catch (Exception x) {
+            //
+        }
+        // plugin loading
+        AdorufuPluginLoader pluginLoader = new AdorufuPluginLoader();
+        try {
+            logMsg(true, "Finding plugins...");
+            List<File> files = pluginLoader.findPlugins();
+            if (files.size() == 0) {
+                logMsg(true, "No plugins to load, continuing the initialisation of vanilla Adorufu");
+                return;
+            }
+            logMsg(true, "Preparing plugins...");
+            int i = pluginLoader.preparePlugins(files);
+            logMsg(true, "Prepared " + i + " plugin(s)");
+            pluginLoader.loadPlugins();
+            logMsg(true, "Successfully loaded plugins!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        logger.info("Adorufu is initialising...");
+        logMsg(true, "Registering commands, renderables and features...");
+        adorufuHUD = new AdorufuHUD();
+        scheduler.schedule(() -> {
+            try {
+                COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
+                logMsg(true, "Registering commands...");
+                this.registerCommands();
+                logMsg(true, "Registering features...");
+                try {
+                    this.registerFeaturesOld();
+                }
+                catch (Exception e) {
+                    e.printStackTrace(); // why isn't anything loading on phi's computer?????????????????????????????
+                }
+                logMsg(true, "Registering renderables...");
+                this.registerRenderables();
+                EVENT_MANAGER.registerListener(new CommandHandler());
+                EVENT_MANAGER.registerListener(adorufuHUD);
+                TPS.INSTANCE = new TPS();
+                EVENT_MANAGER.registerListener(TPS.INSTANCE);
+                WAYPOINT_MANAGER = new WaypointManager();
+                DATA_MANAGER.loadPlayerIdentities();
+                DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
+                    if (id.shouldUpdate()) {
+                        id.updateDisplayName();
+                    }
+                });
+                TRAY_MANAGER = new AdorufuSystemTrayManager();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 0, TimeUnit.NANOSECONDS);
+        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
+        EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
+        EVENT_MANAGER.registerListener(this);
+        logMsg(true, "Adorufu cleanly initialised!");
+    }
+
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+        FONT_MANAGER = new FontManager();
+        FONT_MANAGER.loadFonts(); // I would load this on a separate thread if I could, because it takes forEVER to execute.
+        if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
+            AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
+                    "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
+                    " developers can run malicious code in their plugins.");
+        Manager.Data.recoverSettings();
+        adorufuHUD.setupHUD();
+        Runtime.getRuntime().addShutdownHook(new Thread(Manager.Data::saveCurrentSettings));
+    }
+
+
+
+    ////////// END FORGE INIT ////////////////////////
+
+
 
     /**
      * Set a key to be pressed
@@ -151,44 +256,7 @@ public class AdorufuMod implements SimpleListener {
         minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
     }
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        MinecraftMappingUpdater.updateMappings();
-        ((ScheduledThreadPoolExecutor) scheduler).setRemoveOnCancelPolicy(true);
-        FRIEND_MANAGER = new FriendManager();
-        AdorufuDiscordPresense.setupPresense();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            AdorufuDiscordPresense.discordRpc.Discord_Shutdown();
-        }));
-        try {
-            if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-                BATTERY_MANAGER_INTERFACE = (AdorufuWindowsBatteryManager) Native.loadLibrary("Kernel32", AdorufuWindowsBatteryManager.class);
-                AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS batteryStatus = new AdorufuWindowsBatteryManager.SYSTEM_POWER_STATUS();
-                BATTERY_MANAGER_INTERFACE.GetSystemPowerStatus(batteryStatus);
-                logMsg(true, batteryStatus.getBatteryLifePercent());
-                BATTERY_MANAGER = batteryStatus;
-            }
-        } catch (Exception x) {
-            //
-        }
-        // plugin loading
-        AdorufuPluginLoader pluginLoader = new AdorufuPluginLoader();
-        try {
-            logMsg(true, "Finding plugins...");
-            List<File> files = pluginLoader.findPlugins();
-            if (files.size() == 0) {
-                logMsg(true, "No plugins to load, continuing the initialisation of vanilla Adorufu");
-                return;
-            }
-            logMsg(true, "Preparing plugins...");
-            int i = pluginLoader.preparePlugins(files);
-            logMsg(true, "Prepared " + i + " plugin(s)");
-            pluginLoader.loadPlugins();
-            logMsg(true, "Successfully loaded plugins!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Deprecated
     private void registerFeaturesOld() {
@@ -220,7 +288,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Feature.registerFeature(new CrystalLogoutFeature());
         Manager.Feature.registerFeature(new JesusFeature());
         Manager.Feature.registerFeature(new ClientIgnoreFeature());
-        Manager.Feature.registerFeature(new CarpetWalkerFeature());
+        Manager.Feature.registerFeature(new CarpetPlacerFeature());
         Manager.Feature.registerFeature(new AutoIgnoreFeature());
         Manager.Feature.registerFeature(new AutoSprintFeature());
         Manager.Feature.registerFeature(new CameraClipFeature());
@@ -260,62 +328,8 @@ public class AdorufuMod implements SimpleListener {
         Manager.Feature.registerFeature(new PortalGodModeFeature());
         Manager.Feature.registerFeature(new AutoEatFeature());
         Manager.Feature.registerFeature(new ShulkerSpyFeature());
+        Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        logger.info("Adorufu is initialising...");
-        logMsg(true, "Registering commands, renderables and features...");
-        adorufuHUD = new AdorufuHUD();
-        /*scheduler.schedule(() -> {
-
-        }, 0, TimeUnit.NANOSECONDS);*/
-        try {
-            COMMAND_PROCESSOR = new SimpleCommandProcessor("-");
-            logMsg(true, "Registering commands...");
-            this.registerCommands();
-            logMsg(true, "Registering features...");
-            try {
-                this.registerFeaturesOld();
-            }
-            catch (Exception e) {
-                e.printStackTrace(); // why isn't anything loading on phi's computer?????????????????????????????
-            }
-            logMsg(true, "Registering renderables...");
-            this.registerRenderables();
-            EVENT_MANAGER.registerListener(new CommandHandler());
-            EVENT_MANAGER.registerListener(adorufuHUD);
-            TPS.INSTANCE = new TPS();
-            EVENT_MANAGER.registerListener(TPS.INSTANCE);
-            WAYPOINT_MANAGER = new WaypointManager();
-            DATA_MANAGER.loadPlayerIdentities();
-            DATA_MANAGER.identityCacheMap.forEach((uuid, id) -> {
-                if (id.shouldUpdate()) {
-                    id.updateDisplayName();
-                }
-            });
-            TRAY_MANAGER = new AdorufuSystemTrayManager();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        MinecraftForge.EVENT_BUS.register(new ForgeEvent());
-        EVENT_MANAGER.registerListener(new AdorufuUpdateChecker());
-        EVENT_MANAGER.registerListener(this);
-        logMsg(true, "Adorufu cleanly initialised!");
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent e) {
-        FONT_MANAGER = new FontManager();
-        FONT_MANAGER.loadFonts(); // I would load this on a separate thread if I could, because it takes forEVER to execute.
-        if (AdorufuPluginLoader.getLoadedPlugins().size() > 0)
-            AdorufuMod.logWarn(true, "Adorufu was loaded with plugins! " +
-                    "Please make sure that you know ABSOLUTELY EVERYTHING your installed plugins are doing, as" +
-                    " developers can run malicious code in their plugins.");
-        Manager.Data.recoverSettings();
-        adorufuHUD.setupHUD();
-        Runtime.getRuntime().addShutdownHook(new Thread(Manager.Data::saveCurrentSettings));
     }
 
     private void reload(boolean async) {
