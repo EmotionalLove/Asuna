@@ -24,15 +24,27 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemShulkerBox;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
 public class ShulkerSpyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+
+    ItemRenderer renderer;
+
     public ShulkerSpyFeature() {
         super("ShulkerSpy", AdorufuCategory.RENDER);
     }
@@ -52,12 +64,32 @@ public class ShulkerSpyFeature extends AbstractAdorufuTogglableFeature implement
                     if (realTag.hasKey("Items", 9)) {
                         NonNullList<ItemStack> shulkerContentsList = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
                         ItemStackHelper.loadAllItems(realTag, shulkerContentsList);
-                        for (ItemStack itemStack : shulkerContentsList) {
-                            AdorufuMod.logMsg(itemStack.getDisplayName());
-                        }
+                        List<ItemStack> stacks = shulkerContentsList.stream().filter(e -> e.getItem() != Items.AIR).collect(Collectors.toList());
+                        this.drawShulkerBox(stacks, entity);
                     }
                 }
             }
         }
     }
+
+    private void drawShulkerBox(List<ItemStack> items, Entity entity) {
+        if (!items.isEmpty()) {
+            GlStateManager.pushAttrib();
+            GlStateManager.translate(((items.size() - 1) / 2f) * .5f, .6, 0);
+            items.forEach(itemStack -> {
+                GlStateManager.pushAttrib();
+                RenderHelper.enableStandardItemLighting();
+                GlStateManager.scale(.5, .5, 0);
+                GlStateManager.disableLighting();
+                AdorufuMod.minecraft.getRenderItem().zLevel = -5;
+                AdorufuMod.minecraft.getRenderItem().renderItem(itemStack, itemStack.getItem() == Items.SHIELD ? ItemCameraTransforms.TransformType.FIXED : ItemCameraTransforms.TransformType.NONE);
+                AdorufuMod.minecraft.getRenderItem().zLevel = 0;
+                GlStateManager.scale(2, 2, 0);
+                GlStateManager.popAttrib();
+                GlStateManager.translate(-.5f, 0, 0);
+            });
+            GlStateManager.popMatrix();
+        }
+    }
+
 }
