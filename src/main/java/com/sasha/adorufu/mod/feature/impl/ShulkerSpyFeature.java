@@ -36,7 +36,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
