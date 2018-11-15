@@ -24,6 +24,7 @@ import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import com.sasha.simplesettings.annotation.Setting;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -49,7 +50,7 @@ import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 @FeatureInfo(description = "Automatically attacks nearby entities, excluding friended players.")
 public class KillauraFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    public static double range = 5.0;
+    @Setting public double range = 5.0;
 
     public KillauraFeature() {
         super("KillAura", AdorufuCategory.COMBAT,

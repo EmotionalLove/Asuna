@@ -28,6 +28,7 @@ import net.minecraft.client.multiplayer.ServerData;
 public class AutoReconnectFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
     @Setting public static long delay = 5000L;
+
     public static ServerData serverData = null;
 
     public AutoReconnectFeature() {
