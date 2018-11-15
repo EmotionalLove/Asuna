@@ -25,7 +25,6 @@ import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.Entity;
@@ -41,8 +40,6 @@ import java.util.stream.Collectors;
 
 @FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
 public class ShulkerSpyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
-
-    private ItemRenderer renderer;
 
     public ShulkerSpyFeature() {
         super("ShulkerSpy", AdorufuCategory.RENDER);
