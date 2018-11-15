@@ -50,7 +50,7 @@ public abstract class MixinBlock {
             info.setReturnValue(true);
         }
         if (!Manager.Feature.featureRegistry.isEmpty() && Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
-            List<Block> blockList = XrayFeature.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlocks();
             info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
@@ -68,7 +68,7 @@ public abstract class MixinBlock {
             info.setReturnValue(true);
         }
         if (Manager.Feature.isFeatureEnabled(XrayFeature.class) && !Manager.Feature.featureRegistry.isEmpty()) {
-            List<Block> blockList = XrayFeature.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlocks();
             info.setReturnValue(blockList.contains(state.getBlock()));
         }
     }
@@ -76,7 +76,7 @@ public abstract class MixinBlock {
     @Inject(method = "getRenderType", at = @At("HEAD"), cancellable = true)
     public void getRenderType(IBlockState state, CallbackInfoReturnable<EnumBlockRenderType> info) {
         if (Manager.Feature.isFeatureEnabled(XrayFeature.class) && !Manager.Feature.featureRegistry.isEmpty()) {
-            List<Block> blockList = XrayFeature.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlocks();
             if (!state.getBlock().isNormalCube(state) && !blockList.contains(state.getBlock())) {
                 info.setReturnValue(EnumBlockRenderType.INVISIBLE);
             }
@@ -86,7 +86,7 @@ public abstract class MixinBlock {
     @Inject(method = "shouldSideBeRendered", at = @At("HEAD"), cancellable = true)
     public void shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info) {
         if (Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
-            List<Block> blockList = XrayFeature.getXrayBlockList();
+            List<Block> blockList = XrayFeature.getXrayBlocks();
             info.setReturnValue(blockList.contains(blockState.getBlock()));
         }
     }

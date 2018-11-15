@@ -20,6 +20,7 @@ package com.sasha.adorufu.mod.command.commands;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.impl.XrayFeature;
+import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.simplecmdsys.SimpleCommand;
 import com.sasha.simplecmdsys.SimpleCommandInfo;
 import net.minecraft.block.Block;
@@ -66,7 +67,7 @@ public class XrayCommand extends SimpleCommand {
                     }
                     XrayFeature.xRayBlocks.add(Block.getIdFromBlock(b));
                     AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully added");
-                    AdorufuMod.minecraft.renderGlobal.loadRenderers();
+                    if (Manager.Feature.isFeatureEnabled(XrayFeature.class)) AdorufuMod.minecraft.renderGlobal.loadRenderers();
                     break;
                 case "del":
                     Block delb = Block.getBlockFromName(this.getArguments()[1]);
@@ -80,7 +81,7 @@ public class XrayCommand extends SimpleCommand {
                     }
                     XrayFeature.xRayBlocks.remove(Block.getIdFromBlock(delb));
                     AdorufuMod.logMsg(false, this.getArguments()[1] + " successfully removed");
-                    AdorufuMod.minecraft.renderGlobal.loadRenderers();
+                    if (Manager.Feature.isFeatureEnabled(XrayFeature.class))AdorufuMod.minecraft.renderGlobal.loadRenderers();
                     break;
             }
             return;

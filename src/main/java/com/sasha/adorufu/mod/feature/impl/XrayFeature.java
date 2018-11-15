@@ -45,11 +45,11 @@ public class XrayFeature extends AbstractAdorufuTogglableFeature {
         super("XRay", AdorufuCategory.RENDER);
     }
 
-    public static List<Block> getXrayBlockList() {
+    public static List<Block> getXrayBlocks() {
         return XrayFeature.xRayBlocks.stream().map(Block::getBlockById).collect(Collectors.toList());
     }
 
-    public static boolean isXrayBlock(Block b) {
+    public static boolean isVisibleInXray(Block b) {
         return xRayBlocks.contains(b);
     }
 

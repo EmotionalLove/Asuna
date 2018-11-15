@@ -49,7 +49,7 @@ public class MiddleClickBlockFeature extends AbstractAdorufuTogglableFeature imp
         }
         BlockPos en = AdorufuMod.minecraft.objectMouseOver.getBlockPos();
         Block b = AdorufuMod.minecraft.world.getBlockState(en).getBlock();
-        if (!XrayFeature.isXrayBlock(b)) {
+        if (!XrayFeature.isVisibleInXray(b)) {
             XrayFeature.xRayBlocks.add(Block.getIdFromBlock(b));
             AdorufuMod.logMsg(false, b.getLocalizedName() + " added.");
             refreshXray();
