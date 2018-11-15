@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
 public class ShulkerSpyFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    ItemRenderer renderer;
+    private ItemRenderer renderer;
 
     public ShulkerSpyFeature() {
         super("ShulkerSpy", AdorufuCategory.RENDER);

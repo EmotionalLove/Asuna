@@ -35,15 +35,6 @@ public class YawLockFeature extends AbstractAdorufuTogglableFeature implements I
         super("YawLock", AdorufuCategory.MOVEMENT);
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
 
     @Override
     public void onTick() {

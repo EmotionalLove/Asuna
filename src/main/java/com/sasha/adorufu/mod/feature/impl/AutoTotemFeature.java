@@ -37,15 +37,6 @@ public class AutoTotemFeature extends AbstractAdorufuTogglableFeature implements
         super("AutoTotem", AdorufuCategory.COMBAT);
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
 
     @Override
     public void onTick() {

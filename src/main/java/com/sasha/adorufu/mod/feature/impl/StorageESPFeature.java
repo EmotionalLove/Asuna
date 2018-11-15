@@ -46,15 +46,6 @@ public class StorageESPFeature extends AbstractAdorufuTogglableFeature implement
                 new AdorufuFeatureOption<>("Hopper", true));
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
 
     @Override
     public void onRender() {

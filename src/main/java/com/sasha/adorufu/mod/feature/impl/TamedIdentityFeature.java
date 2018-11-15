@@ -37,16 +37,6 @@ public class TamedIdentityFeature extends AbstractAdorufuTogglableFeature implem
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
     public void onTick() {
         if (this.isEnabled()) {
             for (Entity entity : AdorufuMod.minecraft.world.getLoadedEntityList()) {

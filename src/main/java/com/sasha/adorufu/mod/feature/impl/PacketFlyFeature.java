@@ -36,16 +36,6 @@ public class PacketFlyFeature extends AbstractAdorufuTogglableFeature implements
     }
 
     @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
     public void onTick() {
         if (!this.isEnabled())
             return;
