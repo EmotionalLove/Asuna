@@ -57,9 +57,9 @@ public class GhostBlockWarningFeature extends AbstractAdorufuTogglableFeature
         if (!this.isEnabled()) {
             return;
         }
-        for (HashMap.Entry<Coordinate, Boolean> wow : coordMap.entrySet()) {
-            if (!wow.getValue()) {
-                AdorufuRender.ghostBlock(wow.getKey().getX(), wow.getKey().getY(), wow.getKey().getZ(), 1.0f, 0.0f, 0.0f, 0.5f);
+        for (HashMap.Entry<Coordinate, Boolean> entry : coordMap.entrySet()) {
+            if (!entry.getValue()) {
+                AdorufuRender.ghostBlock(entry.getKey().getX(), entry.getKey().getY(), entry.getKey().getZ(), 1.0f, 0.0f, 0.0f, 0.5f);
             }
         }
     }

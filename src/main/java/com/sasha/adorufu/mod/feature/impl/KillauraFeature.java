@@ -79,6 +79,7 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
 
     @Override
     public void onTick() {
+        this.setSuffix(this.getFormattableOptionsMap());
         if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...
         if (minecraft.player.getCooledAttackStrength(1) < 1) return;
         List<EntityLivingBase> entityLivingBase = minecraft.world.loadedEntityList.stream()

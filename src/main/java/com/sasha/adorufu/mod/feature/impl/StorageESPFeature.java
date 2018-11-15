@@ -23,6 +23,7 @@ import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.adorufu.mod.misc.AdorufuRender;
 import net.minecraft.block.BlockChest;
 import net.minecraft.tileentity.*;
@@ -33,7 +34,16 @@ import net.minecraft.tileentity.*;
 @FeatureInfo(description = "Draws an outline around storage containers")
 public class StorageESPFeature extends AbstractAdorufuTogglableFeature implements IAdorufuRenderableFeature {
     public StorageESPFeature() {
-        super("StorageESP", AdorufuCategory.RENDER);
+        super("StorageESP", AdorufuCategory.RENDER,
+                new AdorufuFeatureOption<>("Chest", true),
+                new AdorufuFeatureOption<>("Trapped Chest", true),
+                new AdorufuFeatureOption<>("Ender Chest", true),
+                new AdorufuFeatureOption<>("Furnace", true),
+                new AdorufuFeatureOption<>("Dropper", true),
+                new AdorufuFeatureOption<>("Dispenser", true),
+                new AdorufuFeatureOption<>("Shulker", true),
+                new AdorufuFeatureOption<>("Dispenser", true),
+                new AdorufuFeatureOption<>("Hopper", true));
     }
 
     @Override
@@ -55,37 +65,36 @@ public class StorageESPFeature extends AbstractAdorufuTogglableFeature implement
             if (TE instanceof TileEntityChest) {
                 i++;
                 if (((TileEntityChest) TE).getChestType() == BlockChest.Type.TRAP /* OwO What's this? */) {
-                    AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.0f, 0.0f);
+                    if (this.getOption("Trapped Chest")) AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.0f, 0.0f);
                 } else {
-                    AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.3f, 0.0f);
+                    if (this.getOption("Chest"))AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.3f, 0.0f);
                 }
             }
-            if (TE instanceof TileEntityFurnace) {
+            if (TE instanceof TileEntityFurnace && this.getOption("Furnace")) {
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 0.0f, 0.3f, 1.0f);
             }
-            if (TE instanceof TileEntityDropper) {
+            if (TE instanceof TileEntityDropper && this.getOption("Dropper")) {
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 0.0f, 0.3f, 1.0f);
             }
-            if (TE instanceof TileEntityDispenser) {
+            if (TE instanceof TileEntityDispenser && this.getOption("Dispenser")) {
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 0.0f, 0.3f, 1.0f);
             }
-            if (TE instanceof TileEntityShulkerBox) {
+            if (TE instanceof TileEntityShulkerBox && this.getOption("Shulker")) {
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.3f, 0.3f);
             }
-            if (TE instanceof TileEntityEnderChest) {
+            if (TE instanceof TileEntityEnderChest && this.getOption("Ender Chest")) {
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 1.0f, 0.0f, 1.0f);
             }
-            if (TE instanceof TileEntityHopper) {
+            if (TE instanceof TileEntityHopper && this.getOption("Hopper")) {
                 i++;
                 AdorufuRender.storageESP(TE.getPos().getX(), TE.getPos().getY(), TE.getPos().getZ(), 0.3f, 0.3f, 0.3f);
             }
         }
-        //todo int x = AdorufuMod.minecraft.world.loadedTileEntityList.stream().filter(tile -> tile. )
         this.setSuffix(i + "");
     }
 
