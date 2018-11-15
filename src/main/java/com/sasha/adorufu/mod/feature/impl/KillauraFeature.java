@@ -23,13 +23,22 @@ import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.feature.annotation.FeatureInfo;
+import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.sasha.adorufu.mod.AdorufuMod.FRIEND_MANAGER;
 import static com.sasha.adorufu.mod.AdorufuMod.minecraft;
 
 /**
@@ -41,7 +50,11 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
     public static double range = 5.0;
 
     public KillauraFeature() {
-        super("KillAura", AdorufuCategory.COMBAT);
+        super("KillAura", AdorufuCategory.COMBAT,
+                new AdorufuFeatureOption<>("Passives", false),
+                new AdorufuFeatureOption<>("Players", true),
+                new AdorufuFeatureOption<>("Hostiles", true),
+                new AdorufuFeatureOption<>("Friends", false));
     }
 
     public static void rotateTowardsEntity(Entity entity) {
@@ -66,7 +79,7 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
         if (this.isEnabled()) {
             if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...
             if (minecraft.player.getCooledAttackStrength(1) < 1) return;
-            EntityLivingBase b = minecraft.world.loadedEntityList.stream()
+            List<EntityLivingBase> entityLivingBase = minecraft.world.loadedEntityList.stream()
                     .filter(e ->
                             e instanceof EntityLivingBase // Is this entity living?
                                     && !(e instanceof EntityPlayerSP)   // Is this entity not the local player?
@@ -74,23 +87,27 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
                                     && e.isEntityAlive()    // Is this entity alive?
                                     && ((EntityLivingBase) e).hurtTime == 0 // Has this entity not been hurt recently?
                                     && (!(e instanceof EntityPlayer) || !AdorufuMod.FRIEND_MANAGER.isFriended(e.getName())) // Is this entity a player? If so, are they not friended?
-                    ).map(entity -> (EntityLivingBase) entity)
-                    .findFirst().orElse(null);
-            if (b != null) {
-                float yaw = minecraft.player.rotationYaw;
-                float pitch = minecraft.player.rotationPitch;
-                float yawh = minecraft.player.rotationYawHead;
-                boolean wasSprinting = minecraft.player.isSprinting();
-                rotateTowardsEntity(b);
-                minecraft.player.setSprinting(false);
-                minecraft.playerController.attackEntity(minecraft.player, b);
-                minecraft.player.swingArm(EnumHand.MAIN_HAND);
-                minecraft.player.rotationYaw = yaw;
-                minecraft.player.rotationPitch = pitch;
-                minecraft.player.rotationYawHead = yawh;
-                if (wasSprinting)
-                    minecraft.player.setSprinting(true);
-            }
+                    ).map(entity -> (EntityLivingBase) entity).collect(Collectors.toList());
+            if (entityLivingBase.isEmpty()) return;
+            Optional<EntityLivingBase> bb = entityLivingBase.stream().findFirst();
+            EntityLivingBase b = bb.get();
+            if (b instanceof EntityAnimal && !this.getOption("Passives")) return;
+            if (b instanceof EntityOtherPlayerMP && !this.getOption("Players")) return;
+            if (b instanceof EntityMob && !this.getOption("Hostiles")) return;
+            if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName())) return;
+            float yaw = minecraft.player.rotationYaw;
+            float pitch = minecraft.player.rotationPitch;
+            float yawh = minecraft.player.rotationYawHead;
+            boolean wasSprinting = minecraft.player.isSprinting();
+            rotateTowardsEntity(b);
+            minecraft.player.setSprinting(false);
+            minecraft.playerController.attackEntity(minecraft.player, b);
+            minecraft.player.swingArm(EnumHand.MAIN_HAND);
+            minecraft.player.rotationYaw = yaw;
+            minecraft.player.rotationPitch = pitch;
+            minecraft.player.rotationYawHead = yawh;
+            if (wasSprinting)
+                minecraft.player.setSprinting(true);
         }
     }
 }

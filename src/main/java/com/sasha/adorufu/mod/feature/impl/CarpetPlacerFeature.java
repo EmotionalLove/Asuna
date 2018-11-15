@@ -22,7 +22,10 @@ import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
+import com.sasha.adorufu.mod.misc.TPS;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
@@ -33,13 +36,16 @@ public class CarpetPlacerFeature extends AbstractAdorufuTogglableFeature impleme
         super("AutoCarpetPlace", AdorufuCategory.MOVEMENT);
     }
 
-    @Override public void onTick() {
+    @Override
+    public void onTick() {
         if (AdorufuMod.minecraft.player.getHeldItem(EnumHand.MAIN_HAND).getTranslationKey().contains("tile.woolCarpet")) {
             RayTraceResult rayTraceResult = AdorufuMod.minecraft.objectMouseOver;
             if (rayTraceResult.typeOfHit != RayTraceResult.Type.BLOCK) return; // make sure we're looking at a block
-            if (AdorufuMod.minecraft.world.getBlockState(rayTraceResult.getBlockPos()).getMaterial() == Material.CARPET)
+            IBlockState state = AdorufuMod.minecraft.world.getBlockState(rayTraceResult.getBlockPos());
+            if (state.getMaterial() == Material.CARPET || state.getBlock() instanceof BlockContainer)
                 return;
-            if (rayTraceResult.sideHit != EnumFacing.UP || AdorufuMod.minecraft.rightClickDelayTimer > 0) return; // make sure it's at the top
+            if (rayTraceResult.sideHit != EnumFacing.UP || AdorufuMod.minecraft.rightClickDelayTimer > 0 || !TPS.isServerResponding())
+                return;
             //BlockPos up = rayTraceResult.getBlockPos().up();
             //AdorufuMath.placeBlock(up);
             AdorufuMod.minecraft.rightClickMouse();
