@@ -31,6 +31,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 
@@ -54,7 +56,8 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
                 new AdorufuFeatureOption<>("Passives", false),
                 new AdorufuFeatureOption<>("Players", true),
                 new AdorufuFeatureOption<>("Hostiles", true),
-                new AdorufuFeatureOption<>("Friends", false));
+                new AdorufuFeatureOption<>("Friends", false),
+                new AdorufuFeatureOption<>("Auto Sword Switch", false));
     }
 
     public static void rotateTowardsEntity(Entity entity) {
@@ -76,25 +79,48 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
 
     @Override
     public void onTick() {
-        if (this.isEnabled()) {
-            if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...
-            if (minecraft.player.getCooledAttackStrength(1) < 1) return;
-            List<EntityLivingBase> entityLivingBase = minecraft.world.loadedEntityList.stream()
-                    .filter(e ->
-                            e instanceof EntityLivingBase // Is this entity living?
-                                    && !(e instanceof EntityPlayerSP)   // Is this entity not the local player?
-                                    && minecraft.player.getDistance(e) <= 5.0f // Is this entity closer than 5 blocks?
-                                    && e.isEntityAlive()    // Is this entity alive?
-                                    && ((EntityLivingBase) e).hurtTime == 0 // Has this entity not been hurt recently?
-                                    && (!(e instanceof EntityPlayer) || !AdorufuMod.FRIEND_MANAGER.isFriended(e.getName())) // Is this entity a player? If so, are they not friended?
-                    ).map(entity -> (EntityLivingBase) entity).collect(Collectors.toList());
-            if (entityLivingBase.isEmpty()) return;
-            Optional<EntityLivingBase> bb = entityLivingBase.stream().findFirst();
-            EntityLivingBase b = bb.get();
-            if (b instanceof EntityAnimal && !this.getOption("Passives")) return;
-            if (b instanceof EntityOtherPlayerMP && !this.getOption("Players")) return;
-            if (b instanceof EntityMob && !this.getOption("Hostiles")) return;
-            if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName())) return;
+        if (minecraft.player.isHandActive()) return; // Return if eating / holding up a shield / ...
+        if (minecraft.player.getCooledAttackStrength(1) < 1) return;
+        List<EntityLivingBase> entityLivingBase = minecraft.world.loadedEntityList.stream()
+                .filter(e ->
+                        e instanceof EntityLivingBase // Is this entity living?
+                                && !(e instanceof EntityPlayerSP)   // Is this entity not the local player?
+                                && minecraft.player.getDistance(e) <= 5.0f // Is this entity closer than 5 blocks?
+                                && e.isEntityAlive()    // Is this entity alive?
+                                && ((EntityLivingBase) e).hurtTime == 0 // Has this entity not been hurt recently?
+                                && (!(e instanceof EntityPlayer) || !AdorufuMod.FRIEND_MANAGER.isFriended(e.getName())) // Is this entity a player? If so, are they not friended?
+                ).map(entity -> (EntityLivingBase) entity).collect(Collectors.toList());
+        if (entityLivingBase.isEmpty()) return;
+        Optional<EntityLivingBase> bb = entityLivingBase.stream().findFirst();
+        EntityLivingBase b = bb.get();
+        if (b instanceof EntityAnimal && !this.getOption("Passives")) return;
+        if (b instanceof EntityOtherPlayerMP && !this.getOption("Players")) return;
+        if (b instanceof EntityMob && !this.getOption("Hostiles")) return;
+        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName())) return;
+        if (this.getOption("Auto Sword Switch")) {
+            for (int s = 0; s <= 8; s++) {
+                ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
+                if (stack.getItem() == Items.DIAMOND_SWORD) {
+                    AdorufuMod.minecraft.player.inventory.currentItem = s;
+                    break;
+                }
+                if (stack.getItem() == Items.IRON_SWORD) {
+                    AdorufuMod.minecraft.player.inventory.currentItem = s;
+                    break;
+                }
+                if (stack.getItem() == Items.STONE_SWORD) {
+                    AdorufuMod.minecraft.player.inventory.currentItem = s;
+                    break;
+                }
+                if (stack.getItem() == Items.WOODEN_SWORD) {
+                    AdorufuMod.minecraft.player.inventory.currentItem = s;
+                    break;
+                }
+                if (stack.getItem() == Items.GOLDEN_SWORD) {
+                    AdorufuMod.minecraft.player.inventory.currentItem = s;
+                    break;
+                }
+            }
             float yaw = minecraft.player.rotationYaw;
             float pitch = minecraft.player.rotationPitch;
             float yawh = minecraft.player.rotationYawHead;
