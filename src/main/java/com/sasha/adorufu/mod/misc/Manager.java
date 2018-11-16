@@ -93,6 +93,7 @@ public class Manager {
         }
 
         public static void renderFeatures() {
+            long l = System.currentTimeMillis();
             featureRegistry
                     .stream()
                     .filter(IAdorufuRenderableFeature.class::isInstance)
@@ -106,6 +107,7 @@ public class Manager {
                         }
                         feature.onRender();
                     });
+            AdorufuMod.PERFORMANCE_ANAL.recordNewRenderTime((int) (System.currentTimeMillis() - l));
         }
 
         public static String getFeatureInfo(Class<? extends IAdorufuFeature> featureClass) {

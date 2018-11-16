@@ -34,7 +34,7 @@ public class RenderableEquipmentDamage extends RenderableObject {
 
     }
 
-    public static String getTheWholeFuckingString() {
+    public String toString() {
         StringBuilder boolder = new StringBuilder("\247fEquipment Damage:");
         HELMCLR:
         if (helmDamage(false) != 0) {
@@ -197,23 +197,23 @@ public class RenderableEquipmentDamage extends RenderableObject {
 
     @Override
     public void renderObjectLT(int yyy) {
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(getTheWholeFuckingString(), 4, yyy, 0xffffff);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(toString(), 4, yyy, 0xffffff);
     }
 
     @Override
     public void renderObjectLB(int yyy) {
-        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(getTheWholeFuckingString(), 4, yyy, 0xffffff);
+        AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(toString(), 4, yyy, 0xffffff);
     }
 
     @Override
     public void renderObjectRT(int yyy) {
-        String s = getTheWholeFuckingString();
+        String s = toString();
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
 
     @Override
     public void renderObjectRB(int yyy) {
-        String s = getTheWholeFuckingString();
+        String s = toString();
         AdorufuMod.FONT_MANAGER.segoe_36.drawStringWithShadow(s, (AdorufuHUD.sWidth - AdorufuMod.FONT_MANAGER.segoe_36.getStringWidth(s) - 2), yyy, 0xffffff);
     }
 }
