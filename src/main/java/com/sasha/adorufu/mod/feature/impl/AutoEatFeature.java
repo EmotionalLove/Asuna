@@ -48,14 +48,11 @@ public class AutoEatFeature extends AbstractAdorufuTogglableFeature implements I
             for (int s = 0; s <= 8; s++) {
                 if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
                     // we can eat this item
-                    if (this.getOption("Conserve gapple")) {
-                        if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
-                            continue;
-                        }
-                    } else if (this.getOption("Priority gapple") && !checked) {
-                        if (AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
-                            continue;
-                        }
+                    if (this.getOption("Conserve gapple") && AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
+                        continue;
+
+                    } else if (this.getOption("Priority gapple") && !checked && AdorufuMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
+                        continue;
                     }
                     if (!eating) prevSlot = AdorufuMod.minecraft.player.inventory.currentItem;
                     eating = true;

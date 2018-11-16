@@ -43,13 +43,11 @@ public class CrystalLogoutFeature extends AbstractAdorufuTogglableFeature implem
         if (this.isEnabled()) {
             for (Entity e : AdorufuMod.minecraft.world.loadedEntityList) {
                 if (e instanceof EntityEnderCrystal) {
-                    //float attacktime = mc.player.getCooledAttackStrength(1);
-                    if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f && !Mouse.isButtonDown(1)/* && mc.player.canEntityBeSeen(e)*/) {
-                        if (e.isEntityAlive()) {
-                            AdorufuMod.minecraft.player.connection.getNetworkManager().closeChannel(new TextComponentString("\2476You were disconnected because you came into range with en End Crystal"));
-                            this.toggleState();
-                            break;
-                        }
+                    if (AdorufuMod.minecraft.player.getDistance(e) <= 3.8f && !Mouse.isButtonDown(1) && e.isEntityAlive()) {
+                        AdorufuMod.minecraft.player.connection.getNetworkManager()
+                                .closeChannel(new TextComponentString("\2476You were disconnected because you came into range with en End Crystal"));
+                        this.toggleState();
+                        break;
                     }
                 }
             }

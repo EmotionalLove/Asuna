@@ -28,9 +28,9 @@ import javax.annotation.Nullable;
 
 @Deprecated
 @SerialiseSuper
-public class RenderableObject {
+public abstract class RenderableObject {
 
-    @Transient private static int LT_x = 12;
+    //@Transient private static int LT_x = 12;
     @Transient private String name;
     @Transient private ScreenCornerPos pos = null;
     @Transient private ScreenCornerPos defaultPos;
@@ -135,23 +135,15 @@ public class RenderableObject {
      * tf is this - me 2018
      * this javadoc is gay af
      */
-    public void renderObjectLT(int yyy) {
+    public abstract void renderObjectLT(int yyy);
 
-    }
+    public abstract void renderObjectLB(int yyy);
 
-    public void renderObjectLB(int yyy) {
+    public abstract void renderObjectRT(int yyy);
 
-    }
+    public abstract void renderObjectRB(int yyy);
 
-    public void renderObjectRT(int yyy) {
-
-    }
-
-    public void renderObjectRB(int yyy) {
-
-    }
-
-    public boolean shouldRender() {
+    protected boolean shouldRender() {
         if (this.tiedFeature instanceof IAdorufuTogglableFeature) {
             return ((IAdorufuTogglableFeature) this.tiedFeature).isEnabled();
         }

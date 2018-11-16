@@ -151,8 +151,11 @@ public class TTFontRenderer extends FontRenderer {
             Color currentColor = c;
             TTFont currentFont = font;
             int width = 0;
-            boolean randomCase = false, bold = false, italic = false,
-                    strikethrough = false, underline = false;
+            boolean randomCase = false;
+            boolean bold = false;
+            boolean italic = false;
+            boolean strikethrough = false;
+            boolean underline = false;
 
             for (int index = 0; index < parts.length; index++) {
                 if (parts[index].length() <= 0)

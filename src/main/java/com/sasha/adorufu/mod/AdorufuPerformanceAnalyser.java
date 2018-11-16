@@ -27,8 +27,6 @@ public class AdorufuPerformanceAnalyser {
 
     private ArrayList<Integer> performanceTimesNormal;
     private ArrayList<Integer> performanceTimesRender;
-    private int counterNormal = 0;
-    private int counterRender = 0;
 
     public AdorufuPerformanceAnalyser() {
         performanceTimesNormal = new ArrayList<>();

@@ -33,7 +33,7 @@ import java.math.RoundingMode;
 public class ElytraBoostFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
     @Setting
-    static float limit = 2.5f;
+    private static float limit = 2.5f;
 
     public ElytraBoostFeature() {
         super("ElytraBoost", AdorufuCategory.MOVEMENT);
