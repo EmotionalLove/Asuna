@@ -21,6 +21,7 @@ package com.sasha.adorufu.mod.misc;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.command.commands.PathCommand;
 import com.sasha.adorufu.mod.feature.IAdorufuFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuRenderableFeature;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
@@ -73,6 +74,8 @@ public class Manager {
          * If a feature is togglable, it will only tick if it's enabled.
          */
         public static void tickFeatures() {
+            long l = System.currentTimeMillis();
+            PathCommand.tick();
             featureRegistry
                     .stream()
                     .filter(IAdorufuTickableFeature.class::isInstance)
@@ -86,6 +89,7 @@ public class Manager {
                         }
                         feature.onTick();
                     });
+            AdorufuMod.PERFORMANCE_ANAL.recordNewNormalTime((int) (System.currentTimeMillis() - l));
         }
 
         public static void renderFeatures() {

@@ -80,10 +80,7 @@ public class JesusFeature extends AbstractAdorufuTogglableFeature
 
     public boolean doJesus() {
         try {
-            if (!this.isEnabled()) {
-                return false;
-            }
-            return !inLiquid(AdorufuMod.minecraft.player, false) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
+            return this.isEnabled() && !inLiquid(AdorufuMod.minecraft.player, false) && !AdorufuMod.minecraft.gameSettings.keyBindSneak.isKeyDown() && !(AdorufuMod.minecraft.player.fallDistance > 2);
         } catch (Exception e) {
             return false;
         }

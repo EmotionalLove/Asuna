@@ -95,47 +95,59 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
         if (entityLivingBase.isEmpty()) return;
         Optional<EntityLivingBase> bb = entityLivingBase.stream().findFirst();
         EntityLivingBase b = bb.get();
-        if (b instanceof EntityAnimal && !this.getOption("Passives")) return;
-        if (b instanceof EntityOtherPlayerMP && !this.getOption("Players")) return;
-        if (b instanceof EntityMob && !this.getOption("Hostiles")) return;
-        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName())) return;
+        if (!shouldHitEntity(b)) return;
         if (this.getOption("Auto Sword Switch")) {
-            for (int s = 0; s <= 8; s++) {
-                ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
-                if (stack.getItem() == Items.DIAMOND_SWORD) {
-                    AdorufuMod.minecraft.player.inventory.currentItem = s;
-                    break;
-                }
-                if (stack.getItem() == Items.IRON_SWORD) {
-                    AdorufuMod.minecraft.player.inventory.currentItem = s;
-                    break;
-                }
-                if (stack.getItem() == Items.STONE_SWORD) {
-                    AdorufuMod.minecraft.player.inventory.currentItem = s;
-                    break;
-                }
-                if (stack.getItem() == Items.WOODEN_SWORD) {
-                    AdorufuMod.minecraft.player.inventory.currentItem = s;
-                    break;
-                }
-                if (stack.getItem() == Items.GOLDEN_SWORD) {
-                    AdorufuMod.minecraft.player.inventory.currentItem = s;
-                    break;
-                }
+            findSword();
+            return;
+        }
+        float yaw = minecraft.player.rotationYaw;
+        float pitch = minecraft.player.rotationPitch;
+        float yawh = minecraft.player.rotationYawHead;
+        boolean wasSprinting = minecraft.player.isSprinting();
+        rotateTowardsEntity(b);
+        minecraft.player.setSprinting(false);
+        minecraft.playerController.attackEntity(minecraft.player, b);
+        minecraft.player.swingArm(EnumHand.MAIN_HAND);
+        minecraft.player.rotationYaw = yaw;
+        minecraft.player.rotationPitch = pitch;
+        minecraft.player.rotationYawHead = yawh;
+        if (wasSprinting)
+            minecraft.player.setSprinting(true);
+    }
+
+    private boolean shouldHitEntity(EntityLivingBase b) {
+        if (b instanceof EntityAnimal && !this.getOption("Passives")) return true;
+        if (b instanceof EntityOtherPlayerMP && !this.getOption("Players")) return true;
+        if (b instanceof EntityMob && !this.getOption("Hostiles")) return true;
+        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName())) return true;
+        return false;
+    }
+
+    private void findSword() {
+        for (int s = 0; s <= 8; s++) {
+            ItemStack stack = AdorufuMod.minecraft.player.inventory.getStackInSlot(s);
+            if (stack.getItem() == Items.DIAMOND_SWORD) {
+                AdorufuMod.minecraft.player.inventory.currentItem = s;
+                break;
             }
-            float yaw = minecraft.player.rotationYaw;
-            float pitch = minecraft.player.rotationPitch;
-            float yawh = minecraft.player.rotationYawHead;
-            boolean wasSprinting = minecraft.player.isSprinting();
-            rotateTowardsEntity(b);
-            minecraft.player.setSprinting(false);
-            minecraft.playerController.attackEntity(minecraft.player, b);
-            minecraft.player.swingArm(EnumHand.MAIN_HAND);
-            minecraft.player.rotationYaw = yaw;
-            minecraft.player.rotationPitch = pitch;
-            minecraft.player.rotationYawHead = yawh;
-            if (wasSprinting)
-                minecraft.player.setSprinting(true);
+            if (stack.getItem() == Items.IRON_SWORD) {
+                AdorufuMod.minecraft.player.inventory.currentItem = s;
+                break;
+            }
+            if (stack.getItem() == Items.STONE_SWORD) {
+                AdorufuMod.minecraft.player.inventory.currentItem = s;
+                break;
+            }
+            if (stack.getItem() == Items.WOODEN_SWORD) {
+                AdorufuMod.minecraft.player.inventory.currentItem = s;
+                break;
+            }
+            if (stack.getItem() == Items.GOLDEN_SWORD) {
+                AdorufuMod.minecraft.player.inventory.currentItem = s;
+                break;
+            }
         }
     }
+
 }
+e

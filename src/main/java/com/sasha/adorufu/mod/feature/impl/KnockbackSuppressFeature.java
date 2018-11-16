@@ -42,15 +42,6 @@ public class KnockbackSuppressFeature extends AbstractAdorufuTogglableFeature
                 new AdorufuFeatureOption<>("Reduce", false));
     }
 
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
 
     @Override
     public void onTick() {
