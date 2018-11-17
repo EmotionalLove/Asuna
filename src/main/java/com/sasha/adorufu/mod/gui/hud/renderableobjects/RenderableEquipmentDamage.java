@@ -35,139 +35,118 @@ public class RenderableEquipmentDamage extends RenderableObject {
     }
 
     public String toString() {
-        StringBuilder boolder = new StringBuilder("\247fEquipment Damage:");
-        HELMCLR:
+        StringBuilder builder = new StringBuilder("\247fEquipment Damage:");
         if (helmDamage(false) != 0) {
-            boolder.append(" \2477H: ");
+            builder.append(" \2477H: ");
             int max = helmDamage(true);
             int cur = helmDamage(false);
             String color = "\247";
             if ((max / 2) < max - cur) {
                 color += "a";
-                boolder.append(color).append(max - cur);
-                break HELMCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 3) < max - cur) {
                 color += "e";
-                boolder.append(color).append(max - cur);
-                break HELMCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 4) < max - cur) {
                 color += "c";
-                boolder.append(color).append(max - cur);
-                break HELMCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 8) < max - cur) {
                 color += "4";
-                boolder.append(color).append(max - cur);
+                builder.append(color).append(max - cur);
             }
         }
-        CHESTCLR:
         if (shirtDamage(false) != 0) {
-            boolder.append(" \2477C: ");
+            builder.append(" \2477C: ");
             int max = shirtDamage(true);
             int cur = shirtDamage(false);
             String color = "\247";
             if ((max / 2) < max - cur) {
                 color += "a";
-                boolder.append(color).append(max - cur);
-                break CHESTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 3) < max - cur) {
                 color += "e";
-                boolder.append(color).append(max - cur);
-                break CHESTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 4) < max - cur) {
                 color += "c";
-                boolder.append(color).append(max - cur);
-                break CHESTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 8) < max - cur) {
                 color += "4";
-                boolder.append(color).append(max - cur);
+                builder.append(color).append(max - cur);
             }
         }
-        PANTCLR:
         if (pantsDamage(false) != 0) {
-            boolder.append(" \2477L: ");
+            builder.append(" \2477L: ");
             int max = pantsDamage(true);
             int cur = pantsDamage(false);
             String color = "\247";
             if ((max / 2) < max - cur) {
                 color += "a";
-                boolder.append(color).append(max - cur);
-                break PANTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 3) < max - cur) {
                 color += "e";
-                boolder.append(color).append(max - cur);
-                break PANTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 4) < max - cur) {
                 color += "c";
-                boolder.append(color).append(max - cur);
-                break PANTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 8) < max - cur) {
                 color += "4";
-                boolder.append(color).append(max - cur);
+                builder.append(color).append(max - cur);
             }
         }
-        BOOTCLR:
         if (bootsDamage(false) != 0) {
-            boolder.append(" \2477B: ");
+            builder.append(" \2477B: ");
             int max = bootsDamage(true);
             int cur = bootsDamage(false);
             String color = "\247";
             if ((max / 2) < max - cur) {
                 color += "a";
-                boolder.append(color).append(max - cur);
-                break BOOTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 3) < max - cur) {
                 color += "e";
-                boolder.append(color).append(max - cur);
-                break BOOTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 4) < max - cur) {
                 color += "c";
-                boolder.append(color).append(max - cur);
-                break BOOTCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 8) < max - cur) {
                 color += "4";
-                boolder.append(color).append(max - cur);
+                builder.append(color).append(max - cur);
             }
         }
-        HELDCLR:
         if (heldDamage(false) != 0) {
-            boolder.append(" \2477Held: ");
+            builder.append(" \2477Held: ");
             int max = heldDamage(true);
             int cur = heldDamage(false);
             String color = "\247";
             if ((max / 2) > cur - max) {
                 color += "a";
-                boolder.append(color).append(max - cur);
-                break HELDCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 3) < max - cur) {
                 color += "e";
-                boolder.append(color).append(max - cur);
-                break HELDCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 4) < max - cur) {
                 color += "c";
-                boolder.append(color).append(max - cur);
-                break HELDCLR;
-            }
+                builder.append(color).append(max - cur);
+            } else
             if ((max / 8) < max - cur) {
                 color += "4";
-                boolder.append(color).append(max - cur);
-                break HELDCLR;
+                builder.append(color).append(max - cur);
             }
         }
-        return boolder.toString();
+        return builder.toString();
     }
 
     private static int bootsDamage(boolean bool) {
