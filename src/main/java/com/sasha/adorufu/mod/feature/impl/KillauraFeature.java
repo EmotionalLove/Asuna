@@ -98,7 +98,6 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
         if (!shouldHitEntity(b)) return;
         if (this.getOption("Auto Sword Switch")) {
             findSword();
-            return;
         }
         float yaw = minecraft.player.rotationYaw;
         float pitch = minecraft.player.rotationPitch;
@@ -115,11 +114,12 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
             minecraft.player.setSprinting(true);
     }
 
-    private boolean shouldHitEntity(EntityLivingBase b) {
+    private boolean shouldHitEntity(Entity b) {
         if (b instanceof EntityAnimal && this.getOption("Passives")) return true;
         if (b instanceof EntityOtherPlayerMP && this.getOption("Players")) return true;
         if (b instanceof EntityMob && this.getOption("Hostiles")) return true;
-        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName()) && this.getOption("Friends")) return true;
+        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName()) && this.getOption("Friends"))
+            return true;
         return false;
     }
 

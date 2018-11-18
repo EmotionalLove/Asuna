@@ -32,8 +32,8 @@ public class EntityMoveEvent extends SimpleCancellableEvent {
     private double y;
     private double z;
 
-    public EntityMoveEvent(World world, int entityId, MoverType moverType, double x, double y, double z) {
-        entity = world.getEntityByID(entityId);
+    public EntityMoveEvent(Entity entity, World world, int entityId, MoverType moverType, double x, double y, double z) {
+        this.entity = entity;
         this.moverType = moverType;
         this.x = x;
         this.y = y;

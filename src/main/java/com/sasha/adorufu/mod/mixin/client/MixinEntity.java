@@ -53,9 +53,9 @@ public abstract class MixinEntity {
 
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo info) {
-        EntityMoveEvent event = new EntityMoveEvent(this.world, this.entityId, type, x, y, z);
+        EntityMoveEvent event = new EntityMoveEvent((Entity)(Object)this, this.world, this.entityId, type, x, y, z);
         AdorufuMod.EVENT_MANAGER.invokeEvent(event);
-        if (event.isCancelled()) return;
+        if (event.isCancelled()) info.cancel();
         x = event.getX();
         y = event.getY();
         z = event.getZ();
