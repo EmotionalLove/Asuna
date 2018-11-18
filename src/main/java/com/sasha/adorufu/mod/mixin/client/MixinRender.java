@@ -54,4 +54,15 @@ public abstract class MixinRender {
 
         ci.cancel();
     }
+
+    @Inject(
+            method = "renderLivingLabel",
+            at = @At(
+                    value = "HEAD"
+            )
+    )
+    private void renderLivingLabel(Entity entityIn, String str, double x, double y, double z, int maxDistance, CallbackInfo ci) {
+        if (Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) maxDistance = 256;
+    }
+
 }
