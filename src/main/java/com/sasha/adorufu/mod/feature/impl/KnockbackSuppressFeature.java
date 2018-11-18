@@ -18,6 +18,8 @@
 
 package com.sasha.adorufu.mod.feature.impl;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.adorufu.mod.events.playerclient.PlayerKnockbackEvent;
 import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
@@ -27,6 +29,7 @@ import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOption;
 import com.sasha.adorufu.mod.feature.option.AdorufuFeatureOptionBehaviour;
 import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
+import net.minecraft.network.play.server.SPacketExplosion;
 
 
 /**
@@ -58,5 +61,23 @@ public class KnockbackSuppressFeature extends AbstractAdorufuTogglableFeature
         e.setMotionX(e.getMotionX() / 3);
         e.setMotionY(e.getMotionY() / 3);
         e.setMotionZ(e.getMotionZ() / 3);
+    }
+    @SimpleEventHandler
+    public void onPlayerPacketKnockBack(ClientPacketRecieveEvent e) {
+        if (!this.isEnabled()) return;
+        if (e.getRecievedPacket() instanceof SPacketExplosion) {
+            SPacketExplosion explosion = e.getRecievedPacket();
+            PlayerKnockbackEvent event = new PlayerKnockbackEvent(explosion.getMotionX(),
+                    explosion.getMotionY(),
+                    explosion.getMotionZ());
+            AdorufuMod.EVENT_MANAGER.invokeEvent(event);
+            if (event.isCancelled()) {
+                e.setCancelled(true);
+                return;
+            }
+            explosion.motionX = (float) event.getMotionX();
+            explosion.motionY = (float) event.getMotionY();
+            explosion.motionZ = (float) event.getMotionZ();
+        }
     }
 }

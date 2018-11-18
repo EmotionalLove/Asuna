@@ -97,7 +97,7 @@ public abstract class MixinEntity {
         // >mixin doesn't allow this == mc.player
         // (thinking)
         // mfw
-        if (this.equals(AdorufuMod.minecraft.player)) {
+        if ((Entity)(Object) this instanceof EntityPlayerSP) {
             PlayerKnockbackEvent event = new PlayerKnockbackEvent(x, y, z);
             AdorufuMod.EVENT_MANAGER.invokeEvent(event);
             if (event.isCancelled()) {
