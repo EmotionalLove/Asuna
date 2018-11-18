@@ -328,6 +328,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Feature.registerFeature(new PortalGodModeFeature());
         Manager.Feature.registerFeature(new AutoEatFeature());
         Manager.Feature.registerFeature(new ShulkerSpyFeature());
+        Manager.Feature.registerFeature(new PeekFeature());
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
         AdorufuPluginLoader.getLoadedPlugins().forEach(AdorufuPlugin::onFeatureRegistration);
     }
