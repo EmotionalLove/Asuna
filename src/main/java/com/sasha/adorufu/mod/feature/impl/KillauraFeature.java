@@ -116,10 +116,10 @@ public class KillauraFeature extends AbstractAdorufuTogglableFeature implements 
     }
 
     private boolean shouldHitEntity(EntityLivingBase b) {
-        if (b instanceof EntityAnimal && !this.getOption("Passives")) return true;
-        if (b instanceof EntityOtherPlayerMP && !this.getOption("Players")) return true;
-        if (b instanceof EntityMob && !this.getOption("Hostiles")) return true;
-        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName())) return true;
+        if (b instanceof EntityAnimal && this.getOption("Passives")) return true;
+        if (b instanceof EntityOtherPlayerMP && this.getOption("Players")) return true;
+        if (b instanceof EntityMob && this.getOption("Hostiles")) return true;
+        if (b instanceof EntityOtherPlayerMP && FRIEND_MANAGER.isFriended(b.getName()) && this.getOption("Friends")) return true;
         return false;
     }
 
