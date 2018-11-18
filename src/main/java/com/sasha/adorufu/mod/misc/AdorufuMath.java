@@ -45,7 +45,7 @@ public abstract class AdorufuMath {
                 .map(PotionEffect::getPotion)
                 .filter(Potion::hasStatusIcon)
                 .collect(Collectors.toList());
-        return potionList.stream().anyMatch(p -> !p.isBadEffect()) ? 48 : potionList.stream().anyMatch(Potion::isBadEffect) ? 24 : 0;
+        return potionList.stream().anyMatch(Potion::isBadEffect) ? 48 : potionList.stream().anyMatch(Potion::isBadEffect) ? 24 : 0;
     }
 
     public static boolean areAllPotionsAmbient(Collection<PotionEffect> collection) {
