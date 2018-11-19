@@ -20,8 +20,13 @@ package com.sasha.adorufu.mod.mixin.client;
 
 import com.sasha.adorufu.mod.AdorufuMod;
 import com.sasha.adorufu.mod.events.client.ClientPlayerInventoryCloseEvent;
+import com.sasha.adorufu.mod.misc.GlobalGuiButton;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,6 +41,41 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Shadow public Container inventorySlots;
 
+    @Shadow protected abstract void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type);
+
+    private GlobalGuiButton storeButton;
+    private GlobalGuiButton stealButton;
+
+    @Inject(method = "initGui", at = @At("TAIL"), cancellable = true)
+    public void initGui(CallbackInfo info) {
+        if (!((GuiContainer)(Object)this instanceof GuiChest)) {
+            info.cancel();
+            return;
+        }
+        GuiChest chest = (GuiChest) (Object)this;
+        storeButton = new GlobalGuiButton("Store",69, 50, 75,40,20, "Store", btn -> {
+
+        });
+        stealButton = new GlobalGuiButton("Steal", 70, 50, 50, 40, 20, "Steal", btn -> {
+            new Thread(() -> {
+                for(int i = 0; i < chest.inventoryRows * 9; i++) {
+                    Slot s = chest.inventorySlots.getSlot(i);
+                    if (s.getStack().getItem() != Items.AIR) {
+                        try {
+                            Thread.sleep(500L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        handleMouseClick(s, i, 0, ClickType.QUICK_MOVE);
+                    }
+                }
+            }).start();
+
+        });
+        AdorufuMod.globalGuiButtonManager.globalButtons.add(storeButton);
+        AdorufuMod.globalGuiButtonManager.globalButtons.add(stealButton);
+    }
+
     @Inject(method = "onGuiClosed", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Container;onContainerClosed(Lnet/minecraft/entity/player/EntityPlayer;)V"), cancellable = true)
     public void onContainerClosed(CallbackInfo info) {
         ClientPlayerInventoryCloseEvent event = new ClientPlayerInventoryCloseEvent(this.inventorySlots);
@@ -43,5 +83,13 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         if (event.isCancelled()) {
             info.cancel();
         }
+    }
+
+
+
+
+    @Inject(method = "onGuiClosed", at = @At("HEAD"))
+    public void onGuiClosed(CallbackInfo info) {
+        AdorufuMod.globalGuiButtonManager.globalButtons.clear();
     }
 }

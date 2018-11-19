@@ -38,6 +38,7 @@ import com.sasha.adorufu.mod.friend.FriendManager;
 import com.sasha.adorufu.mod.gui.fonts.FontManager;
 import com.sasha.adorufu.mod.gui.hud.AdorufuHUD;
 import com.sasha.adorufu.mod.gui.hud.renderableobjects.*;
+import com.sasha.adorufu.mod.misc.GlobalGuiButton;
 import com.sasha.adorufu.mod.misc.Manager;
 import com.sasha.adorufu.mod.misc.TPS;
 import com.sasha.adorufu.mod.remote.RemoteDataManager;
@@ -110,6 +111,11 @@ public class AdorufuMod implements SimpleListener {
     public static AdorufuHUD adorufuHUD;
     public static Minecraft minecraft = Minecraft.getMinecraft();
     private static Logger logger = LogManager.getLogger("Adorufu " + VERSION);
+
+    /**
+     * Buttons
+     */
+    public static GlobalGuiButton.Manager globalGuiButtonManager = new GlobalGuiButton.Manager();
 
 
     ///////////// FORGE INIT ///////////////
@@ -288,7 +294,7 @@ public class AdorufuMod implements SimpleListener {
         Manager.Feature.registerFeature(new CrystalLogoutFeature());
         Manager.Feature.registerFeature(new JesusFeature());
         Manager.Feature.registerFeature(new ClientIgnoreFeature());
-        Manager.Feature.registerFeature(new CarpetPlacerFeature());
+        Manager.Feature.registerFeature(new AutoPlaceFeature());
         Manager.Feature.registerFeature(new AutoIgnoreFeature());
         Manager.Feature.registerFeature(new AutoSprintFeature());
         Manager.Feature.registerFeature(new CameraClipFeature());

@@ -23,31 +23,33 @@ import com.sasha.adorufu.mod.feature.AbstractAdorufuTogglableFeature;
 import com.sasha.adorufu.mod.feature.AdorufuCategory;
 import com.sasha.adorufu.mod.feature.IAdorufuTickableFeature;
 import com.sasha.adorufu.mod.misc.TPS;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 
-public class CarpetPlacerFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
+public class AutoPlaceFeature extends AbstractAdorufuTogglableFeature implements IAdorufuTickableFeature {
 
-    public CarpetPlacerFeature() {
-        super("AutoCarpetPlace", AdorufuCategory.MOVEMENT);
+    public AutoPlaceFeature() {
+        super("AutoPlace", AdorufuCategory.MOVEMENT);
     }
 
     @Override
     public void onTick() {
-        if (AdorufuMod.minecraft.player.getHeldItem(EnumHand.MAIN_HAND).getTranslationKey().contains("tile.woolCarpet")) {
+        ItemStack stack = AdorufuMod.minecraft.player.getHeldItem(EnumHand.MAIN_HAND);
+        Block inHandBlock = Block.getBlockFromItem(stack.getItem());
+        if (inHandBlock != Blocks.AIR) {
             RayTraceResult rayTraceResult = AdorufuMod.minecraft.objectMouseOver;
             if (rayTraceResult.typeOfHit != RayTraceResult.Type.BLOCK) return; // make sure we're looking at a block
             IBlockState state = AdorufuMod.minecraft.world.getBlockState(rayTraceResult.getBlockPos());
-            if (state.getMaterial() == Material.CARPET || state.getBlock() instanceof BlockContainer)
+            if (state.getMaterial() == inHandBlock.getMaterial(inHandBlock.defaultBlockState) || state.getBlock() instanceof BlockContainer)
                 return;
             if (rayTraceResult.sideHit != EnumFacing.UP || AdorufuMod.minecraft.rightClickDelayTimer > 0 || !TPS.isServerResponding())
                 return;
-            //BlockPos up = rayTraceResult.getBlockPos().up();
-            //AdorufuMath.placeBlock(up);
             AdorufuMod.minecraft.rightClickMouse();
         }
 

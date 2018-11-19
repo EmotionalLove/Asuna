@@ -18,12 +18,18 @@
 
 package com.sasha.adorufu.mod.mixin.client;
 
+import com.sasha.adorufu.mod.AdorufuMod;
+import com.sasha.adorufu.mod.misc.GlobalGuiButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,11 +38,33 @@ import java.util.List;
 @Mixin(value = GuiScreen.class, priority = 999)
 public abstract class MixinGuiScreen {
 
-
-    @Shadow public abstract void sendChatMessage(String msg);
-
     @Shadow public int height;
     @Shadow public int width;
     @Shadow public Minecraft mc;
     @Shadow protected List<GuiButton> buttonList;
+
+    @Inject(method = "actionPerformed", at = @At("HEAD"))
+    protected void actionPerformed(GuiButton button, CallbackInfo info) throws IOException {
+        if (button instanceof GlobalGuiButton) AdorufuMod.globalGuiButtonManager.performAction((GlobalGuiButton) button);
+    }
+    @Inject(method = "drawScreen", at = @At("HEAD"))
+    public void drawScreen(int mouseX, int mouseY, float partialTicks, CallbackInfo info) {
+        for (GlobalGuiButton globalButton : AdorufuMod.globalGuiButtonManager.globalButtons) {
+            globalButton.drawButton(this.mc, mouseX, mouseY, partialTicks);
+        }
+    }
+
+    @Inject(method = "mouseClicked", at = @At("HEAD"))
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton, CallbackInfo info) throws IOException {
+        if (mouseButton == 0) {
+            for (GlobalGuiButton globalButton : AdorufuMod.globalGuiButtonManager.globalButtons) {
+                if (globalButton.mousePressed(this.mc, mouseX, mouseY)) {
+                    globalButton.playPressSound(this.mc.getSoundHandler());
+                    AdorufuMod.globalGuiButtonManager.performAction(globalButton);
+                }
+            }
+        }
+    }
+
+
 }
