@@ -54,7 +54,19 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         }
         GuiChest chest = (GuiChest) (Object)this;
         storeButton = new GlobalGuiButton("Store",69, 50, 75,40,20, "Store", btn -> {
-
+            new Thread(() -> {
+                for(int i = 0; i < (chest.inventoryRows * 9) + 44; i++) {
+                    Slot s = chest.inventorySlots.getSlot(i);
+                    if (s.getStack().getItem() != Items.AIR) {
+                        try {
+                            Thread.sleep(250L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        handleMouseClick(s, i, 0, ClickType.QUICK_MOVE);
+                    }
+                }
+            }).start();
         });
         stealButton = new GlobalGuiButton("Steal", 70, 50, 50, 40, 20, "Steal", btn -> {
             new Thread(() -> {
@@ -62,7 +74,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                     Slot s = chest.inventorySlots.getSlot(i);
                     if (s.getStack().getItem() != Items.AIR) {
                         try {
-                            Thread.sleep(500L);
+                            Thread.sleep(250L);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
