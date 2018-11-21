@@ -48,8 +48,14 @@ public class AutoPlaceFeature extends AbstractAdorufuTogglableFeature implements
             IBlockState state = AdorufuMod.minecraft.world.getBlockState(rayTraceResult.getBlockPos());
             if (state.getMaterial() == inHandBlock.getMaterial(inHandBlock.defaultBlockState) || state.getBlock() instanceof BlockContainer)
                 return;
-            if (rayTraceResult.sideHit != EnumFacing.UP || AdorufuMod.minecraft.rightClickDelayTimer > 0 || !TPS.isServerResponding())
+            if (AdorufuMod.minecraft.rightClickDelayTimer > 0 || !TPS.isServerResponding())
                 return;
+            if (rayTraceResult.sideHit != EnumFacing.UP) {
+                if (state.getMaterial() == inHandBlock.getMaterial(inHandBlock.defaultBlockState)) {
+                    AdorufuMod.minecraft.rightClickMouse();
+                    return;
+                }
+            }
             AdorufuMod.minecraft.rightClickMouse();
         }
 
