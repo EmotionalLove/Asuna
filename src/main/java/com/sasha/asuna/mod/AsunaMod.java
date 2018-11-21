@@ -81,8 +81,8 @@ public class AsunaMod implements SimpleListener {
 
     public static final String MODID = "asunaforge";
     public static final String NAME = "Asuna";
-    public static final String JAP_NAME = "\u30A2\u30C9\u30EB\u30D5";
-    public static final String VERSION = "1.6";
+    public static final String JAP_NAME = "\u30A2\u30B9\u30CA";
+    public static final String VERSION = "2.0";
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     @Deprecated public static AsunaDataManager DATA_MANAGER = new AsunaDataManager();
     public static SettingHandler SETTING_HANDLER = new SettingHandler("AsunaSettingData");
@@ -234,7 +234,7 @@ public class AsunaMod implements SimpleListener {
     public static void logMsg(boolean consoleOnly, String logMsg) {
         logger.log(Level.INFO, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + "\2478] \2477" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\247b" + JAP_NAME + "\2478] \2477" + logMsg));
     }
 
     /**
@@ -250,7 +250,7 @@ public class AsunaMod implements SimpleListener {
     public static void logErr(boolean consoleOnly, String logMsg) {
         logger.log(Level.ERROR, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247cERROR\2478] \247c" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\247b" + JAP_NAME + " \247cERROR\2478] \247c" + logMsg));
     }
 
     /**
@@ -259,7 +259,7 @@ public class AsunaMod implements SimpleListener {
     public static void logWarn(boolean consoleOnly, String logMsg) {
         logger.log(Level.WARN, logMsg);
         if (consoleOnly) return;
-        minecraft.player.sendMessage(new TextComponentString("\2478[\2474" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
+        minecraft.player.sendMessage(new TextComponentString("\2478[\247b" + JAP_NAME + " \247eWARNING\2478] \247e" + logMsg));
     }
 
 
@@ -268,6 +268,7 @@ public class AsunaMod implements SimpleListener {
     private void registerFeaturesOld() {
         Manager.Feature.featureRegistry.clear();
         Manager.Feature.registerFeature(new XrayFeature());
+        Manager.Feature.registerFeature(new FlightFeature());
         Manager.Feature.registerFeature(new WireframeFeature());
         Manager.Feature.registerFeature(new NamePlatesFeature());
         Manager.Feature.registerFeature(new TickrateRenderableFeature());
