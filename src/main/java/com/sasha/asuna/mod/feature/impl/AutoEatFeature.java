@@ -38,7 +38,7 @@ public class AutoEatFeature extends AbstractAsunaTogglableFeature implements IAs
                 new AsunaFeatureOptionBehaviour(true),
                 new AsunaFeatureOption<>("Priority gapple", false),
                 new AsunaFeatureOption<>("Conserve  gapple", true),
-                new AsunaFeatureOption<>("PvP gapple", true)); // auto eat gapples when health is low
+                new AsunaFeatureOption<>("PvP gapple", false)); // auto eat gapples when health is low
     }
 
     @Override
