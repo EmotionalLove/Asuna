@@ -33,6 +33,7 @@
     "MixinEntityLlama",
     "MixinGuiIngameMenu",
     "MixinChunkRenderContainer",
-    "MixinRenderList"
+    "MixinRenderList",
+    "MixinVboRenderList"
   ]
 }
