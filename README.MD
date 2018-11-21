@@ -1,4 +1,4 @@
-# Asuna
+# Asuna (formerly known as Adorufu)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2cc5fb986d44f5fa71edfee1edea817)](https://app.codacy.com/app/EmotionalLove/Asuna_Client?utm_source=github.com&utm_medium=referral&utm_content=EmotionalLove/Asuna_Client&utm_campaign=Badge_Grade_Settings)
 
