@@ -48,7 +48,7 @@ public abstract class MixinRender {
     )
     private void modifyLabelText(Entity entityIn, String str, double x, double y, double z, int maxDistance, CallbackInfo ci, double d0, boolean flag, float f, float f1, boolean flag1, float f2, int i) {
         if ((entityIn instanceof EntityOtherPlayerMP) && Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) {
-            str += " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn).getHealth());
+            str += " " + NamePlatesFeature.formatHealthTag(((EntityOtherPlayerMP) entityIn));
         }
         EntityRenderer.drawNameplate(this.getFontRendererFromRenderManager(), str, (float)x, (float)y + f2, (float)z, i, f, f1, flag1, flag);
 
@@ -62,7 +62,7 @@ public abstract class MixinRender {
             )
     )
     private void renderLivingLabel(Entity entityIn, String str, double x, double y, double z, int maxDistance, CallbackInfo ci) {
-        if (Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) maxDistance = 256;
+        if (Manager.Feature.isFeatureEnabled(NamePlatesFeature.class)) maxDistance = 1000;
     }
 
 }

@@ -37,13 +37,14 @@ public class AutoEatFeature extends AbstractAsunaTogglableFeature implements IAs
         super("AutoEat", AsunaCategory.MISC,
                 new AsunaFeatureOptionBehaviour(true),
                 new AsunaFeatureOption<>("Priority gapple", false),
-                new AsunaFeatureOption<>("Conserve  gapple", true));
+                new AsunaFeatureOption<>("Conserve  gapple", true),
+                new AsunaFeatureOption<>("PvP gapple", true)); // auto eat gapples when health is low
     }
 
     @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
-        if (AsunaMod.minecraft.player.getFoodStats().getFoodLevel() <= 8) {
+        if (needsToEat()) {
             // we need to eat
             for (int s = 0; s <= 8; s++) {
                 if (AsunaMod.minecraft.player.inventory.getStackInSlot(s).getItemUseAction() == EnumAction.EAT) {
@@ -51,7 +52,7 @@ public class AutoEatFeature extends AbstractAsunaTogglableFeature implements IAs
                     if (this.getOption("Conserve gapple") && AsunaMod.minecraft.player.inventory.getStackInSlot(s).getItem() == Items.GOLDEN_APPLE) {
                         continue;
 
-                    } else if (this.getOption("Priority gapple") && !checked && AsunaMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
+                    } else if ((this.getOption("Priority gapple") || this.getOption("PvP gapple")) && !checked && AsunaMod.minecraft.player.inventory.getStackInSlot(s).getItem() != Items.GOLDEN_APPLE) {
                         continue;
                     }
                     if (!eating) prevSlot = AsunaMod.minecraft.player.inventory.currentItem;
@@ -73,4 +74,12 @@ public class AutoEatFeature extends AbstractAsunaTogglableFeature implements IAs
             eating = false;
         }
     }
+
+    private boolean needsToEat() {
+        if (this.getOption("PvP gapple")) {
+            return AsunaMod.minecraft.player.getFoodStats().getFoodLevel() <= 8 || AsunaMod.minecraft.player.getHealth() + AsunaMod.minecraft.player.getAbsorptionAmount() < 10.0f;
+        }
+        return AsunaMod.minecraft.player.getFoodStats().getFoodLevel() <= 8;
+    }
+
 }

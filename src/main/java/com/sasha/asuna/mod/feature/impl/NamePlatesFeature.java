@@ -21,6 +21,7 @@ package com.sasha.asuna.mod.feature.impl;
 import com.sasha.asuna.mod.feature.AbstractAsunaTogglableFeature;
 import com.sasha.asuna.mod.feature.AsunaCategory;
 import com.sasha.asuna.mod.feature.annotation.FeatureInfo;
+import net.minecraft.entity.EntityLivingBase;
 
 import static com.sasha.asuna.mod.misc.AsunaMath.dround;
 
@@ -30,15 +31,20 @@ public class NamePlatesFeature extends AbstractAsunaTogglableFeature {
         super("NamePlates", AsunaCategory.RENDER);
     }
 
-    public static String formatHealthTag(double health) {
-        if (health > 15.0) {
-            return "\247" + "a" + (dround(health / 2, 3)) + " " + "\247" + "c<3";
-        } else if (health > 10.0) {
-            return "\247" + "e" + (dround(health / 2, 3)) + " " + "\247" + "c<3";
-        } else if (health > 5.0) {
-            return "\247" + "c" + (dround(health / 2, 3)) + " " + "\247" + "c<3";
-        } else if (health > 0.0) {
-            return "\247" + "4" + (dround(health / 2, 3)) + " " + "\247" + "c</3";
+    public static String formatHealthTag(EntityLivingBase e) {
+        float health = e.getHealth();
+        float gapple = e.getAbsorptionAmount();
+        float combined = health + gapple;
+        if (combined > 20.0) {
+            return "\247" + "b" + (dround(combined / 2, 3)) + " " + "\247" + "c<3";
+        } else if (combined > 15.0) {
+            return "\247" + "a" + (dround(combined / 2, 3)) + " " + "\247" + "c<3";
+        } else if (combined > 10.0) {
+            return "\247" + "e" + (dround(combined  / 2, 3)) + " " + "\247" + "c<3";
+        } else if (combined > 5.0) {
+            return "\247" + "c" + (dround(combined / 2, 3)) + " " + "\247" + "c<3";
+        } else if (combined > 0.0) {
+            return "\247" + "4" + (dround(combined / 2, 3)) + " " + "\247" + "c</3";
         } else {
             return "\247" + "4</3";
         }
