@@ -101,8 +101,8 @@ public abstract class MixinEntityRenderer {
         return fr.drawString(text, x, y, Manager.Feature.isFeatureEnabled(NamePlatesFeature.class) ? 0xFFFFFF : color);
     }
 
-    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GlStateManager;matrixMode(I)V", ordinal = 4))
+    /*@Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/profiler/Profiler;endStartSection(Ljava/lang/String;)V", ordinal = 8))
     public void renderWorldPass$0(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
         if (Manager.Feature.isFeatureEnabled(WireframeFeature.class)) {
             GL11.glPushAttrib(1048575);
@@ -111,15 +111,15 @@ public abstract class MixinEntityRenderer {
             GL11.glLineWidth(1.0f);
             GL11.glPolygonMode(1032, 6913);
         }
-    }
+    }*/
 
-    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
+    /*@Inject(method = "renderWorldPass", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GlStateManager;shadeModel(I)V", ordinal = 1))
     public void renderWorldPass$1(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
         if (Manager.Feature.isFeatureEnabled(FreecamFeature.class)) {
             GL11.glPopAttrib();
         }
-    }
+    }*/
 
     @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;renderHand(FI)V"))
     public void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {

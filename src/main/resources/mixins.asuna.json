@@ -31,6 +31,8 @@
     "MixinGui",
     "MixinGuiConnecting",
     "MixinEntityLlama",
-    "MixinGuiIngameMenu"
+    "MixinGuiIngameMenu",
+    "MixinChunkRenderContainer",
+    "MixinRenderList"
   ]
 }
