@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Sasha Stevens 2018.
+ * Copyright (c) Sasha Stevens (2016 - 2018)
  *
  * This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -18,19 +18,19 @@
 
 package com.sasha.asuna.mod.events.asuna;
 
-import com.sasha.asuna.mod.feature.IAsunaTogglableFeature;
+import com.sasha.asuna.mod.feature.AbstractAsunaTogglableFeature;
 import com.sasha.asuna.mod.misc.ModuleState;
 import com.sasha.eventsys.SimpleCancellableEvent;
 
 /**
  * Created by Sasha on 08/08/2018 at 9:18 AM
  **/
-public class AsunaTogglableFeatureTogglePreEvent extends SimpleCancellableEvent {
-    private IAsunaTogglableFeature toggledModule;
+public class AsunaTogglableFeatureTogglePostEvent extends SimpleCancellableEvent {
+    private AbstractAsunaTogglableFeature toggledFeature;
     private ModuleState toggleState;
 
-    public AsunaTogglableFeatureTogglePreEvent(IAsunaTogglableFeature toggledModule, ModuleState toggleState) {
-        this.toggledModule = toggledModule;
+    public AsunaTogglableFeatureTogglePostEvent(AbstractAsunaTogglableFeature toggledModule, ModuleState toggleState) {
+        this.toggledFeature = toggledModule;
         this.toggleState = toggleState;
     }
 
@@ -38,8 +38,8 @@ public class AsunaTogglableFeatureTogglePreEvent extends SimpleCancellableEvent 
         return toggleState;
     }
 
-    public IAsunaTogglableFeature getToggledModule() {
-        return toggledModule;
+    public AbstractAsunaTogglableFeature getToggledFeature() {
+        return toggledFeature;
     }
 }
 

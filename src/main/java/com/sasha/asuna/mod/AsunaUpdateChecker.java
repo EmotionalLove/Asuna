@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Sasha Stevens 2018.
+ * Copyright (c) Sasha Stevens (2016 - 2018)
  *
  * This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -65,8 +65,8 @@ public class AsunaUpdateChecker implements SimpleListener {
                 return;
             }
             AsunaMod.scheduler.schedule(() -> {
-                AsunaMod.logMsg("\247eThere is an update available for Asuna.");
-                AsunaMod.logMsg("http://sashadev.me/EmotionalLove/Asuna");
+                AsunaMod.logMsg("\247eThere is an update available for Asuna!");
+                AsunaMod.logMsg("https://github.com/EmotionalLove/Asuna/releases");
                 AsunaMod.logMsg("Run \247l-update");
                 AsunaMod.logMsg("Current Version \247l" + AsunaMod.VERSION);
                 AsunaMod.logMsg("Latest Version \247l" + latestVer);

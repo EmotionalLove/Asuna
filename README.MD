@@ -2,11 +2,11 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2cc5fb986d44f5fa71edfee1edea817)](https://app.codacy.com/app/EmotionalLove/Asuna_Client?utm_source=github.com&utm_medium=referral&utm_content=EmotionalLove/Asuna_Client&utm_campaign=Badge_Grade_Settings)
 
-Asuna is a minecraft mod that assists the player in survival anarchy environments. "Asuna" is Japanese for "Adolf"
+Asuna is a minecraft mod that assists the player in survival anarchy environments. "Asuna" is a character in the popular anime "Sword Art Online"
 
 ### Installation tutorial
 
-Download the latest release of `Asuna.jar` from [here](https://github.com/EmotionalLove/Asuna_Client/releases/) and select the latest version and download the jar, than put it into your `.minecraft/mods` folder. Once you've logged into a world. Type `-bind clickgui <key>` and hit that key to open the ClickGUI, from there you can toggle modules. If you don't know what a module does, you can type `-help module <the name of the module>` and it'll tell you it's purpose. You can do the same with commands using `-help command <name of command>`, and it'll tell you the command's syntax and description.
+Download the latest release of `Asuna.jar` from [here](https://github.com/EmotionalLove/Asuna/releases) and select the latest version and download the jar, than put it into your `.minecraft/mods` folder. Once you've logged into a world. Type `-bind clickgui <key>` and hit that key to open the ClickGUI, from there you can toggle modules. If you don't know what a module does, you can type `-help module <the name of the module>` and it'll tell you it's purpose. You can do the same with commands using `-help command <name of command>`, and it'll tell you the command's syntax and description.
 
 If you'd like to reposition the HUD elements (like the tps counter), you can open `.minecraft/AsunaData.yml` in WordPad or TextEdit, and edit the bit that reads like the following:
 
