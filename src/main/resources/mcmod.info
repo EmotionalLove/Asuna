@@ -1,17 +1,17 @@
 [
   {
-    "modid": "adorufuforge",
-    "name": "Adorufu",
-    "description": "Adorufu is a minecraft mod that assists the player in survival anarchy environments. \"Adorufu\" is Japanese for \"Adolf\". Adorufu features many modules like Wireframe, AutoIgnore, Xray, Killaura, and more to help the player in Anarchy enviroments.",
+    "modid": "asunaforge",
+    "name": "Asuna",
+    "description": "Asuna is a minecraft mod that assists the player in survival anarchy environments. \"Asuna\" is Japanese for \"Adolf\". Asuna features many modules like Wireframe, AutoIgnore, Xray, Killaura, and more to help the player in Anarchy enviroments.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/EmotionalLove/Adorufu_Client/",
-    "updateUrl": "https://github.com/EmotionalLove/Adorufu_Client/releases/",
+    "url": "https://github.com/EmotionalLove/Asuna_Client/",
+    "updateUrl": "https://github.com/EmotionalLove/Asuna_Client/releases/",
     "authorList": [
       "Sasha"
     ],
     "credits": "Blake and Phi, for the emotional support and inspiration <3",
-    "logoFile": "adorufu.jpg",
+    "logoFile": "asuna.jpg",
     "screenshots": [],
     "dependencies": []
   }

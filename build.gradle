@@ -42,7 +42,7 @@ minecraft {
     version = project.forgeVersion
     runDir = 'run'
     mappings = project.mcpVersion
-    coreMod = 'com.sasha.adorufu.mod.mixin.AdorufuMixinLoader'
+    coreMod = 'com.sasha.asuna.mod.mixin.AsunaMixinLoader'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
@@ -110,7 +110,7 @@ processResources {
 
 mixin {
     defaultObfuscationEnv searge
-    add sourceSets.main, 'mixins.adorufu.refmap.json'
+    add sourceSets.main, 'mixins.asuna.refmap.json'
 }
 
 reobf {
@@ -168,13 +168,13 @@ build.dependsOn(shadowJar)
 jar {
     manifest {
         attributes(
-                "MixinConfigs": 'mixins.adorufu.json',
+                "MixinConfigs": 'mixins.asuna.json',
                 "tweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
                 "TweakOrder": 0,
                 'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.sasha.adorufu.mod.mixin.AdorufuMixinLoader',
+                'FMLCorePlugin': 'com.sasha.asuna.mod.mixin.AsunaMixinLoader',
                 'ForceLoadAsMod': 'true',
-                'FMLAT': 'adorufu_at.cfg'
+                'FMLAT': 'asuna_at.cfg'
         )
     }
 }
