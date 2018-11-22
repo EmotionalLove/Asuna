@@ -376,6 +376,7 @@ public class AsunaMod implements SimpleListener {
         COMMAND_PROCESSOR.register(UpdateCommand.class);
         COMMAND_PROCESSOR.register(PluginsCommand.class);
         COMMAND_PROCESSOR.register(AutoReconnectCommand.class);
+        COMMAND_PROCESSOR.register(PeekCommand.class);
         COMMAND_PROCESSOR.register(PathCommand.class);
         AsunaPluginLoader.getLoadedPlugins().forEach(AsunaPlugin::onCommandRegistration);
     }

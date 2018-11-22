@@ -24,18 +24,13 @@ import com.sasha.asuna.mod.feature.AsunaCategory;
 import com.sasha.asuna.mod.feature.IAsunaTickableFeature;
 import com.sasha.asuna.mod.feature.annotation.FeatureInfo;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemShulkerBox;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
@@ -45,47 +40,37 @@ public class ShulkerSpyFeature extends AbstractAsunaTogglableFeature implements 
         super("ShulkerSpy", AsunaCategory.RENDER);
     }
 
+    public static ConcurrentHashMap<String, TileEntityShulkerBox> shulkerMap = new ConcurrentHashMap<>();
+    private static String newMsg = "You can now view {}'s most recently held shulker box's contents with \"-peek {}\"!";
+
     /**
      * todo made a gui overlay thingy that shows the items in the grid
      */
-    @Override
     public void onTick() {
         if (!this.isEnabled()) return;
-        for (Entity entity : AsunaMod.minecraft.world.getLoadedEntityList()) {
-            if (entity instanceof EntityOtherPlayerMP
-                    && ((EntityOtherPlayerMP) entity).getHeldItemMainhand().getItem() instanceof ItemShulkerBox) {
-                NBTTagCompound tag = ((EntityOtherPlayerMP) entity).getHeldItemMainhand().getTagCompound();
-                if (tag != null && tag.hasKey("BlockEntityTag", 10)) {
-                    NBTTagCompound realTag = tag.getCompoundTag("BlockEntityTag");
-                    if (realTag.hasKey("Items", 9)) {
-                        NonNullList<ItemStack> shulkerContentsList = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
-                        ItemStackHelper.loadAllItems(realTag, shulkerContentsList);
-                        List<ItemStack> stacks = shulkerContentsList.stream().filter(e -> e.getItem() != Items.AIR).collect(Collectors.toList());
-                        this.drawShulkerBox(stacks, entity);
-                    }
-                }
+        List<Entity> valids = AsunaMod.minecraft.world.getLoadedEntityList()
+                .stream()
+                .filter(en -> en instanceof EntityOtherPlayerMP)
+                .filter(mp -> ((EntityOtherPlayerMP) mp).getHeldItemMainhand().getItem() instanceof ItemShulkerBox)
+                .collect(Collectors.toList());
+        for (Entity valid : valids) {
+            EntityOtherPlayerMP mp = (EntityOtherPlayerMP) valid;
+            TileEntityShulkerBox entityBox = new TileEntityShulkerBox();
+            ItemShulkerBox shulker = (ItemShulkerBox) mp.getHeldItemMainhand().getItem();
+            entityBox.blockType = shulker.getBlock();
+            entityBox.setWorld(AsunaMod.minecraft.world);
+            ItemStackHelper.loadAllItems(mp.getHeldItemMainhand().getTagCompound().getCompoundTag("BlockEntityTag"), entityBox.items);
+            entityBox.readFromNBT(mp.getHeldItemMainhand().getTagCompound().getCompoundTag("BlockEntityTag"));
+            entityBox.setCustomName(mp.getHeldItemMainhand().hasDisplayName() ? mp.getHeldItemMainhand().getDisplayName() : mp.getName() + "'s current shulker box");
+            if (!shulkerMap.containsKey(mp.getName().toLowerCase())) {
+                AsunaMod.logMsg(false, format(mp.getName()));
             }
+            shulkerMap.put(mp.getName().toLowerCase(), entityBox);
         }
     }
 
-    private void drawShulkerBox(List<ItemStack> items, Entity entity) {
-        if (!items.isEmpty()) {
-            GlStateManager.pushAttrib();
-            GlStateManager.translate(((items.size() - 1) / 2f) * .5f, .6, 0);
-            items.forEach(itemStack -> {
-                GlStateManager.pushAttrib();
-                RenderHelper.enableStandardItemLighting();
-                GlStateManager.scale(.5, .5, 0);
-                GlStateManager.disableLighting();
-                AsunaMod.minecraft.getRenderItem().zLevel = -5;
-                AsunaMod.minecraft.getRenderItem().renderItem(itemStack, itemStack.getItem() == Items.SHIELD ? ItemCameraTransforms.TransformType.FIXED : ItemCameraTransforms.TransformType.NONE);
-                AsunaMod.minecraft.getRenderItem().zLevel = 0;
-                GlStateManager.scale(2, 2, 0);
-                GlStateManager.popAttrib();
-                GlStateManager.translate(-.5f, 0, 0);
-            });
-            GlStateManager.popMatrix();
-        }
+    private String format(String name) {
+        return newMsg.replace("{}", name);
     }
 
 }
