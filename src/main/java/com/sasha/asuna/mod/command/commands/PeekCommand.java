@@ -38,8 +38,16 @@ public class PeekCommand extends SimpleCommand {
     @Override
     public void onCommand() {
         if (this.getArguments() == null) {
-            Manager.Feature.findFeature(PeekFeature.class).setState(true, true);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(200L);
+                } catch (InterruptedException ignored) {}
+                Manager.Feature.findFeature(PeekFeature.class).setState(true, true);
+            }).start();
             return;
+        }
+        if (this.getArguments() != null && !Manager.Feature.isFeatureEnabled(ShulkerSpyFeature.class)) {
+            AsunaMod.logErr(false, "You must turn on the ShulkerSpy mod to view others' shulkers.");
         }
         String name = this.getArguments()[0].toLowerCase();
         if (!ShulkerSpyFeature.shulkerMap.containsKey(name.toLowerCase())) {
@@ -47,11 +55,11 @@ public class PeekCommand extends SimpleCommand {
             return;
         }
         IInventory inv = ShulkerSpyFeature.shulkerMap.get(name.toLowerCase());
-        if (inv == null) {
-            AsunaMod.logErr(false, "Null inventory!");
-            return;
-        }
-        AsunaMod.minecraft.displayGuiScreen(null);
-        AsunaMod.minecraft.player.displayGUIChest(inv);
+        new Thread(() -> {
+            try {
+                Thread.sleep(200L);
+            } catch (InterruptedException ignored) {}
+            AsunaMod.minecraft.player.displayGUIChest(inv);
+        }).start();
     }
 }
