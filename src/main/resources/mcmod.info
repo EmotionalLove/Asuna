@@ -5,8 +5,8 @@
     "description": "Asuna is a minecraft mod that assists the player in survival anarchy environments. \"Asuna\" is a character in the popular anime \"Sword Art Online\". Asuna features many modules like Wireframe, AutoIgnore, Xray, Killaura, and more to help the player in Anarchy environments.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/EmotionalLove/Asuna_Client/",
-    "updateUrl": "https://github.com/EmotionalLove/Asuna_Client/releases/",
+    "url": "https://github.com/EmotionalLove/Asuna/",
+    "updateUrl": "https://github.com/EmotionalLove/Asuna/releases/",
     "authorList": [
       "Sasha"
     ],
