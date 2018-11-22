@@ -1,0 +1,39 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.sasha.asuna.mod.mixin.client",
+  "refmap": "mixins.asuna.refmap.json",
+  "injectors": {
+    "maxShiftBy": 1
+  },
+  "client": [
+    "MixinEntityPlayerSP",
+    "MixinNetworkManager",
+    "MixinEntityRenderer",
+    "MixinMinecraft",
+    "MixinBlock",
+    "MixinPlayerControllerMP",
+    "MixinEntityLivingBase",
+    "MixinGuiPlayerTabOverlay",
+    "MixinBlockLiquid",
+    "MixinRender",
+    "MixinEntity",
+    "MixinEntityPig",
+    "MixinAbstractClientPlayer",
+    "MixinNetHandlerPlayClient",
+    "MixinItemRenderer",
+    "MixinNetHandlerLoginClient",
+    "MixinGuiMainMenu",
+    "MixinGuiScreen",
+    "MixinEntityPlayer",
+    "MixinGuiContainer",
+    "MixinGuiScreenBook",
+    "MixinGui",
+    "MixinGuiConnecting",
+    "MixinEntityLlama",
+    "MixinGuiIngameMenu",
+    "MixinChunkRenderContainer",
+    "MixinRenderList",
+    "MixinVboRenderList"
+  ]
+}
