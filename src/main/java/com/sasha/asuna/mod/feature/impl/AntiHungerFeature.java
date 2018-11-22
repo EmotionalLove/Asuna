@@ -40,15 +40,15 @@ public class AntiHungerFeature extends AbstractAsunaTogglableFeature implements 
         super("AntiHunger"
                 , AsunaCategory.MOVEMENT,
                 new AsunaFeatureOptionBehaviour(true)
-                , new AsunaFeatureOption<>("NCP", true)
-                , new AsunaFeatureOption<>("AAC", false));
+                , new AsunaFeatureOption<>("Aggressive", true)
+                , new AsunaFeatureOption<>("Passive", false));
     }
 
     @Override
     public void onTick() {
         this.setSuffix(this.getFormattableOptionsMap());
         if (!AsunaMod.minecraft.gameSettings.keyBindAttack.isPressed() || !AsunaMod.minecraft.gameSettings.keyBindAttack.isKeyDown()) {
-            if (this.getOption("AAC")) {
+            if (this.getOption("Passive")) {
                 return;
             }
             AsunaMod.minecraft.getConnection().sendPacket(new CPacketPlayer(false));
@@ -61,7 +61,7 @@ public class AntiHungerFeature extends AbstractAsunaTogglableFeature implements 
             return;
         }
         if (AsunaMod.minecraft.player == null) return;
-        if (AsunaMod.minecraft.player.motionY > 0.1 && this.getOption("AAC")) {
+        if (AsunaMod.minecraft.player.motionY > 0.05 && this.getOption("Passive")) {
             return;
         }
         if (e.getSendPacket() instanceof CPacketPlayer) {
