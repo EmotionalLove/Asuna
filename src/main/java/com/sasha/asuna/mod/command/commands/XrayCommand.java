@@ -75,11 +75,13 @@ public class XrayCommand extends SimpleCommand {
                         AsunaMod.logErr(false, this.getArguments()[1] + " isn't a valid block! (If the name of your block has spaces in it, try surrounding the entire name in quotation marks)");
                         break;
                     }
-                    if (!XrayFeature.xRayBlocks.contains(Block.getIdFromBlock(delb))) {
+                    int delid = Block.getIdFromBlock(delb);
+                    if (!XrayFeature.xRayBlocks.contains(delid)) {
                         AsunaMod.logErr(false, "That block is not added to xray!");
                         break;
                     }
-                    XrayFeature.xRayBlocks.remove(Block.getIdFromBlock(delb));
+                    int rmindex = XrayFeature.xRayBlocks.indexOf(delid);
+                    XrayFeature.xRayBlocks.remove((int)rmindex);
                     AsunaMod.logMsg(false, this.getArguments()[1] + " successfully removed");
                     if (Manager.Feature.isFeatureEnabled(XrayFeature.class))AsunaMod.minecraft.renderGlobal.loadRenderers();
                     break;
