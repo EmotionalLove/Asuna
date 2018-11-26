@@ -36,12 +36,14 @@ import java.util.stream.Collectors;
 @FeatureInfo(description = "View the contents of shulker boxes being held by other nearby players")
 public class ShulkerSpyFeature extends AbstractAsunaTogglableFeature implements IAsunaTickableFeature {
 
+    public static ConcurrentHashMap<String, TileEntityShulkerBox> shulkerMap = new ConcurrentHashMap<>();
+    private static String newMsg = "You can now view {}'s most recently held shulker box's contents with \"-peek {}\"!";
+
     public ShulkerSpyFeature() {
         super("ShulkerSpy", AsunaCategory.RENDER);
     }
 
-    public static ConcurrentHashMap<String, TileEntityShulkerBox> shulkerMap = new ConcurrentHashMap<>();
-    private static String newMsg = "You can now view {}'s most recently held shulker box's contents with \"-peek {}\"!";
+
 
     /**
      * todo made a gui overlay thingy that shows the items in the grid
