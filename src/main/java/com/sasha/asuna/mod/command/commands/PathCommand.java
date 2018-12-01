@@ -118,6 +118,9 @@ public class PathCommand extends SimpleCommand {
             BaritoneAPI.getSettings().colorCurrentPath.value = Color.MAGENTA;
             BaritoneAPI.getSettings().colorNextPath.value = Color.BLUE;
             BaritoneAPI.getSettings().colorBestPathSoFar.value = Color.YELLOW;
+            BaritoneAPI.getSettings().renderPathIgnoreDepth.value = true;
+            BaritoneAPI.getSettings().renderGoalIgnoreDepth.value = true;
+            BaritoneAPI.getSettings().renderSelectionBoxesIgnoreDepth.value = true;
             set = true;
         }
         if (this.getArguments() == null || this.getArguments().length == 0) {
