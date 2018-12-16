@@ -59,7 +59,7 @@ public abstract class MixinNetworkManager {
     }
 
     @Redirect(
-            method = "channelRead0",
+            method = "channelRead0" ,
             at = @At(
                     value = "INVOKE",
                     target = "net/minecraft/network/Packet.processPacket(Lnet/minecraft/network/INetHandler;)V"
