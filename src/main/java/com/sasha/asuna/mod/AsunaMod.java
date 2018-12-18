@@ -326,7 +326,6 @@ public class AsunaMod implements SimpleListener {
         Manager.Feature.registerFeature(new DesktopNotificationsFeature());
         Manager.Feature.registerFeature(new CPUControlFeature());
         Manager.Feature.registerFeature(new BatteryLifeRenderableFeature());
-        Manager.Feature.registerFeature(new BookForgerFeature());
         Manager.Feature.registerFeature(new AutoWalkFeature());
         Manager.Feature.registerFeature(new BoatFlyFeature());
         Manager.Feature.registerFeature(new AutoReconnectFeature());
