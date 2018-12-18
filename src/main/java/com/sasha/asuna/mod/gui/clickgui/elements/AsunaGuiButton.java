@@ -41,6 +41,8 @@ public class AsunaGuiButton implements IAsunaGuiElement {
     private int height;
     private IToggler buttonAction;
 
+    private boolean alreadyOptionsOpened = false;
+
     public AsunaGuiButton(String title, int x, int y, int width, int height, IToggler buttonAction) {
         this.title = title;
         this.x = x;
@@ -104,7 +106,8 @@ public class AsunaGuiButton implements IAsunaGuiElement {
             if ((x >= this.x && x <= (this.x + this.width))
                     &&
                     y >= this.y && y <= (this.y + this.height)) {
-                if (buttonAction instanceof FeatureToggler && ((FeatureToggler) buttonAction).getFeature().hasOptions()) {
+                if (buttonAction instanceof FeatureToggler && ((FeatureToggler) buttonAction).getFeature().hasOptions() && !alreadyOptionsOpened) {
+                    alreadyOptionsOpened = true;
                     List<IAsunaGuiElement> proposedOptionButtons = new ArrayList<>();
                     ((FeatureToggler) buttonAction).getFeature().getOptions().forEach(name -> {
                         String optionName = name.getIdentifer();
