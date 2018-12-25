@@ -27,7 +27,6 @@
     "MixinGuiScreen",
     "MixinEntityPlayer",
     "MixinGuiContainer",
-    "MixinGuiScreenBook",
     "MixinGui",
     "MixinGuiConnecting",
     "MixinEntityLlama",

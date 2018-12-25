@@ -82,7 +82,7 @@ public class AsunaMod implements SimpleListener {
     public static final String MODID = "asunaforge";
     public static final String NAME = "Asuna";
     public static final String JAP_NAME = "\u30A2\u30B9\u30CA";
-    public static final String VERSION = "2.0.1";
+    public static final String VERSION = "2.0.2";
     public static SimpleEventManager EVENT_MANAGER = new SimpleEventManager();
     @Deprecated public static AsunaDataManager DATA_MANAGER = new AsunaDataManager();
     public static SettingHandler SETTING_HANDLER = new SettingHandler("AsunaSettingData");
@@ -326,7 +326,6 @@ public class AsunaMod implements SimpleListener {
         Manager.Feature.registerFeature(new DesktopNotificationsFeature());
         Manager.Feature.registerFeature(new CPUControlFeature());
         Manager.Feature.registerFeature(new BatteryLifeRenderableFeature());
-        Manager.Feature.registerFeature(new BookForgerFeature());
         Manager.Feature.registerFeature(new AutoWalkFeature());
         Manager.Feature.registerFeature(new BoatFlyFeature());
         Manager.Feature.registerFeature(new AutoReconnectFeature());
@@ -377,6 +376,7 @@ public class AsunaMod implements SimpleListener {
         COMMAND_PROCESSOR.register(PluginsCommand.class);
         COMMAND_PROCESSOR.register(AutoReconnectCommand.class);
         COMMAND_PROCESSOR.register(PeekCommand.class);
+        COMMAND_PROCESSOR.register(SaveCommand.class);
         COMMAND_PROCESSOR.register(PathCommand.class);
         AsunaPluginLoader.getLoadedPlugins().forEach(AsunaPlugin::onCommandRegistration);
     }

@@ -157,7 +157,7 @@ shadowJar {
         include(dependency('club.minnced:java-discord-rpc:2.0.1'))
         include(dependency('club.minnced:discord-rpc-release:v3.3.0'))
         include(dependency('com.google.guava:guava:27.0-jre'))
-        include(dependency(group: 'cabaletta', name: 'baritone-api', version: '1.0.0-hotfix-4'))
+        include(dependency(group: 'cabaletta', name: 'baritone-api', version: '1.0.0'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'

@@ -21,6 +21,8 @@ package com.sasha.asuna.mod.feature.impl;
 import com.sasha.asuna.mod.feature.AbstractAsunaTogglableFeature;
 import com.sasha.asuna.mod.feature.AsunaCategory;
 import com.sasha.asuna.mod.feature.annotation.FeatureInfo;
+import com.sasha.asuna.mod.feature.option.AsunaFeatureOption;
+import com.sasha.asuna.mod.feature.option.AsunaFeatureOptionBehaviour;
 
 /**
  * Created by Sasha on 08/08/2018 at 7:51 PM
