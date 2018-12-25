@@ -44,6 +44,7 @@ public class MiddleClickBlockFeature extends AbstractAsunaTogglableFeature imple
 
     @SimpleEventHandler
     public void onMiddleClick(ClientMouseClickEvent.Middle e) {
+        if (!this.isEnabled()) return;
         if (AsunaMod.minecraft.world.getBlockState(AsunaMod.minecraft.objectMouseOver.getBlockPos()).getBlock().material == Material.AIR) {
             return;
         }

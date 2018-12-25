@@ -34,7 +34,7 @@ public class ElytraFlightFeature extends AbstractAsunaTogglableFeature implement
 
     @Override
     public void onTick() {
-        if (this.isEnabled() && AsunaMod.minecraft.player.isElytraFlying()) {
+        if (AsunaMod.minecraft.player.isElytraFlying()) {
             AsunaMod.minecraft.player.capabilities.isFlying = true;
         }
     }
