@@ -19,6 +19,7 @@
 package com.sasha.asuna.mod.feature.impl;
 
 import com.sasha.asuna.mod.AsunaMod;
+import com.sasha.asuna.mod.events.client.ClientMouseClickEvent;
 import com.sasha.asuna.mod.events.client.ClientPacketRecieveEvent;
 import com.sasha.asuna.mod.feature.AbstractAsunaTogglableFeature;
 import com.sasha.asuna.mod.feature.AsunaCategory;
@@ -40,19 +41,33 @@ public class AFKFishFeature extends AbstractAsunaTogglableFeature implements Sim
     @SimpleEventHandler
     public void onSplash(ClientPacketRecieveEvent e) {
         if (!this.isEnabled()) return;
+        if (AsunaMod.minecraft.player.fishEntity == null) return;
         if (e.getRecievedPacket() instanceof SPacketSoundEffect) {
             SPacketSoundEffect pck = e.getRecievedPacket();
             if (pck.getSound().getSoundName().toString().equalsIgnoreCase("minecraft:entity.bobber.splash")) {
-                new Thread(() -> {
-                    AsunaMod.minecraft.rightClickMouse();
-                    try {
-                        Thread.sleep(1000L);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                    AsunaMod.minecraft.rightClickMouse();
-                }).start();
+                int soundX = (int) pck.getX();
+                //int soundY = (int) pck.getY();
+                int soundZ = (int) pck.getZ();
+                int fishX = (int) AsunaMod.minecraft.player.fishEntity.posX;
+                //int fishY = (int) AsunaMod.minecraft.player.fishEntity.posY;
+                int fishZ = (int) AsunaMod.minecraft.player.fishEntity.posZ;
+                if (soundX == fishX && fishZ == soundZ) {
+                    new Thread(() -> {
+                        AsunaMod.minecraft.rightClickMouse();
+                        try {
+                            Thread.sleep(1000L);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        AsunaMod.minecraft.rightClickMouse();
+                    }).start();
+                }
             }
         }
+    }
+
+    @SimpleEventHandler
+    public void onClick(ClientMouseClickEvent.Right e) {
+
     }
 }
