@@ -27,61 +27,110 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.network.play.server.SPacketChat;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.sasha.asuna.mod.feature.impl.AutoIgnoreFeature.stripColours;
 
 @FeatureInfo(description = "Show the estimated time left in queue in chat")
 public class QueueTimeFeature extends AbstractAsunaTogglableFeature implements SimpleListener {
+    private static long estTime = 10000;
     private static int lastQueuePos = -1;
-    private static int queueMeasurementMilestone = 0;
-    private static long preMeasurementMilestoneTime = 0;
-    private String tu = "Calculating...";
+    private static int sameCount = 1;
+    private ArrayList<Long> avgs = new ArrayList<>();
 
     public QueueTimeFeature() {
         super("QueueTime", AsunaCategory.CHAT);
     }
+    
 
-    private static String convert(long miliSeconds) {
+    @SimpleEventHandler
+    public void onChatRecieved(ClientPacketRecieveEvent ev) {
+        if (!this.isEnabled()) return;
+        if (ev.getRecievedPacket() instanceof SPacketChat){
+            SPacketChat e = (SPacketChat) ev.getRecievedPacket();
+            //AsunaMod.logMsg(false, stripColours(e.chatComponent.getUnformattedText()));
+            if (stripColours(e.getChatComponent().getUnformattedText()).startsWith("Position in queue: ")) {
+                int queuepos = Integer.parseInt(stripColours(e.chatComponent.getUnformattedText()).replace("Position in queue: ", ""));
+                if (lastQueuePos == -1) {
+                    lastQueuePos = queuepos;
+                    AsunaMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "lCalculating...");
+                    return;
+                }
+                if (queuepos == lastQueuePos) {
+                    for (int i = 0; i < queuepos; i++) {
+                        if (i != 0) {
+                            estTime += (10000 / i) / sameCount;
+                            continue;
+                        }
+                        estTime += 10000 / sameCount;
+                    }
+                    sameCount++;
+                    long estTimeWhole = estTime * queuepos;
+                    String tu = convert(estTimeWhole);
+                    if (estTimeWhole > 0) {
+                        AsunaMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
+                    } else {
+                        AsunaMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "lCalculating...");
+                        estTime = 10000;
+                    }
+                    return;
+                }
+                if (sameCount >= 2) {
+                    sameCount--;
+                }
+                for (int i = 0; i < queuepos; i++) {
+                    if (i != 0) {
+                        estTime -= (10000 / i) / sameCount;
+                        continue;
+                    }
+                    estTime -= 10000;
+                }
+                long estTimeWhole = estTime * queuepos;
+                String tu = convert(estTimeWhole);
+                if (estTimeWhole > 0) {
+                    AsunaMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
+                } else {
+                    AsunaMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "lCalculating...");
+                    estTime = 10000;
+                }
+                lastQueuePos = queuepos;
+            }
+        }
+    }
+    private static String convert(long miliSeconds)
+    {
         int hrs = (int) TimeUnit.MILLISECONDS.toHours(miliSeconds) % 24;
         int min = (int) TimeUnit.MILLISECONDS.toMinutes(miliSeconds) % 60;
         int sec = (int) TimeUnit.MILLISECONDS.toSeconds(miliSeconds) % 60;
         return String.format("%02dh %02dm %02ds", hrs, min, sec);
     }
-
-    @SimpleEventHandler
-    public void onChatRecieved(ClientPacketRecieveEvent ev) {
-        if (!this.isEnabled()) return;
-        if (ev.getRecievedPacket() instanceof SPacketChat) {
-            SPacketChat e = ev.getRecievedPacket();
-            if (stripColours(e.getChatComponent().getUnformattedText()).startsWith("Position in queue: ")) {
-                int queuepos = Integer.parseInt(stripColours(e.chatComponent.getUnformattedText()).replace("Position in queue: ", ""));
-                //This runs when the module is initiated
-                int milestone = 5;
-                if (lastQueuePos == -1) {
-                    lastQueuePos = queuepos;
-                    AsunaMod.logMsg("Wait patiently for " + milestone + " spots in the queue to pass to ensure (semi)accurate measurement.");
-                    queueMeasurementMilestone = queuepos - milestone;
-                    preMeasurementMilestoneTime = System.nanoTime();
-                    return;
-                }
-                //this should run recursively
-                if (queueMeasurementMilestone >= queuepos) {
-                    AsunaMod.logMsg("Queue measurement milestone reached. Re-Calculating...");
-                    long estTimePerSpot = (System.nanoTime() - preMeasurementMilestoneTime) / milestone;
-                    //Resetting...
-                    preMeasurementMilestoneTime = System.nanoTime();
-                    queueMeasurementMilestone = queuepos - milestone;
-
-                    long estTimeWhole = estTimePerSpot * queuepos;
-                    tu = convert(estTimeWhole);
-                    return;
-
-                }
-                AsunaMod.logMsg("\247" + "6Estimated Time: " + "\247" + "r" + "\247" + "6" + "\247" + "l" + tu);
-
+    public Long handleAverages(long estTime) {
+        if (avgs.size() > 20) {
+            avgs.remove(0);
+            avgs.add(estTime);
+            long boi = 0;
+            for (Long l : avgs) {
+                boi+=l;
             }
+            return boi / avgs.size();
         }
+        avgs.add(estTime);
+        long boi = 0;
+        for (Long l : avgs) {
+            boi+=l;
+        }
+        return boi / avgs.size();
+    }
+    public Long handleAverages() {
+        if (avgs.size() < 1) {
+            return -1L;
+        }
+        long boi = 0;
+        for (Long l : avgs) {
+            boi+=l;
+        }
+        return boi / avgs.size();
     }
 
 }
