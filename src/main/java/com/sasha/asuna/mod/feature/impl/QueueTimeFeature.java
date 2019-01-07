@@ -48,8 +48,7 @@ public class QueueTimeFeature extends AbstractAsunaTogglableFeature implements S
     public void onChatRecieved(ClientPacketRecieveEvent ev) {
         if (!this.isEnabled()) return;
         if (ev.getRecievedPacket() instanceof SPacketChat){
-            SPacketChat e = (SPacketChat) ev.getRecievedPacket();
-            //AsunaMod.logMsg(false, stripColours(e.chatComponent.getUnformattedText()));
+            SPacketChat e = ev.getRecievedPacket();
             if (stripColours(e.getChatComponent().getUnformattedText()).startsWith("Position in queue: ")) {
                 int queuepos = Integer.parseInt(stripColours(e.chatComponent.getUnformattedText()).replace("Position in queue: ", ""));
                 if (lastQueuePos == -1) {
