@@ -36,7 +36,7 @@ public class AsunaUpdateChecker implements SimpleListener {
 
     public static boolean checkForUpdates() {
         try {
-            URL url = new URL("http://2b2tmuseum.com/xdolfver.txt");
+            URL url = new URL("http://please.someonelove.me/xdolfver.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 
             if ((latestVer = br.readLine()).equals(AsunaMod.VERSION)) {
@@ -67,7 +67,7 @@ public class AsunaUpdateChecker implements SimpleListener {
             AsunaMod.scheduler.schedule(() -> {
                 AsunaMod.logMsg("\247eThere is an update available for Asuna!");
                 AsunaMod.logMsg("https://github.com/EmotionalLove/Asuna/releases");
-                AsunaMod.logMsg("Run \247l-update");
+                AsunaMod.logMsg("Run \247l-update \247r\2477to open in a browser.");
                 AsunaMod.logMsg("Current Version \247l" + AsunaMod.VERSION);
                 AsunaMod.logMsg("Latest Version \247l" + latestVer);
             }, 10, TimeUnit.SECONDS);
