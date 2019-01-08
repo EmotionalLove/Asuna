@@ -106,39 +106,59 @@ public class AsunaGuiButton implements IAsunaGuiElement {
             if ((x >= this.x && x <= (this.x + this.width))
                     &&
                     y >= this.y && y <= (this.y + this.height)) {
-                if (buttonAction instanceof FeatureToggler && ((FeatureToggler) buttonAction).getFeature().hasOptions() && !alreadyOptionsOpened) {
-                    alreadyOptionsOpened = true;
-                    List<IAsunaGuiElement> proposedOptionButtons = new ArrayList<>();
-                    ((FeatureToggler) buttonAction).getFeature().getOptions().forEach(name -> {
-                        String optionName = name.getIdentifer();
-                        proposedOptionButtons.add(
-                                new AsunaGuiButton(
-                                        name.getIdentifer(),
-                                        0,
-                                        0,
-                                        100,
-                                        12,
-                                        new OptionToggler(buttonAction.getMod(), optionName)));
-                    });
-                    new Thread(() -> {
-                        try {
-                            AsunaClickGUI.elementList.add(
-                                    new AsunaGuiWindow(
-                                            this.x + (this.width + 10),
-                                            y,
-                                            AsunaClickGUI.calcListLength(proposedOptionButtons.size(), 12),
+                if (buttonAction instanceof FeatureToggler && ((FeatureToggler) buttonAction).getFeature().hasOptions()) {
+                    if (!alreadyOptionsOpened) {
+                        alreadyOptionsOpened = true;
+                        List<IAsunaGuiElement> proposedOptionButtons = new ArrayList<>();
+                        ((FeatureToggler) buttonAction).getFeature().getOptions().forEach(name -> {
+                            String optionName = name.getIdentifer();
+                            proposedOptionButtons.add(
+                                    new AsunaGuiButton(
+                                            name.getIdentifer(),
+                                            0,
+                                            0,
                                             100,
-                                            86f,
-                                            0f,
-                                            80f,
-                                            255f,
-                                            buttonAction.getMod().getFeatureName(),
-                                            proposedOptionButtons)
-                            );
-                        } finally {
-                            AsunaClickGUI.lock.unlock();
-                        }
-                    }).start();
+                                            12,
+                                            new OptionToggler(buttonAction.getMod(), optionName)));
+                        });
+                        new Thread(() -> {
+                            try {
+                                AsunaClickGUI.elementList.add(
+                                        new AsunaGuiWindow(
+                                                this.x + (this.width + 10),
+                                                y,
+                                                AsunaClickGUI.calcListLength(proposedOptionButtons.size(), 12),
+                                                100,
+                                                86f,
+                                                0f,
+                                                80f,
+                                                255f,
+                                                buttonAction.getMod().getFeatureName(),
+                                                proposedOptionButtons)
+                                );
+                            } finally {
+                                AsunaClickGUI.lock.unlock();
+                            }
+                        }).start();
+                    }
+                    else {
+                        alreadyOptionsOpened = false;
+                        new Thread(() -> {
+                            try {
+                                AsunaClickGUI.lock.lock();
+                                for (int i = 0; i < AsunaClickGUI.elementList.size(); i++) {
+                                    IAsunaGuiElement iAsunaGuiElement = AsunaClickGUI.elementList.get(i);
+                                    if (iAsunaGuiElement instanceof AsunaGuiWindow && ((AsunaGuiWindow) iAsunaGuiElement).getTitle().equals(buttonAction.getMod().getFeatureName())) {
+                                        AsunaClickGUI.elementList.remove(iAsunaGuiElement);
+                                        break;
+                                    }
+                                }
+                            }
+                            finally {
+                                AsunaClickGUI.lock.unlock();
+                            }
+                        }).start();
+                    }
                 }
             }
         }
