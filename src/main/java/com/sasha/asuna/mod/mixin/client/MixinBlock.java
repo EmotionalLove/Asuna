@@ -44,6 +44,10 @@ public abstract class MixinBlock {
 
     @Shadow protected abstract Block setSoundType(SoundType sound);
 
+    @Shadow
+    @Deprecated
+    public abstract boolean isTopSolid(IBlockState state);
+
     @Inject(method = "isOpaqueCube", at = @At("HEAD"), cancellable = true)
     public void isOpaqueCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
         if (!Manager.Feature.featureRegistry.isEmpty() && Manager.Feature.isFeatureEnabled(XrayFeature.class)) {
