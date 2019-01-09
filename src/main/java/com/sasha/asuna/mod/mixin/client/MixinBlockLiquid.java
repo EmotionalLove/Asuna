@@ -32,7 +32,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.sasha.asuna.mod.feature.impl.JesusFeature.WATER_JESUS_AABB;
-import static net.minecraft.block.Block.FULL_BLOCK_AABB;
 import static net.minecraft.block.Block.NULL_AABB;
 
 @Mixin(value = BlockLiquid.class, priority = 999)
@@ -47,7 +46,15 @@ public abstract class MixinBlockLiquid extends MixinBlock {
     @Inject(method = "getCollisionBoundingBox", at = @At("HEAD"), cancellable = true)
     public void getBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos, CallbackInfoReturnable<AxisAlignedBB> info) {
         if (Manager.Feature.isFeatureEnabled(FluidInteractFeature.class)) {
-            info.setReturnValue(FULL_BLOCK_AABB);
+            info.setReturnValue(blockState.getBoundingBox(worldIn, pos));
+            info.cancel();
+        }
+    }
+
+    @Inject(method = "isFullCube", at = @At("HEAD"), cancellable = true)
+    public void isFullCube(IBlockState state, CallbackInfoReturnable<Boolean> info) {
+        if (Manager.Feature.isFeatureEnabled(FluidInteractFeature.class)) {
+            info.setReturnValue(true);
             info.cancel();
         }
     }

@@ -335,7 +335,7 @@ public class AsunaMod implements SimpleListener {
         Manager.Feature.registerFeature(new AutoEatFeature());
         Manager.Feature.registerFeature(new ShulkerSpyFeature());
         Manager.Feature.registerFeature(new PeekFeature());
-        Manager.Feature.registerFeature(new FluidInteractFeature());
+        //Manager.Feature.registerFeature(new FluidInteractFeature()); todo
         Manager.Data.settingRegistry.addAll(Manager.Feature.featureRegistry);
         AsunaPluginLoader.getLoadedPlugins().forEach(AsunaPlugin::onFeatureRegistration);
     }
