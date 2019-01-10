@@ -42,10 +42,8 @@ public class CrystalAuraFeature extends AbstractAsunaTogglableFeature implements
         super("CrystalAura", AsunaCategory.COMBAT,
                 new AsunaFeatureOptionBehaviour(true),
                 new AsunaFeatureOption<>("Aura", true),
+                new AsunaFeatureOption<>("Smart", false),
                 new AsunaFeatureOption<>("Auto", false, e -> {
-                    if (e) AsunaMod.logWarn(false, "This mode isn't currently available!");
-                }),
-                new AsunaFeatureOption<>("Auto All", false, e -> {
                     if (e) AsunaMod.logWarn(false, "This mode isn't currently available!");
                 }));
     }
@@ -54,10 +52,13 @@ public class CrystalAuraFeature extends AbstractAsunaTogglableFeature implements
     public void onTick() {
         if (this.isEnabled()) {
             this.setSuffix(this.getFormattableOptionsMap());
-            if (this.getFormattableOptionsMap().get("Aura")) {
+            if (this.getOption("Aura") || this.getOption("Smart")) {
                 for (Entity e : AsunaMod.minecraft.world.loadedEntityList) {
                     if (e instanceof EntityEnderCrystal) {
                         if (AsunaMod.minecraft.player.getDistance(e) <= 3.8f) {
+                            // if smart mode is on, dont hit crystals that might kill the player
+                            if (this.getOption("Smart") && e.getPosition().getY() < AsunaMod.minecraft.player.getPosition().getY())
+                                continue;
                             if (Mouse.isButtonDown(1) && AsunaMod.minecraft.player.inventory.getCurrentItem().getItem() != Items.END_CRYSTAL) {
                                 return; // dont do anything if the player is eating or anything
                             }
@@ -81,6 +82,10 @@ public class CrystalAuraFeature extends AbstractAsunaTogglableFeature implements
                         }
                     }
                 }
+                return;
+            }
+            if (this.getOption("Auto")) {
+                // todo fully automatic crystal placer
             }
         }
     }
