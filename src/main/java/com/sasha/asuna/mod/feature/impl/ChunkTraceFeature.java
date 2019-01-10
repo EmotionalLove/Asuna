@@ -31,7 +31,12 @@ import com.sasha.eventsys.SimpleEventHandler;
 import com.sasha.eventsys.SimpleListener;
 import net.minecraft.world.chunk.Chunk;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 import static com.sasha.asuna.mod.misc.AsunaRender.chunkESP;
@@ -44,11 +49,17 @@ public class ChunkTraceFeature extends AbstractAsunaTogglableFeature
         implements SimpleListener, IAsunaTickableFeature, IAsunaRenderableFeature {
 
     private static ArrayList<Chunk> chunks = new ArrayList<>();
+    public final String fileName;
 
     public ChunkTraceFeature() {
         super("ChunkTrace", AsunaCategory.RENDER,
                 new AsunaFeatureOption<>("ChunkESP", true),
-                new AsunaFeatureOption<>("PearlNotify", true));
+                new AsunaFeatureOption<>("PearlNotify", true),
+                new AsunaFeatureOption<>("Log to file", true));
+        Date date = new Date();
+        String format = "YYYY-MM-DD";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        fileName = dateFormat.format(date) + "_chunktrace.txt";
     }
 
     @Override
@@ -56,6 +67,7 @@ public class ChunkTraceFeature extends AbstractAsunaTogglableFeature
         LinkedHashMap<String, Boolean> suffixMap = new LinkedHashMap<>();
         suffixMap.put("Chunks", this.getFormattableOptionsMap().get("ChunkESP"));
         suffixMap.put("Pearls", this.getFormattableOptionsMap().get("PearlNotify"));
+        suffixMap.put("Logging", this.getFormattableOptionsMap().get("Log to file"));
         this.setSuffix(suffixMap);
     }
 
@@ -78,6 +90,18 @@ public class ChunkTraceFeature extends AbstractAsunaTogglableFeature
         if (!this.isEnabled() || !this.getFormattableOptionsMap().get("PearlNotify")) return;
         AsunaMod.logMsg(false, "\2478(\247bChunkTrace\2478) \2477Ender pearl loaded @ XYZ *x *y *z".replace("*x", e.getCoordinate()[0] + "")
                 .replace("*y", e.getCoordinate()[1] + "").replace("*z", e.getCoordinate()[2] + ""));
+        if (this.getOption("Log to file")) {
+            try {
+                File file = new File(fileName);
+                if (!file.exists()) file.createNewFile();
+                FileWriter writer = new FileWriter(file, true);
+                writer.write("Ender Pearl loaded at " + e.getCoordinate()[0] + " " + e.getCoordinate()[1] + " " + e.getCoordinate()[2] + "\n");
+                writer.flush();
+                writer.close();
+            } catch (IOException xe) {
+                xe.printStackTrace();
+            }
+        }
     }
 
     @SimpleEventHandler
@@ -86,6 +110,18 @@ public class ChunkTraceFeature extends AbstractAsunaTogglableFeature
         if (e.getPacketIn().isFullChunk()) return;
         if (!chunks.contains(e.getChunk())) {
             chunks.add(e.getChunk());
+        }
+        if (this.getOption("Log to file")) {
+            try {
+                File file = new File(fileName);
+                if (!file.exists()) file.createNewFile();
+                FileWriter writer = new FileWriter(file, true);
+                writer.write("New chunk at " + e.getChunkX() + e.getChunkZ());
+                writer.flush();
+                writer.close();
+            } catch (IOException xe) {
+                xe.printStackTrace();
+            }
         }
     }
 }
