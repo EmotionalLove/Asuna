@@ -91,16 +91,7 @@ public class ChunkTraceFeature extends AbstractAsunaTogglableFeature
         AsunaMod.logMsg(false, "\2478(\247bChunkTrace\2478) \2477Ender pearl loaded @ XYZ *x *y *z".replace("*x", e.getCoordinate()[0] + "")
                 .replace("*y", e.getCoordinate()[1] + "").replace("*z", e.getCoordinate()[2] + ""));
         if (this.getOption("Log to file")) {
-            try {
-                File file = new File(fileName);
-                if (!file.exists()) file.createNewFile();
-                FileWriter writer = new FileWriter(file, true);
-                writer.write("Ender Pearl loaded at " + e.getCoordinate()[0] + " " + e.getCoordinate()[1] + " " + e.getCoordinate()[2] + "\n");
-                writer.flush();
-                writer.close();
-            } catch (IOException xe) {
-                xe.printStackTrace();
-            }
+            log("Ender Pearl loaded at " + e.getCoordinate()[0] + " " + e.getCoordinate()[1] + " " + e.getCoordinate()[2]);
         }
     }
 
@@ -112,16 +103,20 @@ public class ChunkTraceFeature extends AbstractAsunaTogglableFeature
             chunks.add(e.getChunk());
         }
         if (this.getOption("Log to file")) {
-            try {
-                File file = new File(fileName);
-                if (!file.exists()) file.createNewFile();
-                FileWriter writer = new FileWriter(file, true);
-                writer.write("New chunk at " + e.getChunkX() + e.getChunkZ());
-                writer.flush();
-                writer.close();
-            } catch (IOException xe) {
-                xe.printStackTrace();
-            }
+            log("New chunk at " + e.getChunkX() + e.getChunkZ());
+        }
+    }
+
+    private void log(String s) {
+        try {
+            File file = new File(fileName);
+            if (!file.exists()) file.createNewFile();
+            FileWriter writer = new FileWriter(file, true);
+            writer.write(s + System.lineSeparator());
+            writer.flush();
+            writer.close();
+        } catch (IOException xe) {
+            xe.printStackTrace();
         }
     }
 }
