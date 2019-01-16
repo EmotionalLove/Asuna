@@ -75,19 +75,18 @@ public class PathCommand extends SimpleCommand {
         if (AsunaMod.minecraft.world == null) return;
         int fall = 3;
         fall += (0.5f * AsunaMod.minecraft.player.getHealth()); // make sure falling wont kill the player
-        IBaritone primaryBaritone = BaritoneAPI.getProvider().getPrimaryBaritone();
         BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
         BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Feature.isFeatureEnabled(JesusFeature.class);
         if (avoid) {
             BlockPos pos = isHostileEntityClose();
-            if (primaryBaritone.getPathingBehavior().isPathing() && (!(primaryBaritone.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
-                primaryBaritone.getPathingBehavior().cancelEverything();
-                primaryBaritone.getCustomGoalProcess().setGoal(new GoalRunAway(50, pos));
-                primaryBaritone.getCustomGoalProcess().path();
+            if (getPrimaryBaritone().getPathingBehavior().isPathing() && (!(getPrimaryBaritone().getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
+                getPrimaryBaritone().getPathingBehavior().cancelEverything();
+                getPrimaryBaritone().getCustomGoalProcess().setGoal(new GoalRunAway(50, pos));
+                getPrimaryBaritone().getCustomGoalProcess().path();
                 AsunaMod.scheduler.schedule(() -> {
-                    primaryBaritone.getPathingBehavior().cancelEverything();
-                    primaryBaritone.getCustomGoalProcess().setGoal(rememberGoal);
-                    primaryBaritone.getCustomGoalProcess().path();
+                    getPrimaryBaritone().getPathingBehavior().cancelEverything();
+                    getPrimaryBaritone().getCustomGoalProcess().setGoal(rememberGoal);
+                    getPrimaryBaritone().getCustomGoalProcess().path();
                     rememberGoal = null;
                 }, 20L, TimeUnit.SECONDS);
             }
@@ -284,7 +283,7 @@ public class PathCommand extends SimpleCommand {
         AsunaMod.logErr(false, "Unknown parameter. Try -help command path");
     }
 
-    private IBaritone getPrimaryBaritone() {
+    private static IBaritone getPrimaryBaritone() {
         return BaritoneAPI.getProvider().getPrimaryBaritone();
     }
 }
