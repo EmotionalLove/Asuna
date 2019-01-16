@@ -40,6 +40,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -171,6 +172,24 @@ public class PathCommand extends SimpleCommand {
             getPrimaryBaritone().getMineProcess().cancel();
             getPrimaryBaritone().getFollowProcess().cancel();
             AsunaMod.logMsg(false, "The pathfinder has stopped");
+            return;
+        }
+        if (this.getArguments()[0].toLowerCase().matches("build|print")) {
+            if (this.getArguments().length != 2) {
+                AsunaMod.logErr(false, "Invalid args");
+                return;
+            }
+            File dir = new File("schematics");
+            if (!dir.exists()) dir.mkdir();
+            File file = new File(dir, this.getArguments()[1]);
+            if (!file.exists()) {
+                AsunaMod.logErr(false, "Schematic file doesn't exist!!");
+                return;
+            }
+            AsunaMod.logMsg(false, "Trying to build " + this.getArguments()[1]);
+            if (!getPrimaryBaritone().getBuilderProcess().build(this.getArguments()[1])) {
+                AsunaMod.logErr(false, "Couldn't build!");
+            }
             return;
         }
         if (this.getArguments()[0].equalsIgnoreCase("waypoint")) {
