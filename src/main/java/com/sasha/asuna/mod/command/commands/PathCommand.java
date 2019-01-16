@@ -19,6 +19,7 @@
 package com.sasha.asuna.mod.command.commands;
 
 import baritone.api.BaritoneAPI;
+import baritone.api.IBaritone;
 import baritone.api.pathing.goals.Goal;
 import baritone.api.pathing.goals.GoalBlock;
 import baritone.api.pathing.goals.GoalRunAway;
@@ -74,18 +75,19 @@ public class PathCommand extends SimpleCommand {
         if (AsunaMod.minecraft.world == null) return;
         int fall = 3;
         fall += (0.5f * AsunaMod.minecraft.player.getHealth()); // make sure falling wont kill the player
+        IBaritone primaryBaritone = BaritoneAPI.getProvider().getPrimaryBaritone();
         BaritoneAPI.getSettings().maxFallHeightBucket.value = fall;
         BaritoneAPI.getSettings().assumeWalkOnWater.value = Manager.Feature.isFeatureEnabled(JesusFeature.class);
         if (avoid) {
             BlockPos pos = isHostileEntityClose();
-            if (BaritoneAPI.getPathingBehavior().isPathing() && (!(BaritoneAPI.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
-                BaritoneAPI.getPathingBehavior().cancel();
-                BaritoneAPI.getPathingBehavior().setGoal(new GoalRunAway(50, pos));
-                BaritoneAPI.getPathingBehavior().path();
+            if (primaryBaritone.getPathingBehavior().isPathing() && (!(primaryBaritone.getPathingBehavior().getGoal() instanceof GoalRunAway)) && rememberGoal != null && pos != null) {
+                primaryBaritone.getPathingBehavior().cancelEverything();
+                primaryBaritone.getCustomGoalProcess().setGoal(new GoalRunAway(50, pos));
+                primaryBaritone.getCustomGoalProcess().path();
                 AsunaMod.scheduler.schedule(() -> {
-                    BaritoneAPI.getPathingBehavior().cancel();
-                    BaritoneAPI.getPathingBehavior().setGoal(rememberGoal);
-                    BaritoneAPI.getPathingBehavior().path();
+                    primaryBaritone.getPathingBehavior().cancelEverything();
+                    primaryBaritone.getCustomGoalProcess().setGoal(rememberGoal);
+                    primaryBaritone.getCustomGoalProcess().path();
                     rememberGoal = null;
                 }, 20L, TimeUnit.SECONDS);
             }
@@ -139,7 +141,7 @@ public class PathCommand extends SimpleCommand {
             }
             for (Entity entity : AsunaMod.minecraft.world.getLoadedEntityList()) {
                 if (entity instanceof EntityPlayer && entity.getName().equalsIgnoreCase(this.getArguments()[1])) {
-                    BaritoneAPI.getFollowBehavior().follow(entity);
+                    getPrimaryBaritone().getFollowProcess().follow(e -> e == entity);
                     AsunaMod.logMsg("Following " + entity.getName());
                     return;
                 }
@@ -158,17 +160,17 @@ public class PathCommand extends SimpleCommand {
             for (int y = 256; y > 4; y--) {
                 IBlockState bs = AsunaMod.minecraft.world.getBlockState(new BlockPos(x, y, z));
                 if (bs.getMaterial() != Material.AIR && bs.isFullBlock()) {
-                    BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(x, y + 1, z));
-                    BaritoneAPI.getPathingBehavior().path();
+                    getPrimaryBaritone().getCustomGoalProcess().setGoal(new GoalBlock(x, y + 1, z));
+                    getPrimaryBaritone().getCustomGoalProcess().path();
                     AsunaMod.logMsg(false, "Moving to higher ground");
                     return;
                 }
             }
         }
         if (this.getArguments()[0].equalsIgnoreCase("stop")) {
-            BaritoneAPI.getPathingBehavior().cancel();
-            BaritoneAPI.getMineBehavior().cancel();
-            BaritoneAPI.getFollowBehavior().cancel();
+            getPrimaryBaritone().getPathingBehavior().cancelEverything();
+            getPrimaryBaritone().getMineProcess().cancel();
+            getPrimaryBaritone().getFollowProcess().cancel();
             AsunaMod.logMsg(false, "The pathfinder has stopped");
             return;
         }
@@ -179,9 +181,9 @@ public class PathCommand extends SimpleCommand {
             }
             for (Waypoint waypoint : AsunaMod.WAYPOINT_MANAGER.getWaypoints()) {
                 if (waypoint.getName().equalsIgnoreCase(this.getArguments()[1])) {
-                    BaritoneAPI.getPathingBehavior().cancel();
-                    BaritoneAPI.getPathingBehavior().setGoal(new GoalBlock(waypoint.getCoords()[0], waypoint.getCoords()[1], waypoint.getCoords()[2]));
-                    BaritoneAPI.getPathingBehavior().path();
+                    getPrimaryBaritone().getPathingBehavior().cancelEverything();
+                    getPrimaryBaritone().getCustomGoalProcess().setGoal(new GoalBlock(waypoint.getCoords()[0], waypoint.getCoords()[1], waypoint.getCoords()[2]));
+                    getPrimaryBaritone().getCustomGoalProcess().path();
                     AsunaMod.logMsg(false, "Going to " + waypoint.getName());
                     return;
                 }
@@ -239,9 +241,9 @@ public class PathCommand extends SimpleCommand {
                 int z = Integer.parseInt(this.getArguments()[2]);
                 Goal goal = new GoalXZ(x, z);
                 rememberGoal = goal;
-                BaritoneAPI.getPathingBehavior().setGoal(goal);
+                getPrimaryBaritone().getCustomGoalProcess().setGoal(goal);
                 AsunaMod.logMsg(false, "Going to " + x + " " + z);
-                BaritoneAPI.getPathingBehavior().path();
+                getPrimaryBaritone().getCustomGoalProcess().path();
             } catch (Exception e) {
                 AsunaMod.logErr(false, "Coordinates must be integers!");
                 e.printStackTrace();
@@ -263,7 +265,7 @@ public class PathCommand extends SimpleCommand {
                         AsunaMod.logErr(false, "You aren't holding anything!");
                         return;
                     }
-                    BaritoneAPI.getMineBehavior().mine(block);
+                    getPrimaryBaritone().getMineProcess().mine(block);
                     AsunaMod.logMsg(false, "Mining " + block.getLocalizedName());
                     return;
                 }
@@ -271,8 +273,8 @@ public class PathCommand extends SimpleCommand {
                     AsunaMod.logErr(false, "Invalid block name");
                     return;
                 }
-                BaritoneAPI.getMineBehavior().cancel();
-                BaritoneAPI.getMineBehavior().mine(this.getArguments()[1]);
+                getPrimaryBaritone().getMineProcess().cancel();
+                getPrimaryBaritone().getMineProcess().mine(Block.getBlockFromName(this.getArguments()[1]));
                 AsunaMod.logMsg(false, "Mining " + this.getArguments()[1].replace("_", " "));
                 return;
             } catch (Exception e) {
@@ -280,5 +282,9 @@ public class PathCommand extends SimpleCommand {
             }
         }
         AsunaMod.logErr(false, "Unknown parameter. Try -help command path");
+    }
+
+    private IBaritone getPrimaryBaritone() {
+        return BaritoneAPI.getProvider().getPrimaryBaritone();
     }
 }
