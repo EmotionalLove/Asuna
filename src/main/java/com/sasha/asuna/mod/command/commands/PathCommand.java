@@ -57,7 +57,9 @@ import java.util.concurrent.TimeUnit;
         "parkour <true/false>",
         "follow <player>",
         "avoid <true/false>",
-        "top"})
+        "top",
+        "build <schematic file>",
+        "print <schematic file>"})
 public class PathCommand extends SimpleCommand {
 
     private static boolean set = false;
