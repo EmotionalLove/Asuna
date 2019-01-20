@@ -187,7 +187,8 @@ public class PathCommand extends SimpleCommand {
                 return;
             }
             AsunaMod.logMsg(false, "Trying to build " + this.getArguments()[1]);
-            if (!getPrimaryBaritone().getBuilderProcess().build(this.getArguments()[1])) {
+            if (!getPrimaryBaritone().getBuilderProcess().build(this.getArguments()[0],
+                    file, AsunaMod.minecraft.player.getPosition())) {
                 AsunaMod.logErr(false, "Couldn't build!");
             }
             return;
